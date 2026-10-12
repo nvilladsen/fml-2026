@@ -1,0 +1,1901 @@
+/*
+  Machine Learning in Finance — shared Reveal.js theme.
+  Light, spacious, academic. One blue family + sparing amber.
+  System font stack only (no webfonts, works offline).
+*/
+
+/*-- scss:defaults --*/
+
+$font-family-sans-serif: "Segoe UI", system-ui, -apple-system, "Helvetica Neue",
+  Arial, sans-serif;
+$font-family-monospace: "Cascadia Mono", Consolas, Menlo, "Courier New", monospace;
+
+$presentation-font-size-root: 30px;
+$presentation-line-height: 1.5;
+$presentation-slide-text-align: left;
+
+$body-bg: #fcfcfb;
+$body-color: #141413;
+$link-color: #1c5cab;
+
+$presentation-heading-color: #0d366b;
+$presentation-heading-font-weight: 650;
+$presentation-h1-font-size: 1.5em;
+$presentation-h2-font-size: 1.1em;
+$presentation-h3-font-size: 0.92em;
+$presentation-title-slide-text-align: left;
+
+$code-color: #0d366b;
+$code-block-bg: #f4f4f1;
+$code-block-font-size: 0.72em;
+$code-block-border-color: #e6e5df;
+
+$selection-background-color: #dcebfd;
+
+/*-- scss:rules --*/
+
+// ---------- base rhythm ----------
+
+.reveal .slides section {
+  padding-top: 0.2em;
+  overflow: hidden;
+}
+
+.reveal h1 {
+  margin-bottom: 0.5em;
+  letter-spacing: -0.01em;
+}
+
+.reveal h2 {
+  margin-bottom: 0.7em;
+}
+
+.reveal p,
+.reveal li {
+  color: #141413;
+}
+
+.reveal ul,
+.reveal ol {
+  padding-left: 1.5rem !important;
+}
+
+.reveal li {
+  margin-bottom: 0.5em;
+}
+
+// custom list markers — a small squared accent, not a plain black disc.
+// Scoped to top-level content lists and the instructor-intro columns, so
+// component lists with their own markers (do/don't ticks) are untouched.
+.reveal .slides section > ul,
+.reveal .whoami ul {
+  list-style: none;
+  margin-left: 0.1em;
+}
+
+.reveal .slides section > ul > li,
+.reveal .whoami ul > li {
+  position: relative;
+  padding-left: 1.2em;
+}
+
+.reveal .slides section > ul > li::before,
+.reveal .whoami ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0.05em;
+  top: 0.52em;
+  width: 0.4em;
+  height: 0.4em;
+  background: #002546;
+  border-radius: 50%;
+}
+
+// nested sub-lists get a lighter, hollow marker
+// .reveal .slides section > ul ul {
+//   list-style: none;
+//   margin-top: 0.3em;
+// }
+
+// .reveal .slides section > ul ul > li::before {
+//   background: transparent;
+//   border: 1.5px solid #a9bfdd;
+// }
+
+.reveal .slides section > ul ul {
+  list-style: none;
+  margin-top: 0.3em;
+  padding-left: 1.2em;
+}
+
+.reveal .slides section > ul ul > li {
+  position: relative;
+  padding-left: 1.2em;
+}
+
+.reveal .slides section > ul ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0.05em;
+  top: 0.52em;
+  width: 0.4em;
+  height: 0.4em;
+  background: transparent;
+  border: 1.5px solid #a9bfdd;
+  border-radius: 50%;
+}
+
+.reveal strong {
+  color: #0b2a54;
+}
+
+.reveal .slide-number {
+  color: #a8a69f;
+  background: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.reveal .progress {
+  color: #1c5cab;
+  height: 3px;
+}
+
+// ---------- text helpers ----------
+
+.muted {
+  color: #52514e;
+}
+
+.faint {
+  color: #898781;
+}
+
+.small {
+  font-size: 0.72em;
+}
+
+.big {
+  font-size: 1.18em;
+  line-height: 1.4;
+}
+
+.lead {
+  font-size: 1.05em;
+  color: #2d2c2a;
+}
+
+.center-block {
+  text-align: center;
+}
+
+.spacer {
+  height: 0.6em;
+}
+
+.gap-lg {
+  height: 1.5em;
+}
+
+// faint, centered "tagline" box for a closing aside (why-python, etc.)
+.tagline {
+  margin: 1.3em auto 0;
+  max-width: 40em;
+  text-align: center;
+  color: #52514e;
+  font-size: 0.78em;
+  padding: 0.55em 1.2em;
+  background: #faf9f6;
+  border: 1px solid #ece9e2;
+  border-radius: 8px;
+}
+
+// instructor email line
+.who-contact {
+  margin-top: 1.4em;
+  font-size: 0.74em;
+  color: #52514e;
+}
+
+.who-contact code {
+  color: #0d366b;
+  font-size: 0.95em;
+}
+
+// ---------- section divider slides ----------
+
+// .reveal .slides section.divider {
+//   h1 {
+//     font-size: 1.75em;
+//     margin-top: 1.4em;
+//     margin-bottom: 0.35em;
+//   }
+
+//   h1::before {
+//     content: "";
+//     display: block;
+//     width: 58px;
+//     height: 5px;
+//     background: #1c5cab;
+//     border-radius: 3px;
+//     margin-bottom: 0.5em;
+//   }
+
+//   .divider-kicker {
+//     color: #a8794b;
+//     font-size: 0.66em;
+//     letter-spacing: 0.18em;
+//     text-transform: uppercase;
+//     font-weight: 600;
+//     margin-bottom: 0.2em;
+//   }
+
+//   .divider-note {
+//     color: #52514e;
+//     font-size: 0.82em;
+//     margin-top: 0.9em;
+//     max-width: 24em;
+//   }
+// }
+
+// ---------- section divider slides ----------
+
+.reveal .slides section.divider {
+  h1 {
+  font-size: 1.75em;
+  margin-top: 1.4em;
+  margin-bottom: 0.35em;
+}
+
+h1::before {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 5px;
+//   background: #1c5cab;
+  background: #003d73;
+  border-radius: 3px;
+  margin-bottom: 0.5em;
+}
+
+  .divider-kicker {
+    color: #a8794b;
+    font-size: 0.66em;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.2em;
+  }
+
+  .divider-note {
+    color: #52514e;
+    font-size: 0.82em;
+    margin-top: 0.9em;
+    max-width: 24em;
+  }
+}
+
+// ---------- chips (small labels) ----------
+
+.chip {
+  display: inline-block;
+  font-size: 0.5em;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 0.28em 0.8em;
+  border-radius: 1em;
+  vertical-align: middle;
+  position: relative;
+  top: -0.18em;
+}
+
+.chip-turn {
+  background: #1c5cab;
+  color: #ffffff;
+}
+
+.chip-predict {
+  background: #fbf1dc;
+  color: #96631c;
+}
+
+.chip-optional {
+  background: #efeeea;
+  color: #6c6a64;
+}
+
+.chip-case {
+  background: #0d366b;
+  color: #ffffff;
+}
+
+.chip-new {
+  background: #e7f2ec;
+  color: #1b7a4b;
+}
+
+// ---------- "your turn" slides ----------
+
+.reveal .slides section.your-turn {
+  h1 {
+    border-bottom: 3px solid #dce7f4;
+    padding-bottom: 0.25em;
+  }
+}
+
+// ---------- callouts (restrained) ----------
+
+.reveal .callout {
+  border-radius: 7px;
+  font-size: 0.82em;
+}
+
+.reveal .callout.callout-style-simple {
+  padding: 0.45em 1em;
+}
+
+.reveal .callout-warning {
+  border-left: 5px solid #d99a1c;
+  background: #fbf4e4;
+}
+
+.reveal .callout-tip {
+  border-left: 6px solid #003d73;
+  background: #eef4fc;
+}
+
+.reveal .callout-note {
+  border-left: 5px solid #9a9891;
+  background: #f4f4f1;
+}
+
+// ---------- code: static blocks ----------
+
+.reveal div.sourceCode {
+  margin: 0.5em 0;
+  border-radius: 8px;
+  overflow: hidden;              // no stray horizontal scrollbar on the wrapper
+}
+
+.reveal pre {
+  box-shadow: none;
+  border-radius: 8px;
+  line-height: 1.55;
+  margin: 0.5em 0;
+}
+
+.reveal pre code {
+  padding: 0.8em 1em;
+  max-height: none;              // let short blocks size naturally
+  overflow: hidden;              // kill the horizontal "sliding bar"
+  border-radius: 8px;
+  background: #f6f6f3;
+  border: 1px solid #ececE6;
+}
+
+// no line numbers on static code blocks
+.reveal pre code.sourceCode,
+.reveal pre.numberSource code {
+  counter-reset: none;
+}
+.reveal pre.numberSource code > span > a:first-child::before {
+  content: "" !important;
+}
+.reveal .sourceCode .lineNumbers,
+.reveal pre.numberSource {
+  padding-left: 0 !important;
+}
+
+// output cells: hairline, no scrollbar
+.reveal .cell-output pre,
+.reveal .cell-output-stdout pre {
+  background: #ffffff;
+  border: 1px solid #e6e5df;
+  border-left: 6px solid #2f6aa0;
+  color: #26333f;
+  overflow: hidden;
+}
+
+.reveal .cell-output-error pre,
+.reveal .cell-output-stderr pre {
+  background: #fdf4f3;
+  border: 1px solid #f0d4d2;
+  border-left: 6px solid #2f6aa0;
+  color: #8a3129;
+  overflow-x: auto;              // tracebacks may be wide; allow if truly needed
+}
+
+// ---------- code: live (quarto-live / pyodide) cells ----------
+
+// show the CodeMirror line-number gutter; hide fold arrows
+.reveal .cm-editor .cm-gutters {
+  background: #f4f4f1;
+  border-right: 1px solid #e6e5df;
+  color: #a8a69f;
+  font-size: 0.85em;
+  min-width: 2.2em;
+}
+
+.reveal .cm-foldGutter {
+  display: none !important;
+}
+
+.reveal .cm-editor {
+  background: #ffffff;
+  font-size: 1em;
+  border-radius: 6px;
+}
+
+.reveal .cm-editor .cm-content {
+  padding: 0.5em 0.2em;
+}
+
+// the "Python Code" header row + buttons
+// .reveal .exercise-editor,
+// .reveal .qwebr-editor,
+// .reveal .exercise-cell {
+//   margin: 0.4em 0;
+// }
+
+// .reveal .exercise-editor .card,
+// .reveal .qwebr-editor .card,
+// .reveal .exercise-cell .card {
+//   border-left: 6px solid #003d73 !important;
+//   border-radius: 0 6px 6px 0;
+//   overflow: hidden;
+// }
+
+// .reveal .exercise-editor,
+// .reveal .qwebr-editor,
+// .reveal .exercise-cell {
+//   overflow: hidden;
+//   margin: 0.4em 0;
+//   border-left: 6px solid #003d73;
+//   border-radius: 0 6px 6px 0;
+// }
+
+// .reveal .exercise-editor .card-header,
+// .reveal .exercise-cell .card-header {
+//   background: #ffffff;
+//   border-bottom: 1px solid #e6e5df;
+//   padding: 0.25em 0.7em;
+//   font-size: 0.62em;
+//   color: #6c6a64;
+// }
+
+/* Keep outer wrapper properly clipped */
+// .reveal .exercise-editor,
+// .reveal .qwebr-editor,
+// .reveal .exercise-cell {
+//   overflow: hidden;
+//   margin: 0.4em 0;
+//   border-radius: 0 6px 6px 0;
+// }
+
+// /* Style the inner card cleanly without isolated composition blur */
+// .reveal .exercise-editor .card,
+// .reveal .qwebr-editor .card,
+// .reveal .exercise-cell .card {
+//   border: none;
+//   border-left: 6px solid #003d73 !important;
+//   border-radius: 0;
+//   overflow: visible;
+// }
+
+// .reveal .exercise-editor,.reveal .qwebr-editor,.reveal .exercise-cell {
+//   overflow: hidden;
+//   margin: 0.4em 0;
+// }
+// .reveal .exercise-editor .card,.reveal .qwebr-editor .card,.reveal .exercise-cell .card {
+//   border-left: 6px solid #003d73 !important;
+//   border-radius: 0;
+// }
+
+// .reveal .exercise-editor,
+// .reveal .qwebr-editor,
+// .reveal .exercise-cell {
+//   overflow: hidden;
+//   margin: 0.4em 0;
+//   border-left: 6px solid #003d73;
+//   border-radius: 0 6px 6px 0;
+// }
+
+// // run button — target both the generic btn-primary and quarto-live's specific class
+// .reveal .exercise-editor button.btn-primary,
+// .reveal .exercise-cell button.btn-primary,
+// .reveal .btn-exercise-editor.btn-primary,
+// .reveal button.qwebr-button-run {
+//   background: #002546 !important;
+//   border-color: #002546 !important;
+//   color: #ffffff !important;
+//   font-size: 0.9em;
+// }
+
+// // live-cell result area matches static output styling, no scrollbar
+// // .reveal .exercise-cell .exercise-result pre,
+// // .reveal .cell-output.exercise-result pre {
+// //   background: #ffffff;
+// //   border: 1px solid #e6e5df;
+// //   border-left: 6px solid #2f6aa0;
+// //   overflow: hidden;
+// // }
+
+// .reveal .exercise-cell .exercise-result pre,
+// .reveal .cell-output.exercise-result pre {
+//   background: #ffffff;
+//   border: 1px solid #e6e5df;
+//   border-left: 6px solid #2f6aa0;
+//   overflow-x: hidden;
+//   overflow-y: hidden;
+//   white-space: pre-wrap;       // Wraps long tuple strings like (100,) (1, 100) onto the next line
+//   word-break: break-word;      // Ensures long continuous outputs do not push past the right edge
+// }
+
+/* 1. Outer wrapper - keeps everything inside slide bounds (removes bottom scrollbar) */
+.reveal .exercise-editor,
+.reveal .qwebr-editor,
+.reveal .exercise-cell {
+  margin: 0.4em 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* 2. Top Editor Box - dark blue accent border that hugs the block cleanly */
+.reveal .exercise-cell .card,
+.reveal .exercise-editor .card,
+.reveal .qwebr-editor .card {
+  border: 1px solid #dcdcdc !important;
+  border-left: 6px solid #003d73 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+/* 3. Run Code Button - matches dark blue theme instead of bright blue */
+.reveal .exercise-cell .btn-primary,
+.reveal .qwebr-editor .btn-primary,
+.reveal .btn-run-code {
+  background-color: #003d73 !important;
+  border-color: #003d73 !important;
+  color: #ffffff !important;
+}
+
+/* 4. Output Box Outer Container - finished border on all sides */
+// .reveal .exercise-cell .exercise-result,
+// .reveal .cell-output.exercise-result {
+//   margin-top: 0.5em;
+//   border: 1px solid #e6e5df !important;
+//   border-left: 6px solid #2f6aa0 !important;
+//   border-radius: 8px !important;
+//   background-color: #fcfcfc !important;
+//   overflow: hidden !important;
+// }
+
+
+/* 5. Output Box Text Element - cleans up inner pre formatting and wraps long lines */
+// .reveal .exercise-cell .exercise-result pre,
+// .reveal .cell-output.exercise-result pre {
+//   margin: 0 !important;
+//   padding: 0.6em 0.9em !important;
+//   border: none !important;
+//   background: transparent !important;
+//   white-space: pre-wrap !important;
+//   word-break: break-word !important;
+// }
+
+
+
+/* Target the top-level output wrapper (mirrors the .card behavior on the input block) */
+/* Target the output container and force it to match the .card width */
+.reveal .exercise-cell-output,
+.reveal .exercise-result-area,
+.reveal .exercise-cell .exercise-result,
+.reveal .cell-output.exercise-result {
+  margin-top: 0.5em !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  
+  border: 1px solid #dcdcdc !important;
+  border-left: 6px solid #2f6aa0 !important;
+  border-radius: 8px !important;
+  background-color: #f7f7f7 !important;
+  overflow: hidden !important;
+}
+
+/* Strip margins and borders on inner elements so they fit inside cleanly */
+.reveal .exercise-cell-output pre,
+.reveal .exercise-result pre,
+.reveal .cell-output.exercise-result pre {
+  margin: 0 !important;
+  padding: 0.6em 0.9em !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.reveal code {
+  font-size: 0.94em;
+  background: #eef2f8;
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+// ---------- tables ----------
+
+.reveal table {
+  font-size: 0.82em;
+  border-collapse: collapse;
+  margin: 0.4em 0;
+}
+
+.reveal table th {
+  color: #0d366b;
+  border-bottom: 2px solid #c3c2b7;
+  padding: 0.35em 1em;
+  text-align: left;
+}
+
+.reveal table td {
+  border-bottom: 1px solid #ececE6;
+  padding: 0.35em 1em;
+}
+
+// ---------- course timeline (7-week map) ----------
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 0.5em;
+}
+
+.tl-row {
+  display: grid;
+  grid-template-columns: 150px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 0.42em 0.9em;
+  border-radius: 7px;
+  border: 1px solid #edece7;
+  font-size: 0.6em;
+  background: #ffffff;
+}
+
+.tl-row .tl-week {
+  font-weight: 700;
+  color: #0d366b;
+}
+
+.tl-row .tl-topic {
+  color: #33322f;
+}
+
+.tl-row .tl-who {
+  color: #a8a69f;
+  font-size: 0.85em;
+  letter-spacing: 0.05em;
+}
+
+.tl-row.tl-now {
+  background: #eef4fc;
+  border-color: #b9d2f0;
+}
+
+.tl-row.tl-now .tl-topic {
+  font-weight: 600;
+  color: #16385f;
+}
+
+.tl-row.tl-future {
+  color: #6c6a64;
+}
+
+.tl-row.tl-future .tl-week {
+  color: #6f7d8c;
+}
+
+// ---------- course structure (three pillars) ----------
+
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 0.7em;
+}
+
+.pillar {
+  border: 1px solid #e6e5df;
+  border-top: 4px solid #86b6ef;
+  border-radius: 8px;
+  padding: 0.7em 0.85em;
+  background: #ffffff;
+}
+
+.pillar .pillar-tag {
+  font-size: 0.58em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a8794b;
+  font-weight: 700;
+  margin-bottom: 0.25em;
+}
+
+.pillar .pillar-title {
+  font-weight: 650;
+  color: #0d366b;
+  font-size: 0.82em;
+  margin-bottom: 0.3em;
+}
+
+.pillar .pillar-body {
+  font-size: 0.64em;
+  color: #52514e;
+  line-height: 1.45;
+}
+
+.pillar.pillar-live {
+  border-top-color: #1c5cab;
+  background: #f7fafd;
+}
+
+// ---------- notebook mock (what is a notebook) ----------
+
+.nb-mock {
+  max-width: 22em;
+  margin: 0.6em 0;
+  border: 1px solid #e2e1db;
+  border-radius: 8px;
+  overflow: hidden;
+  font-size: 0.68em;
+}
+
+.nb-cell {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid #edece7;
+}
+
+.nb-cell:last-child {
+  border-bottom: none;
+}
+
+.nb-gutter {
+  flex: 0 0 62px;
+  padding: 0.5em 0.4em;
+  font-family: $font-family-monospace;
+  font-size: 0.7em;
+  color: #a8a69f;
+  background: #faf9f6;
+  border-right: 1px solid #edece7;
+  text-align: right;
+}
+
+.nb-body {
+  flex: 1;
+  padding: 0.55em 0.8em;
+}
+
+.nb-cell.nb-text .nb-body {
+  color: #33322f;
+}
+
+.nb-cell.nb-code .nb-body {
+  font-family: $font-family-monospace;
+  font-size: 0.82em;
+  color: #0d366b;
+  background: #ffffff;
+}
+
+.nb-out {
+  padding: 0.4em 0.8em 0.5em 62px;
+  font-family: $font-family-monospace;
+  font-size: 0.72em;
+  color: #26333f;
+  background: #ffffff;
+}
+
+.nb-tag {
+  display: inline-block;
+  font-size: 0.62em;
+  color: #a8a69f;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+// ---------- instructor intro ----------
+
+.whoami {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 26px;
+  margin-top: 0.5em;
+}
+
+.whoami .who-col h3 {
+  color: #0d366b;
+  font-size: 0.72em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.4em;
+  font-weight: 700;
+}
+
+.whoami .who-col ul {
+  font-size: 0.74em;
+  line-height: 1.5;
+}
+
+.whoami .who-personal {
+  border-left: 3px solid #ece4d6;
+  padding-left: 1.1em;
+}
+
+// ---------- motivation two-column (why python / why ml) ----------
+
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 26px;
+  margin-top: 0.6em;
+}
+
+.why-point {
+  font-size: 0.78em;
+}
+
+.why-point strong {
+  color: #0d366b;
+  display: block;
+  margin-bottom: 0.1em;
+}
+
+.why-point span {
+  color: #52514e;
+  font-size: 0.92em;
+}
+
+// ---------- demanding-course "0 to Python+ML" band ----------
+
+.zero-to {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin: 0.7em 0 0.5em;
+}
+
+.zero-to .zt-node {
+  border: 1px solid #e6e5df;
+  border-radius: 8px;
+  padding: 0.5em 1em;
+  text-align: center;
+  background: #ffffff;
+}
+
+.zero-to .zt-node .zt-big {
+  font-size: 1.05em;
+  font-weight: 700;
+  color: #0d366b;
+  display: block;
+}
+
+.zero-to .zt-node .zt-sub {
+  font-size: 0.58em;
+  color: #898781;
+}
+
+.zero-to .zt-arrow {
+  text-align: center;
+  color: #1c5cab;
+}
+
+.zero-to .zt-arrow .zt-arrow-line {
+  font-size: 1.3em;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+
+.zero-to .zt-arrow .zt-arrow-label {
+  display: block;
+  font-size: 0.56em;
+  color: #a8794b;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.zero-to .zt-start .zt-big {
+  color: #898781;
+}
+
+// ---------- do / don't columns (AI policy) ----------
+
+.dodont {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-top: 0.6em;
+}
+
+.do-col,
+.dont-col {
+  border-radius: 8px;
+  padding: 0.6em 0.9em;
+  font-size: 0.72em;
+}
+
+.do-col {
+  background: #eef7f0;
+  border: 1px solid #cbe6d3;
+}
+
+.dont-col {
+  background: #fbf1f0;
+  border: 1px solid #f0d4d1;
+}
+
+.do-col h3,
+.dont-col h3 {
+  font-size: 0.9em;
+  margin-bottom: 0.35em;
+  letter-spacing: 0.02em;
+}
+
+.do-col h3 {
+  color: #1b7a4b;
+}
+
+.dont-col h3 {
+  color: #b23c33;
+}
+
+.do-col ul,
+.dont-col ul {
+  margin-left: 0;
+  list-style: none;
+}
+
+.do-col li,
+.dont-col li {
+  margin-bottom: 0.3em;
+  padding-left: 1.3em;
+  position: relative;
+}
+
+.do-col li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #1b7a4b;
+  font-weight: 700;
+}
+
+.dont-col li::before {
+  content: "✕";
+  position: absolute;
+  left: 0;
+  color: #b23c33;
+  font-weight: 700;
+}
+
+// ---------- exam highlight ----------
+
+.exam-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 0.7em 0;
+}
+
+.exam-fact {
+  border: 1px solid #e6e5df;
+  border-top: 4px solid #d99a1c;
+  border-radius: 8px;
+  padding: 0.6em 0.7em;
+  text-align: center;
+}
+
+.exam-fact .ef-big {
+  font-size: 1.15em;
+  font-weight: 700;
+  color: #0d366b;
+  display: block;
+}
+
+.exam-fact .ef-label {
+  font-size: 0.62em;
+  color: #52514e;
+  margin-top: 0.15em;
+}
+
+// ---------- key-point band ----------
+
+.keypoint {
+  border-left: 6px solid #003d73;
+  background: #f2f7fd;
+  padding: 0.5em 1em;
+  border-radius: 0 7px 7px 0;
+  font-size: 0.92em;
+  margin: 0.5em 0;
+}
+
+// ---------- diagrams ----------
+
+.diagram {
+  display: flex;
+  justify-content: center;
+  margin: 0.7em 0;
+}
+
+.diagram svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.diagram-note {
+  text-align: center;
+  color: #898781;
+  font-size: 0.7em;
+  margin-top: 0.2em;
+}
+
+// ---------- recap grid ----------
+
+.recap-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 22px;
+  margin-top: 0.4em;
+}
+
+.recap-item {
+  border-left: 4px solid #86b6ef;
+  padding: 0.15em 0 0.15em 0.7em;
+  font-size: 0.66em;
+}
+
+.recap-item strong {
+  color: #0d366b;
+  display: block;
+  margin-bottom: 0.1em;
+}
+
+.recap-item code {
+  font-size: 0.95em;
+}
+
+// ---------- fragments: keep it calm ----------
+
+.reveal .slides section .fragment.highlight-current-blue.current-fragment {
+  color: #1c5cab;
+}
+
+// ---------- loop / while trace animations (Session 2) ----------
+
+.reveal table.trace {
+  font-size: 0.72em;
+  margin: 0.4em 0;
+  border-collapse: collapse;
+  min-width: 20em;
+}
+
+.reveal table.trace th {
+  font-size: 0.86em;
+  color: #6c6a64;
+  font-weight: 600;
+  border-bottom: 1px solid #d7d5cc;
+  padding: 0.22em 1.3em;
+  text-align: right;
+}
+
+.reveal table.trace th:first-child {
+  text-align: left;
+}
+
+.reveal table.trace td {
+  font-family: $font-family-monospace;
+  color: #26333f;
+  border-bottom: 1px solid #efeee9;
+  padding: 0.22em 1.3em;
+  text-align: right;
+}
+
+.reveal table.trace td:first-child {
+  color: #a8794b;
+  font-family: $font-family-sans-serif;
+  text-align: left;
+}
+
+.reveal table.trace tr.trace-final td {
+  color: #0d366b;
+  font-weight: 700;
+  border-top: 2px solid #c3c2b7;
+}
+
+// step-list trace (one revealed line per loop step)
+.reveal .trace-step {
+  font-size: 0.82em;
+  color: #33322f;
+  margin-bottom: 0.3em;
+  padding: 0.15em 0 0.15em 0.9em;
+  border-left: 3px solid #dce7f4;
+}
+
+.reveal .trace-step strong {
+  color: #0d366b;
+}
+
+// ---------- step-run animation: highlight a code line + show state ----------
+.reveal .sr {
+  display: flex;
+  gap: 1.4em;
+  align-items: flex-start;
+  margin-top: 0.5em;
+}
+
+.reveal .sr-code {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 0.55em 0.9em;
+  background: #f6f6f3;
+  border: 1px solid #ececE6;
+  border-radius: 8px;
+  font-family: $font-family-monospace;
+  font-size: 0.8em;
+}
+
+.reveal .sr-line {
+  height: 1.9em;
+  line-height: 1.9em;
+  white-space: pre;
+  position: relative;
+  z-index: 1;
+  color: #26333f;
+}
+
+.reveal .sr-kw { color: #b5407a; }
+.reveal .sr-fn { color: #b5407a; }
+.reveal .sr-num { color: #1c5cab; }
+.reveal .sr-cmt { color: #9a9891; }
+
+.reveal .sr-hl {
+  position: absolute;
+  left: 0.35em;
+  right: 0.35em;
+  z-index: 0;
+  background: #fbe08a;
+  border-left: 3px solid #d99a1c;
+  border-radius: 3px;
+  top: calc(0.55em + var(--a) * 1.9em);
+  height: calc((var(--b) - var(--a) + 1) * 1.9em);
+}
+
+// inline highlight over the current item within a code line (e.g. list value)
+.reveal .sr-hl-inline {
+  position: absolute;
+  z-index: 0;
+  background: #f6c94e;
+  border-radius: 3px;
+  top: calc(0.55em + var(--r) * 1.9em);
+  height: 1.9em;
+  left: calc(0.9em + var(--c) * 1ch);
+  width: calc(var(--w) * 1ch);
+}
+
+.reveal .sr-state {
+  position: relative;
+  flex: 0 0 15.5em;
+  min-height: 9em;
+  font-size: 0.8em;
+}
+
+.reveal .sr-panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  border: 1px solid #e6e5df;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0.55em 0.85em;
+}
+
+.reveal .sr-lbl {
+  font-size: 0.62em;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #a8a69f;
+  font-family: $font-family-sans-serif;
+  margin-bottom: 0.1em;
+}
+
+.reveal .sr-mem {
+  color: #0d366b;
+  font-family: $font-family-monospace;
+  font-size: 0.95em;
+  line-height: 1.5;
+  margin-bottom: 0.5em;
+}
+
+.reveal .sr-out {
+  font-family: $font-family-monospace;
+  color: #26333f;
+  font-size: 0.95em;
+  line-height: 1.5;
+  white-space: pre-line;
+  min-height: 1.4em;
+}
+
+.reveal .sr-note {
+  color: #52514e;
+  font-family: $font-family-sans-serif;
+  font-size: 0.92em;
+}
+
+// ---------- mermaid diagrams (kept restrained, sized to the slide) ----------
+.reveal .cell-output-display svg,
+.reveal pre.mermaid svg,
+.reveal .mermaid svg {
+  max-height: 400px;
+  height: auto;
+}
+
+// ---------- precomputed figures ----------
+.reveal .cell-output-display img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+// ---------- a mock of the VS Code documentation popup (Session 3) ----------
+// a single wider line of "editor", for the Session 3 hover demo
+.nb-mock.nb-wide {
+  max-width: 46em;
+}
+
+.hovercard {
+  margin: 0.7em 0 0.2em;
+  max-width: 860px;
+  border: 1px solid #d5d4cc;
+  border-radius: 7px;
+  background: #ffffff;
+  box-shadow: 0 3px 10px rgba(20, 20, 19, 0.09);
+  overflow: hidden;
+}
+
+.hovercard .hc-sig {
+  padding: 0.5em 0.85em;
+  border-bottom: 1px solid #ecebe4;
+  background: #f7f7f4;
+  font-family: $font-family-monospace;
+  font-size: 0.72em;
+  color: #0d366b;
+}
+
+.hovercard .hc-sig .hc-arg {
+  background: #fdf3d7;
+  border-radius: 3px;
+  padding: 0 0.2em;
+  color: #7a5a08;
+}
+
+.hovercard .hc-body {
+  padding: 0.6em 0.85em 0.75em;
+  font-family: $font-family-monospace;
+  font-size: 0.68em;
+  line-height: 1.55;
+  color: #3d3c39;
+}
+
+.hovercard .hc-body .hc-p {
+  color: #0d366b;
+  font-weight: 600;
+}
+
+// ---------- live-cell output that can get tall (Session 3 onwards) ----------
+// help() dumps, DataFrame repr tables and figures are all much bigger than the
+// one- or two-line outputs of Sessions 1 and 2. Cap them so a slide never
+// overflows; the box scrolls in place rather than pushing content off-screen.
+.reveal .cell-output-pyodide pre,
+.reveal .cell-output-pyodide > div:not(.dataframe-container) {
+  max-height: 285px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.reveal .cell-output-pyodide pre code {
+  font-size: 0.92em;
+  line-height: 1.35;
+}
+
+// A live matplotlib figure arrives as a <canvas class="img-fluid">, and
+// Bootstrap's img-fluid stretches it to the full container width whatever its
+// natural size is. Cap the height instead, so a figure can never push the rest
+// of a slide off the bottom.
+.reveal .cell-output-pyodide img,
+.reveal .cell-output-pyodide canvas {
+  max-height: 268px;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+}
+
+// pandas renders a DataFrame as an HTML table; at slide type size that is
+// enormous, so give it its own compact scale. The !important is needed because
+// quarto-ojs.css sets `.observablehq table { font-size: 0.9em !important }`,
+// and every live-cell output is inside an .observablehq container.
+.reveal .slides section table.dataframe,
+.reveal .slides section div.cell-output table.dataframe,
+.reveal .slides section div.cell-output-pyodide table.dataframe {
+  margin: 0.2em auto;
+  font-size: 0.42em !important;
+  line-height: 1.25;
+  border-collapse: collapse;
+}
+
+.reveal table.dataframe th,
+.reveal table.dataframe td {
+  padding: 0.18em 0.7em;
+  font-family: $font-family-monospace;
+  font-weight: 400;
+  border: none;
+  border-bottom: 1px solid #ecebe4;
+  background: transparent;
+  color: #26333f;
+  text-align: right;
+}
+
+.reveal table.dataframe thead th {
+  color: #0d366b;
+  font-weight: 600;
+  border-bottom: 1px solid #c3c2b7;
+}
+
+.reveal table.dataframe tbody th {
+  color: #52514e;
+  text-align: left;
+}
+
+// ---------- maths on slides (Session 4 onwards) ----------
+// MathJax renders at body size, which is far too large for a 720px slide.
+
+.reveal .math.display {
+  font-size: 0.82em;
+  margin: 0.45em 0;
+}
+
+.reveal .math.inline {
+  font-size: 0.95em;
+}
+
+// a single equation given its own band, the way a key point gets one
+.formula {
+  background: #f4f7fb;
+  border: 1px solid #dde6f2;
+  border-radius: 8px;
+  padding: 0.15em 1em 0.3em;
+  margin: 0.5em 0;
+  text-align: center;
+}
+
+.formula .math.display {
+  margin: 0.35em 0;
+}
+
+.formula-note {
+  text-align: center;
+  color: #898781;
+  font-size: 0.62em;
+  margin: 0.1em 0 0.5em;
+}
+
+// the three colours used to name the parts of an equation, matching the
+// figures: blue = the thing you control, amber = the thing you cannot,
+// brick = the error itself
+.t-blue { color: #1c5cab; font-weight: 600; }
+.t-amber { color: #a8790b; font-weight: 600; }
+.t-brick { color: #b3402f; font-weight: 600; }
+
+// ---------- two-column comparison (Session 4) ----------
+// Neutral sibling of .dodont: two ideas side by side, neither one wrong.
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 0.6em;
+}
+
+.compare-col {
+  border: 1px solid #e6e5df;
+  // border-top: 3px solid #86b6ef;
+  border-top: 5px solid #002546;
+  border-radius: 8px;
+  padding: 0.6em 0.9em;
+  font-size: 0.72em;
+  background: #ffffff;
+}
+
+.compare-col.cmp-alt {
+  // border-top-color: #d99a1c;
+  // border-top-color: #002546;
+  border-top-color: #86b6ef;
+}
+
+// .compare-col h3 {
+//   font-size: 0.92em;
+//   // color: #0d366b;
+//   // color: #86b6ef;
+//   color: #002546;
+//   margin-bottom: 0.3em;
+// }
+
+// .compare-col.cmp-alt h3 {
+//   // color: #a8790b;
+//   // color: #002546;
+//   color: #86b6ef;
+// }
+
+.compare-col h3,
+.compare-col .cmp-title {
+  font-size: 0.92em;
+  font-weight: 650;
+  // color: #002546;
+  color: #86b6ef;
+  margin-bottom: 0.3em;
+}
+
+.compare-col.cmp-alt h3,
+.compare-col.cmp-alt .cmp-title {
+  color: #86b6ef;
+}
+
+.compare-col ul {
+  margin-left: 0.9em;
+  margin-bottom: 0;
+}
+
+.compare-col li {
+  margin-bottom: 0.25em;
+  line-height: 1.45;
+}
+
+// ---------- a row of computed numbers (Session 4) ----------
+// Sibling of .exam-facts, in the deck's blue rather than amber, and it takes
+// any number of columns.
+
+.statband {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0.6em 0;
+}
+
+.stat {
+  border: 1px solid #e6e5df;
+  border-top: 4px solid #1c5cab;
+  border-radius: 8px;
+  padding: 0.55em 0.6em;
+  text-align: center;
+}
+
+.stat.stat-warn {
+  border-top-color: #b3402f;
+}
+
+.stat .stat-big {
+  font-size: 1.05em;
+  font-weight: 700;
+  color: #0d366b;
+  display: block;
+  font-family: $font-family-monospace;
+}
+
+.stat.stat-warn .stat-big {
+  color: #b3402f;
+}
+
+.stat .stat-label {
+  font-size: 0.6em;
+  color: #52514e;
+  margin-top: 0.15em;
+  line-height: 1.35;
+}
+
+// ---------- vocabulary table (Session 4) ----------
+// The same object has a different name in econometrics, statistics and ML.
+
+.reveal table.vocab {
+  font-size: 0.62em;
+  margin: 0.5em auto;
+}
+
+.reveal table.vocab td:first-child {
+  color: #0d366b;
+  font-weight: 600;
+}
+
+// ---------- cross-validation fold grid (Session 5) ----------
+// One row per fold, revealed a fragment at a time, so the class watches each
+// fold take its turn as the validation block and sees the scores accumulate.
+
+.foldgrid {
+  margin: 0.7em auto 0.3em;
+  max-width: 1060px;
+}
+
+.foldgrid .fg-head,
+.foldgrid .fg-row,
+.foldgrid .fg-total {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.foldgrid .fg-lab {
+  flex: 0 0 5.4em;
+  text-align: right;
+  font-size: 0.58em;
+  color: #52514e;
+  font-weight: 600;
+}
+
+.foldgrid .fg-cell {
+  flex: 1 1 0;
+  height: 40px;
+  border-radius: 5px;
+  background: #eef4fc;
+  border: 1px solid #c7d8ee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.5em;
+  color: #1c5cab;
+  font-family: $font-family-sans-serif;
+}
+
+.foldgrid .fg-cell.fg-val {
+  background: #fbf3de;
+  border-color: #d99a1c;
+  color: #8a6508;
+  font-weight: 700;
+}
+
+// blocks a fold does not use at all: present, so the columns stay aligned,
+// but visually absent
+.foldgrid .fg-cell.fg-empty {
+  background: transparent;
+  border: 1px dashed #e6e5df;
+}
+
+.foldgrid .fg-cell.fg-ghost {
+  background: transparent;
+  border: none;
+  height: 22px;
+  color: #898781;
+  font-size: 0.46em;
+}
+
+.foldgrid .fg-score {
+  flex: 0 0 4.6em;
+  text-align: right;
+  font-size: 0.56em;
+  font-family: $font-family-monospace;
+  color: #0d366b;
+}
+
+.foldgrid .fg-total {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #e6e5df;
+}
+
+.foldgrid .fg-avg {
+  flex: 1 1 auto;
+  font-size: 0.62em;
+  color: #52514e;
+}
+
+.foldgrid .fg-avg strong {
+  color: #0d366b;
+  font-family: $font-family-monospace;
+}
+
+.reveal .exercise-cell .exercise-result pre {
+  white-space: pre-wrap;
+}
+/* ==========================================================================
+   Four Libraries Card Grid Styling
+   ========================================================================== */
+
+/* 1. Grid layout for the card container */
+.reveal .cards {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 1.2rem !important;
+  margin-top: 1.5rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* 2. Individual card box styling */
+.reveal .cards .card-box {
+  background: #ffffff !important;
+  border: 1px solid #dcdcdc !important;
+  border-left: 6px solid #003d73 !important;
+  border-radius: 8px !important;
+  padding: 1.2rem 1.5rem !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* 3. Title styling [.t] */
+.reveal .cards .card-box .t {
+  display: block !important;
+  font-weight: bold !important;
+  font-size: 1.3em !important;
+  color: #003d73 !important;
+  margin-bottom: 0.3rem !important;
+}
+
+/* 4. Description styling [.d] */
+.reveal .cards .card-box .d {
+  display: block !important;
+  font-size: 0.9em !important;
+  color: #52514e !important;
+}
+
+// ---------- lecture overview (today's agenda) ----------
+// Parent grid owns the columns; each .ov-row uses subgrid so all label
+// boxes share the same width (determined by the widest label).
+
+// .overview {
+//   display: flex;
+//   flex-direction: column;
+//   gap: 6px;
+//   margin-top: 0.65em;
+// }
+
+// .overview {
+//   display: grid;
+//   grid-template-columns: repeat(5, 1fr);
+//   gap: 12px;
+//   margin-top: 0.8em;
+// }
+
+// .ov-row {
+//   border: 1px solid #e6e5df;
+//   border-top: 4px solid #1c5cab;
+//   border-radius: 8px;
+//   padding: 0.65em 0.75em 0.75em;
+//   background: #ffffff;
+// }
+
+// .ov-label {
+//   font-weight: 700;
+//   color: #0d366b;
+//   font-size: 0.72em;
+//   margin-bottom: 0.25em;
+// }
+
+// .ov-desc {
+//   font-size: 0.57em;
+//   color: #52514e;
+//   line-height: 1.4;
+// }
+
+.overview {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 0.65em;
+}
+
+.ov-row {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em 0.9em 0.55em;
+  border-radius: 8px;
+  border: 1px solid #e6e5df;
+  border-left: 5px solid #1c5cab;
+  background: #ffffff;
+  font-size: 0.68em;
+}
+
+.ov-label {
+  font-weight: 700;
+  color: #0d366b;
+  margin-bottom: 0.1em;
+}
+
+.ov-desc {
+  color: #52514e;
+  font-size: 0.9em;
+}
+
+.overview:has(.ov-row-inline) {
+  gap: 12px;
+}
+
+.ov-label p, .ov-desc p {
+  margin: 2pt;
+}
+
+.ov-row-inline {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 0.5em 0.9em 0.55em;
+  border-radius: 8px;
+  border: 1px solid #e6e5df;
+  border-left: 5px solid #1c5cab;
+  background: #ffffff;
+  font-size: 0.68em;
+}
+
+.ov-row-inline .ov-label {
+  font-weight: 700;
+  color: #0d366b;
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+
+// ---------- numbered step list (workflow) ----------
+// Light card, full border-radius, flex so titles never wrap.
+
+.steplist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 0.6em;
+}
+
+.step-row {
+  display: flex;
+  gap: 14px;
+  padding: 0.45em 0.9em;
+  border-radius: 7px;
+  border: 1px solid #edece7;
+  background: #ffffff;
+  font-size: 0.68em;
+  align-items: baseline;
+}
+
+.step-num {
+  flex: 0 0 auto;
+  font-weight: 700;
+  color: #1c5cab;
+  min-width: 1.2em;
+}
+
+.step-title {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  font-weight: 700;
+  color: #0d366b;
+  min-width: 8em;
+}
+
+.step-desc {
+  flex: 1;
+  color: #52514e;
+}
+
+.slide-menu-button a,
+.slide-menu-button a *,
+.slide-menu-button span,
+.slide-menu-button i,
+i.fas.fa-bars {
+  color: #002546 !important;
+}
+
+.reveal iframe {
+  background: white;
+}
+
+// ---------- 1. Interactive CodeMirror editor ----------
+
+.reveal .cm-editor {
+  // Numbers (4, 7, 2)
+  .cm-number,
+  span[class*="tok-number"] {
+    color: #5e81ac !important;
+  }
+
+  // Commas specifically
+  .cm-punctuation,
+  .cm-delimiter,
+  .cm-separator,
+  span[class*="tok-punctuation"],
+  span[class*="tok-separator"],
+  span[class*="tok-operator"] {
+    color: #44475a !important;
+  }
+
+  // Strings
+  .cm-string,
+  span[class*="tok-string"] {
+    color: #f07171 !important;
+  }
+
+  // Booleans / Keywords / Constants (e.g. False, True, None)
+  .cm-bool,
+  .cm-atom,
+  .cm-keyword,
+  span[class*="tok-bool"],
+  span[class*="tok-atom"],
+  span[class*="tok-keyword"] {
+    color: #5e81ac !important;
+  }
+
+  // Functions, built-ins, and method calls (e.g. subplots, range, hist, show)
+  // .cm-variableName,
+  // .cm-function,
+  // .cm-builtin,
+  // .cm-property,
+  // span[class*="tok-variableName"],
+  // span[class*="tok-function"],
+  // span[class*="tok-builtin"],
+  // span[class*="tok-propertyName"] {
+  //   color: #1c5cab !important; // Replace with your preferred colour
+  // }
+  // Functions, built-in calls, and method properties (e.g. range, subplots, hist, show)
+  .cm-function,
+  .cm-builtin,
+  .cm-property,
+  span[class*="tok-function"],
+  span[class*="tok-builtin"],
+  span[class*="tok-propertyName"] {
+    color: #8EBA99 !important; // Function colour
+  }
+
+  // Plain variable names (e.g. fig, ax, df, y)
+  .cm-variableName,
+  span[class*="tok-variableName"] {
+    // color: #26333f !important; // Variable colour (e.g. dark text neutral)
+    color: #1c5cab !important; // Variable colour (e.g. dark text neutral)
+  }
+}
+
+// ---------- 2. Static syntax-highlighted code blocks (.sourceCode) ----------
+
+.reveal div.sourceCode {
+  // Numbers in static blocks (e.g. 0.8)
+  span.fl, // Float
+  span.dv, // Decimal Value
+  span.bn, // Binary/Hex Number
+  span.cn { // Constant
+    color: #5e81ac !important;
+  }
+
+  // Strings in static blocks
+  span.st {
+    color: #f07171 !important;
+  }
+
+  // Functions and built-in functions in static blocks
+  // span.fu, // Function
+  // span.bu { // Built-in function
+  //   color: #5e81ac !important;
+  // }
+  span.fu, // Function
+  span.bu { // Built-in function
+    color: #8EBA99 !important;
+  }
+
+  // Plain variable names in static blocks
+  span.va { // Variable name
+    color: #1c5cab !important;
+  }
+}
