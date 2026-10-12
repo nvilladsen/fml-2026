@@ -5,7 +5,7 @@ author: "Natasia Villadsen"
 date: "November 4, 2026"
 format:
   live-revealjs:
-    theme: [default, custom5.scss]
+    theme: [default, custom6.scss]
     transition: none
     # code-overflow: wrap
     transition-speed: fast
@@ -82,14 +82,78 @@ pyodide:
 </script>
 ```
 
+## Today
+
+:::: {.overview}
+::: {.ov-row-inline}
+::: {.ov-label}
+Brains and history
+:::
+::: {.ov-desc}
+From McCulloch and Pitts to the renaissance of neural networks
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Anatomy of a network
+:::
+::: {.ov-desc}
+Layers, activations, and the forecast
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Training
+:::
+::: {.ov-desc}
+Objective, optimization, backpropagation, initialization
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Regularization
+:::
+::: {.ov-desc}
+Dropout, penalties, and early stopping
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Implementation
+:::
+::: {.ov-desc}
+The PyTorch pipeline
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Beyond feed-forward neural networks
+:::
+::: {.ov-desc}
+CNNs, LSTMs, and Transformers
+:::
+:::
+::::
+
 ## Why PyTorch? 
 
 **PyTorch** is the deep learning framework of this course
 
-- 85% of deep learning research papers use PyTorch
-- 228,000 pre-trained models on HuggingFace (vs. 15,000 for TensorFlow)
-- 55% of new production deployments as of 2025 (not limited to research)
-- Most in-demand deep learning framework in industry 
+:::: {.statband}
+::: {.stat}
+[85%]{.stat-big}
+[of deep learning research papers use PyTorch]{.stat-label}
+:::
+::: {.stat}
+[228,000 vs. 15,000]{.stat-big}
+[pre-trained models on HuggingFace (PyTorch vs. TensorFlow)]{.stat-label}
+:::
+::: {.stat}
+[55%]{.stat-big}
+[of new production deployments as of 2025 (not limited to research)]{.stat-label}
+:::
+::::
+
 - **Tutorials**
 
 ::: {.keypoint}
@@ -100,154 +164,277 @@ PyTorch is the framework of instruction, but you are free to use TensorFlow
 
 ## A Neural Network of the Brain of a Mouse I
 
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Extract from 1mm² of Mouse Brain</p>
-<img src="BioNN5.jpg.svg" style="max-height: 450px; max-width: 75%; width: auto;">
-<p style="font-size: 0.42em; color: #898781; margin-top: 0.4em; text-align: center;">Source: MICrONS Explorer Render, Daniel Berger & MICrONS Explorer Consortium Team. Google Research and Harvard University.</p>
+<div class="figblock fb-brain fb-w75">
+<p class="fig-title">Extract from 1mm² of Mouse Brain</p>
+<img src="BioNN5.jpg.svg">
+<p class="fig-src">Source: MICrONS Explorer Render, Daniel Berger & MICrONS Explorer Consortium Team. Google Research and Harvard University.</p>
 </div>
 
 ## A Neural Network of the Brain of a Mouse II
 
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Extract from 1mm² of Mouse Brain — Closer Look</p>
-<img src="BioNN6.svg" style="max-height: 450px; max-width: 100%; width: auto;">
-<p style="font-size: 0.42em; color: #898781; margin-top: 0.4em; text-align: center;">Source: MICrONS Explorer Render, Daniel Berger & MICrONS Explorer Consortium Team. Google Research and Harvard University.</p>
+<div class="figblock fb-brain">
+<p class="fig-title">Extract from 1mm² of Mouse Brain — Closer Look</p>
+<img src="BioNN6.svg">
+<p class="fig-src">Source: MICrONS Explorer Render, Daniel Berger & MICrONS Explorer Consortium Team. Google Research and Harvard University.</p>
 </div>
 
 ## A Neural Network of the Brain of a Mouse III
 
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Extract from 1mm² of Mouse Brain — Even Closer Look</p>
-<img src="BioNN8.svg" style="max-height: 450px; max-width: 100%; width: auto;">
-<p style="font-size: 0.42em; color: #898781; margin-top: 0.4em; text-align: center;">Source: MICrONS Explorer Render, Daniel Berger & MICrONS Explorer Consortium Team. Google Research and Harvard University.</p>
+<div class="figblock fb-brain">
+<p class="fig-title">Extract from 1mm² of Mouse Brain — Even Closer Look</p>
+<img src="BioNN8.svg">
+<p class="fig-src">Source: MICrONS Explorer Render, Daniel Berger & MICrONS Explorer Consortium Team. Google Research and Harvard University.</p>
 </div>
 
-## McCulloch & Pitts (1943) I
+## McCulloch & Pitts (1943)
 
+:::: {.columns}
+::: {.column width="46%"}
 - Bedrock of contemporary deep learning
 - Conceived analogue between brain and computer/artificial neural network
-    1. Biological neural network $\to$ artificial neural network
-    2. Thinking $\to$ computing
-    3. Neurons $\to$ mathematical objects
-- From abstract of seminal 1943 paper:
-
-::: {style="font-size: 0.78em;"}
-> "Because of the 'all-or-none' character of nervous activity, neural events and the relations among them can be treated by means of propositional logic. It is found that the behaviour of every net can be described in these terms...; and that for any logical expression satisfying certain conditions, one can find a net behaving in the fashion it describes."
+:::
+::: {.column width="54%"}
+::: {.vocab-wrap}
+| Biology | | Computation |
+|:--------------------------|:-:|:-----------------------|
+| Biological neural network | $\Leftrightarrow$ | Artificial neural network |
+| Thinking | $\Leftrightarrow$ | Computing |
+| Neurons | $\Leftrightarrow$ | Mathematical objects |
 :::
 
-- "...one can find a net behaving in the fashion it describes.": Universal Approximation Theorem, e.g., Hornik et al. (1989)
+::: {.faint .small}
+**"...each having a soma and an axon."** 
+:::
+:::
+::::
 
-## McCulloch & Pitts (1943) II
+From introduction of seminal 1943 paper:
 
-::: {style="font-size: 0.82em;"}
+::: {.quote-sm style="font-size: 1.2em;"}
 > "The nervous system is a net of neurons, each having a soma and an axon. Their adjunctions, or synapses, are always between the axon of one neuron and the soma of another. At any instant a neuron has some threshold, which excitation must exceed to initiate an impulse."
 :::
 
-- "...each having a soma and an axon.": Simplified --- today neurons are considered more complex
-
 ## Rosenblatt (1958)
 
-- Operationalised McCulloch & Pitts' networks
-    1. Synapses (connections between biological neurons) $\to$ trainable weights in artificial network
-    2. Human learning $\to$ changing/updating weight matrices and biases
+Operationalised McCulloch & Pitts' networks
+
+::: {.vocab-wrap}
+| Biology | | Artificial network |
+|:-------------------------------------------------|:-:|:-----------------------------------------|
+| Synapses (connections between biological neurons) | $\Leftrightarrow$ | Trainable weights |
+| Human learning | $\Leftrightarrow$ | Changing/updating weights and biases |
+:::
 
 ## A Neuron I
 
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">A Biological Neuron</p>
-<img src="neuron_transparent-_1_.svg" style="max-height: 490px; max-width: 85%; width: auto;">
+<div class="figblock fb-w85">
+<p class="fig-title">A Biological Neuron</p>
+<img src="neuron_transparent-_1_.svg">
 </div>
 
 ## A Neuron II
 
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Artificial Analogue to Neuron</p>
-<img src="NNSomaAxon.svg" style="max-height: 490px; max-width: 100%; width: auto;">
+<div class="figblock">
+<p class="fig-title">Artificial Analogue to Neuron</p>
+<img src="NNSomaAxon.svg">
 </div>
 
 # When Neural Networks Almost Died {.divider}
 
 ## The Crisis of Neural Networks
 
-- Deep learning models are most favorable at scale
-- Lack of necessary computing power and suitable hardware (GPUs)
-- Overfitting, fragility, and vanishing gradients
-- Lack of theoretical support
-  - Minsky & Papert (1969) showed that single-layer perceptrons cannot learn simply non-linear functions (e.g., XOR)
-
+:::: {.cards .cards-sm}
+::: {.card-box}
+[Scale]{.t}
+[Deep learning models are most favorable at scale]{.d}
+:::
+::: {.card-box}
+[Hardware]{.t}
+[Lack of necessary computing power and suitable hardware (GPUs)]{.d}
+:::
+::: {.card-box}
+[Training]{.t}
+[Overfitting, fragility, and vanishing gradients]{.d}
+:::
+::: {.card-box}
+[Theory]{.t}
+[Lack of theoretical support]{.d}
+:::
+::::
 
 ## The Renaissance of Neural Networks
 
-- Backpropagation algorithm (Rumelhart et al., 1986) widely adopted
-- LeCun et al. (1998) developed convolutional neural networks (CNNs) for image recognition
-- Hochreiter & Schmidhuber (1997) developed long short-term memory (LSTM) networks for sequential data
-- Moore's Law held for many years
-- Next challenge: Physical limits of silicon-based chips reached. Possible solution: quantum computing 
+Computation
+
+:::: {.triad}
+::: {.triad-card}
+[Computational power]{.tc-title}
+
+Moore's Law, GPUs
+:::
+::: {.triad-card}
+[Algorithms]{.tc-title}
+
+E.g., ReLU, dropout, Adam
+:::
+::: {.triad-card}
+[Backpropagation]{.tc-title}
+
+Efficient gradient computation for deep networks
+:::
+::::
+
+Modeling
+
+:::: {.triad}
+::: {.triad-card}
+[Pre-trained models]{.tc-title}
+
+Including custom tuning
+:::
+::: {.triad-card}
+[Frameworks]{.tc-title}
+
+PyTorch, TensorFlow, and similar
+:::
+::: {.triad-card}
+[Big data]{.tc-title}
+
+Large datasets
+:::
+::::
+
+::: {.keypoint}
+Next challenge: Physical limits of silicon-based chips reached. 
+
+  Possible solution: quantum computing
+:::
+
 
 ## Moore's Law
 
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Moore's Law</p>
-<img src="moores_law_transparent.svg" style="max-height: 490px; max-width: 100%; width: auto;">
-<p style="font-size: 0.42em; color: #898781; margin-top: 0.4em; text-align: center;">Source: M. Horowitz, F. Labonte, O. Shacham, K. Olukotun, L. Hammond, and C. Batten; Karl Rupp, &amp; Danial Chitnis, Creative Commons Attribution 4.0 International license.</p>
+<div class="figblock">
+<p class="fig-title">Moore's Law</p>
+<img src="moores_law_transparent.svg">
+<p class="fig-src">Source: M. Horowitz, F. Labonte, O. Shacham, K. Olukotun, L. Hammond, and C. Batten; Karl Rupp, &amp; Danial Chitnis, Creative Commons Attribution 4.0 International license.</p>
 </div>
-
 
 # Neural Networks {.divider}
 
 ## A Neural Network
 
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;"></p>
-<img src="NNv1.svg" style="max-height: 490px; max-width: 100%; width: auto;">
+<div class="figblock">
+<p class="fig-title"></p>
+<img src="NNv1.svg">
 </div>
 
-## Construction
-- The neural network has three types of layers, i) input, ii) hidden, and iii) output, $h = 0, \ldots, H+1$ 
-- There are $K_h$ **neurons** in each layer $h$, with **activations** $A_k^{(h)}$. 
-- For the **input** layer ($h = 0$), the neurons are the input features,
+## The Layers of a Neural Network
 
-$$ \mathbf{X} = (X_1, X_2, \ldots, X_p), \qquad A_j^{(0)} = X_j, \quad j = 1,\ldots,p$$
+Layers are indexed by $h$, $h = 0, \ldots, H+1$. There are $K_h$ **neurons** in each layer $h$, with **activations** $A_k^{(h)}$.
 
-- The essential computations occur in the **hidden** layers ($h = 1,...,H$), with activations $A_k^{(h)}$, weights $\omega_{kj}^{(h)}$, and activation functions $g_h$,
+:::: {.triad}
+::: {.triad-card}
+[One input layer]{.tc-tag}
 
-$$A_k^{(h)} = g_h\left(\omega_{k0}^{(h)}+\sum_{j=1}^{K_{h-1}}\omega_{kj}^{(h)}A_j^{(h-1)}\right), \qquad k = 1,...,K_h, \quad A_0^{(h)} = 1$$ 
+[$h = 0$]{.tc-title}
+
+The neurons are the $p$ input features, $\mathbf{X} = (X_1, X_2, \ldots, X_p)$
+
+$A_j^{(0)} = X_j$, $\quad j = 1,\ldots,p$
+:::
+::: {.triad-card .tc-light}
+[$H$ hidden layers]{.tc-tag}
+
+[$h = 1, \ldots, H$]{.tc-title}
+
+Essential computations here
+:::
+::: {.triad-card .tc-amber}
+[One output layer]{.tc-tag}
+
+[$h = H+1$]{.tc-title}
+
+Produces the forecast
+:::
+::::
+
+## The Hidden Layers
+
+The essential computations occur in the **hidden** layers ($h = 1,...,H$), with activations $A_k^{(h)}$, weights $\omega_{kj}^{(h)}$, biases $\omega_{k0}^{(h)}$, and activation functions $g_h$,
+
+$$A_k^{(h)} = g_h\left(\omega_{k0}^{(h)}+\sum_{j=1}^{K_{h-1}}\omega_{kj}^{(h)}A_j^{(h-1)}\right), \qquad k = 1,...,K_h$$
+
+:::: {.triad .cols-2}
+::: {.triad-card}
+[Weighted sum]{.tc-tag}
+
+Weights times the activations of the previous layer
+:::
+::: {.triad-card .tc-light}
+[Activation function]{.tc-tag}
+
+$g_h$ introduces non-linearity to layer $h$
+:::
+::::
+
+## The First Hidden Layer
+
+The first hidden layer is a special case, with $K_0 = p$ and $A_j^{(0)} = X_j$,
+
+$$A_k^{(1)} = g_1\left(\omega_{k0}^{(1)}+\sum_{j=1}^{p}\omega_{kj}^{(1)}X_j\right), \qquad k = 1,...,K_1$$
 
 ## Forecasts
-- In the regression task, the **output** layer ($h = H+1$) produces forecasts, with weights $\beta_k$ and intercept $\beta_0$,
+In the regression task, the **output** layer ($h = H+1$) produces forecasts, with weights $\beta_k$ and intercept $\beta_0$,
 $$f(\mathbf{X}) = \beta_0 + \sum_{k = 1}^{K_H}\beta_k A_k^{(H)}$$
 
-- Evaluating in the activations of the last hidden layer, 
+Evaluating in the activations of the last hidden layer, 
 
 $$f(\mathbf{X}) = \beta_0 + \sum_{k = 1}^{K_H}\beta_k\, g_H\left(\omega_{k0}^{(H)}+\sum_{j=1}^{K_{H-1}}\omega_{kj}^{(H)}A_j^{(H-1)}\right)$$
 
 ## Similarity to Neurons Revisited
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Artificial Analogue to Neuron</p>
-<img src="NNSomaAxon.svg" style="max-height: 490px; max-width: 100%; width: auto;">
+<div class="figblock">
+<p class="fig-title">Artificial Analogue to Neuron</p>
+<img src="NNSomaAxon.svg">
 </div>
 
-## Non-Linear Activation Functions I 
-- Essential component of neural networks
-- Introduces non-linearity to the model, allowing it to learn complex patterns
-- ReLU (Rectified Linear Unit) most dominant today,
+## Non-Linear Activation Functions
 
-$$ f: \mathbb{R} \to [0, \infty), \quad f(x) = \max\{0, x\} $$
+Essential component of neural networks: Introduces non-linearity to the model, allowing it to learn complex patterns
 
-- tanh (hyperbolic tangent),
+::: {.act-table}
+| Function | Map | Definition |
+|:----------------------------|:-------------------------:|:--------------------------:|
+| **ReLU** (Rectified Linear Unit)<br>[most dominant today]{.small} | $f: \mathbb{R} \to [0, \infty)$ | $f(x) = \max\{0, x\}$ |
+| **tanh** (hyperbolic tangent) | $\text{tanh}: \mathbb{R} \to [-1, 1]$ | $\text{tanh}(x) = \dfrac{e^x - e^{-x}}{e^x + e^{-x}}$ |
+| **sigmoid** | $\sigma: \mathbb{R} \to [0, 1]$ | $\sigma(x) = \dfrac{1}{1 + e^{-x}}$ |
+:::
 
-$$ \text{tanh}: \mathbb{R} \to [-1, 1], \quad \text{tanh}(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} $$
+[Sigmoid was the first activation function]{.flow-label .fl-lg}
 
-- sigmoid,
+:::: {.triad .cols-2 .strip}
+::: {.triad-card}
+$\sigma(x) = 0$: the neuron does not fire
+:::
+::: {.triad-card}
+$\sigma(x) = 1$: the neuron fires $\Rightarrow$ the neuron contributes to the output of the network
+:::
+::::
+## Activation Functions and Their Derivatives
 
-$$ \sigma: \mathbb{R} \to [0, 1], \quad \sigma(x) = \frac{1}{1 + e^{-x}} $$
+<div class="figblock fb-s400">
+<img src="activations_deriv.svg">
+<p class="fig-src">ReLU: \(g'(x) = 0\) for \(x &lt; 0\), \(g'(x) = 1\) for \(x &gt; 0\). tanh: \(g'(x) = 1 - \tanh^2(x)\). sigmoid: \(g'(x) = \sigma(x)(1 - \sigma(x))\).</p>
+</div>
 
-## Non-Linear Activation Functions II
-- Sigmoid was the first activation function
-- $\sigma(x) = 0$ means the neuron does not fire, $\sigma(x) = 1$ means the neuron fires
-- Neuron firing $\Rightarrow$ neuron contributes to the output of the network
+::: {.keypoint}
+The derivative $g'$ enters every backpropagation step.
 
-- Specifying the activation function in the forward pass (alternatives: `torch.tanh`, `torch.sigmoid`),
+Note: the sigmoid derivative is maximized at $x = 0 \to \sigma'(x) = 0.25$ - risk of vanishing gradients
+:::
+
+## Specifying the Activation Function
+
+Specifying the activation function in the forward pass,
 
 ```{pyodide}
 #| autorun: false
@@ -260,21 +447,91 @@ x = F.relu(self.fc1(x))
 # alternatives: torch.tanh(self.fc1(x)), torch.sigmoid(self.fc1(x))
 ```
 
-## The ReLU Visualized
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">ReLU Activation Function</p>
-<!-- <img src="relu.svg" style="max-height: 490px; max-width: 100%; width: auto;"> -->
-<img src="relu_transparent.svg" style="max-height: 415px; max-width: 100%; width: auto;">
-</div>
+Alternatives: `torch.tanh(self.fc1(x))`, `torch.sigmoid(self.fc1(x))`
 
-## The tanh and sigmoid Activation Functions Visualized
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">tanh and sigmoid Activation Functions</p>
-<img src="tanh_sigmoid_transparent.svg" style="max-height: 490px; max-width: 100%; width: auto;">
-</div>
+## The Blueprint
+:::: {.steplist}
+::: {.step-row}
+::: {.step-num}
+1
+:::
+::: {.step-title}
+Data
+:::
+::: {.step-desc}
+Target variable and predictors
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+2
+:::
+::: {.step-title}
+Split and scale
+:::
+::: {.step-desc}
+Chronological training, validation and test split, standardization fitted on the training sample only
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+3
+:::
+::: {.step-title}
+DataLoaders
+:::
+::: {.step-desc}
+Tensors in mini-batches
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+4
+:::
+::: {.step-title}
+Model
+:::
+::: {.step-desc}
+An `nn.Module` defining the architecture
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+5
+:::
+::: {.step-title}
+Ingredients
+:::
+::: {.step-desc}
+Objective, optimizer, initialization, regularization, early stopping, loss
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+6
+:::
+::: {.step-title}
+Training loop
+:::
+::: {.step-desc}
+Training and validation over epochs
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+7
+:::
+::: {.step-title}
+Evaluation
+:::
+::: {.step-desc}
+Out-of-sample accuracy measures on the test sample
+:::
+:::
+::::
 
 ## Preliminaries
-- We consider a general blueprint for forecasting with neural networks and a specific example of forecasting US quarterly inflation with a feedforward neural network
+We consider a general blueprint for forecasting with neural networks and a specific example of forecasting US quarterly inflation with a feedforward neural network
 
 ```{pyodide}
 #| autorun: false
@@ -293,8 +550,8 @@ from torch.utils.data import TensorDataset, DataLoader
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 ```
 
-## Empirical Data 
-- US quarterly macro data 1959Q1-2009Q3 (no missing values)
+## Empirical Data
+US quarterly macro data 1959Q1-2009Q3 (no missing values)
 
 ```{pyodide}
 #| autorun: false
@@ -303,14 +560,33 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 df = pd.read_csv("macrodata.csv").iloc[1:]
 series = df[["infl", "unemp", "tbilrate"]].to_numpy()   # (T, 3)
 infl = series[:, 0]
+```
 
-# Features at time t (inflation, unemployment, T-bill rate), target is inflation at time t+1
+Lagged features: inflation, unemployment and the T-bill rate at time $t$ are used to predict inflation at time $t+1$
+
+```{pyodide}
+#| autorun: false
+#| runbutton: false
+#| startover: false
 X = series[:-1]
 target = infl[1:].reshape(-1, 1)
 ```
 
-## Data Splitting and Standardization
-- Chronological split (shuffle=False) to preserve temporal order (split: 70:15:15)
+## Temporally Conscious Data Splitting
+
+Chronological split (shuffle=False) to preserve temporal order (split: 70:15:15)
+
+:::: {.splitbar}
+::: {.sb-train style="flex: 70"}
+Train (70%)
+:::
+::: {.sb-val style="flex: 15"}
+Validation (15%)
+:::
+::: {.sb-test style="flex: 15"}
+Test (15%)
+:::
+::::
 
 ```{pyodide}
 #| autorun: false
@@ -318,7 +594,14 @@ target = infl[1:].reshape(-1, 1)
 #| startover: false
 X_train, X_tmp, y_train, y_tmp = train_test_split(X, target, test_size=0.3, shuffle=False)
 X_val, X_test, y_val, y_test = train_test_split(X_tmp, y_tmp, test_size=0.5, shuffle=False)
+```
 
+## Standardization
+
+```{pyodide}
+#| autorun: false
+#| runbutton: false
+#| startover: false
 # Standardization, fitting on the training sample only
 X_scaler = StandardScaler()
 y_scaler = StandardScaler()
@@ -332,9 +615,24 @@ y_val = y_scaler.transform(y_val)
 y_test = y_scaler.transform(y_test)
 ```
 
-## Constructing DataLoaders
-- The input data is converted to the format that PyTorch expects
-- This is incredibly efficient for large or specialized datasets 
+## Tensors
+
+:::: {.flow}
+::: {.fn-navy}
+NumPy array
+:::
+::: {.fn}
+`torch.Tensor`
+:::
+::: {.fn}
+`TensorDataset`
+:::
+::: {.fn}
+`DataLoader`
+:::
+::::
+
+The input data is converted to the format that PyTorch expects
 
 ```{pyodide}
 #| autorun: false
@@ -346,7 +644,16 @@ X_test = torch.from_numpy(X_test).float().to(device)
 y_train = torch.from_numpy(y_train).float().to(device)
 y_val = torch.from_numpy(y_val).float().to(device)
 y_test = torch.from_numpy(y_test).float().to(device)
+```
 
+## Constructing DataLoaders
+
+This is incredibly efficient for large or specialized datasets
+
+```{pyodide}
+#| autorun: false
+#| runbutton: false
+#| startover: false
 dfTrain = TensorDataset(X_train, y_train)
 dfVal = TensorDataset(X_val, y_val)
 dfTest = TensorDataset(X_test, y_test)
@@ -357,10 +664,32 @@ lTest = DataLoader(dfTest, batch_size = 32, shuffle = False)
 ```
 
 ## The Simple Neural Network I
-- PyTorch neural networks are defined as subclasses of `nn.Module`
-- Parameters are passed after `self` (here `n_in` and `n_hidden`)
-- `n_in` is the number of input features, `n_hidden` is the number of neurons in the hidden layers
+
+PyTorch neural networks are defined as subclasses of `nn.Module`
+
+:::: {.flow}
+::: {.fn-navy}
+Input
+[`n_in` features]{.fn-sub}
+:::
+::: {.fn}
+`fc1` + ReLU
+[`n_hidden1` neurons]{.fn-sub}
+:::
+::: {.fn}
+`fc2` + ReLU
+[`n_hidden2` neurons]{.fn-sub}
+:::
+::: {.fn-amber}
+`fc3`
+[1 output]{.fn-sub}
+:::
+::::
+
+- Parameters are passed after `self` (here `n_in`, `n_hidden1` and `n_hidden2`)
+- `n_in` is the number of input features, `n_hidden1` and `n_hidden2` are the numbers of neurons in the first and second hidden layer
 - The network on the next slide has two hidden layers
+
 
 ## The Simple Neural Network II
 ```{pyodide}
@@ -368,11 +697,11 @@ lTest = DataLoader(dfTest, batch_size = 32, shuffle = False)
 #| runbutton: false
 #| startover: false
 class NN(nn.Module):
-    def __init__(self, n_in, n_hidden=16):
+    def __init__(self, n_in, n_hidden1=16, n_hidden2=8):
         super(NN, self).__init__()
-        self.fc1 = nn.Linear(n_in, n_hidden)
-        self.fc2 = nn.Linear(n_hidden, n_hidden)
-        self.fc3 = nn.Linear(n_hidden, 1)
+        self.fc1 = nn.Linear(n_in, n_hidden1)
+        self.fc2 = nn.Linear(n_hidden1, n_hidden2)
+        self.fc3 = nn.Linear(n_hidden2, 1)
 
     def forward(self, x):
         x = F.relu(self.fc1(x))
@@ -382,11 +711,12 @@ class NN(nn.Module):
         return x
 ```
 
+
 ## Training a Neural Network I 
 
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">xkcd \#1838</p>
-<img src="xkcd.svg" style="max-height: 490px; max-width: 100%; width: auto;">
+<div class="figblock">
+<p class="fig-title">xkcd \#1838</p>
+<img src="xkcd.svg">
 </div>
 
 ## Training a Neural Network II
@@ -394,27 +724,53 @@ class NN(nn.Module):
 
 $$f(\mathbf{X}) = \beta_0 + \sum_{k = 1}^{K_1} \beta_k A_k^{(1)} = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g_1\left(w_{k0}^{(1)}+\sum_{j=1}^p\omega_{kj}^{(1)}X_j \right)$$
 
-- The parameters to be estimated are $\beta_0, \beta_1, \ldots, \beta_{K_1}$ and $\omega_{kj}^{(1)}$ for $k = 1, \ldots, K_1$ and $j = 1, \ldots, p$
+The parameters to be estimated are
 
+:::: {.triad .cols-2}
+::: {.triad-card}
+[Output layer]{.tc-tag}
+
+$\boldsymbol{\beta} = \beta_0, \beta_1, \ldots, \beta_{K_1}$
+:::
+::: {.triad-card .tc-light}
+[Hidden layer]{.tc-tag}
+
+$\boldsymbol{\omega}^{(1)} = \omega_{kj}^{(1)}$ for $k = 1, \ldots, K_1$ and $j = 1, \ldots, p$
+:::
+::::
+
+Stack the parameters into a vector: $\theta = (\boldsymbol{\beta}, \boldsymbol{\omega}^{(1)})$
 
 ## Objective Function
 
-- We assume a squared loss function to estimate parameters $\theta = \left(\boldsymbol{\beta}, \{\omega_k^{(1)}\}_1^{K_1}\right)$
-- For a single-hidden-layer network ($H=1$), the model forecast for observation $i$ is:
+We assume a squared loss function to estimate parameters $\theta$
+
+For a single-hidden-layer network ($H=1$), the model forecast for observation $i$ is,
 
 $$ f_\theta(x_i) = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g\left(\omega_{k0}^{(1)}+\sum_{j=1}^p\omega_{kj}^{(1)}x_{ij} \right) $$
 
-- Vectorising the parameters into $\theta$, we minimize the objective function $R(\theta)$:
+Vectorising the parameters into $\theta$, we minimize the objective function $R(\theta)$:
 
-$$ \min_\theta \{R(\theta)\} = \min_\theta \left\{\frac12\sum_{i = 1}^n(y_i - f_\theta(x_i))^2\right\}, \quad R(\theta) = \frac12\sum_{i = 1}^n(y_i - f_\theta(x_i))^2 $$
+$$ \min_\theta \{R(\theta)\}, \quad R(\theta) = \frac12\sum_{i = 1}^n(y_i - f_\theta(x_i))^2 $$
 
 ## Numerical Optimization I
-- The optimization problem is non-convex and high-dimensional $\Rightarrow$ no closed form/no analytical solution 
-- We use numerical optimization
-- Gradient descent is a common numerical optimization algorithm
-- Too heavy computationally $\Rightarrow$ stochastic gradient descent (SGD) is used instead
-- Use only a small batch of data to compute the gradient and update the parameters at each iteration
 
+:::: {.flow}
+::: {.fn-navy}
+Non-convex and high-dimensional problem
+[no closed form, no analytical solution]{.fn-sub}
+:::
+::: {.fn}
+Numerical optimization
+[gradient descent is a common algorithm]{.fn-sub}
+:::
+::: {.fn-amber}
+Too heavy computationally
+[stochastic gradient descent (SGD) is used instead]{.fn-sub}
+:::
+::::
+
+SGD uses only a small batch of data to compute the gradient and update the parameters at each iteration
 
 ## Numerical Optimization II --- Gradient Descent
 - Given a differentiable function $f: \mathbb{R}^p\to \mathbb{R}$ to be minimized with respect to the vector $\mathbf{\theta}\in\mathbb{R}^p$ and step size $s$,
@@ -449,24 +805,70 @@ $$ \min_\theta \{R(\theta)\} = \min_\theta \left\{\frac12\sum_{i = 1}^n(y_i - f_
 
 ![](gd.webp){fig-align="center" width="60%"}
 
-## Backpropagation I 
+
+## Backpropagation I
+
+:::: {.triad .cols-2}
+::: {.triad-card .tc-brick}
+[The problem]{.tc-tag}
+
 - The numerical optimization, even in the SGD case, has incredibly high computational overhead
 - Weights require the chain rule to compute derivatives
-- Backpropagation eases the burden of this
+:::
+::: {.triad-card}
+[The solution]{.tc-tag}
 - Backpropagation is a recursive application of the chain rule to compute the gradient of the loss
+- Therefore, backpropagation eases the burden of computational costs
+
+:::
+::::
+
 
 ## Backpropagation II
-- Recall the objective,
+Recall the objective,
 
 $$ R(\theta) = \sum_{i = 1}^n R_i(\theta) = \frac12\sum_{i = 1}^n(y_i - f_\theta(x_i))^2$$
 
-- This is a sum, which means the gradient is a sum over the $n$ observations, so we consider only one of these,
+A sum, which means the gradient is a sum over the $n$ observations, so we need only consider one of these,
 
 $$R_i(\theta) = \frac12\left(y_i - \beta_0- \sum_{k = 1}^{K_1}\beta_k g_1\left(\omega_{k0}+\sum_{j = 1}^p\omega_{kj}x_{ij}\right)\right)^2$$
 
-## Backpropagation III
-- Define $z_{ik} = \omega_{k0} + \sum_{j = 1}^p\omega_{kj}x_{ij}$ 
-- Computing the derivative w.r.t. $\beta_k$,
+## Backpropagation III {.bp}
+
+Define $z_{ik} = \omega_{k0} + \sum_{j = 1}^p\omega_{kj}x_{ij}$
+
+The output weight $\beta_k$ enters the forecast directly: $f_\theta(x_i) = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g(z_{ik})$
+
+::: {.flow-label}
+Forward pass: compute the forecast and the loss
+:::
+
+:::: {.flow}
+::: {.fn}
+$\beta_k$
+:::
+::: {.fn}
+$f_\theta(x_i)$
+:::
+::: {.fn-navy}
+$R_i(\theta)$
+:::
+::::
+
+::: {.flow-label}
+Backward pass: multiply the derivatives (chain rule)
+:::
+
+:::: {.flow .back}
+::: {.fn}
+$\dfrac{\partial f_\theta(x_i)}{\partial \beta_k}$
+:::
+::: {.fn}
+$\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)}$
+:::
+::::
+
+Computing the derivative w.r.t. $\beta_k$,
 
 $$
 \begin{aligned}
@@ -474,8 +876,52 @@ $$
 \end{aligned}
 $$
 
-## Backpropagation IV
-- Computing the derivative w.r.t. $\omega_{kj}$,
+## Backpropagation IV {.bp}
+
+Define $z_{ik} = \omega_{k0} + \sum_{j = 1}^p\omega_{kj}x_{ij}$
+
+::: {.flow-label}
+Forward pass: compute the forecast and the loss
+:::
+
+:::: {.flow}
+::: {.fn}
+$x_{ij}$
+:::
+::: {.fn}
+$z_{ik}$
+:::
+::: {.fn}
+$g(z_{ik})$
+:::
+::: {.fn}
+$f_\theta(x_i)$
+:::
+::: {.fn-navy}
+$R_i(\theta)$
+:::
+::::
+
+::: {.flow-label}
+Backward pass: multiply the derivatives (chain rule)
+:::
+
+:::: {.flow .back}
+::: {.fn}
+$\dfrac{\partial z_{ik}}{\partial \omega_{kj}}$
+:::
+::: {.fn}
+$\dfrac{\partial g_1(z_{ik})}{\partial z_{ik}}$
+:::
+::: {.fn}
+$\dfrac{\partial f_\theta(x_i)}{\partial g(z_{ik})}$
+:::
+::: {.fn}
+$\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)}$
+:::
+::::
+
+Computing the derivative w.r.t. $\omega_{kj}$,
 
 $$
 \begin{aligned}
@@ -483,16 +929,67 @@ $$
 \end{aligned}
 $$
 
-- Both expressions contain $(y_i - f_\theta(x_i))$
+## Backpropagation V: Update Rules
+
+The two derivatives form the basis for the update rules, with step size $s$ and one observation $i$ per step
+
+:::: {.triad .cols-2 .big}
+::: {.triad-card}
+[Output weight]{.tc-tag}
+
+$$
+\begin{aligned}
+\beta_k^{(t + 1)} &= \beta_k^{(t)} - s\,\frac{\partial R_i}{\partial \beta_k} \\
+&= \beta_k^{(t)} + s\,(y_i - f_\theta(x_i))\,g(z_{ik})
+\end{aligned}
+$$
+:::
+::: {.triad-card}
+[Hidden weight]{.tc-tag}
+
+$$
+\begin{aligned}
+\omega_{kj}^{(t + 1)} &= \omega_{kj}^{(t)} - s\,\frac{\partial R_i}{\partial \omega_{kj}} \\
+&= \omega_{kj}^{(t)} + s\,(y_i - f_\theta(x_i))\,\beta_k\,g'(z_{ik})\,x_{ij}
+\end{aligned}
+$$
+:::
+::::
+
+- Both updates contain the forecast error $(y_i - f_\theta(x_i))$
 - This error term is attributed to the parameters via the terms $g(z_{ik})$ and $\beta_k g'(z_{ik}) x_{ij}$
-- Form basis for update rules,  $\beta_k^{(i + 1)} \leftarrow \beta_k^{(i)} - s,\frac{\partial R_i}{\partial \beta_k}$, $\quad \omega_{kj}^{(i + 1)} \leftarrow \omega_{kj}^{(i)} - s,\frac{\partial R_i}{\partial \omega_{kj}^{(i)}}$
+
 
 ## Optimization Algorithms
-- Stochastic Gradient Descent is rarely used in practice today
-- Instead, the ADAM (Kingma & Ba, 2014), a combination of RMSProp and momentum, is commonly preferred
-- RMSProp uses smaller steps for parameters with large recent gradients
-- Momentum averages past gradients to smooth noise and speed up
-- Specifying optimizers (common alternatives: `torch.optim.SGD`, `torch.optim.RMSprop`, `torch.optim.AdamW`),
+::: {.keypoint}
+Stochastic Gradient Descent is rarely used in practice today
+:::
+
+:::: {.triad}
+::: {.triad-card .tc-light}
+[Building block]{.tc-tag}
+
+[RMSProp]{.tc-title}
+
+Uses smaller steps for parameters with large recent gradients
+:::
+::: {.triad-card .tc-light}
+[Building block]{.tc-tag}
+
+[Momentum]{.tc-title}
+
+Averages past gradients to smooth noise and speed up
+:::
+::: {.triad-card .tc-navy}
+[Commonly preferred]{.tc-tag}
+
+[ADAM]{.tc-title}
+
+A combination of RMSProp and momentum (Kingma & Ba, 2014)
+:::
+::::
+
+## Specifying the Optimizer
 
 ```{pyodide}
 #| autorun: false
@@ -503,18 +1000,36 @@ import torch
 optimiser = torch.optim.Adam(model.parameters(), lr = 0.001)
 ```
 
-## Initialization of Parameters I 
+Common alternatives: `torch.optim.SGD`, `torch.optim.RMSprop`, `torch.optim.AdamW`
+
+## Initialization of Parameters I
+
 - The network parameters are initialized at random --- `nn.Linear` uniformly
 - If identical weights, the neurons within a layer would have identical values (thus gradients)
 - Random initialization $\Rightarrow$ differing forecasts --- we might want to ensemble
-- Common choices of initialization, `torch.nn.init`:
-- Xavier (Glorot & Bengio, 2010) for `torch.tanh` and `torch.sigmoid` activations, 
-- `.xavier_uniform_`, `.xavier_normal_`, $\operatorname{Var}(\omega_{kj}^{(h)}) = 2/(K_{h-1}+K_h)$
-- He (He et al., 2015) for `F.relu`, 
-- `.kaiming_uniform_`, `.kaiming_normal_`, $\operatorname{Var}(\omega_{kj}^{(h)}) = 2/K_{h-1}$
+
+Common choices of initialization, `torch.nn.init`:
+
+:::: {.compare}
+::: {.compare-col}
+[Xavier (Glorot & Bengio, 2010)]{.cmp-title}
+
+- For `torch.tanh` and `torch.sigmoid` activations
+- `.xavier_uniform_`, `.xavier_normal_`
+- $\operatorname{Var}(\omega_{kj}^{(h)}) = 2/(K_{h-1}+K_h)$
+:::
+::: {.compare-col .cmp-alt}
+[He (He et al., 2015)]{.cmp-title}
+
+- For `F.relu`
+- `.kaiming_uniform_`, `.kaiming_normal_`
+- $\operatorname{Var}(\omega_{kj}^{(h)}) = 2/K_{h-1}$
+:::
+::::
 
 ## Initialization of Parameters II
-- Specifying He initialization for all linear layers,
+
+Specifying He initialization for all linear layers,
 
 ```{pyodide}
 #| autorun: false
@@ -530,7 +1045,155 @@ def init_weights(m):
 model.apply(init_weights)
 ```
 
+## Guards Against Overfitting
+
+<!-- ## Guarding Against Overfitting -->
+
+::: {.overview}
+::: {.ov-row}
+::: {.ov-label}
+Dropout
+:::
+::: {.ov-desc}
+Randomly sets neurons to zero in each training step
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+$\mathcal{L}_1$ regularization
+:::
+::: {.ov-desc}
+Penalizes the absolute value of the weights, favouring sparse networks
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+$\mathcal{L}_2$ regularization (weight decay)
+:::
+::: {.ov-desc}
+Shrinks the weights towards zero
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+Early stopping
+:::
+::: {.ov-desc}
+Stops training when the validation loss no longer improves
+:::
+:::
+:::
+
+<!-- :::: {.steplist}
+::: {.step-row}
+::: {.step-num}
+1
+:::
+::: {.step-title}
+Dropout
+:::
+::: {.step-desc}
+Randomly sets neurons to zero in each training step
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+2
+:::
+::: {.step-title}
+$\mathcal{L}_1$ regularization
+:::
+::: {.step-desc}
+Penalizes the absolute value of the weights, favoring sparse networks
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+3
+:::
+::: {.step-title}
+$\mathcal{L}_2$ regularization (weight decay)
+:::
+::: {.step-desc}
+Shrinks the weights towards zero
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+4
+:::
+::: {.step-title}
+Early stopping
+:::
+::: {.step-desc}
+Stops training when the validation loss no longer improves
+:::
+:::
+:::: -->
+
+<!-- ## Guarding Against Overfitting
+
+::: {.act-table}
+| Method | Effect | Acts on |
+|:------------------------|:--------------------------------------------|:-----------:|
+| **Dropout** | Randomly sets neurons to zero in each training step | network |
+| **$\mathcal{L}_1$ regularization** | Penalizes the absolute value of the weights, favouring sparse networks | loss |
+| **$\mathcal{L}_2$ regularization** (weight decay) | Shrinks the weights towards zero | loss |
+| **Early stopping** | Stops training when the validation loss no longer improves | training loop |
+:::
+
+## Guarding Against Overfitting
+
+:::: {.flow}
+::: {.fn-navy}
+**Dropout**
+[Randomly sets neurons to zero in each training step]{.fn-sub}
+:::
+::: {.fn}
+**$\mathcal{L}_1$ and $\mathcal{L}_2$ regularization**
+[$\mathcal{L}_1$ penalizes the absolute value of the weights, favouring sparse networks. $\mathcal{L}_2$ (weight decay) shrinks the weights towards zero]{.fn-sub}
+:::
+::: {.fn-amber}
+**Early stopping**
+[Stops training when the validation loss no longer improves]{.fn-sub}
+:::
+:::: -->
+
+
 ## Dropout
+
+:::: {.columns}
+::: {.column width="48%" .fs-sm}
+- Dropout (Srivastava et al., 2014): `nn.Dropout(p)` is applied in every training step
+- Each neuron in the layer is set to zero with probability $p$, e.g., $p = 0.5$
+- Neurons are made more independent, so the network behaves like an average of many thinned networks (think bagged trees)
+- Dropout is not applied in evaluation
+:::
+::: {.column width="52%"}
+<div class="figblock fb-s360">
+<p class="fig-title">Neural Network with Dropout = 0.5</p>
+<img src="NNDropout.svg">
+</div>
+:::
+::::
+
+## Dropout in PyTorch
+
+Applying dropout to layer `fc1` with specified probability `p=0.5`
+
+```{pyodide}
+#| autorun: false
+#| runbutton: false
+#| startover: false
+# in __init__
+self.dropout = nn.Dropout(p = 0.5)
+
+# in forward
+x = self.dropout(F.relu(self.fc1(x)))
+```
+
+
+<!-- ## Dropout
 - Dropout (Srivastava et al., 2014): `nn.Dropout(p)` is applied in every training step
 - Each neuron in the layer is set to zero with probability $p$, e.g., $p = 0.5$
 - Neurons are made more independent, so the network behaves like an average of many thinned networks (think bagged trees)
@@ -545,16 +1208,59 @@ self.dropout = nn.Dropout(p = 0.5)
 
 # in forward
 x = self.dropout(F.relu(self.fc1(x)))
-```
+``` -->
 
-## Dropout Visualized
+<!-- ## Dropout Visualized
 
 <div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
 <p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Neural Network with Dropout = 0.5</p>
 <img src="NNDropout.svg" style="max-height: 490px; max-width: 100%; width: auto;">
-</div>
+</div> -->
 
-## $\mathcal{L}_1$ Regularization
+## $\mathcal{L}_1$ and $\mathcal{L}_2$ Regularization
+
+:::: {.compare}
+::: {.compare-col}
+[$\mathcal{L}_1$: absolute value]{.cmp-title}
+
+Penalizes the absolute value of the weights, favouring sparse networks, with penalty added to the loss,
+
+$$\mathcal{L}(\omega) + \lambda\sum_{h,k,j}\left|\omega_{kj}^{(h)}\right|$$
+:::
+::: {.compare-col .cmp-alt}
+[$\mathcal{L}_2$: weight decay]{.cmp-title}
+
+Weight decay ($\mathcal{L}_2$) adds a penalty to the loss, shrinking the weights towards zero,
+
+$$\mathcal{L}(\omega) + \frac{\lambda}{2}\sum_{h,k,j}\left(\omega_{kj}^{(h)}\right)^2$$
+:::
+::::
+
+## $\mathcal{L}_1$ Regularization in PyTorch
+
+```{pyodide}
+#| autorun: false
+#| runbutton: false
+#| startover: false
+l1_lambda = 0.0001
+
+loss = criterion(outputs, targets)
+loss = loss + l1_lambda * sum(param.abs().sum() for param in model.parameters())
+```
+
+## $\mathcal{L}_2$ Regularization in PyTorch
+
+Weight decay is passed as an argument to the optimizer, e.g., `weight_decay = 0.01` in `Adam`,
+
+```{pyodide}
+#| autorun: false
+#| runbutton: false
+#| startover: false
+optimiser = torch.optim.Adam(model.parameters(), lr = 0.001, weight_decay = 0.01)
+```
+
+
+<!-- ## $\mathcal{L}_1$ Regularization
 - $\mathcal{L}_1$ penalizes the absolute value of the weights, favouring sparse networks, with penalty added to the loss,
 
 $$\mathcal{L}(\omega) + \lambda\sum_{h,k,j}\left|\omega_{kj}^{(h)}\right|$$
@@ -581,52 +1287,106 @@ $$\mathcal{L}(\omega) + \frac{\lambda}{2}\sum_{h,k,j}\left(\omega_{kj}^{(h)}\rig
 #| runbutton: false
 #| startover: false
 optimiser = torch.optim.Adam(model.parameters(), lr = 0.001, weight_decay = 0.01)
-```
+``` -->
+
 
 ## Epochs
+
+::: {.keypoint}
+An epoch is a complete pass through the entire training dataset
+:::
+
+The training process is iterative and involves multiple **epochs**. The number of epochs can be,
+1. prespecified,
+2. tuned, or
+3. determined by early stopping
+
+
+
+<!-- ## Epochs
 - The training process is iterative and involves multiple **epochs**
 - An epoch is a complete pass through the entire training dataset
-- The number of epochs can be prespecified, tuned, or determined by early stopping
-- Guard against overfitting
+- The number of epochs can be, prespecified, tuned, or determined by early stopping
+- Guard against overfitting -->
 
-## Early Stopping I
+## Early Stopping I 
+
+<div class="figblock">
+<p class="fig-title">Early Stopping</p>
+<img src="early_stopping.svg">
+</div>
+
+
+## Early Stopping II
+
+We will discuss the bias-variance trade-off in more detail next week
+
+:::: {.flow}
+::: {.fn-navy}
+When the training accuracy keeps increasing, we continue training
+:::
+::: {.fn}
+The validation accuracy, our ability to generalize, starts to decrease after a certain point
+:::
+::: {.fn-amber}
+No improvement for #`patience` epochs: stop and restore the best model state
+:::
+::::
+
+To implement early stopping, the training loop (see later slides) must be slightly modified
+
+
+<!-- ## Early Stopping I
 - We will discuss the bias-variance trade-off in more detail next week
 - For now: when we keep training (increasing the number of epochs), we keep increasing the training accuracy 
 - The validation accuracy, our ability to generalize, will start to decrease after a certain point
 - To implement early stopping, the training loop (see later slides) must be slightly modified 
-- We watch the validation loss, and when it has not improved for a certain number of epochs (patience), we stop training and restore the best model state
+- We watch the validation loss, and when it has not improved for a certain number of epochs (patience), we stop training and restore the best model state -->
 
-## Early Stopping II
+<!-- ## Early Stopping and Overfitting Visualized
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
+<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Early Stopping</p>
+<img src="early_stopping.svg" style="max-height: 490px; max-width: 100%; width: auto;">
+</div> -->
+
+## Loss Functions
+
+We still consider only the regression task. Typical loss functions include,
+
+:::: {.triad}
+::: {.triad-card}
+[`nn.MSELoss`]{.tc-title}
+
+Squared error
+:::
+::: {.triad-card .tc-light}
+[`nn.L1Loss`]{.tc-title}
+
+Absolute error
+:::
+::: {.triad-card .tc-amber}
+[`nn.HuberLoss`]{.tc-title}
+
+Squared for small errors, absolute for large (Huber, 1964). We will see this next week!
+:::
+::::
+
+ Example for the mean squared error,
+
 ```{pyodide}
 #| autorun: false
 #| runbutton: false
 #| startover: false
-# Before training
-best_val = float("inf")
-patience = 5
-wait = 0
+import torch.nn as nn
 
-# At the end of each epoch
-    if val_loss < best_val:
-        best_val = val_loss
-        best_state = {k: v.clone() for k, v in model.state_dict().items()}
-        wait = 0
-    else:
-        wait += 1
-        if wait == patience:
-            break
+criterion = nn.MSELoss()
 
-# Post training, restoring the best state (five models prior to early stop)
-model.load_state_dict(best_state)
+loss = criterion(outputs, targets) # Application
 ```
 
-## Early Stopping and Overfitting Visualized
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Early Stopping</p>
-<img src="early_stopping.svg" style="max-height: 490px; max-width: 100%; width: auto;">
-</div>
+We can write our own loss functions, but this is up to you if you wish to do so.
 
-## Loss Functions
+<!-- ## Loss Functions
 - We still consider only the regression task
 - Typical loss functions include
 - `nn.MSELoss` (squared error), `nn.L1Loss` (absolute error), `nn.HuberLoss` (squared for small errors, absolute for large) (Huber, 1964), (we will see this next week!)
@@ -642,7 +1402,9 @@ import torch.nn as nn
 criterion = nn.MSELoss()
 
 loss = criterion(outputs, targets) # Application
-```
+``` -->
+
+
 
 ## Initializing Training
 - The model is initialized and moved to the appropriate device (CPU or GPU)
@@ -659,6 +1421,51 @@ criterion = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 n_epochs = 20
 ```
+
+## One Training Step
+
+::: {.overview}
+::: {.ov-row}
+::: {.ov-label}
+1\. `optimizer.zero_grad()`
+:::
+::: {.ov-desc}
+Reset the gradients
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+2\. `model(inputs)`
+:::
+::: {.ov-desc}
+Forward pass: compute the forecasts
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+3\. `criterion(outputs, targets)`
+:::
+::: {.ov-desc}
+Compute the loss
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+4\. `loss.backward()`
+:::
+::: {.ov-desc}
+Backpropagation: compute the gradients
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+5\. `optimizer.step()`
+:::
+::: {.ov-desc}
+Update the parameters
+:::
+:::
+:::
 
 ## Main Training and Validation Loop I 
 ```{pyodide}
@@ -724,10 +1531,31 @@ r2_oos = 1 - np.sum((y_unstd - forecasts_unstd) ** 2) / np.sum((y_unstd - y_benc
 print(f"Test RMSE: {np.sqrt(mse):.2f} | Test OOS R2 (vs. train mean): {r2_oos:.3f}")
 ```
 
-## An Extended Pipeline (My Preferred Approach)
+<!-- ## An Extended Pipeline (My Preferred Approach)
 - I set the seed for reproducibility, store the training and validation losses, and time the run
 - I keep running loss book-keeping for each epoch to keep track of the training process
-- I print these losses at the end of each epoch to monitor convergence
+- I print these losses at the end of each epoch to monitor convergence -->
+
+## An Extended Pipeline (My Preferred Approach)
+
+:::: {.triad}
+::: {.triad-card}
+[Reproducible]{.tc-title}
+
+I set the seed for reproducibility
+:::
+::: {.triad-card .tc-light}
+[Tracked]{.tc-title}
+
+I store the training and validation losses, time the run, and keep running loss book-keeping for each epoch to keep track of the training process
+:::
+::: {.triad-card .tc-amber}
+[Monitored]{.tc-title}
+
+I print these losses at the end of each epoch to monitor convergence
+:::
+::::
+
 
 ## Limitations of Deep Learning
 - "Jagged Intelligence" --- models have incredible power, yet struggle with tasks like telling time ([Stanford 2026 AI Index Report](https://hai.stanford.edu/ai-index/2026-ai-index-report))

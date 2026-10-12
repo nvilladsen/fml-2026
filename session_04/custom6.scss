@@ -1,6 +1,6 @@
 /*
   Machine Learning in Finance — shared Reveal.js theme.
-  Light, spacious, academic. One blue family + sparing amber.
+  Light, spacious, academic. One blue family: navy #002546, mid-blue #1c5cab, light-blue #86b6ef.
   System font stack only (no webfonts, works offline).
 */
 
@@ -377,7 +377,7 @@ h1::before {
 }
 
   .divider-kicker {
-    color: #a8794b;
+    color: #1c5cab;
     font-size: 0.66em;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -414,8 +414,8 @@ h1::before {
 }
 
 .chip-predict {
-  background: #fbf1dc;
-  color: #96631c;
+  background: #e3effc;
+  color: #1c5cab;
 }
 
 .chip-optional {
@@ -454,8 +454,8 @@ h1::before {
 }
 
 .reveal .callout-warning {
-  border-left: 5px solid #d99a1c;
-  background: #fbf4e4;
+  border-left: 5px solid #86b6ef;
+  background: #f4f9ff;
 }
 
 .reveal .callout-tip {
@@ -973,8 +973,9 @@ h1::before {
 }
 
 .pillar {
+  --pc: #86b6ef;
   border: 1px solid #e6e5df;
-  border-top: 4px solid #86b6ef;
+  border-top: 4px solid var(--pc);
   border-radius: 8px;
   padding: 0.7em 0.85em;
   background: #ffffff;
@@ -984,7 +985,7 @@ h1::before {
   font-size: 0.58em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #a8794b;
+  color: var(--pc);
   font-weight: 700;
   margin-bottom: 0.25em;
 }
@@ -1003,7 +1004,8 @@ h1::before {
 }
 
 .pillar.pillar-live {
-  border-top-color: #1c5cab;
+  --pc: #1c5cab;
+  border-top-color: var(--pc);
   background: #f7fafd;
 }
 
@@ -1167,7 +1169,7 @@ h1::before {
 .zero-to .zt-arrow .zt-arrow-label {
   display: block;
   font-size: 0.56em;
-  color: #a8794b;
+  color: #1c5cab;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   font-weight: 700;
@@ -1258,7 +1260,7 @@ h1::before {
 
 .exam-fact {
   border: 1px solid #e6e5df;
-  border-top: 4px solid #d99a1c;
+  border-top: 4px solid #1c5cab;
   border-radius: 8px;
   padding: 0.6em 0.7em;
   text-align: center;
@@ -1370,7 +1372,7 @@ h1::before {
 }
 
 .reveal table.trace td:first-child {
-  color: #a8794b;
+  color: #1c5cab;
   font-family: $font-family-sans-serif;
   text-align: left;
 }
@@ -1432,8 +1434,8 @@ h1::before {
   left: 0.35em;
   right: 0.35em;
   z-index: 0;
-  background: #fbe08a;
-  border-left: 3px solid #d99a1c;
+  background: #cfe2fa;
+  border-left: 3px solid #1c5cab;
   border-radius: 3px;
   top: calc(0.55em + var(--a) * 1.9em);
   height: calc((var(--b) - var(--a) + 1) * 1.9em);
@@ -1443,7 +1445,7 @@ h1::before {
 .reveal .sr-hl-inline {
   position: absolute;
   z-index: 0;
-  background: #f6c94e;
+  background: #a9c9f2;
   border-radius: 3px;
   top: calc(0.55em + var(--r) * 1.9em);
   height: 1.9em;
@@ -1543,10 +1545,10 @@ h1::before {
 }
 
 .hovercard .hc-sig .hc-arg {
-  background: #fdf3d7;
+  background: #dcebfd;
   border-radius: 3px;
   padding: 0 0.2em;
-  color: #7a5a08;
+  color: #0d366b;
 }
 
 .hovercard .hc-body {
@@ -1660,10 +1662,10 @@ h1::before {
 }
 
 // the three colours used to name the parts of an equation, matching the
-// figures: blue = the thing you control, amber = the thing you cannot,
-// brick = the error itself
+// figures: blue = the thing you control, navy (.t-amber, name kept) = the
+// thing you cannot, brick = the error itself
 .t-blue { color: #1c5cab; font-weight: 600; }
-.t-amber { color: #a8790b; font-weight: 600; }
+.t-amber { color: #0d366b; font-weight: 600; }
 .t-brick { color: #b3402f; font-weight: 600; }
 
 // ---------- two-column comparison (Session 4) ----------
@@ -1710,8 +1712,7 @@ h1::before {
 .compare-col .cmp-title {
   font-size: 0.92em;
   font-weight: 650;
-  // color: #002546;
-  color: #86b6ef;
+  color: #002546;
   margin-bottom: 0.3em;
 }
 
@@ -1826,9 +1827,9 @@ h1::before {
 }
 
 .foldgrid .fg-cell.fg-val {
-  background: #fbf3de;
-  border-color: #d99a1c;
-  color: #8a6508;
+  background: #1c5cab;
+  border-color: #1c5cab;
+  color: #ffffff;
   font-weight: 700;
 }
 
@@ -2094,3 +2095,449 @@ i.fas.fa-bars {
   margin-top: auto;
   margin-bottom: auto;
 }
+// ==========================================================================
+// Session 4 additions (custom6). Everything above is custom5, unchanged.
+// ==========================================================================
+
+// ---------- native Quarto columns: same markers as top-level lists ----------
+
+.reveal .slides section .column > ul {
+  list-style: none;
+  margin-left: 0.1em;
+}
+
+.reveal .slides section .column > ul > li {
+  position: relative;
+  padding-left: 1.2em;
+}
+
+.reveal .slides section .column > ul > li::before {
+  content: "";
+  position: absolute;
+  left: 0.05em;
+  top: 0.52em;
+  width: 0.4em;
+  height: 0.4em;
+  background: #002546;
+  border-radius: 50%;
+}
+
+.reveal .column.fs-sm {
+  font-size: 0.82em;
+}
+
+// ---------- figure block (replaces the repeated inline-styled divs) ----------
+
+.figblock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.2em;
+}
+
+.figblock .fig-title {
+  font-size: 0.74em;
+  font-weight: 600;
+  color: #0d366b;
+  margin-bottom: 0.35em;
+}
+
+.figblock img {
+  max-height: 490px;
+  max-width: 100%;
+  width: auto;
+}
+
+.figblock .fig-src {
+  font-size: 0.42em;
+  color: #898781;
+  margin-top: 0.4em;
+  text-align: center;
+}
+
+.figblock.fb-brain img { max-height: 450px; }
+.figblock.fb-w75 img { max-width: 75%; }
+.figblock.fb-w85 img { max-width: 85%; }
+.figblock.fb-s415 img { max-height: 415px; }
+.figblock.fb-s400 img { max-height: 400px; }
+.figblock.fb-s360 img { max-height: 360px; }
+.figblock.fb-s330 img { max-height: 330px; }
+
+// ---------- stat label as a block (statband spans) ----------
+
+.stat .stat-label {
+  display: block;
+}
+
+// ---------- triad: three (or two) cards in a row ----------
+
+.triad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 0.7em;
+}
+
+.triad.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.triad-card {
+  --tc: #1c5cab;
+  border: 1px solid #e6e5df;
+  border-top: 4px solid var(--tc);
+  border-radius: 8px;
+  padding: 0.55em 0.85em 0.6em;
+  background: #ffffff;
+  font-size: 0.7em;
+  line-height: 1.4;
+}
+
+.triad-card p {
+  margin: 0 0 0.3em;
+}
+
+.triad-card .tc-tag {
+  display: block;
+  font-size: 0.78em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tc);
+  font-weight: 700;
+}
+
+.triad-card .tc-title {
+  display: block;
+  font-size: 1.12em;
+  font-weight: 650;
+  color: #0d366b;
+}
+
+.triad-card .math.display {
+  font-size: 0.9em;
+  margin: 0.3em 0;
+}
+
+// colour ramp by position (tag text follows the border):
+// three cards: navy, mid-blue, light-blue; two cards: mid-blue, light-blue.
+// .tc-amber, .tc-light and .tc-navy are kept as inert aliases so that old
+// markup still renders; .tc-brick marks a problem or an error card.
+.triad:not(.cols-2) > .triad-card:nth-child(1) { --tc: #002546; }
+.triad:not(.cols-2) > .triad-card:nth-child(2) { --tc: #1c5cab; }
+.triad:not(.cols-2) > .triad-card:nth-child(3) { --tc: #86b6ef; }
+.triad.cols-2 > .triad-card:nth-child(1) { --tc: #1c5cab; }
+.triad.cols-2 > .triad-card:nth-child(2) { --tc: #86b6ef; }
+.triad .triad-card.tc-brick:nth-child(n) { --tc: #b3402f; }
+
+// ---------- pairs: challenge -> development rows ----------
+
+.pairs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 0.6em;
+}
+
+.pairs-head,
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 2.4em 1.45fr;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.pairs-head > div {
+  font-size: 0.52em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1c5cab;
+  font-weight: 700;
+}
+
+.pairs-head > div:nth-child(1) { grid-column: 1; }
+.pairs-head > div:nth-child(2) { grid-column: 3; }
+
+.pair::after {
+  content: "\2192";
+  grid-column: 2;
+  grid-row: 1;
+  text-align: center;
+  color: #1c5cab;
+  font-weight: 700;
+  font-size: 1.3em;
+}
+
+.pair > .pair-from,
+.pair > .pair-to {
+  grid-row: 1;
+  border-radius: 8px;
+  padding: 0.4em 0.85em;
+  font-size: 0.68em;
+  line-height: 1.35;
+}
+
+.pair > .pair-from {
+  grid-column: 1;
+  background: #fbf1f0;
+  border: 1px solid #f0d4d1;
+  border-left: 5px solid #b3402f;
+}
+
+.pair > .pair-to {
+  grid-column: 3;
+  background: #ffffff;
+  border: 1px solid #e6e5df;
+  border-left: 5px solid #1c5cab;
+}
+
+.pair p,
+.pairs-head p {
+  margin: 0;
+}
+
+// ---------- horizontal timeline ----------
+
+.hline {
+  display: flex;
+  position: relative;
+  margin: 1.4em 0 0.8em;
+}
+
+.hline::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 3%;
+  right: 3%;
+  height: 3px;
+  background: #dce7f4;
+}
+
+.hl-item {
+  flex: 1 1 0;
+  position: relative;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.hl-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #1c5cab;
+  border: 3px solid #fcfcfb;
+}
+
+.hl-item.hl-crisis::before { background: #b3402f; }
+
+.hl-item .hl-year {
+  display: block;
+  font-weight: 700;
+  color: #0d366b;
+  font-size: 0.8em;
+}
+
+.hl-item.hl-crisis .hl-year { color: #b3402f; }
+
+.hl-item .hl-label {
+  display: block;
+  font-size: 0.56em;
+  line-height: 1.3;
+  color: #52514e;
+  padding: 0 0.3em;
+}
+
+// ---------- flow: boxes joined by arrows ----------
+
+.flow-label {
+  font-size: 0.55em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #1c5cab;
+  font-weight: 700;
+  margin: 0.8em 0 0.2em;
+}
+
+.flow {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 38px;
+  margin: 0.5em 0;
+}
+
+.flow > div {
+  position: relative;
+  flex: 1 1 0;
+  border: 1px solid #e6e5df;
+  border-top: 4px solid #1c5cab;
+  border-radius: 8px;
+  background: #ffffff;
+  padding: 0.4em 0.7em;
+  text-align: center;
+  font-size: 0.66em;
+  line-height: 1.35;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.flow > div p {
+  margin: 0;
+}
+
+.flow > div:not(:first-child)::before {
+  content: "\2192";
+  position: absolute;
+  left: -34px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  text-align: center;
+  color: #1c5cab;
+  font-weight: 700;
+  font-size: 1.5em;
+}
+
+.flow.back > div {
+  border-top-color: #b3402f;
+}
+
+.flow.back > div:not(:first-child)::before {
+  content: "\2190";
+  color: #b3402f;
+}
+
+.flow > div.fn-amber { border-top-color: #86b6ef; }
+.flow > div.fn-navy { border-top-color: #002546; background: #f2f7fd; }
+
+.flow > div .fn-sub {
+  display: block;
+  font-size: 0.82em;
+  color: #898781;
+}
+
+// ---------- split bar (train / validation / test) ----------
+
+.splitbar {
+  display: flex;
+  gap: 4px;
+  margin: 0.7em 0 0.5em;
+}
+
+.splitbar > div {
+  border-radius: 6px;
+  padding: 0.35em 0.6em;
+  text-align: center;
+  font-size: 0.6em;
+  line-height: 1.3;
+  min-width: 0;
+}
+
+.splitbar p {
+  margin: 0;
+}
+
+.splitbar .sb-train {
+  background: #e6edf5;
+  border: 1px solid #002546;
+  color: #002546;
+}
+
+.splitbar .sb-val {
+  background: #eef4fc;
+  border: 1px solid #1c5cab;
+  color: #0d366b;
+}
+
+.splitbar .sb-test {
+  background: #f4f9ff;
+  border: 1px solid #86b6ef;
+  color: #0d366b;
+}
+
+// ---------- mapping table (two columns with a double arrow) ----------
+
+.vocab-wrap table {
+  font-size: 0.74em;
+  margin: 0.5em auto;
+}
+
+.vocab-wrap td:first-child {
+  color: #0d366b;
+  font-weight: 600;
+}
+
+.vocab-wrap td:nth-child(2) {
+  text-align: center;
+  color: #1c5cab;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+}
+
+// ---------- step rows and overview rows: tidy paragraphs ----------
+
+.step-row p,
+.ov-row-inline p {
+  margin: 0;
+}
+
+.step-row .step-title code {
+  font-size: 0.9em;
+}
+
+// ---------- block quote inside a column ----------
+
+.reveal .quote-sm blockquote {
+  font-size: 0.78em;
+  width: 100%;
+  margin: 0;
+  box-shadow: none;
+}
+
+// smaller text in a card grid: use {.cards .cards-sm}
+.reveal .cards.cards-sm .card-box {
+  font-size: 0.8em !important;
+}
+
+// activation function table
+.reveal .act-table table {
+  width: 100%;
+  font-size: 1em;
+  margin: 0.6em 0;
+}
+
+.reveal .act-table td {
+  padding: 0.7em 1em;
+}
+
+.reveal .act-table td:first-child {
+  color: #141413;
+  white-space: nowrap;
+}
+
+.reveal .act-table td:first-child strong {
+  color: #141413;
+  font-size: 1.05em;
+}
+
+.reveal .act-table table { margin: 0.2em 0; }
+.reveal .act-table td { padding: 0.3em 0.8em; }
+.reveal .keypoint p { margin: 0; }
+
+.reveal .triad.strip { margin-top: 0.2em; }
+
+.reveal .flow-label.fl-lg { display: block; font-size: 0.68em; margin: 0.5em 0 0.25em; }
+.reveal .triad.strip .triad-card { font-size: 0.8em; padding: 0.4em 0.8em; }
+
+.reveal .bp .flow-label { margin: 1.1em 0 0.45em; }
+.reveal .bp .flow { margin: 0.8em 0; }
+.reveal .bp .math.display { margin: 0.8em 0; }
+.reveal .bp p { margin: 0.7em 0; }
+
+.reveal .triad.big .triad-card { font-size: 0.9em; }

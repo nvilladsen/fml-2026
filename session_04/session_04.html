@@ -38,7 +38,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="session_04_files/libs/revealjs/dist/theme/quarto-ca23406763da49348ae1edd10a3f6b50.css">
+  <link rel="stylesheet" href="session_04_files/libs/revealjs/dist/theme/quarto-22065b3518b419ab45fc3b5bc00eb9e1.css">
   <link href="session_04_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="session_04_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="session_04_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -188,14 +188,74 @@ Natasia Villadsen
 })();
 </script>
 </section>
+<section id="today" class="slide level2 center">
+<h2>Today</h2>
+<div class="overview">
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Brains and history</p>
+</div>
+<div class="ov-desc">
+<p>From McCulloch and Pitts to the renaissance of neural networks</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Anatomy of a network</p>
+</div>
+<div class="ov-desc">
+<p>Layers, activations, and the forecast</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Training</p>
+</div>
+<div class="ov-desc">
+<p>Objective, optimization, backpropagation, initialization</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Regularization</p>
+</div>
+<div class="ov-desc">
+<p>Dropout, penalties, and early stopping</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Implementation</p>
+</div>
+<div class="ov-desc">
+<p>The PyTorch pipeline</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Beyond feed-forward neural networks</p>
+</div>
+<div class="ov-desc">
+<p>CNNs, LSTMs, and Transformers</p>
+</div>
+</div>
+</div>
+</section>
 <section id="why-pytorch" class="slide level2 center">
 <h2>Why PyTorch?</h2>
 <p><strong>PyTorch</strong> is the deep learning framework of this course</p>
+<div class="statband">
+<div class="stat">
+<p><span class="stat-big">85%</span> <span class="stat-label">of deep learning research papers use PyTorch</span></p>
+</div>
+<div class="stat">
+<p><span class="stat-big">228,000 vs.&nbsp;15,000</span> <span class="stat-label">pre-trained models on HuggingFace (PyTorch vs.&nbsp;TensorFlow)</span></p>
+</div>
+<div class="stat">
+<p><span class="stat-big">55%</span> <span class="stat-label">of new production deployments as of 2025 (not limited to research)</span></p>
+</div>
+</div>
 <ul>
-<li>85% of deep learning research papers use PyTorch</li>
-<li>228,000 pre-trained models on HuggingFace (vs.&nbsp;15,000 for TensorFlow)</li>
-<li>55% of new production deployments as of 2025 (not limited to research)</li>
-<li>Most in-demand deep learning framework in industry</li>
 <li><strong>Tutorials</strong></li>
 </ul>
 <div class="keypoint">
@@ -209,98 +269,141 @@ Natasia Villadsen
 </section>
 <section id="a-neural-network-of-the-brain-of-a-mouse-i" class="slide level2 center">
 <h2>A Neural Network of the Brain of a Mouse I</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<div class="figblock fb-brain fb-w75">
+<p class="fig-title">
 Extract from 1mm² of Mouse Brain
 </p>
-<img src="BioNN5.jpg.svg" style="max-height: 450px; max-width: 75%; width: auto;">
-<p style="font-size: 0.42em; color: #898781; margin-top: 0.4em; text-align: center;">
+<img src="BioNN5.jpg.svg">
+<p class="fig-src">
 Source: MICrONS Explorer Render, Daniel Berger &amp; MICrONS Explorer Consortium Team. Google Research and Harvard University.
 </p>
 </div>
 </section>
 <section id="a-neural-network-of-the-brain-of-a-mouse-ii" class="slide level2 center">
 <h2>A Neural Network of the Brain of a Mouse II</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<div class="figblock fb-brain">
+<p class="fig-title">
 Extract from 1mm² of Mouse Brain — Closer Look
 </p>
-<img src="BioNN6.svg" style="max-height: 450px; max-width: 100%; width: auto;">
-<p style="font-size: 0.42em; color: #898781; margin-top: 0.4em; text-align: center;">
+<img src="BioNN6.svg">
+<p class="fig-src">
 Source: MICrONS Explorer Render, Daniel Berger &amp; MICrONS Explorer Consortium Team. Google Research and Harvard University.
 </p>
 </div>
 </section>
 <section id="a-neural-network-of-the-brain-of-a-mouse-iii" class="slide level2 center">
 <h2>A Neural Network of the Brain of a Mouse III</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<div class="figblock fb-brain">
+<p class="fig-title">
 Extract from 1mm² of Mouse Brain — Even Closer Look
 </p>
-<img src="BioNN8.svg" style="max-height: 450px; max-width: 100%; width: auto;">
-<p style="font-size: 0.42em; color: #898781; margin-top: 0.4em; text-align: center;">
+<img src="BioNN8.svg">
+<p class="fig-src">
 Source: MICrONS Explorer Render, Daniel Berger &amp; MICrONS Explorer Consortium Team. Google Research and Harvard University.
 </p>
 </div>
 </section>
-<section id="mcculloch-pitts-1943-i" class="slide level2 center">
-<h2>McCulloch &amp; Pitts (1943) I</h2>
+<section id="mcculloch-pitts-1943" class="slide level2 center">
+<h2>McCulloch &amp; Pitts (1943)</h2>
+<div class="columns">
+<div class="column" style="width:46%;">
 <ul>
 <li>Bedrock of contemporary deep learning</li>
-<li>Conceived analogue between brain and computer/artificial neural network
-<ol type="1">
-<li>Biological neural network <span class="math inline">\(\to\)</span> artificial neural network</li>
-<li>Thinking <span class="math inline">\(\to\)</span> computing</li>
-<li>Neurons <span class="math inline">\(\to\)</span> mathematical objects</li>
-</ol></li>
-<li>From abstract of seminal 1943 paper:</li>
+<li>Conceived analogue between brain and computer/artificial neural network</li>
 </ul>
-<div style="font-size: 0.78em;">
-<blockquote>
-<p>“Because of the ‘all-or-none’ character of nervous activity, neural events and the relations among them can be treated by means of propositional logic. It is found that the behaviour of every net can be described in these terms…; and that for any logical expression satisfying certain conditions, one can find a net behaving in the fashion it describes.”</p>
-</blockquote>
+</div><div class="column" style="width:54%;">
+<div class="vocab-wrap">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 5%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Biology</th>
+<th style="text-align: center;"></th>
+<th style="text-align: left;">Computation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Biological neural network</td>
+<td style="text-align: center;"><span class="math inline">\(\Leftrightarrow\)</span></td>
+<td style="text-align: left;">Artificial neural network</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Thinking</td>
+<td style="text-align: center;"><span class="math inline">\(\Leftrightarrow\)</span></td>
+<td style="text-align: left;">Computing</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Neurons</td>
+<td style="text-align: center;"><span class="math inline">\(\Leftrightarrow\)</span></td>
+<td style="text-align: left;">Mathematical objects</td>
+</tr>
+</tbody>
+</table>
 </div>
-<ul>
-<li>“…one can find a net behaving in the fashion it describes.”: Universal Approximation Theorem, e.g., Hornik et al.&nbsp;(1989)</li>
-</ul>
-</section>
-<section id="mcculloch-pitts-1943-ii" class="slide level2 center">
-<h2>McCulloch &amp; Pitts (1943) II</h2>
-<div style="font-size: 0.82em;">
+<div class="faint small">
+<p><strong>“…each having a soma and an axon.”</strong></p>
+</div>
+</div></div>
+<p>From introduction of seminal 1943 paper:</p>
+<div class="quote-sm" style="font-size: 1.2em;">
 <blockquote>
 <p>“The nervous system is a net of neurons, each having a soma and an axon. Their adjunctions, or synapses, are always between the axon of one neuron and the soma of another. At any instant a neuron has some threshold, which excitation must exceed to initiate an impulse.”</p>
 </blockquote>
 </div>
-<ul>
-<li>“…each having a soma and an axon.”: Simplified — today neurons are considered more complex</li>
-</ul>
 </section>
 <section id="rosenblatt-1958" class="slide level2 center">
 <h2>Rosenblatt (1958)</h2>
-<ul>
-<li>Operationalised McCulloch &amp; Pitts’ networks
-<ol type="1">
-<li>Synapses (connections between biological neurons) <span class="math inline">\(\to\)</span> trainable weights in artificial network</li>
-<li>Human learning <span class="math inline">\(\to\)</span> changing/updating weight matrices and biases</li>
-</ol></li>
-</ul>
+<p>Operationalised McCulloch &amp; Pitts’ networks</p>
+<div class="vocab-wrap">
+<table class="caption-top">
+<colgroup>
+<col style="width: 52%">
+<col style="width: 3%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Biology</th>
+<th style="text-align: center;"></th>
+<th style="text-align: left;">Artificial network</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Synapses (connections between biological neurons)</td>
+<td style="text-align: center;"><span class="math inline">\(\Leftrightarrow\)</span></td>
+<td style="text-align: left;">Trainable weights</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Human learning</td>
+<td style="text-align: center;"><span class="math inline">\(\Leftrightarrow\)</span></td>
+<td style="text-align: left;">Changing/updating weights and biases</td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 <section id="a-neuron-i" class="slide level2 center">
 <h2>A Neuron I</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<div class="figblock fb-w85">
+<p class="fig-title">
 A Biological Neuron
 </p>
-<p><img src="neuron_transparent-_1_.svg" style="max-height: 490px; max-width: 85%; width: auto;"></p>
+<p><img src="neuron_transparent-_1_.svg"></p>
 </div>
 </section>
 <section id="a-neuron-ii" class="slide level2 center">
 <h2>A Neuron II</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<div class="figblock">
+<p class="fig-title">
 Artificial Analogue to Neuron
 </p>
-<p><img src="NNSomaAxon.svg" style="max-height: 490px; max-width: 100%; width: auto;"></p>
+<p><img src="NNSomaAxon.svg"></p>
 </div>
 </section></section>
 <section>
@@ -310,34 +413,66 @@ Artificial Analogue to Neuron
 </section>
 <section id="the-crisis-of-neural-networks" class="slide level2 center">
 <h2>The Crisis of Neural Networks</h2>
-<ul>
-<li>Deep learning models are most favorable at scale</li>
-<li>Lack of necessary computing power and suitable hardware (GPUs)</li>
-<li>Overfitting, fragility, and vanishing gradients</li>
-<li>Lack of theoretical support
-<ul>
-<li>Minsky &amp; Papert (1969) showed that single-layer perceptrons cannot learn simply non-linear functions (e.g., XOR)</li>
-</ul></li>
-</ul>
+<div class="cards cards-sm">
+<div class="card-box">
+<p><span class="t">Scale</span> <span class="d">Deep learning models are most favorable at scale</span></p>
+</div>
+<div class="card-box">
+<p><span class="t">Hardware</span> <span class="d">Lack of necessary computing power and suitable hardware (GPUs)</span></p>
+</div>
+<div class="card-box">
+<p><span class="t">Training</span> <span class="d">Overfitting, fragility, and vanishing gradients</span></p>
+</div>
+<div class="card-box">
+<p><span class="t">Theory</span> <span class="d">Lack of theoretical support</span></p>
+</div>
+</div>
 </section>
 <section id="the-renaissance-of-neural-networks" class="slide level2 center">
 <h2>The Renaissance of Neural Networks</h2>
-<ul>
-<li>Backpropagation algorithm (Rumelhart et al., 1986) widely adopted</li>
-<li>LeCun et al.&nbsp;(1998) developed convolutional neural networks (CNNs) for image recognition</li>
-<li>Hochreiter &amp; Schmidhuber (1997) developed long short-term memory (LSTM) networks for sequential data</li>
-<li>Moore’s Law held for many years</li>
-<li>Next challenge: Physical limits of silicon-based chips reached. Possible solution: quantum computing</li>
-</ul>
+<p>Computation</p>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-title">Computational power</span></p>
+<p>Moore’s Law, GPUs</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-title">Algorithms</span></p>
+<p>E.g., ReLU, dropout, Adam</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-title">Backpropagation</span></p>
+<p>Efficient gradient computation for deep networks</p>
+</div>
+</div>
+<p>Modeling</p>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-title">Pre-trained models</span></p>
+<p>Including custom tuning</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-title">Frameworks</span></p>
+<p>PyTorch, TensorFlow, and similar</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-title">Big data</span></p>
+<p>Large datasets</p>
+</div>
+</div>
+<div class="keypoint">
+<p>Next challenge: Physical limits of silicon-based chips reached.</p>
+<p>Possible solution: quantum computing</p>
+</div>
 </section>
 <section id="moores-law" class="slide level2 center">
 <h2>Moore’s Law</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<div class="figblock">
+<p class="fig-title">
 Moore’s Law
 </p>
-<img src="moores_law_transparent.svg" style="max-height: 490px; max-width: 100%; width: auto;">
-<p style="font-size: 0.42em; color: #898781; margin-top: 0.4em; text-align: center;">
+<img src="moores_law_transparent.svg">
+<p class="fig-src">
 Source: M. Horowitz, F. Labonte, O. Shacham, K. Olukotun, L. Hammond, and C. Batten; Karl Rupp, &amp; Danial Chitnis, Creative Commons Attribution 4.0 International license.
 </p>
 </div>
@@ -349,67 +484,131 @@ Source: M. Horowitz, F. Labonte, O. Shacham, K. Olukotun, L. Hammond, and C. Bat
 </section>
 <section id="a-neural-network" class="slide level2 center">
 <h2>A Neural Network</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<div class="figblock">
+<p class="fig-title">
 </p>
-<p><img src="NNv1.svg" style="max-height: 490px; max-width: 100%; width: auto;"></p>
+<p><img src="NNv1.svg"></p>
 </div>
 </section>
-<section id="construction" class="slide level2 center">
-<h2>Construction</h2>
-<ul>
-<li>The neural network has three types of layers, i) input, ii) hidden, and iii) output, <span class="math inline">\(h = 0, \ldots, H+1\)</span></li>
-<li>There are <span class="math inline">\(K_h\)</span> <strong>neurons</strong> in each layer <span class="math inline">\(h\)</span>, with <strong>activations</strong> <span class="math inline">\(A_k^{(h)}\)</span>.</li>
-<li>For the <strong>input</strong> layer (<span class="math inline">\(h = 0\)</span>), the neurons are the input features,</li>
-</ul>
-<p><span class="math display">\[ \mathbf{X} = (X_1, X_2, \ldots, X_p), \qquad A_j^{(0)} = X_j, \quad j = 1,\ldots,p\]</span></p>
-<ul>
-<li>The essential computations occur in the <strong>hidden</strong> layers (<span class="math inline">\(h = 1,...,H\)</span>), with activations <span class="math inline">\(A_k^{(h)}\)</span>, weights <span class="math inline">\(\omega_{kj}^{(h)}\)</span>, and activation functions <span class="math inline">\(g_h\)</span>,</li>
-</ul>
-<p><span class="math display">\[A_k^{(h)} = g_h\left(\omega_{k0}^{(h)}+\sum_{j=1}^{K_{h-1}}\omega_{kj}^{(h)}A_j^{(h-1)}\right), \qquad k = 1,...,K_h, \quad A_0^{(h)} = 1\]</span></p>
+<section id="the-layers-of-a-neural-network" class="slide level2 center">
+<h2>The Layers of a Neural Network</h2>
+<p>Layers are indexed by <span class="math inline">\(h\)</span>, <span class="math inline">\(h = 0, \ldots, H+1\)</span>. There are <span class="math inline">\(K_h\)</span> <strong>neurons</strong> in each layer <span class="math inline">\(h\)</span>, with <strong>activations</strong> <span class="math inline">\(A_k^{(h)}\)</span>.</p>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">One input layer</span></p>
+<p><span class="tc-title"><span class="math inline">\(h = 0\)</span></span></p>
+<p>The neurons are the <span class="math inline">\(p\)</span> input features, <span class="math inline">\(\mathbf{X} = (X_1, X_2, \ldots, X_p)\)</span></p>
+<p><span class="math inline">\(A_j^{(0)} = X_j\)</span>, <span class="math inline">\(\quad j = 1,\ldots,p\)</span></p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag"><span class="math inline">\(H\)</span> hidden layers</span></p>
+<p><span class="tc-title"><span class="math inline">\(h = 1, \ldots, H\)</span></span></p>
+<p>Essential computations here</p>
+</div>
+<div class="triad-card tc-amber">
+<p><span class="tc-tag">One output layer</span></p>
+<p><span class="tc-title"><span class="math inline">\(h = H+1\)</span></span></p>
+<p>Produces the forecast</p>
+</div>
+</div>
+</section>
+<section id="the-hidden-layers" class="slide level2 center">
+<h2>The Hidden Layers</h2>
+<p>The essential computations occur in the <strong>hidden</strong> layers (<span class="math inline">\(h = 1,...,H\)</span>), with activations <span class="math inline">\(A_k^{(h)}\)</span>, weights <span class="math inline">\(\omega_{kj}^{(h)}\)</span>, biases <span class="math inline">\(\omega_{k0}^{(h)}\)</span>, and activation functions <span class="math inline">\(g_h\)</span>,</p>
+<p><span class="math display">\[A_k^{(h)} = g_h\left(\omega_{k0}^{(h)}+\sum_{j=1}^{K_{h-1}}\omega_{kj}^{(h)}A_j^{(h-1)}\right), \qquad k = 1,...,K_h\]</span></p>
+<div class="triad cols-2">
+<div class="triad-card">
+<p><span class="tc-tag">Weighted sum</span></p>
+<p>Weights times the activations of the previous layer</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Activation function</span></p>
+<p><span class="math inline">\(g_h\)</span> introduces non-linearity to layer <span class="math inline">\(h\)</span></p>
+</div>
+</div>
+</section>
+<section id="the-first-hidden-layer" class="slide level2 center">
+<h2>The First Hidden Layer</h2>
+<p>The first hidden layer is a special case, with <span class="math inline">\(K_0 = p\)</span> and <span class="math inline">\(A_j^{(0)} = X_j\)</span>,</p>
+<p><span class="math display">\[A_k^{(1)} = g_1\left(\omega_{k0}^{(1)}+\sum_{j=1}^{p}\omega_{kj}^{(1)}X_j\right), \qquad k = 1,...,K_1\]</span></p>
 </section>
 <section id="forecasts" class="slide level2 center">
 <h2>Forecasts</h2>
-<ul>
-<li><p>In the regression task, the <strong>output</strong> layer (<span class="math inline">\(h = H+1\)</span>) produces forecasts, with weights <span class="math inline">\(\beta_k\)</span> and intercept <span class="math inline">\(\beta_0\)</span>, <span class="math display">\[f(\mathbf{X}) = \beta_0 + \sum_{k = 1}^{K_H}\beta_k A_k^{(H)}\]</span></p></li>
-<li><p>Evaluating in the activations of the last hidden layer,</p></li>
-</ul>
+<p>In the regression task, the <strong>output</strong> layer (<span class="math inline">\(h = H+1\)</span>) produces forecasts, with weights <span class="math inline">\(\beta_k\)</span> and intercept <span class="math inline">\(\beta_0\)</span>, <span class="math display">\[f(\mathbf{X}) = \beta_0 + \sum_{k = 1}^{K_H}\beta_k A_k^{(H)}\]</span></p>
+<p>Evaluating in the activations of the last hidden layer,</p>
 <p><span class="math display">\[f(\mathbf{X}) = \beta_0 + \sum_{k = 1}^{K_H}\beta_k\, g_H\left(\omega_{k0}^{(H)}+\sum_{j=1}^{K_{H-1}}\omega_{kj}^{(H)}A_j^{(H-1)}\right)\]</span></p>
 </section>
 <section id="similarity-to-neurons-revisited" class="slide level2 center">
 <h2>Similarity to Neurons Revisited</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<div class="figblock">
+<p class="fig-title">
 Artificial Analogue to Neuron
 </p>
-<p><img src="NNSomaAxon.svg" style="max-height: 490px; max-width: 100%; width: auto;"></p>
+<p><img src="NNSomaAxon.svg"></p>
 </div>
 </section>
-<section id="non-linear-activation-functions-i" class="slide level2 center">
-<h2>Non-Linear Activation Functions I</h2>
-<ul>
-<li>Essential component of neural networks</li>
-<li>Introduces non-linearity to the model, allowing it to learn complex patterns</li>
-<li>ReLU (Rectified Linear Unit) most dominant today,</li>
-</ul>
-<p><span class="math display">\[ f: \mathbb{R} \to [0, \infty), \quad f(x) = \max\{0, x\} \]</span></p>
-<ul>
-<li>tanh (hyperbolic tangent),</li>
-</ul>
-<p><span class="math display">\[ \text{tanh}: \mathbb{R} \to [-1, 1], \quad \text{tanh}(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}} \]</span></p>
-<ul>
-<li>sigmoid,</li>
-</ul>
-<p><span class="math display">\[ \sigma: \mathbb{R} \to [0, 1], \quad \sigma(x) = \frac{1}{1 + e^{-x}} \]</span></p>
+<section id="non-linear-activation-functions" class="slide level2 center">
+<h2>Non-Linear Activation Functions</h2>
+<p>Essential component of neural networks: Introduces non-linearity to the model, allowing it to learn complex patterns</p>
+<div class="act-table">
+<table class="caption-top">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 32%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Function</th>
+<th style="text-align: center;">Map</th>
+<th style="text-align: center;">Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>ReLU</strong> (Rectified Linear Unit)<br><span class="small">most dominant today</span></td>
+<td style="text-align: center;"><span class="math inline">\(f: \mathbb{R} \to [0, \infty)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(f(x) = \max\{0, x\}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>tanh</strong> (hyperbolic tangent)</td>
+<td style="text-align: center;"><span class="math inline">\(\text{tanh}: \mathbb{R} \to [-1, 1]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\text{tanh}(x) = \dfrac{e^x - e^{-x}}{e^x + e^{-x}}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>sigmoid</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\sigma: \mathbb{R} \to [0, 1]\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sigma(x) = \dfrac{1}{1 + e^{-x}}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span class="flow-label fl-lg">Sigmoid was the first activation function</span></p>
+<div class="triad cols-2 strip">
+<div class="triad-card">
+<p><span class="math inline">\(\sigma(x) = 0\)</span>: the neuron does not fire</p>
+</div>
+<div class="triad-card">
+<p><span class="math inline">\(\sigma(x) = 1\)</span>: the neuron fires <span class="math inline">\(\Rightarrow\)</span> the neuron contributes to the output of the network</p>
+</div>
+</div>
 </section>
-<section id="non-linear-activation-functions-ii" class="slide level2 center">
-<h2>Non-Linear Activation Functions II</h2>
-<ul>
-<li><p>Sigmoid was the first activation function</p></li>
-<li><p><span class="math inline">\(\sigma(x) = 0\)</span> means the neuron does not fire, <span class="math inline">\(\sigma(x) = 1\)</span> means the neuron fires</p></li>
-<li><p>Neuron firing <span class="math inline">\(\Rightarrow\)</span> neuron contributes to the output of the network</p></li>
-<li><p>Specifying the activation function in the forward pass (alternatives: <code>torch.tanh</code>, <code>torch.sigmoid</code>),</p></li>
-</ul>
+<section id="activation-functions-and-their-derivatives" class="slide level2 center">
+<h2>Activation Functions and Their Derivatives</h2>
+<div class="figblock fb-s400">
+<img src="activations_deriv.svg">
+<p class="fig-src">
+ReLU: (g’(x) = 0) for (x &lt; 0), (g’(x) = 1) for (x &gt; 0). tanh: (g’(x) = 1 - ^2(x)). sigmoid: (g’(x) = (x)(1 - (x))).
+</p>
+</div>
+<div class="keypoint">
+<p>The derivative <span class="math inline">\(g'\)</span> enters every backpropagation step.</p>
+<p>Note: the sigmoid derivative is maximized at <span class="math inline">\(x = 0 \to \sigma'(x) = 0.25\)</span> - risk of vanishing gradients</p>
+</div>
+</section>
+<section id="specifying-the-activation-function" class="slide level2 center">
+<h2>Specifying the Activation Function</h2>
+<p>Specifying the activation function in the forward pass,</p>
 <div>
 <div id="pyodide-1" class="exercise-cell">
 
@@ -418,31 +617,93 @@ Artificial Analogue to Neuron
 eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImltcG9ydCB0b3JjaFxuaW1wb3J0IHRvcmNoLm5uLmZ1bmN0aW9uYWwgYXMgRlxuXG54ID0gRi5yZWx1KHNlbGYuZmMxKHgpKVxuIyBhbHRlcm5hdGl2ZXM6IHRvcmNoLnRhbmgoc2VsZi5mYzEoeCkpLCB0b3JjaC5zaWdtb2lkKHNlbGYuZmMxKHgpKSJ9
 </script>
 </div>
+<p>Alternatives: <code>torch.tanh(self.fc1(x))</code>, <code>torch.sigmoid(self.fc1(x))</code></p>
 </section>
-<section id="the-relu-visualized" class="slide level2 center">
-<h2>The ReLU Visualized</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
-ReLU Activation Function
-</p>
-<!-- <img src="relu.svg" style="max-height: 490px; max-width: 100%; width: auto;"> -->
-<p><img src="relu_transparent.svg" style="max-height: 415px; max-width: 100%; width: auto;"></p>
+<section id="the-blueprint" class="slide level2 center">
+<h2>The Blueprint</h2>
+<div class="steplist">
+<div class="step-row">
+<div class="step-num">
+<p>1</p>
 </div>
-</section>
-<section id="the-tanh-and-sigmoid-activation-functions-visualized" class="slide level2 center">
-<h2>The tanh and sigmoid Activation Functions Visualized</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
-tanh and sigmoid Activation Functions
-</p>
-<p><img src="tanh_sigmoid_transparent.svg" style="max-height: 490px; max-width: 100%; width: auto;"></p>
+<div class="step-title">
+<p>Data</p>
+</div>
+<div class="step-desc">
+<p>Target variable and predictors</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>2</p>
+</div>
+<div class="step-title">
+<p>Split and scale</p>
+</div>
+<div class="step-desc">
+<p>Chronological training, validation and test split, standardization fitted on the training sample only</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>3</p>
+</div>
+<div class="step-title">
+<p>DataLoaders</p>
+</div>
+<div class="step-desc">
+<p>Tensors in mini-batches</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>4</p>
+</div>
+<div class="step-title">
+<p>Model</p>
+</div>
+<div class="step-desc">
+<p>An <code>nn.Module</code> defining the architecture</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>5</p>
+</div>
+<div class="step-title">
+<p>Ingredients</p>
+</div>
+<div class="step-desc">
+<p>Objective, optimizer, initialization, regularization, early stopping, loss</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>6</p>
+</div>
+<div class="step-title">
+<p>Training loop</p>
+</div>
+<div class="step-desc">
+<p>Training and validation over epochs</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>7</p>
+</div>
+<div class="step-title">
+<p>Evaluation</p>
+</div>
+<div class="step-desc">
+<p>Out-of-sample accuracy measures on the test sample</p>
+</div>
+</div>
 </div>
 </section>
 <section id="preliminaries" class="slide level2 center">
 <h2>Preliminaries</h2>
-<ul>
-<li>We consider a general blueprint for forecasting with neural networks and a specific example of forecasting US quarterly inflation with a feedforward neural network</li>
-</ul>
+<p>We consider a general blueprint for forecasting with neural networks and a specific example of forecasting US quarterly inflation with a feedforward neural network</p>
 <div>
 <div id="pyodide-2" class="exercise-cell">
 
@@ -454,74 +715,138 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 </section>
 <section id="empirical-data" class="slide level2 center">
 <h2>Empirical Data</h2>
-<ul>
-<li>US quarterly macro data 1959Q1-2009Q3 (no missing values)</li>
-</ul>
+<p>US quarterly macro data 1959Q1-2009Q3 (no missing values)</p>
 <div>
 <div id="pyodide-3" class="exercise-cell">
 
 </div>
 <script type="pyodide-3-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImRmID0gcGQucmVhZF9jc3YoXCJtYWNyb2RhdGEuY3N2XCIpLmlsb2NbMTpdXG5zZXJpZXMgPSBkZltbXCJpbmZsXCIsIFwidW5lbXBcIiwgXCJ0YmlscmF0ZVwiXV0udG9fbnVtcHkoKSAgICMgKFQsIDMpXG5pbmZsID0gc2VyaWVzWzosIDBdXG5cbiMgRmVhdHVyZXMgYXQgdGltZSB0IChpbmZsYXRpb24sIHVuZW1wbG95bWVudCwgVC1iaWxsIHJhdGUpLCB0YXJnZXQgaXMgaW5mbGF0aW9uIGF0IHRpbWUgdCsxXG5YID0gc2VyaWVzWzotMV1cbnRhcmdldCA9IGluZmxbMTpdLnJlc2hhcGUoLTEsIDEpIn0=
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImRmID0gcGQucmVhZF9jc3YoXCJtYWNyb2RhdGEuY3N2XCIpLmlsb2NbMTpdXG5zZXJpZXMgPSBkZltbXCJpbmZsXCIsIFwidW5lbXBcIiwgXCJ0YmlscmF0ZVwiXV0udG9fbnVtcHkoKSAgICMgKFQsIDMpXG5pbmZsID0gc2VyaWVzWzosIDBdIn0=
 </script>
 </div>
-</section>
-<section id="data-splitting-and-standardization" class="slide level2 center">
-<h2>Data Splitting and Standardization</h2>
-<ul>
-<li>Chronological split (shuffle=False) to preserve temporal order (split: 70:15:15)</li>
-</ul>
+<p>Lagged features: inflation, unemployment and the T-bill rate at time <span class="math inline">\(t\)</span> are used to predict inflation at time <span class="math inline">\(t+1\)</span></p>
 <div>
 <div id="pyodide-4" class="exercise-cell">
 
 </div>
 <script type="pyodide-4-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IlhfdHJhaW4sIFhfdG1wLCB5X3RyYWluLCB5X3RtcCA9IHRyYWluX3Rlc3Rfc3BsaXQoWCwgdGFyZ2V0LCB0ZXN0X3NpemU9MC4zLCBzaHVmZmxlPUZhbHNlKVxuWF92YWwsIFhfdGVzdCwgeV92YWwsIHlfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoWF90bXAsIHlfdG1wLCB0ZXN0X3NpemU9MC41LCBzaHVmZmxlPUZhbHNlKVxuXG4jIFN0YW5kYXJkaXphdGlvbiwgZml0dGluZyBvbiB0aGUgdHJhaW5pbmcgc2FtcGxlIG9ubHlcblhfc2NhbGVyID0gU3RhbmRhcmRTY2FsZXIoKVxueV9zY2FsZXIgPSBTdGFuZGFyZFNjYWxlcigpXG5cblhfdHJhaW4gPSBYX3NjYWxlci5maXRfdHJhbnNmb3JtKFhfdHJhaW4pXG5YX3ZhbCA9IFhfc2NhbGVyLnRyYW5zZm9ybShYX3ZhbClcblhfdGVzdCA9IFhfc2NhbGVyLnRyYW5zZm9ybShYX3Rlc3QpXG5cbnlfdHJhaW4gPSB5X3NjYWxlci5maXRfdHJhbnNmb3JtKHlfdHJhaW4pXG55X3ZhbCA9IHlfc2NhbGVyLnRyYW5zZm9ybSh5X3ZhbClcbnlfdGVzdCA9IHlfc2NhbGVyLnRyYW5zZm9ybSh5X3Rlc3QpIn0=
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IlggPSBzZXJpZXNbOi0xXVxudGFyZ2V0ID0gaW5mbFsxOl0ucmVzaGFwZSgtMSwgMSkifQ==
 </script>
 </div>
 </section>
-<section id="constructing-dataloaders" class="slide level2 center">
-<h2>Constructing DataLoaders</h2>
-<ul>
-<li>The input data is converted to the format that PyTorch expects</li>
-<li>This is incredibly efficient for large or specialized datasets</li>
-</ul>
+<section id="temporally-conscious-data-splitting" class="slide level2 center">
+<h2>Temporally Conscious Data Splitting</h2>
+<p>Chronological split (shuffle=False) to preserve temporal order (split: 70:15:15)</p>
+<div class="splitbar">
+<div class="sb-train" style="flex: 70">
+<p>Train (70%)</p>
+</div>
+<div class="sb-val" style="flex: 15">
+<p>Validation (15%)</p>
+</div>
+<div class="sb-test" style="flex: 15">
+<p>Test (15%)</p>
+</div>
+</div>
 <div>
 <div id="pyodide-5" class="exercise-cell">
 
 </div>
 <script type="pyodide-5-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IlhfdHJhaW4gPSB0b3JjaC5mcm9tX251bXB5KFhfdHJhaW4pLmZsb2F0KCkudG8oZGV2aWNlKVxuWF92YWwgPSB0b3JjaC5mcm9tX251bXB5KFhfdmFsKS5mbG9hdCgpLnRvKGRldmljZSlcblhfdGVzdCA9IHRvcmNoLmZyb21fbnVtcHkoWF90ZXN0KS5mbG9hdCgpLnRvKGRldmljZSlcbnlfdHJhaW4gPSB0b3JjaC5mcm9tX251bXB5KHlfdHJhaW4pLmZsb2F0KCkudG8oZGV2aWNlKVxueV92YWwgPSB0b3JjaC5mcm9tX251bXB5KHlfdmFsKS5mbG9hdCgpLnRvKGRldmljZSlcbnlfdGVzdCA9IHRvcmNoLmZyb21fbnVtcHkoeV90ZXN0KS5mbG9hdCgpLnRvKGRldmljZSlcblxuZGZUcmFpbiA9IFRlbnNvckRhdGFzZXQoWF90cmFpbiwgeV90cmFpbilcbmRmVmFsID0gVGVuc29yRGF0YXNldChYX3ZhbCwgeV92YWwpXG5kZlRlc3QgPSBUZW5zb3JEYXRhc2V0KFhfdGVzdCwgeV90ZXN0KVxuXG5sVHJhaW4gPSBEYXRhTG9hZGVyKGRmVHJhaW4sIGJhdGNoX3NpemUgPSAzMiwgc2h1ZmZsZSA9IEZhbHNlKVxubFZhbCA9IERhdGFMb2FkZXIoZGZWYWwsIGJhdGNoX3NpemUgPSAzMiwgc2h1ZmZsZSA9IEZhbHNlKVxubFRlc3QgPSBEYXRhTG9hZGVyKGRmVGVzdCwgYmF0Y2hfc2l6ZSA9IDMyLCBzaHVmZmxlID0gRmFsc2UpIn0=
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IlhfdHJhaW4sIFhfdG1wLCB5X3RyYWluLCB5X3RtcCA9IHRyYWluX3Rlc3Rfc3BsaXQoWCwgdGFyZ2V0LCB0ZXN0X3NpemU9MC4zLCBzaHVmZmxlPUZhbHNlKVxuWF92YWwsIFhfdGVzdCwgeV92YWwsIHlfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoWF90bXAsIHlfdG1wLCB0ZXN0X3NpemU9MC41LCBzaHVmZmxlPUZhbHNlKSJ9
+</script>
+</div>
+</section>
+<section id="standardization" class="slide level2 center">
+<h2>Standardization</h2>
+<div>
+<div id="pyodide-6" class="exercise-cell">
+
+</div>
+<script type="pyodide-6-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IiMgU3RhbmRhcmRpemF0aW9uLCBmaXR0aW5nIG9uIHRoZSB0cmFpbmluZyBzYW1wbGUgb25seVxuWF9zY2FsZXIgPSBTdGFuZGFyZFNjYWxlcigpXG55X3NjYWxlciA9IFN0YW5kYXJkU2NhbGVyKClcblxuWF90cmFpbiA9IFhfc2NhbGVyLmZpdF90cmFuc2Zvcm0oWF90cmFpbilcblhfdmFsID0gWF9zY2FsZXIudHJhbnNmb3JtKFhfdmFsKVxuWF90ZXN0ID0gWF9zY2FsZXIudHJhbnNmb3JtKFhfdGVzdClcblxueV90cmFpbiA9IHlfc2NhbGVyLmZpdF90cmFuc2Zvcm0oeV90cmFpbilcbnlfdmFsID0geV9zY2FsZXIudHJhbnNmb3JtKHlfdmFsKVxueV90ZXN0ID0geV9zY2FsZXIudHJhbnNmb3JtKHlfdGVzdCkifQ==
+</script>
+</div>
+</section>
+<section id="tensors" class="slide level2 center">
+<h2>Tensors</h2>
+<div class="flow">
+<div class="fn-navy">
+<p>NumPy array</p>
+</div>
+<div class="fn">
+<p><code>torch.Tensor</code></p>
+</div>
+<div class="fn">
+<p><code>TensorDataset</code></p>
+</div>
+<div class="fn">
+<p><code>DataLoader</code></p>
+</div>
+</div>
+<p>The input data is converted to the format that PyTorch expects</p>
+<div>
+<div id="pyodide-7" class="exercise-cell">
+
+</div>
+<script type="pyodide-7-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IlhfdHJhaW4gPSB0b3JjaC5mcm9tX251bXB5KFhfdHJhaW4pLmZsb2F0KCkudG8oZGV2aWNlKVxuWF92YWwgPSB0b3JjaC5mcm9tX251bXB5KFhfdmFsKS5mbG9hdCgpLnRvKGRldmljZSlcblhfdGVzdCA9IHRvcmNoLmZyb21fbnVtcHkoWF90ZXN0KS5mbG9hdCgpLnRvKGRldmljZSlcbnlfdHJhaW4gPSB0b3JjaC5mcm9tX251bXB5KHlfdHJhaW4pLmZsb2F0KCkudG8oZGV2aWNlKVxueV92YWwgPSB0b3JjaC5mcm9tX251bXB5KHlfdmFsKS5mbG9hdCgpLnRvKGRldmljZSlcbnlfdGVzdCA9IHRvcmNoLmZyb21fbnVtcHkoeV90ZXN0KS5mbG9hdCgpLnRvKGRldmljZSkifQ==
+</script>
+</div>
+</section>
+<section id="constructing-dataloaders" class="slide level2 center">
+<h2>Constructing DataLoaders</h2>
+<p>This is incredibly efficient for large or specialized datasets</p>
+<div>
+<div id="pyodide-8" class="exercise-cell">
+
+</div>
+<script type="pyodide-8-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImRmVHJhaW4gPSBUZW5zb3JEYXRhc2V0KFhfdHJhaW4sIHlfdHJhaW4pXG5kZlZhbCA9IFRlbnNvckRhdGFzZXQoWF92YWwsIHlfdmFsKVxuZGZUZXN0ID0gVGVuc29yRGF0YXNldChYX3Rlc3QsIHlfdGVzdClcblxubFRyYWluID0gRGF0YUxvYWRlcihkZlRyYWluLCBiYXRjaF9zaXplID0gMzIsIHNodWZmbGUgPSBGYWxzZSlcbmxWYWwgPSBEYXRhTG9hZGVyKGRmVmFsLCBiYXRjaF9zaXplID0gMzIsIHNodWZmbGUgPSBGYWxzZSlcbmxUZXN0ID0gRGF0YUxvYWRlcihkZlRlc3QsIGJhdGNoX3NpemUgPSAzMiwgc2h1ZmZsZSA9IEZhbHNlKSJ9
 </script>
 </div>
 </section>
 <section id="the-simple-neural-network-i" class="slide level2 center">
 <h2>The Simple Neural Network I</h2>
+<p>PyTorch neural networks are defined as subclasses of <code>nn.Module</code></p>
+<div class="flow">
+<div class="fn-navy">
+<p>Input <span class="fn-sub"><code>n_in</code> features</span></p>
+</div>
+<div class="fn">
+<p><code>fc1</code> + ReLU <span class="fn-sub"><code>n_hidden1</code> neurons</span></p>
+</div>
+<div class="fn">
+<p><code>fc2</code> + ReLU <span class="fn-sub"><code>n_hidden2</code> neurons</span></p>
+</div>
+<div class="fn-amber">
+<p><code>fc3</code> <span class="fn-sub">1 output</span></p>
+</div>
+</div>
 <ul>
-<li>PyTorch neural networks are defined as subclasses of <code>nn.Module</code></li>
-<li>Parameters are passed after <code>self</code> (here <code>n_in</code> and <code>n_hidden</code>)</li>
-<li><code>n_in</code> is the number of input features, <code>n_hidden</code> is the number of neurons in the hidden layers</li>
+<li>Parameters are passed after <code>self</code> (here <code>n_in</code>, <code>n_hidden1</code> and <code>n_hidden2</code>)</li>
+<li><code>n_in</code> is the number of input features, <code>n_hidden1</code> and <code>n_hidden2</code> are the numbers of neurons in the first and second hidden layer</li>
 <li>The network on the next slide has two hidden layers</li>
 </ul>
 </section>
 <section id="the-simple-neural-network-ii" class="slide level2 center">
 <h2>The Simple Neural Network II</h2>
 <div>
-<div id="pyodide-6" class="exercise-cell">
+<div id="pyodide-9" class="exercise-cell">
 
 </div>
-<script type="pyodide-6-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNsYXNzIE5OKG5uLk1vZHVsZSk6XG4gICAgZGVmIF9faW5pdF9fKHNlbGYsIG5faW4sIG5faGlkZGVuPTE2KTpcbiAgICAgICAgc3VwZXIoTk4sIHNlbGYpLl9faW5pdF9fKClcbiAgICAgICAgc2VsZi5mYzEgPSBubi5MaW5lYXIobl9pbiwgbl9oaWRkZW4pXG4gICAgICAgIHNlbGYuZmMyID0gbm4uTGluZWFyKG5faGlkZGVuLCBuX2hpZGRlbilcbiAgICAgICAgc2VsZi5mYzMgPSBubi5MaW5lYXIobl9oaWRkZW4sIDEpXG5cbiAgICBkZWYgZm9yd2FyZChzZWxmLCB4KTpcbiAgICAgICAgeCA9IEYucmVsdShzZWxmLmZjMSh4KSlcbiAgICAgICAgeCA9IEYucmVsdShzZWxmLmZjMih4KSlcbiAgICAgICAgeCA9IHNlbGYuZmMzKHgpXG5cbiAgICAgICAgcmV0dXJuIHgifQ==
+<script type="pyodide-9-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNsYXNzIE5OKG5uLk1vZHVsZSk6XG4gICAgZGVmIF9faW5pdF9fKHNlbGYsIG5faW4sIG5faGlkZGVuMT0xNiwgbl9oaWRkZW4yPTgpOlxuICAgICAgICBzdXBlcihOTiwgc2VsZikuX19pbml0X18oKVxuICAgICAgICBzZWxmLmZjMSA9IG5uLkxpbmVhcihuX2luLCBuX2hpZGRlbjEpXG4gICAgICAgIHNlbGYuZmMyID0gbm4uTGluZWFyKG5faGlkZGVuMSwgbl9oaWRkZW4yKVxuICAgICAgICBzZWxmLmZjMyA9IG5uLkxpbmVhcihuX2hpZGRlbjIsIDEpXG5cbiAgICBkZWYgZm9yd2FyZChzZWxmLCB4KTpcbiAgICAgICAgeCA9IEYucmVsdShzZWxmLmZjMSh4KSlcbiAgICAgICAgeCA9IEYucmVsdShzZWxmLmZjMih4KSlcbiAgICAgICAgeCA9IHNlbGYuZmMzKHgpXG5cbiAgICAgICAgcmV0dXJuIHgifQ==
 </script>
 </div>
 </section>
 <section id="training-a-neural-network-i" class="slide level2 center">
 <h2>Training a Neural Network I</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<div class="figblock">
+<p class="fig-title">
 xkcd #1838
 </p>
-<p><img src="xkcd.svg" style="max-height: 490px; max-width: 100%; width: auto;"></p>
+<p><img src="xkcd.svg"></p>
 </div>
 </section>
 <section id="training-a-neural-network-ii" class="slide level2 center">
@@ -530,31 +855,41 @@ xkcd #1838
 <li>We give this example in the <span class="math inline">\(h = 1\)</span> case,</li>
 </ul>
 <p><span class="math display">\[f(\mathbf{X}) = \beta_0 + \sum_{k = 1}^{K_1} \beta_k A_k^{(1)} = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g_1\left(w_{k0}^{(1)}+\sum_{j=1}^p\omega_{kj}^{(1)}X_j \right)\]</span></p>
-<ul>
-<li>The parameters to be estimated are <span class="math inline">\(\beta_0, \beta_1, \ldots, \beta_{K_1}\)</span> and <span class="math inline">\(\omega_{kj}^{(1)}\)</span> for <span class="math inline">\(k = 1, \ldots, K_1\)</span> and <span class="math inline">\(j = 1, \ldots, p\)</span></li>
-</ul>
+<p>The parameters to be estimated are</p>
+<div class="triad cols-2">
+<div class="triad-card">
+<p><span class="tc-tag">Output layer</span></p>
+<p><span class="math inline">\(\boldsymbol{\beta} = \beta_0, \beta_1, \ldots, \beta_{K_1}\)</span></p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Hidden layer</span></p>
+<p><span class="math inline">\(\boldsymbol{\omega}^{(1)} = \omega_{kj}^{(1)}\)</span> for <span class="math inline">\(k = 1, \ldots, K_1\)</span> and <span class="math inline">\(j = 1, \ldots, p\)</span></p>
+</div>
+</div>
+<p>Stack the parameters into a vector: <span class="math inline">\(\theta = (\boldsymbol{\beta}, \boldsymbol{\omega}^{(1)})\)</span></p>
 </section>
 <section id="objective-function" class="slide level2 center">
 <h2>Objective Function</h2>
-<ul>
-<li>We assume a squared loss function to estimate parameters <span class="math inline">\(\theta = \left(\boldsymbol{\beta}, \{\omega_k^{(1)}\}_1^{K_1}\right)\)</span></li>
-<li>For a single-hidden-layer network (<span class="math inline">\(H=1\)</span>), the model forecast for observation <span class="math inline">\(i\)</span> is:</li>
-</ul>
+<p>We assume a squared loss function to estimate parameters <span class="math inline">\(\theta\)</span></p>
+<p>For a single-hidden-layer network (<span class="math inline">\(H=1\)</span>), the model forecast for observation <span class="math inline">\(i\)</span> is,</p>
 <p><span class="math display">\[ f_\theta(x_i) = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g\left(\omega_{k0}^{(1)}+\sum_{j=1}^p\omega_{kj}^{(1)}x_{ij} \right) \]</span></p>
-<ul>
-<li>Vectorising the parameters into <span class="math inline">\(\theta\)</span>, we minimize the objective function <span class="math inline">\(R(\theta)\)</span>:</li>
-</ul>
-<p><span class="math display">\[ \min_\theta \{R(\theta)\} = \min_\theta \left\{\frac12\sum_{i = 1}^n(y_i - f_\theta(x_i))^2\right\}, \quad R(\theta) = \frac12\sum_{i = 1}^n(y_i - f_\theta(x_i))^2 \]</span></p>
+<p>Vectorising the parameters into <span class="math inline">\(\theta\)</span>, we minimize the objective function <span class="math inline">\(R(\theta)\)</span>:</p>
+<p><span class="math display">\[ \min_\theta \{R(\theta)\}, \quad R(\theta) = \frac12\sum_{i = 1}^n(y_i - f_\theta(x_i))^2 \]</span></p>
 </section>
 <section id="numerical-optimization-i" class="slide level2 center">
 <h2>Numerical Optimization I</h2>
-<ul>
-<li>The optimization problem is non-convex and high-dimensional <span class="math inline">\(\Rightarrow\)</span> no closed form/no analytical solution</li>
-<li>We use numerical optimization</li>
-<li>Gradient descent is a common numerical optimization algorithm</li>
-<li>Too heavy computationally <span class="math inline">\(\Rightarrow\)</span> stochastic gradient descent (SGD) is used instead</li>
-<li>Use only a small batch of data to compute the gradient and update the parameters at each iteration</li>
-</ul>
+<div class="flow">
+<div class="fn-navy">
+<p>Non-convex and high-dimensional problem <span class="fn-sub">no closed form, no analytical solution</span></p>
+</div>
+<div class="fn">
+<p>Numerical optimization <span class="fn-sub">gradient descent is a common algorithm</span></p>
+</div>
+<div class="fn-amber">
+<p>Too heavy computationally <span class="fn-sub">stochastic gradient descent (SGD) is used instead</span></p>
+</div>
+</div>
+<p>SGD uses only a small batch of data to compute the gradient and update the parameters at each iteration</p>
 </section>
 <section id="numerical-optimization-ii-gradient-descent" class="slide level2 center">
 <h2>Numerical Optimization II — Gradient Descent</h2>
@@ -598,69 +933,171 @@ xkcd #1838
 </section>
 <section id="backpropagation-i" class="slide level2 center">
 <h2>Backpropagation I</h2>
+<div class="triad cols-2">
+<div class="triad-card tc-brick">
+<p><span class="tc-tag">The problem</span></p>
 <ul>
 <li>The numerical optimization, even in the SGD case, has incredibly high computational overhead</li>
 <li>Weights require the chain rule to compute derivatives</li>
-<li>Backpropagation eases the burden of this</li>
-<li>Backpropagation is a recursive application of the chain rule to compute the gradient of the loss</li>
 </ul>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">The solution</span> - Backpropagation is a recursive application of the chain rule to compute the gradient of the loss - Therefore, backpropagation eases the burden of computational costs</p>
+</div>
+</div>
 </section>
 <section id="backpropagation-ii" class="slide level2 center">
 <h2>Backpropagation II</h2>
-<ul>
-<li>Recall the objective,</li>
-</ul>
+<p>Recall the objective,</p>
 <p><span class="math display">\[ R(\theta) = \sum_{i = 1}^n R_i(\theta) = \frac12\sum_{i = 1}^n(y_i - f_\theta(x_i))^2\]</span></p>
-<ul>
-<li>This is a sum, which means the gradient is a sum over the <span class="math inline">\(n\)</span> observations, so we consider only one of these,</li>
-</ul>
+<p>A sum, which means the gradient is a sum over the <span class="math inline">\(n\)</span> observations, so we need only consider one of these,</p>
 <p><span class="math display">\[R_i(\theta) = \frac12\left(y_i - \beta_0- \sum_{k = 1}^{K_1}\beta_k g_1\left(\omega_{k0}+\sum_{j = 1}^p\omega_{kj}x_{ij}\right)\right)^2\]</span></p>
 </section>
-<section id="backpropagation-iii" class="slide level2 center">
+<section id="backpropagation-iii" class="slide level2 bp center">
 <h2>Backpropagation III</h2>
-<ul>
-<li>Define <span class="math inline">\(z_{ik} = \omega_{k0} + \sum_{j = 1}^p\omega_{kj}x_{ij}\)</span></li>
-<li>Computing the derivative w.r.t. <span class="math inline">\(\beta_k\)</span>,</li>
-</ul>
+<p>Define <span class="math inline">\(z_{ik} = \omega_{k0} + \sum_{j = 1}^p\omega_{kj}x_{ij}\)</span></p>
+<p>The output weight <span class="math inline">\(\beta_k\)</span> enters the forecast directly: <span class="math inline">\(f_\theta(x_i) = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g(z_{ik})\)</span></p>
+<div class="flow-label">
+<p>Forward pass: compute the forecast and the loss</p>
+</div>
+<div class="flow">
+<div class="fn">
+<p><span class="math inline">\(\beta_k\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(f_\theta(x_i)\)</span></p>
+</div>
+<div class="fn-navy">
+<p><span class="math inline">\(R_i(\theta)\)</span></p>
+</div>
+</div>
+<div class="flow-label">
+<p>Backward pass: multiply the derivatives (chain rule)</p>
+</div>
+<div class="flow back">
+<div class="fn">
+<p><span class="math inline">\(\dfrac{\partial f_\theta(x_i)}{\partial \beta_k}\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)}\)</span></p>
+</div>
+</div>
+<p>Computing the derivative w.r.t. <span class="math inline">\(\beta_k\)</span>,</p>
 <p><span class="math display">\[
 \begin{aligned}
 \frac{\partial R_i(\theta)}{\partial \beta_k} &amp;= \frac{\partial R_i(\theta)}{\partial f_\theta(x_i)} \cdot \frac{\partial f_\theta(x_i)}{\partial \beta_k} \\ &amp;= -(y_i - f_\theta(x_i)) \cdot g(z_{ik})
 \end{aligned}
 \]</span></p>
 </section>
-<section id="backpropagation-iv" class="slide level2 center">
+<section id="backpropagation-iv" class="slide level2 bp center">
 <h2>Backpropagation IV</h2>
-<ul>
-<li>Computing the derivative w.r.t. <span class="math inline">\(\omega_{kj}\)</span>,</li>
-</ul>
+<p>Define <span class="math inline">\(z_{ik} = \omega_{k0} + \sum_{j = 1}^p\omega_{kj}x_{ij}\)</span></p>
+<div class="flow-label">
+<p>Forward pass: compute the forecast and the loss</p>
+</div>
+<div class="flow">
+<div class="fn">
+<p><span class="math inline">\(x_{ij}\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(z_{ik}\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(g(z_{ik})\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(f_\theta(x_i)\)</span></p>
+</div>
+<div class="fn-navy">
+<p><span class="math inline">\(R_i(\theta)\)</span></p>
+</div>
+</div>
+<div class="flow-label">
+<p>Backward pass: multiply the derivatives (chain rule)</p>
+</div>
+<div class="flow back">
+<div class="fn">
+<p><span class="math inline">\(\dfrac{\partial z_{ik}}{\partial \omega_{kj}}\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(\dfrac{\partial g_1(z_{ik})}{\partial z_{ik}}\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(\dfrac{\partial f_\theta(x_i)}{\partial g(z_{ik})}\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)}\)</span></p>
+</div>
+</div>
+<p>Computing the derivative w.r.t. <span class="math inline">\(\omega_{kj}\)</span>,</p>
 <p><span class="math display">\[
 \begin{aligned}
 \frac{\partial R_i(\theta)}{\partial \omega_{kj}} &amp;= \frac{\partial R_i(\theta)}{\partial f_\theta(x_i)} \cdot \frac{\partial f_\theta(x_i)}{\partial g(z_{ik})} \cdot \frac{\partial g_1(z_{ik})}{\partial z_{ik}} \cdot \frac{\partial z_{ik}}{\partial \omega_{kj}} \\ &amp;= -(y_i - f_\theta(x_i)) \cdot \beta_k \cdot g'(z_{ik}) \cdot x_{ij}
 \end{aligned}
 \]</span></p>
+</section>
+<section id="backpropagation-v-update-rules" class="slide level2 center">
+<h2>Backpropagation V: Update Rules</h2>
+<p>The two derivatives form the basis for the update rules, with step size <span class="math inline">\(s\)</span> and one observation <span class="math inline">\(i\)</span> per step</p>
+<div class="triad cols-2 big">
+<div class="triad-card">
+<p><span class="tc-tag">Output weight</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\beta_k^{(t + 1)} &amp;= \beta_k^{(t)} - s\,\frac{\partial R_i}{\partial \beta_k} \\
+&amp;= \beta_k^{(t)} + s\,(y_i - f_\theta(x_i))\,g(z_{ik})
+\end{aligned}
+\]</span></p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Hidden weight</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\omega_{kj}^{(t + 1)} &amp;= \omega_{kj}^{(t)} - s\,\frac{\partial R_i}{\partial \omega_{kj}} \\
+&amp;= \omega_{kj}^{(t)} + s\,(y_i - f_\theta(x_i))\,\beta_k\,g'(z_{ik})\,x_{ij}
+\end{aligned}
+\]</span></p>
+</div>
+</div>
 <ul>
-<li>Both expressions contain <span class="math inline">\((y_i - f_\theta(x_i))\)</span></li>
+<li>Both updates contain the forecast error <span class="math inline">\((y_i - f_\theta(x_i))\)</span></li>
 <li>This error term is attributed to the parameters via the terms <span class="math inline">\(g(z_{ik})\)</span> and <span class="math inline">\(\beta_k g'(z_{ik}) x_{ij}\)</span></li>
-<li>Form basis for update rules, <span class="math inline">\(\beta_k^{(i + 1)} \leftarrow \beta_k^{(i)} - s,\frac{\partial R_i}{\partial \beta_k}\)</span>, <span class="math inline">\(\quad \omega_{kj}^{(i + 1)} \leftarrow \omega_{kj}^{(i)} - s,\frac{\partial R_i}{\partial \omega_{kj}^{(i)}}\)</span></li>
 </ul>
 </section>
 <section id="optimization-algorithms" class="slide level2 center">
 <h2>Optimization Algorithms</h2>
-<ul>
-<li>Stochastic Gradient Descent is rarely used in practice today</li>
-<li>Instead, the ADAM (Kingma &amp; Ba, 2014), a combination of RMSProp and momentum, is commonly preferred</li>
-<li>RMSProp uses smaller steps for parameters with large recent gradients</li>
-<li>Momentum averages past gradients to smooth noise and speed up</li>
-<li>Specifying optimizers (common alternatives: <code>torch.optim.SGD</code>, <code>torch.optim.RMSprop</code>, <code>torch.optim.AdamW</code>),</li>
-</ul>
+<div class="keypoint">
+<p>Stochastic Gradient Descent is rarely used in practice today</p>
+</div>
+<div class="triad">
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Building block</span></p>
+<p><span class="tc-title">RMSProp</span></p>
+<p>Uses smaller steps for parameters with large recent gradients</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Building block</span></p>
+<p><span class="tc-title">Momentum</span></p>
+<p>Averages past gradients to smooth noise and speed up</p>
+</div>
+<div class="triad-card tc-navy">
+<p><span class="tc-tag">Commonly preferred</span></p>
+<p><span class="tc-title">ADAM</span></p>
+<p>A combination of RMSProp and momentum (Kingma &amp; Ba, 2014)</p>
+</div>
+</div>
+</section>
+<section id="specifying-the-optimizer" class="slide level2 center">
+<h2>Specifying the Optimizer</h2>
 <div>
-<div id="pyodide-7" class="exercise-cell">
+<div id="pyodide-10" class="exercise-cell">
 
 </div>
-<script type="pyodide-7-contents">
+<script type="pyodide-10-contents">
 eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImltcG9ydCB0b3JjaFxuXG5vcHRpbWlzZXIgPSB0b3JjaC5vcHRpbS5BZGFtKG1vZGVsLnBhcmFtZXRlcnMoKSwgbHIgPSAwLjAwMSkifQ==
 </script>
 </div>
+<p>Common alternatives: <code>torch.optim.SGD</code>, <code>torch.optim.RMSprop</code>, <code>torch.optim.AdamW</code></p>
 </section>
 <section id="initialization-of-parameters-i" class="slide level2 center">
 <h2>Initialization of Parameters I</h2>
@@ -668,143 +1105,361 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 <li>The network parameters are initialized at random — <code>nn.Linear</code> uniformly</li>
 <li>If identical weights, the neurons within a layer would have identical values (thus gradients)</li>
 <li>Random initialization <span class="math inline">\(\Rightarrow\)</span> differing forecasts — we might want to ensemble</li>
-<li>Common choices of initialization, <code>torch.nn.init</code>:</li>
-<li>Xavier (Glorot &amp; Bengio, 2010) for <code>torch.tanh</code> and <code>torch.sigmoid</code> activations,</li>
-<li><code>.xavier_uniform_</code>, <code>.xavier_normal_</code>, <span class="math inline">\(\operatorname{Var}(\omega_{kj}^{(h)}) = 2/(K_{h-1}+K_h)\)</span></li>
-<li>He (He et al., 2015) for <code>F.relu</code>,</li>
-<li><code>.kaiming_uniform_</code>, <code>.kaiming_normal_</code>, <span class="math inline">\(\operatorname{Var}(\omega_{kj}^{(h)}) = 2/K_{h-1}\)</span></li>
 </ul>
+<p>Common choices of initialization, <code>torch.nn.init</code>:</p>
+<div class="compare">
+<div class="compare-col">
+<p><span class="cmp-title">Xavier (Glorot &amp; Bengio, 2010)</span></p>
+<ul>
+<li>For <code>torch.tanh</code> and <code>torch.sigmoid</code> activations</li>
+<li><code>.xavier_uniform_</code>, <code>.xavier_normal_</code></li>
+<li><span class="math inline">\(\operatorname{Var}(\omega_{kj}^{(h)}) = 2/(K_{h-1}+K_h)\)</span></li>
+</ul>
+</div>
+<div class="compare-col cmp-alt">
+<p><span class="cmp-title">He (He et al., 2015)</span></p>
+<ul>
+<li>For <code>F.relu</code></li>
+<li><code>.kaiming_uniform_</code>, <code>.kaiming_normal_</code></li>
+<li><span class="math inline">\(\operatorname{Var}(\omega_{kj}^{(h)}) = 2/K_{h-1}\)</span></li>
+</ul>
+</div>
+</div>
 </section>
 <section id="initialization-of-parameters-ii" class="slide level2 center">
 <h2>Initialization of Parameters II</h2>
-<ul>
-<li>Specifying He initialization for all linear layers,</li>
-</ul>
-<div>
-<div id="pyodide-8" class="exercise-cell">
-
-</div>
-<script type="pyodide-8-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImltcG9ydCB0b3JjaC5ubiBhcyBublxuXG5kZWYgaW5pdF93ZWlnaHRzKG0pOlxuICAgIGlmIGlzaW5zdGFuY2UobSwgbm4uTGluZWFyKTpcbiAgICAgICAgbm4uaW5pdC5rYWltaW5nX25vcm1hbF8obS53ZWlnaHQsIG5vbmxpbmVhcml0eSA9IFwicmVsdVwiKVxuICAgICAgICBubi5pbml0Lnplcm9zXyhtLmJpYXMpXG5cbm1vZGVsLmFwcGx5KGluaXRfd2VpZ2h0cykifQ==
-</script>
-</div>
-</section>
-<section id="dropout" class="slide level2 center">
-<h2>Dropout</h2>
-<ul>
-<li>Dropout (Srivastava et al., 2014): <code>nn.Dropout(p)</code> is applied in every training step</li>
-<li>Each neuron in the layer is set to zero with probability <span class="math inline">\(p\)</span>, e.g., <span class="math inline">\(p = 0.5\)</span></li>
-<li>Neurons are made more independent, so the network behaves like an average of many thinned networks (think bagged trees)</li>
-<li>Dropout is not applied in evaluation</li>
-<li>Applying dropout to layer <code>fc1</code> with specified probability <code>p=0.5</code></li>
-</ul>
-<div>
-<div id="pyodide-9" class="exercise-cell">
-
-</div>
-<script type="pyodide-9-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IiMgaW4gX19pbml0X19cbnNlbGYuZHJvcG91dCA9IG5uLkRyb3BvdXQocCA9IDAuNSlcblxuIyBpbiBmb3J3YXJkXG54ID0gc2VsZi5kcm9wb3V0KEYucmVsdShzZWxmLmZjMSh4KSkpIn0=
-</script>
-</div>
-</section>
-<section id="dropout-visualized" class="slide level2 center">
-<h2>Dropout Visualized</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
-Neural Network with Dropout = 0.5
-</p>
-<p><img src="NNDropout.svg" style="max-height: 490px; max-width: 100%; width: auto;"></p>
-</div>
-</section>
-<section id="mathcall_1-regularization" class="slide level2 center">
-<h2><span class="math inline">\(\mathcal{L}_1\)</span> Regularization</h2>
-<ul>
-<li><span class="math inline">\(\mathcal{L}_1\)</span> penalizes the absolute value of the weights, favouring sparse networks, with penalty added to the loss,</li>
-</ul>
-<p><span class="math display">\[\mathcal{L}(\omega) + \lambda\sum_{h,k,j}\left|\omega_{kj}^{(h)}\right|\]</span></p>
-<div>
-<div id="pyodide-10" class="exercise-cell">
-
-</div>
-<script type="pyodide-10-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImwxX2xhbWJkYSA9IDAuMDAwMVxuXG5sb3NzID0gY3JpdGVyaW9uKG91dHB1dHMsIHRhcmdldHMpXG5sb3NzID0gbG9zcyArIGwxX2xhbWJkYSAqIHN1bShwYXJhbS5hYnMoKS5zdW0oKSBmb3IgcGFyYW0gaW4gbW9kZWwucGFyYW1ldGVycygpKSJ9
-</script>
-</div>
-</section>
-<section id="mathcall_2-regularization" class="slide level2 center">
-<h2><span class="math inline">\(\mathcal{L}_2\)</span> Regularization</h2>
-<ul>
-<li>Weight decay (<span class="math inline">\(\mathcal{L}_2\)</span>) adds a penalty to the loss, shrinking the weights towards zero,</li>
-</ul>
-<p><span class="math display">\[\mathcal{L}(\omega) + \frac{\lambda}{2}\sum_{h,k,j}\left(\omega_{kj}^{(h)}\right)^2\]</span></p>
-<ul>
-<li>Weight decay is passed as an argument to the optimizer, e.g., <code>weight_decay = 0.01</code> in <code>Adam</code>,</li>
-</ul>
+<p>Specifying He initialization for all linear layers,</p>
 <div>
 <div id="pyodide-11" class="exercise-cell">
 
 </div>
 <script type="pyodide-11-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6Im9wdGltaXNlciA9IHRvcmNoLm9wdGltLkFkYW0obW9kZWwucGFyYW1ldGVycygpLCBsciA9IDAuMDAxLCB3ZWlnaHRfZGVjYXkgPSAwLjAxKSJ9
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImltcG9ydCB0b3JjaC5ubiBhcyBublxuXG5kZWYgaW5pdF93ZWlnaHRzKG0pOlxuICAgIGlmIGlzaW5zdGFuY2UobSwgbm4uTGluZWFyKTpcbiAgICAgICAgbm4uaW5pdC5rYWltaW5nX25vcm1hbF8obS53ZWlnaHQsIG5vbmxpbmVhcml0eSA9IFwicmVsdVwiKVxuICAgICAgICBubi5pbml0Lnplcm9zXyhtLmJpYXMpXG5cbm1vZGVsLmFwcGx5KGluaXRfd2VpZ2h0cykifQ==
 </script>
 </div>
 </section>
-<section id="epochs" class="slide level2 center">
-<h2>Epochs</h2>
-<ul>
-<li>The training process is iterative and involves multiple <strong>epochs</strong></li>
-<li>An epoch is a complete pass through the entire training dataset</li>
-<li>The number of epochs can be prespecified, tuned, or determined by early stopping</li>
-<li>Guard against overfitting</li>
-</ul>
+<section id="guards-against-overfitting" class="slide level2 center">
+<h2>Guards Against Overfitting</h2>
+<!-- ## Guarding Against Overfitting -->
+<div class="overview">
+<div class="ov-row">
+<div class="ov-label">
+<p>Dropout</p>
+</div>
+<div class="ov-desc">
+<p>Randomly sets neurons to zero in each training step</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p><span class="math inline">\(\mathcal{L}_1\)</span> regularization</p>
+</div>
+<div class="ov-desc">
+<p>Penalizes the absolute value of the weights, favouring sparse networks</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p><span class="math inline">\(\mathcal{L}_2\)</span> regularization (weight decay)</p>
+</div>
+<div class="ov-desc">
+<p>Shrinks the weights towards zero</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>Early stopping</p>
+</div>
+<div class="ov-desc">
+<p>Stops training when the validation loss no longer improves</p>
+</div>
+</div>
+</div>
+<!-- :::: {.steplist}
+::: {.step-row}
+::: {.step-num}
+1
+:::
+::: {.step-title}
+Dropout
+:::
+::: {.step-desc}
+Randomly sets neurons to zero in each training step
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+2
+:::
+::: {.step-title}
+$\mathcal{L}_1$ regularization
+:::
+::: {.step-desc}
+Penalizes the absolute value of the weights, favoring sparse networks
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+3
+:::
+::: {.step-title}
+$\mathcal{L}_2$ regularization (weight decay)
+:::
+::: {.step-desc}
+Shrinks the weights towards zero
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+4
+:::
+::: {.step-title}
+Early stopping
+:::
+::: {.step-desc}
+Stops training when the validation loss no longer improves
+:::
+:::
+:::: -->
+<!-- ## Guarding Against Overfitting
+
+::: {.act-table}
+| Method | Effect | Acts on |
+|:------------------------|:--------------------------------------------|:-----------:|
+| **Dropout** | Randomly sets neurons to zero in each training step | network |
+| **$\mathcal{L}_1$ regularization** | Penalizes the absolute value of the weights, favouring sparse networks | loss |
+| **$\mathcal{L}_2$ regularization** (weight decay) | Shrinks the weights towards zero | loss |
+| **Early stopping** | Stops training when the validation loss no longer improves | training loop |
+:::
+
+## Guarding Against Overfitting
+
+:::: {.flow}
+::: {.fn-navy}
+**Dropout**
+[Randomly sets neurons to zero in each training step]{.fn-sub}
+:::
+::: {.fn}
+**$\mathcal{L}_1$ and $\mathcal{L}_2$ regularization**
+[$\mathcal{L}_1$ penalizes the absolute value of the weights, favouring sparse networks. $\mathcal{L}_2$ (weight decay) shrinks the weights towards zero]{.fn-sub}
+:::
+::: {.fn-amber}
+**Early stopping**
+[Stops training when the validation loss no longer improves]{.fn-sub}
+:::
+:::: -->
 </section>
-<section id="early-stopping-i" class="slide level2 center">
-<h2>Early Stopping I</h2>
+<section id="dropout" class="slide level2 center">
+<h2>Dropout</h2>
+<div class="columns">
+<div class="column fs-sm" style="width:48%;">
 <ul>
-<li>We will discuss the bias-variance trade-off in more detail next week</li>
-<li>For now: when we keep training (increasing the number of epochs), we keep increasing the training accuracy</li>
-<li>The validation accuracy, our ability to generalize, will start to decrease after a certain point</li>
-<li>To implement early stopping, the training loop (see later slides) must be slightly modified</li>
-<li>We watch the validation loss, and when it has not improved for a certain number of epochs (patience), we stop training and restore the best model state</li>
+<li>Dropout (Srivastava et al., 2014): <code>nn.Dropout(p)</code> is applied in every training step</li>
+<li>Each neuron in the layer is set to zero with probability <span class="math inline">\(p\)</span>, e.g., <span class="math inline">\(p = 0.5\)</span></li>
+<li>Neurons are made more independent, so the network behaves like an average of many thinned networks (think bagged trees)</li>
+<li>Dropout is not applied in evaluation</li>
 </ul>
+</div><div class="column" style="width:52%;">
+<div class="figblock fb-s360">
+<p class="fig-title">
+Neural Network with Dropout = 0.5
+</p>
+<p><img src="NNDropout.svg"></p>
+</div>
+</div></div>
 </section>
-<section id="early-stopping-ii" class="slide level2 center">
-<h2>Early Stopping II</h2>
+<section id="dropout-in-pytorch" class="slide level2 center">
+<h2>Dropout in PyTorch</h2>
+<p>Applying dropout to layer <code>fc1</code> with specified probability <code>p=0.5</code></p>
 <div>
 <div id="pyodide-12" class="exercise-cell">
 
 </div>
 <script type="pyodide-12-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IiMgQmVmb3JlIHRyYWluaW5nXG5iZXN0X3ZhbCA9IGZsb2F0KFwiaW5mXCIpXG5wYXRpZW5jZSA9IDVcbndhaXQgPSAwXG5cbiMgQXQgdGhlIGVuZCBvZiBlYWNoIGVwb2NoXG4gICAgaWYgdmFsX2xvc3MgPCBiZXN0X3ZhbDpcbiAgICAgICAgYmVzdF92YWwgPSB2YWxfbG9zc1xuICAgICAgICBiZXN0X3N0YXRlID0ge2s6IHYuY2xvbmUoKSBmb3IgaywgdiBpbiBtb2RlbC5zdGF0ZV9kaWN0KCkuaXRlbXMoKX1cbiAgICAgICAgd2FpdCA9IDBcbiAgICBlbHNlOlxuICAgICAgICB3YWl0ICs9IDFcbiAgICAgICAgaWYgd2FpdCA9PSBwYXRpZW5jZTpcbiAgICAgICAgICAgIGJyZWFrXG5cbiMgUG9zdCB0cmFpbmluZywgcmVzdG9yaW5nIHRoZSBiZXN0IHN0YXRlIChmaXZlIG1vZGVscyBwcmlvciB0byBlYXJseSBzdG9wKVxubW9kZWwubG9hZF9zdGF0ZV9kaWN0KGJlc3Rfc3RhdGUpIn0=
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IiMgaW4gX19pbml0X19cbnNlbGYuZHJvcG91dCA9IG5uLkRyb3BvdXQocCA9IDAuNSlcblxuIyBpbiBmb3J3YXJkXG54ID0gc2VsZi5kcm9wb3V0KEYucmVsdShzZWxmLmZjMSh4KSkpIn0=
 </script>
 </div>
-</section>
-<section id="early-stopping-and-overfitting-visualized" class="slide level2 center">
-<h2>Early Stopping and Overfitting Visualized</h2>
+<!-- ## Dropout
+- Dropout (Srivastava et al., 2014): `nn.Dropout(p)` is applied in every training step
+- Each neuron in the layer is set to zero with probability $p$, e.g., $p = 0.5$
+- Neurons are made more independent, so the network behaves like an average of many thinned networks (think bagged trees)
+- Dropout is not applied in evaluation 
+- Applying dropout to layer `fc1` with specified probability `p=0.5`
+```lqezyfucg
+#| autorun: false
+#| runbutton: false
+#| startover: false
+# in __init__
+self.dropout = nn.Dropout(p = 0.5)
+
+# in forward
+x = self.dropout(F.relu(self.fc1(x)))
+``` -->
+<!-- ## Dropout Visualized
+
 <div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
-Early Stopping
-</p>
-<p><img src="early_stopping.svg" style="max-height: 490px; max-width: 100%; width: auto;"></p>
+<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Neural Network with Dropout = 0.5</p>
+<img src="NNDropout.svg" style="max-height: 490px; max-width: 100%; width: auto;">
+</div> -->
+</section>
+<section id="mathcall_1-and-mathcall_2-regularization" class="slide level2 center">
+<h2><span class="math inline">\(\mathcal{L}_1\)</span> and <span class="math inline">\(\mathcal{L}_2\)</span> Regularization</h2>
+<div class="compare">
+<div class="compare-col">
+<p><span class="cmp-title"><span class="math inline">\(\mathcal{L}_1\)</span>: absolute value</span></p>
+<p>Penalizes the absolute value of the weights, favouring sparse networks, with penalty added to the loss,</p>
+<p><span class="math display">\[\mathcal{L}(\omega) + \lambda\sum_{h,k,j}\left|\omega_{kj}^{(h)}\right|\]</span></p>
+</div>
+<div class="compare-col cmp-alt">
+<p><span class="cmp-title"><span class="math inline">\(\mathcal{L}_2\)</span>: weight decay</span></p>
+<p>Weight decay (<span class="math inline">\(\mathcal{L}_2\)</span>) adds a penalty to the loss, shrinking the weights towards zero,</p>
+<p><span class="math display">\[\mathcal{L}(\omega) + \frac{\lambda}{2}\sum_{h,k,j}\left(\omega_{kj}^{(h)}\right)^2\]</span></p>
+</div>
 </div>
 </section>
-<section id="loss-functions" class="slide level2 center">
-<h2>Loss Functions</h2>
-<ul>
-<li>We still consider only the regression task</li>
-<li>Typical loss functions include</li>
-<li><code>nn.MSELoss</code> (squared error), <code>nn.L1Loss</code> (absolute error), <code>nn.HuberLoss</code> (squared for small errors, absolute for large) (Huber, 1964), (we will see this next week!)</li>
-<li>We can write our own loss functions, but this is up to you if you wish to do so</li>
-<li>Example for the mean squared error,</li>
-</ul>
+<section id="mathcall_1-regularization-in-pytorch" class="slide level2 center">
+<h2><span class="math inline">\(\mathcal{L}_1\)</span> Regularization in PyTorch</h2>
 <div>
 <div id="pyodide-13" class="exercise-cell">
 
 </div>
 <script type="pyodide-13-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImwxX2xhbWJkYSA9IDAuMDAwMVxuXG5sb3NzID0gY3JpdGVyaW9uKG91dHB1dHMsIHRhcmdldHMpXG5sb3NzID0gbG9zcyArIGwxX2xhbWJkYSAqIHN1bShwYXJhbS5hYnMoKS5zdW0oKSBmb3IgcGFyYW0gaW4gbW9kZWwucGFyYW1ldGVycygpKSJ9
+</script>
+</div>
+</section>
+<section id="mathcall_2-regularization-in-pytorch" class="slide level2 center">
+<h2><span class="math inline">\(\mathcal{L}_2\)</span> Regularization in PyTorch</h2>
+<p>Weight decay is passed as an argument to the optimizer, e.g., <code>weight_decay = 0.01</code> in <code>Adam</code>,</p>
+<div>
+<div id="pyodide-14" class="exercise-cell">
+
+</div>
+<script type="pyodide-14-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6Im9wdGltaXNlciA9IHRvcmNoLm9wdGltLkFkYW0obW9kZWwucGFyYW1ldGVycygpLCBsciA9IDAuMDAxLCB3ZWlnaHRfZGVjYXkgPSAwLjAxKSJ9
+</script>
+</div>
+<!-- ## $\mathcal{L}_1$ Regularization
+- $\mathcal{L}_1$ penalizes the absolute value of the weights, favouring sparse networks, with penalty added to the loss,
+
+$$\mathcal{L}(\omega) + \lambda\sum_{h,k,j}\left|\omega_{kj}^{(h)}\right|$$
+
+```lqezyfucg
+#| autorun: false
+#| runbutton: false
+#| startover: false
+l1_lambda = 0.0001
+
+loss = criterion(outputs, targets)
+loss = loss + l1_lambda * sum(param.abs().sum() for param in model.parameters())
+```
+
+## $\mathcal{L}_2$ Regularization
+- Weight decay ($\mathcal{L}_2$) adds a penalty to the loss, shrinking the weights towards zero,
+
+$$\mathcal{L}(\omega) + \frac{\lambda}{2}\sum_{h,k,j}\left(\omega_{kj}^{(h)}\right)^2$$
+
+- Weight decay is passed as an argument to the optimizer, e.g., `weight_decay = 0.01` in `Adam`,
+
+```lqezyfucg
+#| autorun: false
+#| runbutton: false
+#| startover: false
+optimiser = torch.optim.Adam(model.parameters(), lr = 0.001, weight_decay = 0.01)
+``` -->
+</section>
+<section id="epochs" class="slide level2 center">
+<h2>Epochs</h2>
+<div class="keypoint">
+<p>An epoch is a complete pass through the entire training dataset</p>
+</div>
+<p>The training process is iterative and involves multiple <strong>epochs</strong>. The number of epochs can be, 1. prespecified, 2. tuned, or 3. determined by early stopping</p>
+<!-- ## Epochs
+- The training process is iterative and involves multiple **epochs**
+- An epoch is a complete pass through the entire training dataset
+- The number of epochs can be, prespecified, tuned, or determined by early stopping
+- Guard against overfitting -->
+</section>
+<section id="early-stopping-i" class="slide level2 center">
+<h2>Early Stopping I</h2>
+<div class="figblock">
+<p class="fig-title">
+Early Stopping
+</p>
+<p><img src="early_stopping.svg"></p>
+</div>
+</section>
+<section id="early-stopping-ii" class="slide level2 center">
+<h2>Early Stopping II</h2>
+<p>We will discuss the bias-variance trade-off in more detail next week</p>
+<div class="flow">
+<div class="fn-navy">
+<p>When the training accuracy keeps increasing, we continue training</p>
+</div>
+<div class="fn">
+<p>The validation accuracy, our ability to generalize, starts to decrease after a certain point</p>
+</div>
+<div class="fn-amber">
+<p>No improvement for #<code>patience</code> epochs: stop and restore the best model state</p>
+</div>
+</div>
+<p>To implement early stopping, the training loop (see later slides) must be slightly modified</p>
+<!-- ## Early Stopping I
+- We will discuss the bias-variance trade-off in more detail next week
+- For now: when we keep training (increasing the number of epochs), we keep increasing the training accuracy 
+- The validation accuracy, our ability to generalize, will start to decrease after a certain point
+- To implement early stopping, the training loop (see later slides) must be slightly modified 
+- We watch the validation loss, and when it has not improved for a certain number of epochs (patience), we stop training and restore the best model state -->
+<!-- ## Early Stopping and Overfitting Visualized
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
+<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Early Stopping</p>
+<img src="early_stopping.svg" style="max-height: 490px; max-width: 100%; width: auto;">
+</div> -->
+</section>
+<section id="loss-functions" class="slide level2 center">
+<h2>Loss Functions</h2>
+<p>We still consider only the regression task. Typical loss functions include,</p>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-title"><code>nn.MSELoss</code></span></p>
+<p>Squared error</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-title"><code>nn.L1Loss</code></span></p>
+<p>Absolute error</p>
+</div>
+<div class="triad-card tc-amber">
+<p><span class="tc-title"><code>nn.HuberLoss</code></span></p>
+<p>Squared for small errors, absolute for large (Huber, 1964). We will see this next week!</p>
+</div>
+</div>
+<p>Example for the mean squared error,</p>
+<div>
+<div id="pyodide-15" class="exercise-cell">
+
+</div>
+<script type="pyodide-15-contents">
 eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImltcG9ydCB0b3JjaC5ubiBhcyBublxuXG5jcml0ZXJpb24gPSBubi5NU0VMb3NzKClcblxubG9zcyA9IGNyaXRlcmlvbihvdXRwdXRzLCB0YXJnZXRzKSAjIEFwcGxpY2F0aW9uIn0=
 </script>
 </div>
+<p>We can write our own loss functions, but this is up to you if you wish to do so.</p>
+<!-- ## Loss Functions
+- We still consider only the regression task
+- Typical loss functions include
+- `nn.MSELoss` (squared error), `nn.L1Loss` (absolute error), `nn.HuberLoss` (squared for small errors, absolute for large) (Huber, 1964), (we will see this next week!)
+- We can write our own loss functions, but this is up to you if you wish to do so
+- Example for the mean squared error,
+
+```lqezyfucg
+#| autorun: false
+#| runbutton: false
+#| startover: false
+import torch.nn as nn
+
+criterion = nn.MSELoss()
+
+loss = criterion(outputs, targets) # Application
+``` -->
 </section>
 <section id="initializing-training" class="slide level2 center">
 <h2>Initializing Training</h2>
@@ -814,21 +1469,66 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 <li>The number of epochs is set to 20</li>
 </ul>
 <div>
-<div id="pyodide-14" class="exercise-cell">
+<div id="pyodide-16" class="exercise-cell">
 
 </div>
-<script type="pyodide-14-contents">
+<script type="pyodide-16-contents">
 eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6Im1vZGVsID0gTk4obl9pbj1YX3RyYWluLnNoYXBlWzFdKS50byhkZXZpY2UpXG5cbmNyaXRlcmlvbiA9IG5uLk1TRUxvc3MoKVxub3B0aW1pemVyID0gdG9yY2gub3B0aW0uQWRhbShtb2RlbC5wYXJhbWV0ZXJzKCksIGxyPTAuMDAxKVxubl9lcG9jaHMgPSAyMCJ9
 </script>
+</div>
+</section>
+<section id="one-training-step" class="slide level2 center">
+<h2>One Training Step</h2>
+<div class="overview">
+<div class="ov-row">
+<div class="ov-label">
+<p>1. <code>optimizer.zero_grad()</code></p>
+</div>
+<div class="ov-desc">
+<p>Reset the gradients</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>2. <code>model(inputs)</code></p>
+</div>
+<div class="ov-desc">
+<p>Forward pass: compute the forecasts</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>3. <code>criterion(outputs, targets)</code></p>
+</div>
+<div class="ov-desc">
+<p>Compute the loss</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>4. <code>loss.backward()</code></p>
+</div>
+<div class="ov-desc">
+<p>Backpropagation: compute the gradients</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>5. <code>optimizer.step()</code></p>
+</div>
+<div class="ov-desc">
+<p>Update the parameters</p>
+</div>
+</div>
 </div>
 </section>
 <section id="main-training-and-validation-loop-i" class="slide level2 center">
 <h2>Main Training and Validation Loop I</h2>
 <div>
-<div id="pyodide-15" class="exercise-cell">
+<div id="pyodide-17" class="exercise-cell">
 
 </div>
-<script type="pyodide-15-contents">
+<script type="pyodide-17-contents">
 eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImZvciBlcG9jaCBpbiByYW5nZShuX2Vwb2Nocyk6XG4gICAgbW9kZWwudHJhaW4oKVxuICAgIHJ1bm5pbmdfbG9zcyA9IDAuMFxuICAgIGZvciBpbnB1dHMsIHRhcmdldHMgaW4gbFRyYWluOlxuICAgICAgICBpbnB1dHMsIHRhcmdldHMgPSBpbnB1dHMudG8oZGV2aWNlKSwgdGFyZ2V0cy50byhkZXZpY2UpXG5cbiAgICAgICAgb3B0aW1pemVyLnplcm9fZ3JhZCgpXG4gICAgICAgIG91dHB1dHMgPSBtb2RlbChpbnB1dHMpXG4gICAgICAgIGxvc3MgPSBjcml0ZXJpb24ob3V0cHV0cywgdGFyZ2V0cylcbiAgICAgICAgbG9zcy5iYWNrd2FyZCgpXG5cbiAgICAgICAgb3B0aW1pemVyLnN0ZXAoKVxuICAgICAgICBydW5uaW5nX2xvc3MgKz0gbG9zcy5pdGVtKCkgKiBpbnB1dHMuc2l6ZSgwKVxuICAuLi5cbiMgQ29udGludWVkIG9uIG5leHQgc2xpZGUifQ==
 </script>
 </div>
@@ -836,10 +1536,10 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 <section id="main-training-and-validation-loop-ii" class="slide level2 center">
 <h2>Main Training and Validation Loop II</h2>
 <div>
-<div id="pyodide-16" class="exercise-cell">
+<div id="pyodide-18" class="exercise-cell">
 
 </div>
-<script type="pyodide-16-contents">
+<script type="pyodide-18-contents">
 eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImZvciBlcG9jaCBpbiByYW5nZShuX2Vwb2Nocyk6XG4gIC4uLlxuIyBDb250aW51ZWQgZnJvbSBwcmV2aW91cyBzbGlkZVxuICAgIG1vZGVsLmV2YWwoKVxuICAgIHZhbF9sb3NzID0gMC4wXG4gICAgd2l0aCB0b3JjaC5ub19ncmFkKCk6XG4gICAgICAgIGZvciBpbnB1dHMsIHRhcmdldHMgaW4gbFZhbDpcbiAgICAgICAgICAgIGlucHV0cywgdGFyZ2V0cyA9IGlucHV0cy50byhkZXZpY2UpLCB0YXJnZXRzLnRvKGRldmljZSlcblxuICAgICAgICAgICAgb3V0cHV0cyA9IG1vZGVsKGlucHV0cylcbiAgICAgICAgICAgIGxvc3MgPSBjcml0ZXJpb24ob3V0cHV0cywgdGFyZ2V0cylcbiAgICAgICAgICAgIHZhbF9sb3NzICs9IGxvc3MuaXRlbSgpICogaW5wdXRzLnNpemUoMCkifQ==
 </script>
 </div>
@@ -847,21 +1547,34 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 <section id="model-evaluation" class="slide level2 center">
 <h2>Model Evaluation</h2>
 <div>
-<div id="pyodide-17" class="exercise-cell">
+<div id="pyodide-19" class="exercise-cell">
 
 </div>
-<script type="pyodide-17-contents">
+<script type="pyodide-19-contents">
 eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6Im1vZGVsLmV2YWwoKVxubFByZWQgPSBbXVxuXG53aXRoIHRvcmNoLm5vX2dyYWQoKTpcbiAgICBmb3IgaW5wdXRzLCBfIGluIGxUZXN0OlxuICAgICAgICBsUHJlZC5hcHBlbmQobW9kZWwoaW5wdXRzLnRvKGRldmljZSkpLmNwdSgpLm51bXB5KCkpXG5cbmZvcmVjYXN0cyA9IG5wLmNvbmNhdGVuYXRlKGxQcmVkKVxuZm9yZWNhc3RzX3Vuc3RkID0geV9zY2FsZXIuaW52ZXJzZV90cmFuc2Zvcm0oZm9yZWNhc3RzKVxueV91bnN0ZCA9IHlfc2NhbGVyLmludmVyc2VfdHJhbnNmb3JtKHlfdGVzdClcblxubXNlID0gbnAubWVhbigoeV91bnN0ZCAtIGZvcmVjYXN0c191bnN0ZCkgKiogMilcbiMgQmVuY2htYXJrOiB0cmFpbmluZy1zYW1wbGUgbWVhbiBmb3JlY2FzdFxueV9iZW5jaCA9IHlfc2NhbGVyLmludmVyc2VfdHJhbnNmb3JtKHlfdHJhaW4pLm1lYW4oKVxucjJfb29zID0gMSAtIG5wLnN1bSgoeV91bnN0ZCAtIGZvcmVjYXN0c191bnN0ZCkgKiogMikgLyBucC5zdW0oKHlfdW5zdGQgLSB5X2JlbmNoKSAqKiAyKVxucHJpbnQoZlwiVGVzdCBSTVNFOiB7bnAuc3FydChtc2UpOi4yZn0gfCBUZXN0IE9PUyBSMiAodnMuIHRyYWluIG1lYW4pOiB7cjJfb29zOi4zZn1cIikifQ==
 </script>
 </div>
+<!-- ## An Extended Pipeline (My Preferred Approach)
+- I set the seed for reproducibility, store the training and validation losses, and time the run
+- I keep running loss book-keeping for each epoch to keep track of the training process
+- I print these losses at the end of each epoch to monitor convergence -->
 </section>
 <section id="an-extended-pipeline-my-preferred-approach" class="slide level2 center">
 <h2>An Extended Pipeline (My Preferred Approach)</h2>
-<ul>
-<li>I set the seed for reproducibility, store the training and validation losses, and time the run</li>
-<li>I keep running loss book-keeping for each epoch to keep track of the training process</li>
-<li>I print these losses at the end of each epoch to monitor convergence</li>
-</ul>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-title">Reproducible</span></p>
+<p>I set the seed for reproducibility</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-title">Tracked</span></p>
+<p>I store the training and validation losses, time the run, and keep running loss book-keeping for each epoch to keep track of the training process</p>
+</div>
+<div class="triad-card tc-amber">
+<p><span class="tc-title">Monitored</span></p>
+<p>I print these losses at the end of each epoch to monitor convergence</p>
+</div>
+</div>
 </section>
 <section id="limitations-of-deep-learning" class="slide level2 center">
 <h2>Limitations of Deep Learning</h2>
@@ -985,7 +1698,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 eyJvcHRpb25zIjp7ImVudiI6eyJQTE9UTFlfUkVOREVSRVIiOiJwbG90bHlfbWltZXR5cGUifSwiaW5kZXhVUkwiOiJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvcHlvZGlkZS92MC4yOC4xL2Z1bGwvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsicHlvZGlkZV9odHRwIiwibWljcm9waXAiLCJpcHl0aG9uIl19fQ==
 </script>
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJweW9kaWRlLTE3IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTcgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTE3LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTctY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xNyA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTE2IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTYgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTE2LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTYtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xNiA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTYsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTE1IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTUgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTE1LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTUtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xNSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTUsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTE0IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTQgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTE0LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTQtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xNCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTEzIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTMgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTEzLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTMtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xMyA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTEyIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTIgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTEyLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTItY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xMiA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTExIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTEgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTExLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTEtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xMSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTEwIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTAgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTEwLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTAtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xMCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTAsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTkiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl85ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS05LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtOS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzkgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzksIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTgiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl84ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS04LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtOC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzggPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzgsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTciLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl83ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS03LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtNy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzcgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTYiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl82ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS02LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtNi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzYgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzYsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl81ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS01LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtNS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzUgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzUsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl80ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS00LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtNC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzQgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTMiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl8zID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzMgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl8yID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0yLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzIgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl8xID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0xLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzEgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLXByZWx1ZGUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJweW9kaWRlT2pzID0ge1xuICBjb25zdCB7XG4gICAgUHlvZGlkZUV2YWx1YXRvcixcbiAgICBQeW9kaWRlRW52aXJvbm1lbnRNYW5hZ2VyLFxuICAgIHNldHVwUHl0aG9uLFxuICAgIHN0YXJ0UHlvZGlkZVdvcmtlcixcbiAgICBiNjREZWNvZGUsXG4gICAgY29sbGFwc2VQYXRoLFxuICB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcblxuICBjb25zdCBzdGF0dXNDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctc3RhdHVzXCIpO1xuICBjb25zdCBpbmRpY2F0b3JDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpbmRpY2F0b3JDb250YWluZXIuY2xhc3NMaXN0LnJlbW92ZShcImQtbm9uZVwiKTtcblxuICBsZXQgc3RhdHVzVGV4dCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIilcbiAgc3RhdHVzVGV4dC5jbGFzc0xpc3QgPSBcImV4ZXJjaXNlLWxvYWRpbmctZGV0YWlsc1wiO1xuICBzdGF0dXNUZXh0ID0gc3RhdHVzQ29udGFpbmVyLmFwcGVuZENoaWxkKHN0YXR1c1RleHQpO1xuICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluaXRpYWxpc2VgO1xuXG4gIC8vIEhvaXN0IGluZGljYXRvciBvdXQgZnJvbSBmaW5hbCBzbGlkZSB3aGVuIHJ1bm5pbmcgdW5kZXIgcmV2ZWFsXG4gIGNvbnN0IHJldmVhbFN0YXR1cyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsIC5leGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaWYgKHJldmVhbFN0YXR1cykge1xuICAgIHJldmVhbFN0YXR1cy5yZW1vdmUoKTtcbiAgICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCA+IC5zbGlkZXNcIikuYXBwZW5kQ2hpbGQocmV2ZWFsU3RhdHVzKTtcbiAgfVxuXG4gIC8vIE1ha2UgYW55IHJldmVhbCBzbGlkZXMgd2l0aCBsaXZlIGNlbGxzIHNjcm9sbGFibGVcbiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbChcIi5yZXZlYWwgLmV4ZXJjaXNlLWNlbGxcIikuZm9yRWFjaCgoZWwpID0+IHtcbiAgICBlbC5jbG9zZXN0KCdzZWN0aW9uLnNsaWRlJykuY2xhc3NMaXN0LmFkZChcInNjcm9sbGFibGVcIik7XG4gIH0pXG5cbiAgLy8gUHlvZGlkZSBzdXBwbGVtZW50YWwgZGF0YSBhbmQgb3B0aW9uc1xuICBjb25zdCBkYXRhQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLWRhdGFcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBkYXRhID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZGF0YUNvbnRlbnQpKTtcblxuICAvLyBHcmFiIGxpc3Qgb2YgcmVzb3VyY2VzIHRvIGJlIGRvd25sb2FkZWRcbiAgY29uc3QgZmlsZXNDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInZmcy1maWxlXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZmlsZXMgPSBKU09OLnBhcnNlKGI2NERlY29kZShmaWxlc0NvbnRlbnQpKTtcblxuICBsZXQgcHlvZGlkZVByb21pc2UgPSAoYXN5bmMgKCkgPT4ge1xuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgUHlvZGlkZWA7XG4gICAgY29uc3QgcHlvZGlkZSA9IGF3YWl0IHN0YXJ0UHlvZGlkZVdvcmtlcihkYXRhLm9wdGlvbnMpO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBwYWNrYWdlOiBtaWNyb3BpcGA7XG4gICAgYXdhaXQgcHlvZGlkZS5sb2FkUGFja2FnZShcIm1pY3JvcGlwXCIpO1xuICAgIGNvbnN0IG1pY3JvcGlwID0gYXdhaXQgcHlvZGlkZS5weWltcG9ydChcIm1pY3JvcGlwXCIpO1xuICAgIGF3YWl0IGRhdGEucGFja2FnZXMucGtncy5tYXAoKHBrZykgPT4gKCkgPT4ge1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBwYWNrYWdlOiAke3BrZ31gO1xuICAgICAgcmV0dXJuIG1pY3JvcGlwLmluc3RhbGwocGtnKTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcbiAgICBhd2FpdCBtaWNyb3BpcC5kZXN0cm95KCk7XG5cbiAgICAvLyBEb3dubG9hZCBhbmQgaW5zdGFsbCByZXNvdXJjZXNcbiAgICBhd2FpdCBmaWxlcy5tYXAoKGZpbGUpID0+IGFzeW5jICgpID0+IHtcbiAgICAgIGNvbnN0IG5hbWUgPSBmaWxlLnN1YnN0cmluZyhmaWxlLmxhc3RJbmRleE9mKCcvJykgKyAxKTtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcmVzb3VyY2U6ICR7bmFtZX1gO1xuICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBmZXRjaChmaWxlKTtcbiAgICAgIGlmICghcmVzcG9uc2Uub2spIHtcbiAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBDYW4ndCBkb3dubG9hZCBcXGAke2ZpbGV9XFxgLiBFcnJvciAke3Jlc3BvbnNlLnN0YXR1c306IFwiJHtyZXNwb25zZS5zdGF0dXNUZXh0fVwiLmApO1xuICAgICAgfVxuICAgICAgY29uc3QgZGF0YSA9IGF3YWl0IHJlc3BvbnNlLmFycmF5QnVmZmVyKCk7XG5cbiAgICAgIC8vIFN0b3JlIFVSTHMgaW4gdGhlIGN3ZCB3aXRob3V0IGFueSBzdWJkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBpZiAoZmlsZS5pbmNsdWRlcyhcIjovL1wiKSkge1xuICAgICAgICBmaWxlID0gbmFtZTtcbiAgICAgIH1cblxuICAgICAgLy8gQ29sbGFwc2UgaGlnaGVyIGRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGZpbGUgPSBjb2xsYXBzZVBhdGgoZmlsZSk7XG5cbiAgICAgIC8vIENyZWF0ZSBkaXJlY3RvcnkgdHJlZSwgaWdub3JpbmcgXCJkaXJlY3RvcnkgZXhpc3RzXCIgVkZTIGVycm9yc1xuICAgICAgY29uc3QgcGFydHMgPSBmaWxlLnNwbGl0KCcvJykuc2xpY2UoMCwgLTEpO1xuICAgICAgbGV0IHBhdGggPSAnJztcbiAgICAgIHdoaWxlIChwYXJ0cy5sZW5ndGggPiAwKSB7XG4gICAgICAgIHBhdGggKz0gcGFydHMuc2hpZnQoKSArICcvJztcbiAgICAgICAgdHJ5IHtcbiAgICAgICAgICBhd2FpdCBweW9kaWRlLkZTLm1rZGlyKHBhdGgpO1xuICAgICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgICAgaWYgKGUubmFtZSAhPT0gXCJFcnJub0Vycm9yXCIpIHRocm93IGU7XG4gICAgICAgICAgaWYgKGUuZXJybm8gIT09IDIwKSB7XG4gICAgICAgICAgICBjb25zdCBlcnJvclRleHRQdHIgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuX3N0cmVycm9yKGUuZXJybm8pO1xuICAgICAgICAgICAgY29uc3QgZXJyb3JUZXh0ID0gYXdhaXQgcHlvZGlkZS5fbW9kdWxlLlVURjhUb1N0cmluZyhlcnJvclRleHRQdHIpO1xuICAgICAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBGaWxlc3lzdGVtIEVycm9yICR7ZS5lcnJub30gXCIke2Vycm9yVGV4dH1cIi5gKTtcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH1cblxuICAgICAgLy8gV3JpdGUgdGhpcyBmaWxlIHRvIHRoZSBWRlNcbiAgICAgIHRyeSB7XG4gICAgICAgIHJldHVybiBhd2FpdCBweW9kaWRlLkZTLndyaXRlRmlsZShmaWxlLCBuZXcgVWludDhBcnJheShkYXRhKSk7XG4gICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgIGlmIChlLm5hbWUgIT09IFwiRXJybm9FcnJvclwiKSB0aHJvdyBlO1xuICAgICAgICBjb25zdCBlcnJvclRleHRQdHIgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuX3N0cmVycm9yKGUuZXJybm8pO1xuICAgICAgICBjb25zdCBlcnJvclRleHQgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuVVRGOFRvU3RyaW5nKGVycm9yVGV4dFB0cik7XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgRmlsZXN5c3RlbSBFcnJvciAke2UuZXJybm99IFwiJHtlcnJvclRleHR9XCIuYCk7XG4gICAgICB9XG4gICAgfSkucmVkdWNlKChjdXIsIG5leHQpID0+IGN1ci50aGVuKG5leHQpLCBQcm9taXNlLnJlc29sdmUoKSk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYFB5b2RpZGUgZW52aXJvbm1lbnQgc2V0dXBgO1xuICAgIGF3YWl0IHNldHVwUHl0aG9uKHB5b2RpZGUpO1xuXG4gICAgc3RhdHVzVGV4dC5yZW1vdmUoKTtcbiAgICBpZiAoc3RhdHVzQ29udGFpbmVyLmNoaWxkcmVuLmxlbmd0aCA9PSAwKSB7XG4gICAgICBzdGF0dXNDb250YWluZXIucGFyZW50Tm9kZS5yZW1vdmUoKTtcbiAgICB9XG4gICAgcmV0dXJuIHB5b2RpZGU7XG4gIH0pKCkuY2F0Y2goKGVycikgPT4ge1xuICAgIHN0YXR1c1RleHQuc3R5bGUuY29sb3IgPSBcInZhcigtLWV4ZXJjaXNlLWVkaXRvci1obC1lciwgI0FEMDAwMClcIjtcbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gZXJyLm1lc3NhZ2U7XG4gICAgLy9pbmRpY2F0b3JDb250YWluZXIucXVlcnlTZWxlY3RvcihcIi5zcGlubmVyLWdyb3dcIikuY2xhc3NMaXN0LmFkZChcImQtbm9uZVwiKTtcbiAgICB0aHJvdyBlcnI7XG4gIH0pO1xuXG4gIC8vIEtlZXAgdHJhY2sgb2YgaW5pdGlhbCBPSlMgYmxvY2sgcmVuZGVyXG4gIGNvbnN0IHJlbmRlcmVkT2pzID0ge307XG5cbiAgY29uc3QgcHJvY2VzcyA9IGFzeW5jIChjb250ZXh0LCBpbnB1dHMpID0+IHtcbiAgICBjb25zdCBweW9kaWRlID0gYXdhaXQgcHlvZGlkZVByb21pc2U7XG4gICAgY29uc3QgZXZhbHVhdG9yID0gbmV3IFB5b2RpZGVFdmFsdWF0b3IocHlvZGlkZSwgY29udGV4dCk7XG4gICAgYXdhaXQgZXZhbHVhdG9yLnByb2Nlc3MoaW5wdXRzKTtcbiAgICByZXR1cm4gZXZhbHVhdG9yLmNvbnRhaW5lcjtcbiAgfVxuXG4gIHJldHVybiB7XG4gICAgcHlvZGlkZVByb21pc2UsXG4gICAgcmVuZGVyZWRPanMsXG4gICAgcHJvY2VzcyxcbiAgfTtcbn1cbiJ9XX0=
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJweW9kaWRlLTE5IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTkgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTE5LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTktY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xOSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTksIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTE4IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTggPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTE4LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTgtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xOCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTgsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTE3IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTcgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTE3LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTctY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xNyA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTE2IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTYgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTE2LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTYtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xNiA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTYsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTE1IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTUgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTE1LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTUtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xNSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTUsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTE0IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTQgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTE0LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTQtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xNCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTEzIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTMgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTEzLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTMtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xMyA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTEyIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTIgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTEyLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTItY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xMiA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTExIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTEgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTExLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTEtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xMSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTEwIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMTAgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTEwLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMTAtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8xMCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMTAsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTkiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl85ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS05LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtOS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzkgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzksIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTgiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl84ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS04LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtOC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzggPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzgsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTciLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl83ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS03LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtNy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzcgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTYiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl82ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS02LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtNi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzYgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzYsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl81ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS01LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtNS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzUgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzUsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl80ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS00LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtNC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzQgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTMiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl8zID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzMgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl8yID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0yLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzIgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl8xID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0xLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzEgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLXByZWx1ZGUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJweW9kaWRlT2pzID0ge1xuICBjb25zdCB7XG4gICAgUHlvZGlkZUV2YWx1YXRvcixcbiAgICBQeW9kaWRlRW52aXJvbm1lbnRNYW5hZ2VyLFxuICAgIHNldHVwUHl0aG9uLFxuICAgIHN0YXJ0UHlvZGlkZVdvcmtlcixcbiAgICBiNjREZWNvZGUsXG4gICAgY29sbGFwc2VQYXRoLFxuICB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcblxuICBjb25zdCBzdGF0dXNDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctc3RhdHVzXCIpO1xuICBjb25zdCBpbmRpY2F0b3JDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpbmRpY2F0b3JDb250YWluZXIuY2xhc3NMaXN0LnJlbW92ZShcImQtbm9uZVwiKTtcblxuICBsZXQgc3RhdHVzVGV4dCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIilcbiAgc3RhdHVzVGV4dC5jbGFzc0xpc3QgPSBcImV4ZXJjaXNlLWxvYWRpbmctZGV0YWlsc1wiO1xuICBzdGF0dXNUZXh0ID0gc3RhdHVzQ29udGFpbmVyLmFwcGVuZENoaWxkKHN0YXR1c1RleHQpO1xuICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluaXRpYWxpc2VgO1xuXG4gIC8vIEhvaXN0IGluZGljYXRvciBvdXQgZnJvbSBmaW5hbCBzbGlkZSB3aGVuIHJ1bm5pbmcgdW5kZXIgcmV2ZWFsXG4gIGNvbnN0IHJldmVhbFN0YXR1cyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsIC5leGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaWYgKHJldmVhbFN0YXR1cykge1xuICAgIHJldmVhbFN0YXR1cy5yZW1vdmUoKTtcbiAgICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCA+IC5zbGlkZXNcIikuYXBwZW5kQ2hpbGQocmV2ZWFsU3RhdHVzKTtcbiAgfVxuXG4gIC8vIE1ha2UgYW55IHJldmVhbCBzbGlkZXMgd2l0aCBsaXZlIGNlbGxzIHNjcm9sbGFibGVcbiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbChcIi5yZXZlYWwgLmV4ZXJjaXNlLWNlbGxcIikuZm9yRWFjaCgoZWwpID0+IHtcbiAgICBlbC5jbG9zZXN0KCdzZWN0aW9uLnNsaWRlJykuY2xhc3NMaXN0LmFkZChcInNjcm9sbGFibGVcIik7XG4gIH0pXG5cbiAgLy8gUHlvZGlkZSBzdXBwbGVtZW50YWwgZGF0YSBhbmQgb3B0aW9uc1xuICBjb25zdCBkYXRhQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLWRhdGFcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBkYXRhID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZGF0YUNvbnRlbnQpKTtcblxuICAvLyBHcmFiIGxpc3Qgb2YgcmVzb3VyY2VzIHRvIGJlIGRvd25sb2FkZWRcbiAgY29uc3QgZmlsZXNDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInZmcy1maWxlXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZmlsZXMgPSBKU09OLnBhcnNlKGI2NERlY29kZShmaWxlc0NvbnRlbnQpKTtcblxuICBsZXQgcHlvZGlkZVByb21pc2UgPSAoYXN5bmMgKCkgPT4ge1xuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgUHlvZGlkZWA7XG4gICAgY29uc3QgcHlvZGlkZSA9IGF3YWl0IHN0YXJ0UHlvZGlkZVdvcmtlcihkYXRhLm9wdGlvbnMpO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBwYWNrYWdlOiBtaWNyb3BpcGA7XG4gICAgYXdhaXQgcHlvZGlkZS5sb2FkUGFja2FnZShcIm1pY3JvcGlwXCIpO1xuICAgIGNvbnN0IG1pY3JvcGlwID0gYXdhaXQgcHlvZGlkZS5weWltcG9ydChcIm1pY3JvcGlwXCIpO1xuICAgIGF3YWl0IGRhdGEucGFja2FnZXMucGtncy5tYXAoKHBrZykgPT4gKCkgPT4ge1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBwYWNrYWdlOiAke3BrZ31gO1xuICAgICAgcmV0dXJuIG1pY3JvcGlwLmluc3RhbGwocGtnKTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcbiAgICBhd2FpdCBtaWNyb3BpcC5kZXN0cm95KCk7XG5cbiAgICAvLyBEb3dubG9hZCBhbmQgaW5zdGFsbCByZXNvdXJjZXNcbiAgICBhd2FpdCBmaWxlcy5tYXAoKGZpbGUpID0+IGFzeW5jICgpID0+IHtcbiAgICAgIGNvbnN0IG5hbWUgPSBmaWxlLnN1YnN0cmluZyhmaWxlLmxhc3RJbmRleE9mKCcvJykgKyAxKTtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcmVzb3VyY2U6ICR7bmFtZX1gO1xuICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBmZXRjaChmaWxlKTtcbiAgICAgIGlmICghcmVzcG9uc2Uub2spIHtcbiAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBDYW4ndCBkb3dubG9hZCBcXGAke2ZpbGV9XFxgLiBFcnJvciAke3Jlc3BvbnNlLnN0YXR1c306IFwiJHtyZXNwb25zZS5zdGF0dXNUZXh0fVwiLmApO1xuICAgICAgfVxuICAgICAgY29uc3QgZGF0YSA9IGF3YWl0IHJlc3BvbnNlLmFycmF5QnVmZmVyKCk7XG5cbiAgICAgIC8vIFN0b3JlIFVSTHMgaW4gdGhlIGN3ZCB3aXRob3V0IGFueSBzdWJkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBpZiAoZmlsZS5pbmNsdWRlcyhcIjovL1wiKSkge1xuICAgICAgICBmaWxlID0gbmFtZTtcbiAgICAgIH1cblxuICAgICAgLy8gQ29sbGFwc2UgaGlnaGVyIGRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGZpbGUgPSBjb2xsYXBzZVBhdGgoZmlsZSk7XG5cbiAgICAgIC8vIENyZWF0ZSBkaXJlY3RvcnkgdHJlZSwgaWdub3JpbmcgXCJkaXJlY3RvcnkgZXhpc3RzXCIgVkZTIGVycm9yc1xuICAgICAgY29uc3QgcGFydHMgPSBmaWxlLnNwbGl0KCcvJykuc2xpY2UoMCwgLTEpO1xuICAgICAgbGV0IHBhdGggPSAnJztcbiAgICAgIHdoaWxlIChwYXJ0cy5sZW5ndGggPiAwKSB7XG4gICAgICAgIHBhdGggKz0gcGFydHMuc2hpZnQoKSArICcvJztcbiAgICAgICAgdHJ5IHtcbiAgICAgICAgICBhd2FpdCBweW9kaWRlLkZTLm1rZGlyKHBhdGgpO1xuICAgICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgICAgaWYgKGUubmFtZSAhPT0gXCJFcnJub0Vycm9yXCIpIHRocm93IGU7XG4gICAgICAgICAgaWYgKGUuZXJybm8gIT09IDIwKSB7XG4gICAgICAgICAgICBjb25zdCBlcnJvclRleHRQdHIgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuX3N0cmVycm9yKGUuZXJybm8pO1xuICAgICAgICAgICAgY29uc3QgZXJyb3JUZXh0ID0gYXdhaXQgcHlvZGlkZS5fbW9kdWxlLlVURjhUb1N0cmluZyhlcnJvclRleHRQdHIpO1xuICAgICAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBGaWxlc3lzdGVtIEVycm9yICR7ZS5lcnJub30gXCIke2Vycm9yVGV4dH1cIi5gKTtcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH1cblxuICAgICAgLy8gV3JpdGUgdGhpcyBmaWxlIHRvIHRoZSBWRlNcbiAgICAgIHRyeSB7XG4gICAgICAgIHJldHVybiBhd2FpdCBweW9kaWRlLkZTLndyaXRlRmlsZShmaWxlLCBuZXcgVWludDhBcnJheShkYXRhKSk7XG4gICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgIGlmIChlLm5hbWUgIT09IFwiRXJybm9FcnJvclwiKSB0aHJvdyBlO1xuICAgICAgICBjb25zdCBlcnJvclRleHRQdHIgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuX3N0cmVycm9yKGUuZXJybm8pO1xuICAgICAgICBjb25zdCBlcnJvclRleHQgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuVVRGOFRvU3RyaW5nKGVycm9yVGV4dFB0cik7XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgRmlsZXN5c3RlbSBFcnJvciAke2UuZXJybm99IFwiJHtlcnJvclRleHR9XCIuYCk7XG4gICAgICB9XG4gICAgfSkucmVkdWNlKChjdXIsIG5leHQpID0+IGN1ci50aGVuKG5leHQpLCBQcm9taXNlLnJlc29sdmUoKSk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYFB5b2RpZGUgZW52aXJvbm1lbnQgc2V0dXBgO1xuICAgIGF3YWl0IHNldHVwUHl0aG9uKHB5b2RpZGUpO1xuXG4gICAgc3RhdHVzVGV4dC5yZW1vdmUoKTtcbiAgICBpZiAoc3RhdHVzQ29udGFpbmVyLmNoaWxkcmVuLmxlbmd0aCA9PSAwKSB7XG4gICAgICBzdGF0dXNDb250YWluZXIucGFyZW50Tm9kZS5yZW1vdmUoKTtcbiAgICB9XG4gICAgcmV0dXJuIHB5b2RpZGU7XG4gIH0pKCkuY2F0Y2goKGVycikgPT4ge1xuICAgIHN0YXR1c1RleHQuc3R5bGUuY29sb3IgPSBcInZhcigtLWV4ZXJjaXNlLWVkaXRvci1obC1lciwgI0FEMDAwMClcIjtcbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gZXJyLm1lc3NhZ2U7XG4gICAgLy9pbmRpY2F0b3JDb250YWluZXIucXVlcnlTZWxlY3RvcihcIi5zcGlubmVyLWdyb3dcIikuY2xhc3NMaXN0LmFkZChcImQtbm9uZVwiKTtcbiAgICB0aHJvdyBlcnI7XG4gIH0pO1xuXG4gIC8vIEtlZXAgdHJhY2sgb2YgaW5pdGlhbCBPSlMgYmxvY2sgcmVuZGVyXG4gIGNvbnN0IHJlbmRlcmVkT2pzID0ge307XG5cbiAgY29uc3QgcHJvY2VzcyA9IGFzeW5jIChjb250ZXh0LCBpbnB1dHMpID0+IHtcbiAgICBjb25zdCBweW9kaWRlID0gYXdhaXQgcHlvZGlkZVByb21pc2U7XG4gICAgY29uc3QgZXZhbHVhdG9yID0gbmV3IFB5b2RpZGVFdmFsdWF0b3IocHlvZGlkZSwgY29udGV4dCk7XG4gICAgYXdhaXQgZXZhbHVhdG9yLnByb2Nlc3MoaW5wdXRzKTtcbiAgICByZXR1cm4gZXZhbHVhdG9yLmNvbnRhaW5lcjtcbiAgfVxuXG4gIHJldHVybiB7XG4gICAgcHlvZGlkZVByb21pc2UsXG4gICAgcmVuZGVyZWRPanMsXG4gICAgcHJvY2VzcyxcbiAgfTtcbn1cbiJ9XX0=
 </script>
 <div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
 <div id="exercise-loading-status" class="d-flex gap-2">
