@@ -2385,20 +2385,37 @@ i.fas.fa-bars {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .flow > div p {
   margin: 0;
 }
 
+// .flow > div:not(:first-child)::before {
+//   content: "\2192";
+//   position: absolute;
+//   left: -34px;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   width: 30px;
+//   text-align: center;
+//   color: #1c5cab;
+//   font-weight: 700;
+//   font-size: 1.5em;
+// }
+
 .flow > div:not(:first-child)::before {
   content: "\2192";
   position: absolute;
   left: -34px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 30px;
-  text-align: center;
   color: #1c5cab;
   font-weight: 700;
   font-size: 1.5em;
@@ -2541,3 +2558,45 @@ i.fas.fa-bars {
 .reveal .bp p { margin: 0.7em 0; }
 
 .reveal .triad.big .triad-card { font-size: 0.9em; }
+
+.triad-card .tc-letter {
+  display: block;
+  font-size: 2em;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--tc);
+}
+
+// .reveal .slides,
+// .reveal .slides > section,
+// .reveal .slides > section > section {
+//   will-change: auto;
+//   backface-visibility: visible;
+// }
+
+// .reveal .figblock img,
+// .reveal .callout,
+// .reveal .keypoint,
+// .reveal .triad-card,
+// .reveal .dodont > div {
+//   transform: translateZ(0);
+//   backface-visibility: hidden;
+// }
+
+// .reveal .slides section > * {
+//   transform: translateZ(0);
+//   backface-visibility: hidden;
+// }
+
+// .figblock svg { max-height: 490px; max-width: 100%; width: auto; height: auto; }
+// .figblock.fb-s330 svg { max-height: 330px; }
+// .figblock.fb-s360 svg { max-height: 360px; }
+// .figblock.fb-s400 svg { max-height: 400px; }
+// .figblock.fb-s415 svg { max-height: 415px; }
+// .figblock.fb-brain svg { max-height: 450px; }
+
+.reveal .slides,
+.reveal .slides section {
+  transform-style: flat !important;
+  perspective: none !important;
+}

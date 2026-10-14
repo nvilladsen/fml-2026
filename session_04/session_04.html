@@ -38,7 +38,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="session_04_files/libs/revealjs/dist/theme/quarto-22065b3518b419ab45fc3b5bc00eb9e1.css">
+  <link rel="stylesheet" href="session_04_files/libs/revealjs/dist/theme/quarto-0ac6e72e8fa60fc055a75333cf781cbe.css">
   <link href="session_04_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="session_04_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="session_04_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -1175,79 +1175,6 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 </div>
 </div>
 </div>
-<!-- :::: {.steplist}
-::: {.step-row}
-::: {.step-num}
-1
-:::
-::: {.step-title}
-Dropout
-:::
-::: {.step-desc}
-Randomly sets neurons to zero in each training step
-:::
-:::
-::: {.step-row}
-::: {.step-num}
-2
-:::
-::: {.step-title}
-$\mathcal{L}_1$ regularization
-:::
-::: {.step-desc}
-Penalizes the absolute value of the weights, favoring sparse networks
-:::
-:::
-::: {.step-row}
-::: {.step-num}
-3
-:::
-::: {.step-title}
-$\mathcal{L}_2$ regularization (weight decay)
-:::
-::: {.step-desc}
-Shrinks the weights towards zero
-:::
-:::
-::: {.step-row}
-::: {.step-num}
-4
-:::
-::: {.step-title}
-Early stopping
-:::
-::: {.step-desc}
-Stops training when the validation loss no longer improves
-:::
-:::
-:::: -->
-<!-- ## Guarding Against Overfitting
-
-::: {.act-table}
-| Method | Effect | Acts on |
-|:------------------------|:--------------------------------------------|:-----------:|
-| **Dropout** | Randomly sets neurons to zero in each training step | network |
-| **$\mathcal{L}_1$ regularization** | Penalizes the absolute value of the weights, favouring sparse networks | loss |
-| **$\mathcal{L}_2$ regularization** (weight decay) | Shrinks the weights towards zero | loss |
-| **Early stopping** | Stops training when the validation loss no longer improves | training loop |
-:::
-
-## Guarding Against Overfitting
-
-:::: {.flow}
-::: {.fn-navy}
-**Dropout**
-[Randomly sets neurons to zero in each training step]{.fn-sub}
-:::
-::: {.fn}
-**$\mathcal{L}_1$ and $\mathcal{L}_2$ regularization**
-[$\mathcal{L}_1$ penalizes the absolute value of the weights, favouring sparse networks. $\mathcal{L}_2$ (weight decay) shrinks the weights towards zero]{.fn-sub}
-:::
-::: {.fn-amber}
-**Early stopping**
-[Stops training when the validation loss no longer improves]{.fn-sub}
-:::
-:::: -->
 </section>
 <section id="dropout" class="slide level2 center">
 <h2>Dropout</h2>
@@ -1279,28 +1206,6 @@ Neural Network with Dropout = 0.5
 eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IiMgaW4gX19pbml0X19cbnNlbGYuZHJvcG91dCA9IG5uLkRyb3BvdXQocCA9IDAuNSlcblxuIyBpbiBmb3J3YXJkXG54ID0gc2VsZi5kcm9wb3V0KEYucmVsdShzZWxmLmZjMSh4KSkpIn0=
 </script>
 </div>
-<!-- ## Dropout
-- Dropout (Srivastava et al., 2014): `nn.Dropout(p)` is applied in every training step
-- Each neuron in the layer is set to zero with probability $p$, e.g., $p = 0.5$
-- Neurons are made more independent, so the network behaves like an average of many thinned networks (think bagged trees)
-- Dropout is not applied in evaluation 
-- Applying dropout to layer `fc1` with specified probability `p=0.5`
-```lqezyfucg
-#| autorun: false
-#| runbutton: false
-#| startover: false
-# in __init__
-self.dropout = nn.Dropout(p = 0.5)
-
-# in forward
-x = self.dropout(F.relu(self.fc1(x)))
-``` -->
-<!-- ## Dropout Visualized
-
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Neural Network with Dropout = 0.5</p>
-<img src="NNDropout.svg" style="max-height: 490px; max-width: 100%; width: auto;">
-</div> -->
 </section>
 <section id="mathcall_1-and-mathcall_2-regularization" class="slide level2 center">
 <h2><span class="math inline">\(\mathcal{L}_1\)</span> and <span class="math inline">\(\mathcal{L}_2\)</span> Regularization</h2>
@@ -1339,34 +1244,6 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6Im9wdGltaXNlciA9IHRvcmNoLm9wdGltLkFkYW0obW9kZWwucGFyYW1ldGVycygpLCBsciA9IDAuMDAxLCB3ZWlnaHRfZGVjYXkgPSAwLjAxKSJ9
 </script>
 </div>
-<!-- ## $\mathcal{L}_1$ Regularization
-- $\mathcal{L}_1$ penalizes the absolute value of the weights, favouring sparse networks, with penalty added to the loss,
-
-$$\mathcal{L}(\omega) + \lambda\sum_{h,k,j}\left|\omega_{kj}^{(h)}\right|$$
-
-```lqezyfucg
-#| autorun: false
-#| runbutton: false
-#| startover: false
-l1_lambda = 0.0001
-
-loss = criterion(outputs, targets)
-loss = loss + l1_lambda * sum(param.abs().sum() for param in model.parameters())
-```
-
-## $\mathcal{L}_2$ Regularization
-- Weight decay ($\mathcal{L}_2$) adds a penalty to the loss, shrinking the weights towards zero,
-
-$$\mathcal{L}(\omega) + \frac{\lambda}{2}\sum_{h,k,j}\left(\omega_{kj}^{(h)}\right)^2$$
-
-- Weight decay is passed as an argument to the optimizer, e.g., `weight_decay = 0.01` in `Adam`,
-
-```lqezyfucg
-#| autorun: false
-#| runbutton: false
-#| startover: false
-optimiser = torch.optim.Adam(model.parameters(), lr = 0.001, weight_decay = 0.01)
-``` -->
 </section>
 <section id="epochs" class="slide level2 center">
 <h2>Epochs</h2>
@@ -1374,11 +1251,6 @@ optimiser = torch.optim.Adam(model.parameters(), lr = 0.001, weight_decay = 0.01
 <p>An epoch is a complete pass through the entire training dataset</p>
 </div>
 <p>The training process is iterative and involves multiple <strong>epochs</strong>. The number of epochs can be, 1. prespecified, 2. tuned, or 3. determined by early stopping</p>
-<!-- ## Epochs
-- The training process is iterative and involves multiple **epochs**
-- An epoch is a complete pass through the entire training dataset
-- The number of epochs can be, prespecified, tuned, or determined by early stopping
-- Guard against overfitting -->
 </section>
 <section id="early-stopping-i" class="slide level2 center">
 <h2>Early Stopping I</h2>
@@ -1404,17 +1276,6 @@ Early Stopping
 </div>
 </div>
 <p>To implement early stopping, the training loop (see later slides) must be slightly modified</p>
-<!-- ## Early Stopping I
-- We will discuss the bias-variance trade-off in more detail next week
-- For now: when we keep training (increasing the number of epochs), we keep increasing the training accuracy 
-- The validation accuracy, our ability to generalize, will start to decrease after a certain point
-- To implement early stopping, the training loop (see later slides) must be slightly modified 
-- We watch the validation loss, and when it has not improved for a certain number of epochs (patience), we stop training and restore the best model state -->
-<!-- ## Early Stopping and Overfitting Visualized
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Early Stopping</p>
-<img src="early_stopping.svg" style="max-height: 490px; max-width: 100%; width: auto;">
-</div> -->
 </section>
 <section id="loss-functions" class="slide level2 center">
 <h2>Loss Functions</h2>
@@ -1443,23 +1304,6 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 </script>
 </div>
 <p>We can write our own loss functions, but this is up to you if you wish to do so.</p>
-<!-- ## Loss Functions
-- We still consider only the regression task
-- Typical loss functions include
-- `nn.MSELoss` (squared error), `nn.L1Loss` (absolute error), `nn.HuberLoss` (squared for small errors, absolute for large) (Huber, 1964), (we will see this next week!)
-- We can write our own loss functions, but this is up to you if you wish to do so
-- Example for the mean squared error,
-
-```lqezyfucg
-#| autorun: false
-#| runbutton: false
-#| startover: false
-import torch.nn as nn
-
-criterion = nn.MSELoss()
-
-loss = criterion(outputs, targets) # Application
-``` -->
 </section>
 <section id="initializing-training" class="slide level2 center">
 <h2>Initializing Training</h2>
@@ -1554,10 +1398,6 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6Im1vZGVsLmV2YWwoKVxubFByZWQgPSBbXVxuXG53aXRoIHRvcmNoLm5vX2dyYWQoKTpcbiAgICBmb3IgaW5wdXRzLCBfIGluIGxUZXN0OlxuICAgICAgICBsUHJlZC5hcHBlbmQobW9kZWwoaW5wdXRzLnRvKGRldmljZSkpLmNwdSgpLm51bXB5KCkpXG5cbmZvcmVjYXN0cyA9IG5wLmNvbmNhdGVuYXRlKGxQcmVkKVxuZm9yZWNhc3RzX3Vuc3RkID0geV9zY2FsZXIuaW52ZXJzZV90cmFuc2Zvcm0oZm9yZWNhc3RzKVxueV91bnN0ZCA9IHlfc2NhbGVyLmludmVyc2VfdHJhbnNmb3JtKHlfdGVzdClcblxubXNlID0gbnAubWVhbigoeV91bnN0ZCAtIGZvcmVjYXN0c191bnN0ZCkgKiogMilcbiMgQmVuY2htYXJrOiB0cmFpbmluZy1zYW1wbGUgbWVhbiBmb3JlY2FzdFxueV9iZW5jaCA9IHlfc2NhbGVyLmludmVyc2VfdHJhbnNmb3JtKHlfdHJhaW4pLm1lYW4oKVxucjJfb29zID0gMSAtIG5wLnN1bSgoeV91bnN0ZCAtIGZvcmVjYXN0c191bnN0ZCkgKiogMikgLyBucC5zdW0oKHlfdW5zdGQgLSB5X2JlbmNoKSAqKiAyKVxucHJpbnQoZlwiVGVzdCBSTVNFOiB7bnAuc3FydChtc2UpOi4yZn0gfCBUZXN0IE9PUyBSMiAodnMuIHRyYWluIG1lYW4pOiB7cjJfb29zOi4zZn1cIikifQ==
 </script>
 </div>
-<!-- ## An Extended Pipeline (My Preferred Approach)
-- I set the seed for reproducibility, store the training and validation losses, and time the run
-- I keep running loss book-keeping for each epoch to keep track of the training process
-- I print these losses at the end of each epoch to monitor convergence -->
 </section>
 <section id="an-extended-pipeline-my-preferred-approach" class="slide level2 center">
 <h2>An Extended Pipeline (My Preferred Approach)</h2>
@@ -1576,14 +1416,42 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 </div>
 </div>
 </section>
-<section id="limitations-of-deep-learning" class="slide level2 center">
-<h2>Limitations of Deep Learning</h2>
-<ul>
-<li>“Jagged Intelligence” — models have incredible power, yet struggle with tasks like telling time (<a href="https://hai.stanford.edu/ai-index/2026-ai-index-report">Stanford 2026 AI Index Report</a>)</li>
-<li>“Black Box” — models are not interpretable with potentially harmful consequences</li>
-<li>“Data Hungry” — models require large amounts of data to train effectively, which may not be available in all domains</li>
-<li>Computational overhead — frequently requires GPUs, high memory, and long compute times</li>
-</ul>
+<section id="limitations-of-neural-networks" class="slide level2 center">
+<h2>Limitations of Neural Networks</h2>
+<div class="overview">
+<div class="ov-row">
+<div class="ov-label">
+<p>Jagged Intelligence</p>
+</div>
+<div class="ov-desc">
+<p>Models have incredible power, yet struggle with tasks like telling time (<a href="https://hai.stanford.edu/ai-index/2026-ai-index-report">Stanford 2026 AI Index Report</a>)</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>Black Box</p>
+</div>
+<div class="ov-desc">
+<p>Models are not interpretable with potentially harmful consequences</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>Data Hungry</p>
+</div>
+<div class="ov-desc">
+<p>Models require large amounts of data to train effectively, which may not be available in all domains</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>Computational overhead</p>
+</div>
+<div class="ov-desc">
+<p>Frequently requires GPUs, high memory, and long compute times</p>
+</div>
+</div>
+</div>
 </section></section>
 <section>
 <section id="broader-perspectives-of-neural-networks" class="title-slide slide level1 divider center">
@@ -1592,12 +1460,24 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 </section>
 <section id="broader-applications-of-deep-learning" class="slide level2 center">
 <h2>Broader Applications of Deep Learning</h2>
-<ul>
-<li>Computer vision (Convolutional Neural Networks)</li>
-<li>Time Series Modelling (Recurrent Neural Networks, LSTMs, Transformers)</li>
-<li>Natural language processing (Transformers <span class="math inline">\(\to\)</span> Large Language Models)</li>
-<li>Example: Health care</li>
-</ul>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">Computer vision</span></p>
+<p><span class="tc-title">Convolutional Neural Networks</span></p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Time series modelling</span></p>
+<p><span class="tc-title">Recurrent Neural Networks, LSTMs, Transformers</span></p>
+</div>
+<div class="triad-card tc-amber">
+<p><span class="tc-tag">Natural language processing</span></p>
+<p><span class="tc-title">Transformers (!) <span class="math inline">\(\to\)</span> Large Language Models</span></p>
+</div>
+</div>
+<div class="keypoint">
+<p>Example: Computer vision for health care</p>
+</div>
+<p>No maths, only intuition</p>
 </section>
 <section id="convolutional-neural-networks-cnns" class="slide level2 center">
 <h2>Convolutional Neural Networks (CNNs)</h2>
@@ -1605,94 +1485,187 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 <li>Developed for computer vision tasks (LeCun et al., 1998)</li>
 <li>Dominant in the field of deep learning for image recognition and classification</li>
 <li>Pipeline consists of convolutional and pooling operations</li>
-<li>No maths, only intuition</li>
 </ul>
+<div class="flow">
+<div class="fn-navy">
+<p>Image</p>
+</div>
+<div class="fn">
+<p>Convolution</p>
+</div>
+<div class="fn">
+<p>Activation</p>
+</div>
+<div class="fn">
+<p>Pooling</p>
+</div>
+<div class="fn-amber">
+<p>Prediction</p>
+</div>
+</div>
 </section>
 <section id="a-convolutional-neural-network-visualized" class="slide level2 center">
 <h2>A Convolutional Neural Network Visualized</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<div class="figblock">
+<p class="fig-title">
 </p>
-<p><img src="CNN.svg" style="max-height: 490px; max-width: 100%; width: auto;"></p>
+<p><img src="CNN.svg"></p>
 </div>
 </section>
 <section id="the-convolutional-operation" class="slide level2 center">
 <h2>The Convolutional Operation</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<div class="figblock">
+<p class="fig-title">
 </p>
-<p><img src="Conv.svg" style="max-height: 490px; max-width: 100%; width: auto;"></p>
+<p><img src="Conv.svg"></p>
 </div>
 </section>
 <section id="applying-activations-and-pooling" class="slide level2 center">
 <h2>Applying Activations and Pooling</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<div class="figblock">
+<p class="fig-title">
 </p>
-<p><img src="ActPool.svg" style="max-height: 490px; max-width: 100%; width: auto;"></p>
+<p><img src="ActPool.svg"></p>
 </div>
 </section>
-<section id="long-short-term-memory-networks-lstms" class="slide level2 center">
-<h2>Long-short-Term Memory Networks (LSTMs)</h2>
+<section id="recurrent-networks-and-lstms" class="slide level2 center">
+<h2>Recurrent Networks and LSTMs</h2>
+<div class="compare">
+<div class="compare-col">
+<p><span class="cmp-title">Recurrent neural networks (RNNs)</span></p>
 <ul>
-<li>LSTMs are a type of recurrent neural network (RNN) that can learn long-term dependencies</li>
-<li>RNNs are designed for sequential data, where the output at time <span class="math inline">\(t\)</span> depends on previous inputs and outputs</li>
-<li>Sequential data is common in time series and natural language processing</li>
-<li>Before 2017 (the transformer revolution, in a few slides), Google Translate used LSTMs</li>
-<li>No maths, only intuition</li>
+<li>Designed for sequential data, where the output at time <span class="math inline">\(t\)</span> depends on previous inputs and outputs</li>
+<li>Sequential data common in time series and natural language processing</li>
 </ul>
+</div>
+<div class="compare-col cmp-alt">
+<p><span class="cmp-title">Long short-term memory networks (LSTMs)</span></p>
+<ul>
+<li>A type of RNN that can learn long-term dependencies</li>
+<li>Before 2017 (the transformer revolution, in a few slides), Google Translate used LSTMs</li>
+</ul>
+</div>
+</div>
 </section>
 <section id="recurrent-neural-networks-visualized" class="slide level2 center">
 <h2>Recurrent Neural Networks Visualized</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<div class="figblock">
+<p class="fig-title">
 </p>
-<p><img src="RNN.svg" style="max-height: 490px; max-width: 100%; width: auto;"></p>
+<p><img src="RNN.svg"></p>
 </div>
 </section>
-<section id="lstms-visualized" class="slide level2 center">
-<h2>LSTMs Visualized</h2>
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">
+<section id="lstm-unit-visualized" class="slide level2 center">
+<h2>LSTM Unit Visualized</h2>
+<div class="figblock">
+<p class="fig-title">
 </p>
-<p><img src="LSTMUnit.svg" style="max-height: 490px; max-width: 100%; width: auto;"></p>
+<p><img src="LSTMUnit.svg"></p>
 </div>
 </section>
 <section id="the-transformer-revolution" class="slide level2 center">
 <h2>The Transformer Revolution</h2>
-<ul>
-<li>Transformers (Vaswani et al., 2017) are the foundation of Large Language Models (LLMs)</li>
-<li>Transformers use self-attention mechanisms to process sequential data in parallel, allowing for better scalability and performance</li>
-<li>Attention can be explained as a mechanism that allows the model to focus on relevant parts of the input sequence when making predictions</li>
-<li>The best intuitive introduction by far, in my opinion, is Section “The Transformer Architecture”, Chapter 15 of <a href="https://deeplearningwithpython.io/chapters/chapter15_language-models-and-the-transformer/#the-transformer-architecture">Deep Learning with Python</a> (Challot, 3rd edition, 2025)</li>
-<li>Skip the code (which is geared towards TensorFlow) and focus on the intuition</li>
-</ul>
+<p><strong>Transformers</strong> (Vaswani et al., 2017) are the <strong>foundation</strong> of Large Language Models (LLMs)</p>
+<div class="triad cols-2">
+<div class="triad-card">
+<p><span class="tc-tag">Self-attention</span></p>
+<p>Transformers use self-attention mechanisms to process sequential data in parallel, allowing for better scalability and performance</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Attention</span></p>
+<p>A mechanism that allows the model to focus on relevant parts of the input sequence when making predictions</p>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>The best intuitive introduction by far, in my opinion, is Section “The Transformer Architecture”, Chapter 15 of <a href="https://deeplearningwithpython.io/chapters/chapter15_language-models-and-the-transformer/#the-transformer-architecture">Deep Learning with Python</a> (Challot, 3rd edition, 2025).</p>
+<p>Skip the code (which is geared towards TensorFlow) and focus on the intuition</p>
+</div>
+</div>
+</div>
+</section>
+<section id="llms-are-forecasting-models" class="slide level2 center">
+<h2>LLMs are Forecasting Models</h2>
+<p>When we chat with generative AI, we are sampling from the probability distribution of the next word given the previous words</p>
+<div class="figblock fb-s330">
+<p class="fig-title">
+Prompt: “The central bank decided to raise the …”
+</p>
+<p><img src="nexttoken.svg"></p>
+</div>
+<div class="keypoint">
+<p>The replies we receive are nothing but (incredibly good) predictions</p>
+</div>
 </section>
 <section id="llms-and-generative-ai" class="slide level2 center">
 <h2>LLMs and Generative AI</h2>
-<ul>
-<li>Transformers provide the bedrock of LLMs — GPT as in ChatGPT abbreviates “Generative Pre-trained <strong>Transformer</strong>”</li>
-<li>LLMs are trained on large corpora of text data to learn the statistical properties of language</li>
-<li>When we chat with generative AI, we are sampling from the probability distribution of the next word given the previous words</li>
-<li>That is, the replies we receive are nothing but (incredibly good) predictions</li>
-</ul>
+<p>Transformers provide the bedrock of LLMs — GPT as in ChatGPT abbreviates “Generative Pre-trained <strong>Transformer</strong>”</p>
+<div class="triad gpt">
+<div class="triad-card">
+<p><span class="tc-letter">G</span> <span class="tc-title">Generative (AI)</span></p>
+</div>
+<div class="triad-card">
+<p><span class="tc-letter">P</span> <span class="tc-title">Pre-trained</span> Trained on large corpora of text data to learn the statistical properties of language</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-letter">T</span> <span class="tc-title">Transformers</span></p>
+</div>
+</div>
 </section>
 <section id="a-friendly-piece-of-advice" class="slide level2 center">
 <h2>A friendly piece of advice</h2>
+<div class="keypoint">
+<p>We must keep in mind that the model is trained to retain our attention and engagement (like social media) <span class="math inline">\(\Rightarrow\)</span> will tend to tell us what we want to hear</p>
+</div>
+<div class="spacer">
+
+</div>
+<p>Can mitigate this somewhat with being neutral in our prompts:</p>
+<div class="dodont">
+<section id="leading-prompt" class="dont-col">
+<h3>Leading prompt</h3>
 <ul>
-<li>We must keep in mind that the model is trained to retain our attention and engagement (like social media) <span class="math inline">\(\Rightarrow\)</span> will tend to tell us what we want to hear</li>
-<li>Can mitigate this somewhat with being neutral in our prompts: “I am right about this, right?” vs.&nbsp;“Will you check the correctness of this statement?”</li>
+<li>“I am right about this, right?”</li>
+</ul>
+</section>
+<section id="neutral-prompt" class="do-col">
+<h3>Neutral prompt</h3>
+<ul>
+<li>“Will you check the correctness of this statement?”</li>
+</ul>
+</section>
+</div>
+<div class="spacer">
+
+</div>
+<ul>
 <li>I often pose simpler questions with “Yes or no?”</li>
 <li>Restarting a conversation or changing model (Gemini/Claude/ChatGPT) can also be helpful</li>
 </ul>
 </section>
-<section id="examples-of-deep-learning-break-throughs" class="slide level2 center">
-<h2>Examples of Deep Learning Break-Throughs</h2>
-<ul>
-<li>Training the Chinese LLM LongCat-2.0 Model without NVIDIA GPUs</li>
-<li>MuSViT reads sheet music like computer vision models read images</li>
-<li>OpenAI and Anthropic (and others) are making progress in the field of mathematics</li>
-</ul>
+<section id="recent-deep-learning-break-throughs" class="slide level2 center">
+<h2>Recent Deep Learning Break-Throughs</h2>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">Hardware</span></p>
+<p>Training the Chinese LLM LongCat-2.0 Model without NVIDIA GPUs</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Computer vision meets music</span></p>
+<p>MuSViT reads sheet music like computer vision models read images</p>
+</div>
+<div class="triad-card tc-amber">
+<p><span class="tc-tag">Mathematics</span></p>
+<p>OpenAI and Anthropic (and others) are making progress in the field of mathematics</p>
+</div>
+</div>
 
 <script type="pyodide-data">
 eyJvcHRpb25zIjp7ImVudiI6eyJQTE9UTFlfUkVOREVSRVIiOiJwbG90bHlfbWltZXR5cGUifSwiaW5kZXhVUkwiOiJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvcHlvZGlkZS92MC4yOC4xL2Z1bGwvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsicHlvZGlkZV9odHRwIiwibWljcm9waXAiLCJpcHl0aG9uIl19fQ==

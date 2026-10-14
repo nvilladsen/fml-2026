@@ -1084,82 +1084,6 @@ Stops training when the validation loss no longer improves
 :::
 :::
 
-<!-- :::: {.steplist}
-::: {.step-row}
-::: {.step-num}
-1
-:::
-::: {.step-title}
-Dropout
-:::
-::: {.step-desc}
-Randomly sets neurons to zero in each training step
-:::
-:::
-::: {.step-row}
-::: {.step-num}
-2
-:::
-::: {.step-title}
-$\mathcal{L}_1$ regularization
-:::
-::: {.step-desc}
-Penalizes the absolute value of the weights, favoring sparse networks
-:::
-:::
-::: {.step-row}
-::: {.step-num}
-3
-:::
-::: {.step-title}
-$\mathcal{L}_2$ regularization (weight decay)
-:::
-::: {.step-desc}
-Shrinks the weights towards zero
-:::
-:::
-::: {.step-row}
-::: {.step-num}
-4
-:::
-::: {.step-title}
-Early stopping
-:::
-::: {.step-desc}
-Stops training when the validation loss no longer improves
-:::
-:::
-:::: -->
-
-<!-- ## Guarding Against Overfitting
-
-::: {.act-table}
-| Method | Effect | Acts on |
-|:------------------------|:--------------------------------------------|:-----------:|
-| **Dropout** | Randomly sets neurons to zero in each training step | network |
-| **$\mathcal{L}_1$ regularization** | Penalizes the absolute value of the weights, favouring sparse networks | loss |
-| **$\mathcal{L}_2$ regularization** (weight decay) | Shrinks the weights towards zero | loss |
-| **Early stopping** | Stops training when the validation loss no longer improves | training loop |
-:::
-
-## Guarding Against Overfitting
-
-:::: {.flow}
-::: {.fn-navy}
-**Dropout**
-[Randomly sets neurons to zero in each training step]{.fn-sub}
-:::
-::: {.fn}
-**$\mathcal{L}_1$ and $\mathcal{L}_2$ regularization**
-[$\mathcal{L}_1$ penalizes the absolute value of the weights, favouring sparse networks. $\mathcal{L}_2$ (weight decay) shrinks the weights towards zero]{.fn-sub}
-:::
-::: {.fn-amber}
-**Early stopping**
-[Stops training when the validation loss no longer improves]{.fn-sub}
-:::
-:::: -->
-
-
 ## Dropout
 
 :::: {.columns}
@@ -1191,31 +1115,6 @@ self.dropout = nn.Dropout(p = 0.5)
 # in forward
 x = self.dropout(F.relu(self.fc1(x)))
 ```
-
-
-<!-- ## Dropout
-- Dropout (Srivastava et al., 2014): `nn.Dropout(p)` is applied in every training step
-- Each neuron in the layer is set to zero with probability $p$, e.g., $p = 0.5$
-- Neurons are made more independent, so the network behaves like an average of many thinned networks (think bagged trees)
-- Dropout is not applied in evaluation 
-- Applying dropout to layer `fc1` with specified probability `p=0.5`
-```{pyodide}
-#| autorun: false
-#| runbutton: false
-#| startover: false
-# in __init__
-self.dropout = nn.Dropout(p = 0.5)
-
-# in forward
-x = self.dropout(F.relu(self.fc1(x)))
-``` -->
-
-<!-- ## Dropout Visualized
-
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Neural Network with Dropout = 0.5</p>
-<img src="NNDropout.svg" style="max-height: 490px; max-width: 100%; width: auto;">
-</div> -->
 
 ## $\mathcal{L}_1$ and $\mathcal{L}_2$ Regularization
 
@@ -1260,36 +1159,6 @@ optimiser = torch.optim.Adam(model.parameters(), lr = 0.001, weight_decay = 0.01
 ```
 
 
-<!-- ## $\mathcal{L}_1$ Regularization
-- $\mathcal{L}_1$ penalizes the absolute value of the weights, favouring sparse networks, with penalty added to the loss,
-
-$$\mathcal{L}(\omega) + \lambda\sum_{h,k,j}\left|\omega_{kj}^{(h)}\right|$$
-
-```{pyodide}
-#| autorun: false
-#| runbutton: false
-#| startover: false
-l1_lambda = 0.0001
-
-loss = criterion(outputs, targets)
-loss = loss + l1_lambda * sum(param.abs().sum() for param in model.parameters())
-```
-
-## $\mathcal{L}_2$ Regularization
-- Weight decay ($\mathcal{L}_2$) adds a penalty to the loss, shrinking the weights towards zero,
-
-$$\mathcal{L}(\omega) + \frac{\lambda}{2}\sum_{h,k,j}\left(\omega_{kj}^{(h)}\right)^2$$
-
-- Weight decay is passed as an argument to the optimizer, e.g., `weight_decay = 0.01` in `Adam`,
-
-```{pyodide}
-#| autorun: false
-#| runbutton: false
-#| startover: false
-optimiser = torch.optim.Adam(model.parameters(), lr = 0.001, weight_decay = 0.01)
-``` -->
-
-
 ## Epochs
 
 ::: {.keypoint}
@@ -1300,14 +1169,6 @@ The training process is iterative and involves multiple **epochs**. The number o
 1. prespecified,
 2. tuned, or
 3. determined by early stopping
-
-
-
-<!-- ## Epochs
-- The training process is iterative and involves multiple **epochs**
-- An epoch is a complete pass through the entire training dataset
-- The number of epochs can be, prespecified, tuned, or determined by early stopping
-- Guard against overfitting -->
 
 ## Early Stopping I 
 
@@ -1334,20 +1195,6 @@ No improvement for #`patience` epochs: stop and restore the best model state
 ::::
 
 To implement early stopping, the training loop (see later slides) must be slightly modified
-
-
-<!-- ## Early Stopping I
-- We will discuss the bias-variance trade-off in more detail next week
-- For now: when we keep training (increasing the number of epochs), we keep increasing the training accuracy 
-- The validation accuracy, our ability to generalize, will start to decrease after a certain point
-- To implement early stopping, the training loop (see later slides) must be slightly modified 
-- We watch the validation loss, and when it has not improved for a certain number of epochs (patience), we stop training and restore the best model state -->
-
-<!-- ## Early Stopping and Overfitting Visualized
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Early Stopping</p>
-<img src="early_stopping.svg" style="max-height: 490px; max-width: 100%; width: auto;">
-</div> -->
 
 ## Loss Functions
 
@@ -1385,25 +1232,6 @@ loss = criterion(outputs, targets) # Application
 ```
 
 We can write our own loss functions, but this is up to you if you wish to do so.
-
-<!-- ## Loss Functions
-- We still consider only the regression task
-- Typical loss functions include
-- `nn.MSELoss` (squared error), `nn.L1Loss` (absolute error), `nn.HuberLoss` (squared for small errors, absolute for large) (Huber, 1964), (we will see this next week!)
-- We can write our own loss functions, but this is up to you if you wish to do so
-- Example for the mean squared error,
-
-```{pyodide}
-#| autorun: false
-#| runbutton: false
-#| startover: false
-import torch.nn as nn
-
-criterion = nn.MSELoss()
-
-loss = criterion(outputs, targets) # Application
-``` -->
-
 
 
 ## Initializing Training
@@ -1531,11 +1359,6 @@ r2_oos = 1 - np.sum((y_unstd - forecasts_unstd) ** 2) / np.sum((y_unstd - y_benc
 print(f"Test RMSE: {np.sqrt(mse):.2f} | Test OOS R2 (vs. train mean): {r2_oos:.3f}")
 ```
 
-<!-- ## An Extended Pipeline (My Preferred Approach)
-- I set the seed for reproducibility, store the training and validation losses, and time the run
-- I keep running loss book-keeping for each epoch to keep track of the training process
-- I print these losses at the end of each epoch to monitor convergence -->
-
 ## An Extended Pipeline (My Preferred Approach)
 
 :::: {.triad}
@@ -1557,83 +1380,250 @@ I print these losses at the end of each epoch to monitor convergence
 ::::
 
 
-## Limitations of Deep Learning
-- "Jagged Intelligence" --- models have incredible power, yet struggle with tasks like telling time ([Stanford 2026 AI Index Report](https://hai.stanford.edu/ai-index/2026-ai-index-report))
-- "Black Box" --- models are not interpretable with potentially harmful consequences
-- "Data Hungry" --- models require large amounts of data to train effectively, which may not be available in all domains
-- Computational overhead --- frequently requires GPUs, high memory, and long compute times
+## Limitations of Neural Networks
+
+::: {.overview}
+::: {.ov-row}
+::: {.ov-label}
+Jagged Intelligence
+:::
+::: {.ov-desc}
+Models have incredible power, yet struggle with tasks like telling time ([Stanford 2026 AI Index Report](https://hai.stanford.edu/ai-index/2026-ai-index-report))
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+Black Box
+:::
+::: {.ov-desc}
+Models are not interpretable with potentially harmful consequences
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+Data Hungry
+:::
+::: {.ov-desc}
+Models require large amounts of data to train effectively, which may not be available in all domains
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+Computational overhead
+:::
+::: {.ov-desc}
+Frequently requires GPUs, high memory, and long compute times
+:::
+:::
+:::
 
 # Broader Perspectives of Neural Networks {.divider}
 
-## Broader Applications of Deep Learning 
-- Computer vision (Convolutional Neural Networks)
-- Time Series Modelling (Recurrent Neural Networks, LSTMs, Transformers)
-- Natural language processing (Transformers $\to$ Large Language Models)
-- Example: Health care
+## Broader Applications of Deep Learning
+
+:::: {.triad}
+::: {.triad-card}
+[Computer vision]{.tc-tag}
+
+[Convolutional Neural Networks]{.tc-title}
+:::
+::: {.triad-card .tc-light}
+[Time series modelling]{.tc-tag}
+
+[Recurrent Neural Networks, LSTMs, Transformers]{.tc-title}
+:::
+::: {.triad-card .tc-amber}
+[Natural language processing]{.tc-tag}
+
+[Transformers (!) $\to$ Large Language Models]{.tc-title}
+:::
+::::
+
+::: {.keypoint}
+Example: Computer vision for health care
+:::
+
+No maths, only intuition
 
 ## Convolutional Neural Networks (CNNs)
+
 - Developed for computer vision tasks (LeCun et al., 1998)
 - Dominant in the field of deep learning for image recognition and classification
 - Pipeline consists of convolutional and pooling operations
-- No maths, only intuition
+
+:::: {.flow}
+::: {.fn-navy}
+Image
+:::
+::: {.fn}
+Convolution
+:::
+::: {.fn}
+Activation
+:::
+::: {.fn}
+Pooling
+:::
+::: {.fn-amber}
+Prediction
+:::
+::::
 
 ## A Convolutional Neural Network Visualized
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;"></p>
-<img src="CNN.svg" style="max-height: 490px; max-width: 100%; width: auto;">
+
+<div class="figblock">
+<p class="fig-title"></p>
+<img src="CNN.svg">
 </div>
 
 ## The Convolutional Operation
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;"></p>
-<img src="Conv.svg" style="max-height: 490px; max-width: 100%; width: auto;">
+
+<div class="figblock">
+<p class="fig-title"></p>
+<img src="Conv.svg">
 </div>
 
 ## Applying Activations and Pooling
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;"></p>
-<img src="ActPool.svg" style="max-height: 490px; max-width: 100%; width: auto;">
+
+<div class="figblock">
+<p class="fig-title"></p>
+<img src="ActPool.svg">
 </div>
 
-## Long-short-Term Memory Networks (LSTMs)
-- LSTMs are a type of recurrent neural network (RNN) that can learn long-term dependencies
-- RNNs are designed for sequential data, where the output at time $t$ depends on previous inputs and outputs
-- Sequential data is common in time series and natural language processing
+## Recurrent Networks and LSTMs
+
+:::: {.compare}
+::: {.compare-col}
+[Recurrent neural networks (RNNs)]{.cmp-title}
+
+- Designed for sequential data, where the output at time $t$ depends on previous inputs and outputs
+- Sequential data common in time series and natural language processing
+:::
+::: {.compare-col .cmp-alt}
+[Long short-term memory networks (LSTMs)]{.cmp-title}
+
+- A type of RNN that can learn long-term dependencies
 - Before 2017 (the transformer revolution, in a few slides), Google Translate used LSTMs
-- No maths, only intuition
+:::
+::::
+
 
 ## Recurrent Neural Networks Visualized
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;"></p>
-<img src="RNN.svg" style="max-height: 490px; max-width: 100%; width: auto;">
+
+<div class="figblock">
+<p class="fig-title"></p>
+<img src="RNN.svg">
 </div>
 
-## LSTMs Visualized
-<div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;"></p>
-<img src="LSTMUnit.svg" style="max-height: 490px; max-width: 100%; width: auto;">
+## LSTM Unit Visualized
+
+<div class="figblock">
+<p class="fig-title"></p>
+<img src="LSTMUnit.svg">
 </div>
 
 ## The Transformer Revolution
-- Transformers (Vaswani et al., 2017) are the foundation of Large Language Models (LLMs)
-- Transformers use self-attention mechanisms to process sequential data in parallel, allowing for better scalability and performance
-- Attention can be explained as a mechanism that allows the model to focus on relevant parts of the input sequence when making predictions
-- The best intuitive introduction by far, in my opinion, is Section "The Transformer Architecture", Chapter 15 of [Deep Learning with Python](https://deeplearningwithpython.io/chapters/chapter15_language-models-and-the-transformer/#the-transformer-architecture) (Challot, 3rd edition, 2025)
-- Skip the code (which is geared towards TensorFlow) and focus on the intuition
+
+**Transformers** (Vaswani et al., 2017) are the **foundation** of Large Language Models (LLMs)
+
+:::: {.triad .cols-2}
+::: {.triad-card}
+[Self-attention]{.tc-tag}
+
+Transformers use self-attention mechanisms to process sequential data in parallel, allowing for better scalability and performance
+:::
+::: {.triad-card .tc-light}
+[Attention]{.tc-tag}
+
+A mechanism that allows the model to focus on relevant parts of the input sequence when making predictions
+:::
+::::
+
+::: {.callout-tip}
+The best intuitive introduction by far, in my opinion, is Section "The Transformer Architecture", Chapter 15 of [Deep Learning with Python](https://deeplearningwithpython.io/chapters/chapter15_language-models-and-the-transformer/#the-transformer-architecture) (Challot, 3rd edition, 2025). 
+
+Skip the code (which is geared towards TensorFlow) and focus on the intuition
+:::
+
+## LLMs are Forecasting Models
+
+When we chat with generative AI, we are sampling from the probability distribution of the next word given the previous words
+
+<div class="figblock fb-s330">
+<p class="fig-title">Prompt: "The central bank decided to raise the ..."</p>
+<img src="nexttoken.svg">
+</div>
+
+::: {.keypoint}
+The replies we receive are nothing but (incredibly good) predictions
+:::
 
 ## LLMs and Generative AI
-- Transformers provide the bedrock of LLMs --- GPT as in ChatGPT abbreviates "Generative Pre-trained **Transformer**"
-- LLMs are trained on large corpora of text data to learn the statistical properties of language
-- When we chat with generative AI, we are sampling from the probability distribution of the next word given the previous words
-- That is, the replies we receive are nothing but (incredibly good) predictions
+
+Transformers provide the bedrock of LLMs --- GPT as in ChatGPT abbreviates "Generative Pre-trained **Transformer**"
+
+:::: {.triad .gpt}
+::: {.triad-card}
+[G]{.tc-letter}
+[Generative (AI)]{.tc-title}
+:::
+::: {.triad-card}
+[P]{.tc-letter}
+[Pre-trained]{.tc-title}
+Trained on large corpora of text data to learn the statistical properties of language
+:::
+::: {.triad-card}
+[T]{.tc-letter}
+[Transformers]{.tc-title}
+:::
+::::
 
 ## A friendly piece of advice
-- We must keep in mind that the model is trained to retain our attention and engagement (like social media) $\Rightarrow$ will tend to tell us what we want to hear
-- Can mitigate this somewhat with being neutral in our prompts: "I am right about this, right?" vs. "Will you check the correctness of this statement?"
+
+::: {.keypoint}
+We must keep in mind that the model is trained to retain our attention and engagement (like social media) $\Rightarrow$ will tend to tell us what we want to hear
+:::
+
+::: {.spacer}
+:::
+
+Can mitigate this somewhat with being neutral in our prompts:
+
+:::: {.dodont}
+::: {.dont-col}
+### Leading prompt
+
+- "I am right about this, right?"
+:::
+::: {.do-col}
+### Neutral prompt
+
+- "Will you check the correctness of this statement?"
+:::
+::::
+
+::: {.spacer}
+:::
+
 - I often pose simpler questions with "Yes or no?"
 - Restarting a conversation or changing model (Gemini/Claude/ChatGPT) can also be helpful
 
-## Examples of Deep Learning Break-Throughs
-- Training the Chinese LLM LongCat-2.0 Model without NVIDIA GPUs 
-- MuSViT reads sheet music like computer vision models read images
-- OpenAI and Anthropic (and others) are making progress in the field of mathematics
+## Recent Deep Learning Break-Throughs
+
+:::: {.triad}
+::: {.triad-card}
+[Hardware]{.tc-tag}
+
+Training the Chinese LLM LongCat-2.0 Model without NVIDIA GPUs
+:::
+::: {.triad-card .tc-light}
+[Computer vision meets music]{.tc-tag}
+
+MuSViT reads sheet music like computer vision models read images
+:::
+::: {.triad-card .tc-amber}
+[Mathematics]{.tc-tag}
+
+OpenAI and Anthropic (and others) are making progress in the field of mathematics
+:::
+::::
