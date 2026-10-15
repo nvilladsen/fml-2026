@@ -592,8 +592,8 @@ Test (15%)
 #| autorun: false
 #| runbutton: false
 #| startover: false
-X_train, X_tmp, y_train, y_tmp = train_test_split(X, target, test_size=0.3, shuffle=False)
-X_val, X_test, y_val, y_test = train_test_split(X_tmp, y_tmp, test_size=0.5, shuffle=False)
+X_train, X_tmp, y_train, y_tmp = train_test_split(X, target, train_size=0.7, shuffle=False)
+X_val, X_test, y_val, y_test = train_test_split(X_tmp, y_tmp, train_size=0.5, shuffle=False)
 ```
 
 ## Standardization
@@ -658,9 +658,9 @@ dfTrain = TensorDataset(X_train, y_train)
 dfVal = TensorDataset(X_val, y_val)
 dfTest = TensorDataset(X_test, y_test)
 
-lTrain = DataLoader(dfTrain, batch_size = 32, shuffle = False)
-lVal = DataLoader(dfVal, batch_size = 32, shuffle = False)
-lTest = DataLoader(dfTest, batch_size = 32, shuffle = False)
+lTrain = DataLoader(dfTrain, batch_size=32, shuffle=True)
+lVal = DataLoader(dfVal, batch_size=32, shuffle=False)
+lTest = DataLoader(dfTest, batch_size=32, shuffle=False)
 ```
 
 ## The Simple Neural Network I
@@ -833,7 +833,7 @@ A sum, which means the gradient is a sum over the $n$ observations, so we need o
 
 $$R_i(\theta) = \frac12\left(y_i - \beta_0- \sum_{k = 1}^{K_1}\beta_k g_1\left(\omega_{k0}+\sum_{j = 1}^p\omega_{kj}x_{ij}\right)\right)^2$$
 
-## Backpropagation III {.bp}
+<!-- ## Backpropagation III {.bp}
 
 Define $z_{ik} = \omega_{k0} + \sum_{j = 1}^p\omega_{kj}x_{ij}$
 
@@ -865,6 +865,50 @@ $\dfrac{\partial f_\theta(x_i)}{\partial \beta_k}$
 :::
 ::: {.fn}
 $\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)}$
+:::
+::::
+
+Computing the derivative w.r.t. $\beta_k$,
+
+$$
+\begin{aligned}
+\frac{\partial R_i(\theta)}{\partial \beta_k} &= \frac{\partial R_i(\theta)}{\partial f_\theta(x_i)} \cdot \frac{\partial f_\theta(x_i)}{\partial \beta_k} \\ &= -(y_i - f_\theta(x_i)) \cdot g(z_{ik})
+\end{aligned}
+$$ -->
+
+
+## Backpropagation III {.bp}
+
+Define $z_{ik} = \omega_{k0} + \sum_{j = 1}^p\omega_{kj}x_{ij}$
+
+The output weight $\beta_k$ enters the forecast directly: $f_\theta(x_i) = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g(z_{ik})$
+
+::: {.flow-label}
+Forward pass: compute the forecast and the loss
+:::
+
+:::: {.flow}
+::: {.fn}
+$\beta_k$
+:::
+::: {.fn}
+$f_\theta(x_i)$
+:::
+::: {.fn-navy}
+$R_i(\theta)$
+:::
+::::
+
+::: {.flow-label}
+Backward pass: multiply the derivatives (chain rule)
+:::
+
+:::: {.flow .back}
+::: {.fn}
+$\dfrac{\partial f_\theta(x_i)}{\partial \beta_k} = g(z_{ik})$
+:::
+::: {.fn}
+$\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)} = -(y_i - f_\theta(x_i))$
 :::
 ::::
 
@@ -906,7 +950,7 @@ $R_i(\theta)$
 Backward pass: multiply the derivatives (chain rule)
 :::
 
-:::: {.flow .back}
+<!-- :::: {.flow .back}
 ::: {.fn}
 $\dfrac{\partial z_{ik}}{\partial \omega_{kj}}$
 :::
@@ -918,6 +962,21 @@ $\dfrac{\partial f_\theta(x_i)}{\partial g(z_{ik})}$
 :::
 ::: {.fn}
 $\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)}$
+:::
+:::: -->
+
+:::: {.flow .back}
+::: {.fn}
+$\dfrac{\partial z_{ik}}{\partial \omega_{kj}} = x_{ij}$
+:::
+::: {.fn}
+$\dfrac{\partial g_1(z_{ik})}{\partial z_{ik}} = g'(z_{ik})$
+:::
+::: {.fn}
+$\dfrac{\partial f_\theta(x_i)}{\partial g(z_{ik})} = \beta_k$
+:::
+::: {.fn}
+$\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)} = -(y_i - f_\theta(x_i))$
 :::
 ::::
 
@@ -997,7 +1056,7 @@ A combination of RMSProp and momentum (Kingma & Ba, 2014)
 #| startover: false
 import torch
 
-optimiser = torch.optim.Adam(model.parameters(), lr = 0.001)
+optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
 ```
 
 Common alternatives: `torch.optim.SGD`, `torch.optim.RMSprop`, `torch.optim.AdamW`
@@ -1155,7 +1214,7 @@ Weight decay is passed as an argument to the optimizer, e.g., `weight_decay = 0.
 #| autorun: false
 #| runbutton: false
 #| startover: false
-optimiser = torch.optim.Adam(model.parameters(), lr = 0.001, weight_decay = 0.01)
+optimizer = torch.optim.Adam(model.parameters(), lr = 0.001, weight_decay = 0.01)
 ```
 
 

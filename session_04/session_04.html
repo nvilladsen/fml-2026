@@ -753,7 +753,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 
 </div>
 <script type="pyodide-5-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IlhfdHJhaW4sIFhfdG1wLCB5X3RyYWluLCB5X3RtcCA9IHRyYWluX3Rlc3Rfc3BsaXQoWCwgdGFyZ2V0LCB0ZXN0X3NpemU9MC4zLCBzaHVmZmxlPUZhbHNlKVxuWF92YWwsIFhfdGVzdCwgeV92YWwsIHlfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoWF90bXAsIHlfdG1wLCB0ZXN0X3NpemU9MC41LCBzaHVmZmxlPUZhbHNlKSJ9
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IlhfdHJhaW4sIFhfdG1wLCB5X3RyYWluLCB5X3RtcCA9IHRyYWluX3Rlc3Rfc3BsaXQoWCwgdGFyZ2V0LCB0cmFpbl9zaXplPTAuNywgc2h1ZmZsZT1GYWxzZSlcblhfdmFsLCBYX3Rlc3QsIHlfdmFsLCB5X3Rlc3QgPSB0cmFpbl90ZXN0X3NwbGl0KFhfdG1wLCB5X3RtcCwgdHJhaW5fc2l6ZT0wLjUsIHNodWZmbGU9RmFsc2UpIn0=
 </script>
 </div>
 </section>
@@ -802,7 +802,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 
 </div>
 <script type="pyodide-8-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImRmVHJhaW4gPSBUZW5zb3JEYXRhc2V0KFhfdHJhaW4sIHlfdHJhaW4pXG5kZlZhbCA9IFRlbnNvckRhdGFzZXQoWF92YWwsIHlfdmFsKVxuZGZUZXN0ID0gVGVuc29yRGF0YXNldChYX3Rlc3QsIHlfdGVzdClcblxubFRyYWluID0gRGF0YUxvYWRlcihkZlRyYWluLCBiYXRjaF9zaXplID0gMzIsIHNodWZmbGUgPSBGYWxzZSlcbmxWYWwgPSBEYXRhTG9hZGVyKGRmVmFsLCBiYXRjaF9zaXplID0gMzIsIHNodWZmbGUgPSBGYWxzZSlcbmxUZXN0ID0gRGF0YUxvYWRlcihkZlRlc3QsIGJhdGNoX3NpemUgPSAzMiwgc2h1ZmZsZSA9IEZhbHNlKSJ9
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImRmVHJhaW4gPSBUZW5zb3JEYXRhc2V0KFhfdHJhaW4sIHlfdHJhaW4pXG5kZlZhbCA9IFRlbnNvckRhdGFzZXQoWF92YWwsIHlfdmFsKVxuZGZUZXN0ID0gVGVuc29yRGF0YXNldChYX3Rlc3QsIHlfdGVzdClcblxubFRyYWluID0gRGF0YUxvYWRlcihkZlRyYWluLCBiYXRjaF9zaXplPTMyLCBzaHVmZmxlPVRydWUpXG5sVmFsID0gRGF0YUxvYWRlcihkZlZhbCwgYmF0Y2hfc2l6ZT0zMiwgc2h1ZmZsZT1GYWxzZSlcbmxUZXN0ID0gRGF0YUxvYWRlcihkZlRlc3QsIGJhdGNoX3NpemU9MzIsIHNodWZmbGU9RmFsc2UpIn0=
 </script>
 </div>
 </section>
@@ -952,6 +952,48 @@ xkcd #1838
 <p><span class="math display">\[ R(\theta) = \sum_{i = 1}^n R_i(\theta) = \frac12\sum_{i = 1}^n(y_i - f_\theta(x_i))^2\]</span></p>
 <p>A sum, which means the gradient is a sum over the <span class="math inline">\(n\)</span> observations, so we need only consider one of these,</p>
 <p><span class="math display">\[R_i(\theta) = \frac12\left(y_i - \beta_0- \sum_{k = 1}^{K_1}\beta_k g_1\left(\omega_{k0}+\sum_{j = 1}^p\omega_{kj}x_{ij}\right)\right)^2\]</span></p>
+<!-- ## Backpropagation III {.bp}
+
+Define $z_{ik} = \omega_{k0} + \sum_{j = 1}^p\omega_{kj}x_{ij}$
+
+The output weight $\beta_k$ enters the forecast directly: $f_\theta(x_i) = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g(z_{ik})$
+
+::: {.flow-label}
+Forward pass: compute the forecast and the loss
+:::
+
+:::: {.flow}
+::: {.fn}
+$\beta_k$
+:::
+::: {.fn}
+$f_\theta(x_i)$
+:::
+::: {.fn-navy}
+$R_i(\theta)$
+:::
+::::
+
+::: {.flow-label}
+Backward pass: multiply the derivatives (chain rule)
+:::
+
+:::: {.flow .back}
+::: {.fn}
+$\dfrac{\partial f_\theta(x_i)}{\partial \beta_k}$
+:::
+::: {.fn}
+$\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)}$
+:::
+::::
+
+Computing the derivative w.r.t. $\beta_k$,
+
+$$
+\begin{aligned}
+\frac{\partial R_i(\theta)}{\partial \beta_k} &= \frac{\partial R_i(\theta)}{\partial f_\theta(x_i)} \cdot \frac{\partial f_\theta(x_i)}{\partial \beta_k} \\ &= -(y_i - f_\theta(x_i)) \cdot g(z_{ik})
+\end{aligned}
+$$ -->
 </section>
 <section id="backpropagation-iii" class="slide level2 bp center">
 <h2>Backpropagation III</h2>
@@ -976,10 +1018,10 @@ xkcd #1838
 </div>
 <div class="flow back">
 <div class="fn">
-<p><span class="math inline">\(\dfrac{\partial f_\theta(x_i)}{\partial \beta_k}\)</span></p>
+<p><span class="math inline">\(\dfrac{\partial f_\theta(x_i)}{\partial \beta_k} = g(z_{ik})\)</span></p>
 </div>
 <div class="fn">
-<p><span class="math inline">\(\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)}\)</span></p>
+<p><span class="math inline">\(\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)} = -(y_i - f_\theta(x_i))\)</span></p>
 </div>
 </div>
 <p>Computing the derivative w.r.t. <span class="math inline">\(\beta_k\)</span>,</p>
@@ -1015,18 +1057,32 @@ xkcd #1838
 <div class="flow-label">
 <p>Backward pass: multiply the derivatives (chain rule)</p>
 </div>
+<!-- :::: {.flow .back}
+::: {.fn}
+$\dfrac{\partial z_{ik}}{\partial \omega_{kj}}$
+:::
+::: {.fn}
+$\dfrac{\partial g_1(z_{ik})}{\partial z_{ik}}$
+:::
+::: {.fn}
+$\dfrac{\partial f_\theta(x_i)}{\partial g(z_{ik})}$
+:::
+::: {.fn}
+$\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)}$
+:::
+:::: -->
 <div class="flow back">
 <div class="fn">
-<p><span class="math inline">\(\dfrac{\partial z_{ik}}{\partial \omega_{kj}}\)</span></p>
+<p><span class="math inline">\(\dfrac{\partial z_{ik}}{\partial \omega_{kj}} = x_{ij}\)</span></p>
 </div>
 <div class="fn">
-<p><span class="math inline">\(\dfrac{\partial g_1(z_{ik})}{\partial z_{ik}}\)</span></p>
+<p><span class="math inline">\(\dfrac{\partial g_1(z_{ik})}{\partial z_{ik}} = g'(z_{ik})\)</span></p>
 </div>
 <div class="fn">
-<p><span class="math inline">\(\dfrac{\partial f_\theta(x_i)}{\partial g(z_{ik})}\)</span></p>
+<p><span class="math inline">\(\dfrac{\partial f_\theta(x_i)}{\partial g(z_{ik})} = \beta_k\)</span></p>
 </div>
 <div class="fn">
-<p><span class="math inline">\(\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)}\)</span></p>
+<p><span class="math inline">\(\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)} = -(y_i - f_\theta(x_i))\)</span></p>
 </div>
 </div>
 <p>Computing the derivative w.r.t. <span class="math inline">\(\omega_{kj}\)</span>,</p>
@@ -1094,7 +1150,7 @@ xkcd #1838
 
 </div>
 <script type="pyodide-10-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImltcG9ydCB0b3JjaFxuXG5vcHRpbWlzZXIgPSB0b3JjaC5vcHRpbS5BZGFtKG1vZGVsLnBhcmFtZXRlcnMoKSwgbHIgPSAwLjAwMSkifQ==
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImltcG9ydCB0b3JjaFxuXG5vcHRpbWl6ZXIgPSB0b3JjaC5vcHRpbS5BZGFtKG1vZGVsLnBhcmFtZXRlcnMoKSwgbHIgPSAwLjAwMSkifQ==
 </script>
 </div>
 <p>Common alternatives: <code>torch.optim.SGD</code>, <code>torch.optim.RMSprop</code>, <code>torch.optim.AdamW</code></p>
@@ -1241,7 +1297,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 
 </div>
 <script type="pyodide-14-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6Im9wdGltaXNlciA9IHRvcmNoLm9wdGltLkFkYW0obW9kZWwucGFyYW1ldGVycygpLCBsciA9IDAuMDAxLCB3ZWlnaHRfZGVjYXkgPSAwLjAxKSJ9
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6Im9wdGltaXplciA9IHRvcmNoLm9wdGltLkFkYW0obW9kZWwucGFyYW1ldGVycygpLCBsciA9IDAuMDAxLCB3ZWlnaHRfZGVjYXkgPSAwLjAxKSJ9
 </script>
 </div>
 </section>
