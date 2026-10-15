@@ -30,3 +30,17 @@
   }, true);
 })();
 </script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var timer;
+  var observer = new MutationObserver(function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () { Reveal.layout(); }, 100);
+  });
+  observer.observe(document.querySelector(".reveal .slides"), {
+    childList: true,
+    subtree: true
+  });
+});
+</script>

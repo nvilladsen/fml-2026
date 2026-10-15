@@ -5,9 +5,8 @@ author: "Natasia Villadsen"
 date: "November 4, 2026"
 format:
   live-revealjs:
-    theme: [default, custom6.scss]
+    theme: [default, custom7.scss]
     transition: none
-    # code-overflow: wrap
     transition-speed: fast
     background-transition: none
     progress: true
@@ -25,7 +24,6 @@ format:
     menu:
       side: left
       numbers: true
-    # code-line-numbers: false
     link-external-newwindow: true
 engine: jupyter
 pyodide:
@@ -35,9 +33,6 @@ pyodide:
   execute:
     echo: true
     warning: false
-  # packages:
-  #   - numpy
-  #   - pandas
 ---
 
 
@@ -166,7 +161,7 @@ PyTorch is the framework of instruction, but you are free to use TensorFlow
 
 <div class="figblock fb-brain fb-w75">
 <p class="fig-title">Extract from 1mm² of Mouse Brain</p>
-<img src="BioNN5.jpg.svg">
+<img src="BioNN1.svg">
 <p class="fig-src">Source: MICrONS Explorer Render, Daniel Berger & MICrONS Explorer Consortium Team. Google Research and Harvard University.</p>
 </div>
 
@@ -174,7 +169,7 @@ PyTorch is the framework of instruction, but you are free to use TensorFlow
 
 <div class="figblock fb-brain">
 <p class="fig-title">Extract from 1mm² of Mouse Brain — Closer Look</p>
-<img src="BioNN6.svg">
+<img src="BioNN2.svg">
 <p class="fig-src">Source: MICrONS Explorer Render, Daniel Berger & MICrONS Explorer Consortium Team. Google Research and Harvard University.</p>
 </div>
 
@@ -182,7 +177,7 @@ PyTorch is the framework of instruction, but you are free to use TensorFlow
 
 <div class="figblock fb-brain">
 <p class="fig-title">Extract from 1mm² of Mouse Brain — Even Closer Look</p>
-<img src="BioNN8.svg">
+<img src="BioNN3.svg">
 <p class="fig-src">Source: MICrONS Explorer Render, Daniel Berger & MICrONS Explorer Consortium Team. Google Research and Harvard University.</p>
 </div>
 
@@ -229,7 +224,7 @@ Operationalised McCulloch & Pitts' networks
 
 <div class="figblock fb-w85">
 <p class="fig-title">A Biological Neuron</p>
-<img src="neuron_transparent-_1_.svg">
+<img src="neuron.svg">
 </div>
 
 ## A Neuron II
@@ -315,7 +310,7 @@ Next challenge: Physical limits of silicon-based chips reached.
 
 <div class="figblock">
 <p class="fig-title">Moore's Law</p>
-<img src="moores_law_transparent.svg">
+<img src="moores_law.svg">
 <p class="fig-src">Source: M. Horowitz, F. Labonte, O. Shacham, K. Olukotun, L. Hammond, and C. Batten; Karl Rupp, &amp; Danial Chitnis, Creative Commons Attribution 4.0 International license.</p>
 </div>
 
@@ -422,8 +417,8 @@ $\sigma(x) = 1$: the neuron fires $\Rightarrow$ the neuron contributes to the ou
 ## Activation Functions and Their Derivatives
 
 <div class="figblock fb-s400">
-<img src="activations_deriv.svg">
-<p class="fig-src">ReLU: \(g'(x) = 0\) for \(x &lt; 0\), \(g'(x) = 1\) for \(x &gt; 0\). tanh: \(g'(x) = 1 - \tanh^2(x)\). sigmoid: \(g'(x) = \sigma(x)(1 - \sigma(x))\).</p>
+<img src="actfuns.svg">
+<p class="fig-src">ReLU: $g'(x) = 0$ for $x < 0$, $g'(x) = 1$ for $x > 0$. tanh: $g'(x) = 1 - \tanh^2(x)$. sigmoid: $g'(x) = \sigma(x)(1 - \sigma(x))$.</p>
 </div>
 
 ::: {.keypoint}
@@ -833,49 +828,6 @@ A sum, which means the gradient is a sum over the $n$ observations, so we need o
 
 $$R_i(\theta) = \frac12\left(y_i - \beta_0- \sum_{k = 1}^{K_1}\beta_k g_1\left(\omega_{k0}+\sum_{j = 1}^p\omega_{kj}x_{ij}\right)\right)^2$$
 
-<!-- ## Backpropagation III {.bp}
-
-Define $z_{ik} = \omega_{k0} + \sum_{j = 1}^p\omega_{kj}x_{ij}$
-
-The output weight $\beta_k$ enters the forecast directly: $f_\theta(x_i) = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g(z_{ik})$
-
-::: {.flow-label}
-Forward pass: compute the forecast and the loss
-:::
-
-:::: {.flow}
-::: {.fn}
-$\beta_k$
-:::
-::: {.fn}
-$f_\theta(x_i)$
-:::
-::: {.fn-navy}
-$R_i(\theta)$
-:::
-::::
-
-::: {.flow-label}
-Backward pass: multiply the derivatives (chain rule)
-:::
-
-:::: {.flow .back}
-::: {.fn}
-$\dfrac{\partial f_\theta(x_i)}{\partial \beta_k}$
-:::
-::: {.fn}
-$\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)}$
-:::
-::::
-
-Computing the derivative w.r.t. $\beta_k$,
-
-$$
-\begin{aligned}
-\frac{\partial R_i(\theta)}{\partial \beta_k} &= \frac{\partial R_i(\theta)}{\partial f_\theta(x_i)} \cdot \frac{\partial f_\theta(x_i)}{\partial \beta_k} \\ &= -(y_i - f_\theta(x_i)) \cdot g(z_{ik})
-\end{aligned}
-$$ -->
-
 
 ## Backpropagation III {.bp}
 
@@ -949,21 +901,6 @@ $R_i(\theta)$
 ::: {.flow-label}
 Backward pass: multiply the derivatives (chain rule)
 :::
-
-<!-- :::: {.flow .back}
-::: {.fn}
-$\dfrac{\partial z_{ik}}{\partial \omega_{kj}}$
-:::
-::: {.fn}
-$\dfrac{\partial g_1(z_{ik})}{\partial z_{ik}}$
-:::
-::: {.fn}
-$\dfrac{\partial f_\theta(x_i)}{\partial g(z_{ik})}$
-:::
-::: {.fn}
-$\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)}$
-:::
-:::: -->
 
 :::: {.flow .back}
 ::: {.fn}

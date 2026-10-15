@@ -5,7 +5,7 @@ author: "Natasia Villadsen"
 date: "November 2, 2026"
 format:
   live-revealjs:
-    theme: [default, custom3.scss]
+    theme: [default, custom7.scss]
     transition: none
     transition-speed: fast
     background-transition: none
@@ -14,7 +14,7 @@ format:
     footer: "Forecasting with Machine Learning"
     include-after-body: exercise.html
     hash: true
-    center: false
+    center: true
     width: 1280
     height: 720
     margin: 0.12
@@ -42,8 +42,6 @@ resources:
   - ToyData.csv
   - student_performance.csv
   - energy_demand.csv
-  # - AIModel_cropped.pdf
-  # - npArray.pdf
 ---
 
 
@@ -178,10 +176,6 @@ print(arrS.shape, arrV.shape, arrM.shape, arrT.shape)
 <img src="3DArray.svg" style="max-height: 500px; width: auto;">
 </div>
 
-<!-- <div style="display: flex; justify-content: center; margin-top: 0.3em;">
-  <iframe src="3DArray.svg" style="width: 850px; max-width: 95%; height: 500px; border: none;"></iframe>
-</div> -->
-
 ## Functions on arrays
 
 ```{pyodide}
@@ -315,8 +309,6 @@ print(arrMNaN0.shape, arrMNoNaN.shape)
 Manipulating NaNs is dangerous --- choose replacement values with care
 :::
 
-
-
 ## Random numbers and concatenating
 
 Simulate to show your methods work: $T$ values at a time, $d$ replications.
@@ -374,10 +366,6 @@ dfS
 ```
 
 The left-most column is the index; it can also be set afterwards with `dfS.index = [...]`.
-
-<!-- ::: {.keypoint}
-`print()` is usually unnecessary in such context --- here it is necessary for consistent formatting
-::: -->
 
 ## Data frames
 
@@ -445,14 +433,6 @@ df = df.sort_values("Amount", ascending=False)
 df.head(3)
 ```
 
-<!-- ## Setting the index
-
-```{pyodide}
-df = df.set_index("Date").sort_index()
-df.head(3)
-``` -->
-
-
 ## Writing to .csv
 
 When done wrangling, write the data frame to file:
@@ -469,12 +449,8 @@ In the browser this only writes to a temporary file system --- run it in your ow
 
 ## Layers of Intelligence
 <div style="display: flex; justify-content: center;">
-  <img src="AIModelv1.svg" style="max-width: 95%; max-height: 440px; height: auto; width: auto;">
+  <img src="AIModel.svg" style="max-width: 95%; max-height: 440px; height: auto; width: auto;">
 </div>
-
-<!-- <div style="display: flex; justify-content: center;">
-  <iframe src="AIModelv1.svg" style="width: 850px; max-width: 95%; max-height: 440px; height: 440px; border: none;"></iframe>
-</div> -->
 
 ::: {.notes}
 The IBM supercomputer, Deep Blue, defeated chess grandmaster Garry Kasparov -- in chess -- in 1997. No learning was applied, the rules of chess were hard-coded -- still AI.
@@ -493,64 +469,6 @@ The IBM supercomputer, Deep Blue, defeated chess grandmaster Garry Kasparov -- i
 # The Forecasting Pipeline {.divider}
 
 ## The forecasting pipeline
-
-<!-- ::: {.overview}
-::: {.ov-row-inline}
-::: {.ov-label}
-Inspecting
-:::
-::: {.ov-desc}
-Explore distributions, check for NaNs and outliers
-:::
-:::
-::: {.ov-row-inline}
-::: {.ov-label}
-Splitting
-:::
-::: {.ov-desc}
-Reserve the test set before touching the data further
-:::
-:::
-::: {.ov-row-inline}
-::: {.ov-label}
-Lagging
-:::
-::: {.ov-desc}
-Construct predictors from past values only
-:::
-:::
-::: {.ov-row-inline}
-::: {.ov-label}
-Standardizing
-:::
-::: {.ov-desc}
-Fit the scaler on train, apply to both data sets
-:::
-:::
-::: {.ov-row-inline}
-::: {.ov-label}
-Tuning
-:::
-::: {.ov-desc}
-Cross-validate hyperparameters on the training set
-:::
-:::
-::: {.ov-row-inline}
-::: {.ov-label}
-Fitting
-:::
-::: {.ov-desc}
-Fit the model on the training and validation sets
-:::
-::: {.ov-row-inline}
-::: {.ov-label}
-Evaluating
-:::
-::: {.ov-desc}
-Compare models on the held-out test set
-:::
-:::
-::: -->
 
 ::: {.overview}
 ::: {.ov-row-inline}
@@ -736,7 +654,6 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 ```
 
-
 ## Expanding and rolling windows
 
 For out-of-sample evaluation across many periods:
@@ -767,7 +684,7 @@ Rolling window
 ## Difference Between Rolling and Expanding Windows
 
 <div style="display: flex; justify-content: center; margin-top: 0.3em;">
-<img src="RollingExpanding1.svg" style="max-height: 500px; width: auto;">
+<img src="RollingExpanding.svg" style="max-height: 500px; width: auto;">
 </div>
 
 ## Lagging and off-by-one errors
@@ -895,11 +812,6 @@ y = student_performance.data.targets
 :::
 
 ## Variables in dataset
-<!-- ```{python}
-#| echo: false
-import pandas as pd
-pd.read_csv("student_performance_variables.csv")[["name", "role", "type"]]
-``` -->
 
 ```{python}
 #| echo: false
@@ -907,8 +819,6 @@ pd.read_csv("student_performance_variables.csv")[["name", "role", "type"]]
 import pandas as pd
 from IPython.display import HTML
 df = pd.read_csv("student_performance_variables.csv")[["name", "role", "type"]]
-# display(HTML(f'<div style="height:560px;overflow-y:auto;width:100%">{df.to_html(index=False)}</div>'))
-# display(HTML(f'<div style="height:560px;overflow-y:auto">{df.to_html(index=False)}</div>'))
 display(HTML(f'<div style="height:560px;overflow-y:auto;width:100%;font-size:1.1em">{df.to_html(index=False)}</div>'))
 ```
 
@@ -922,10 +832,6 @@ df = df.drop(columns = ["school", "sex", "address", "famsize", "Pstatus", "Mjob"
              "nursery", "higher", "internet", "romantic"])
 ```
 
-<!-- df = df.drop(columns = ['school', 'sex', 'address', 'famsize', 'Pstatus', 'Mjob', 'Fjob', 
-             'reason', 'guardian', 'schoolsup', 'famsup', 'paid', 'activities', 
-             'nursery', 'higher', 'internet', 'romantic']) -->
-
 Splitting data according to target (only the continuous target, `G3` is used) and covariates
 ```{pyodide}
 X = df.drop(columns=["G1", "G2", "G3"])
@@ -933,7 +839,7 @@ y = df["G3"]
 ```
 
 ## Train/test split
-<!-- Splitting into train/test set -->
+
 ```{pyodide}
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, shuffle=True
@@ -964,7 +870,6 @@ Intuitive and interpretable; challenged by heteroskedasticity and serial correla
 
 - Estimator, for your reference,
 
-<!-- $$\hat{\beta} = (X^\top X)^{-1} X^\top y$$ -->
 ::: {style="margin-top: -1em"}
 $$\hat{\beta} = (X^\top X)^{-1} X^\top y$$
 :::
@@ -1109,9 +1014,14 @@ print(f"LASSO MSE = {mse_lasso:.4f}")
 print(f"Ridge MSE = {mse_ridge:.4f}")
 ```
 
-## Cross Validation
+## Cross-Sectional Cross-Validation
 <div style="display: flex; justify-content: center; margin-top: 0.3em;">
-<img src="CrossValidation.svg" style="max-height: 500px; width: auto;">
+<img src="CSCV.svg" style="max-height: 500px; width: auto;">
+</div>
+
+## Time Series Cross-Validation
+<div style="display: flex; justify-content: center; margin-top: 0.3em;">
+<img src="TSCV.svg" style="max-height: 500px; width: auto;">
 </div>
 
 ## Cross-validated LASSO and Ridge

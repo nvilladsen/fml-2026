@@ -104,7 +104,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="session_03_files/libs/revealjs/dist/theme/quarto-0ea66027a4b9e097d4f31078ab4a699d.css">
+  <link rel="stylesheet" href="session_03_files/libs/revealjs/dist/theme/quarto-77ba15e94764edaa27d88613ceccadbb.css">
   <link href="session_03_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="session_03_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="session_03_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -225,7 +225,7 @@ Natasia Villadsen
 <h1>Introduction</h1>
 
 </section>
-<section id="why-python" class="slide level2">
+<section id="why-python" class="slide level2 center">
 <h2>Why Python?</h2>
 <p>Python is the programming language used in this course.</p>
 <ul>
@@ -249,7 +249,7 @@ Natasia Villadsen
           display:block!important;
       }</style></aside>
 </section>
-<section id="the-four-libraries" class="slide level2">
+<section id="the-four-libraries" class="slide level2 center">
 <h2>The four libraries</h2>
 <div class="cards">
 <div class="card-box">
@@ -266,7 +266,7 @@ Natasia Villadsen
 </div>
 </div>
 </section>
-<section id="todays-lecture" class="slide level2">
+<section id="todays-lecture" class="slide level2 center">
 <h2>Today’s lecture</h2>
 <div class="overview">
 <div class="ov-row">
@@ -311,7 +311,7 @@ Natasia Villadsen
 </div>
 </div>
 </section>
-<section id="pratical-information" class="slide level2">
+<section id="pratical-information" class="slide level2 center">
 <h2>Pratical Information</h2>
 <ul>
 <li>Colab is used in course instruction and exercises</li>
@@ -329,7 +329,7 @@ Natasia Villadsen
 <h1>NumPy — Numerical Python</h1>
 
 </section>
-<section id="what-is-numpy" class="slide level2">
+<section id="what-is-numpy" class="slide level2 center">
 <h2>What is NumPy?</h2>
 <ul>
 <li>Go-to library for numerical tasks — mean, logs, etc.</li>
@@ -351,7 +351,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 \texttt{arr}\in\mathbb{R},\quad \texttt{arr}\in\mathbb{R}^n,\quad \texttt{arr}\in\mathbb{R}^{n\times m},\quad \texttt{arr}\in\mathbb{R}^{m_1\times \cdots \times m_n}
 \]</span></p>
 </section>
-<section id="defining-arrays" class="slide level2">
+<section id="defining-arrays" class="slide level2 center">
 <h2>Defining arrays</h2>
 <div>
 <div id="pyodide-2" class="exercise-cell">
@@ -362,16 +362,13 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="visualising-a-3d-array" class="slide level2">
+<section id="visualising-a-3d-array" class="slide level2 center">
 <h2>Visualising a 3D array</h2>
 <div style="display: flex; justify-content: center; margin-top: 0.3em;">
 <p><img src="3DArray.svg" style="max-height: 500px; width: auto;"></p>
 </div>
-<!-- <div style="display: flex; justify-content: center; margin-top: 0.3em;">
-  <iframe src="3DArray.svg" style="width: 850px; max-width: 95%; height: 500px; border: none;"></iframe>
-</div> -->
 </section>
-<section id="functions-on-arrays" class="slide level2">
+<section id="functions-on-arrays" class="slide level2 center">
 <h2>Functions on arrays</h2>
 <div>
 <div id="pyodide-3" class="exercise-cell">
@@ -395,7 +392,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
           display:block!important;
       }</style></aside>
 </section>
-<section id="subsetting" class="slide level2">
+<section id="subsetting" class="slide level2 center">
 <h2>Subsetting</h2>
 <ul>
 <li>Important to get right — differs from pandas</li>
@@ -411,7 +408,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="subsetting-a-row" class="slide level2">
+<section id="subsetting-a-row" class="slide level2 center">
 <h2>Subsetting a row</h2>
 <div>
 <div id="pyodide-5" class="exercise-cell">
@@ -439,7 +436,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
           display:block!important;
       }</style></aside>
 </section>
-<section id="several-indices" class="slide level2">
+<section id="several-indices" class="slide level2 center">
 <h2>Several indices</h2>
 <div>
 <div id="pyodide-6" class="exercise-cell">
@@ -453,7 +450,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 <p><code>arrM[RowIdx, ColIdx]</code> is wrong — it only selects three data points.</p>
 </div>
 </section>
-<section id="intervals" class="slide level2">
+<section id="intervals" class="slide level2 center">
 <h2>Intervals</h2>
 <div>
 <div id="pyodide-7" class="exercise-cell">
@@ -467,7 +464,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 <p>Zero-indexed, but the end of the interval is <strong>excluded</strong></p>
 </div>
 </section>
-<section id="up-to-you-subsetting" class="slide level2">
+<section id="up-to-you-subsetting" class="slide level2 center">
 <h2>Up to you: subsetting</h2>
 <p>Extract from <code>arrM</code>, every 4th column of rows 20 to 60 in increments of three.</p>
 <script type="exercise-setup-ex_subset-contents">
@@ -488,7 +485,7 @@ print(arrMSub.shape)</code>
 <span id="interpolate-12-2"><a href="#interpolate-12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(arrMSub.shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="nans-i" class="slide level2">
+<section id="nans-i" class="slide level2 center">
 <h2>NaNs I</h2>
 <p>Adding a number of NaNs to <code>arrM</code>,</p>
 <div>
@@ -503,7 +500,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 <p><code>.copy()</code> is required — otherwise it is a <em>view</em> and the original receives NaNs too.</p>
 </div>
 </section>
-<section id="nans-ii" class="slide level2">
+<section id="nans-ii" class="slide level2 center">
 <h2>NaNs II</h2>
 <p>Determine whether NaNs are present and their count,</p>
 <div>
@@ -524,7 +521,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="nans-iii---drop-rows-containing-nans" class="slide level2">
+<section id="nans-iii---drop-rows-containing-nans" class="slide level2 center">
 <h2>NaNs III - Drop Rows Containing NaNs</h2>
 <div>
 <div id="pyodide-16" class="exercise-cell">
@@ -543,7 +540,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 <p>Manipulating NaNs is dangerous — choose replacement values with care</p>
 </div>
 </section>
-<section id="random-numbers-and-concatenating" class="slide level2">
+<section id="random-numbers-and-concatenating" class="slide level2 center">
 <h2>Random numbers and concatenating</h2>
 <p>Simulate to show your methods work: <span class="math inline">\(T\)</span> values at a time, <span class="math inline">\(d\)</span> replications.</p>
 <div>
@@ -555,7 +552,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="lagging" class="slide level2">
+<section id="lagging" class="slide level2 center">
 <h2>Lagging</h2>
 <p>Prediction <span class="math inline">\(Y_t \sim f(X_{t-1})\)</span> — to avoid look-ahead bias we must <strong>lag</strong> the data.</p>
 <div>
@@ -567,7 +564,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="lagging-shape-for-ols" class="slide level2">
+<section id="lagging-shape-for-ols" class="slide level2 center">
 <h2>Lagging: shape for OLS</h2>
 <p>OLS functions generally expect matrix arrays: reshape <code>arrX</code> from (9,) to (9,1).</p>
 <div>
@@ -597,7 +594,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 <h1>Pandas — Panel Data</h1>
 
 </section>
-<section id="what-are-pandas" class="slide level2">
+<section id="what-are-pandas" class="slide level2 center">
 <h2>What are pandas?</h2>
 <ul>
 <li>Developed to match <code>R</code>’s (at the time) superior data handling</li>
@@ -613,7 +610,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="series" class="slide level2">
+<section id="series" class="slide level2 center">
 <h2>Series</h2>
 <div>
 <div id="pyodide-21" class="exercise-cell">
@@ -624,11 +621,8 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 <p>The left-most column is the index; it can also be set afterwards with <code>dfS.index = [...]</code>.</p>
-<!-- ::: {.keypoint}
-`print()` is usually unnecessary in such context --- here it is necessary for consistent formatting
-::: -->
 </section>
-<section id="data-frames" class="slide level2">
+<section id="data-frames" class="slide level2 center">
 <h2>Data frames</h2>
 <div>
 <div id="pyodide-22" class="exercise-cell">
@@ -639,7 +633,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="reading-in-data" class="slide level2">
+<section id="reading-in-data" class="slide level2 center">
 <h2>Reading in data</h2>
 <p><code>pd.read_csv()</code> is an important function. We use <code>ToyData.csv</code>.</p>
 <div>
@@ -651,7 +645,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="inspecting-types" class="slide level2">
+<section id="inspecting-types" class="slide level2 center">
 <h2>Inspecting types</h2>
 <div>
 <div id="pyodide-24" class="exercise-cell">
@@ -665,7 +659,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 <p>Also useful: <code>df.describe()</code>, <code>df.isna().sum()</code>, <code>df.dropna()</code>.</p>
 </div>
 </section>
-<section id="subsetting-1" class="slide level2">
+<section id="subsetting-1" class="slide level2 center">
 <h2>Subsetting</h2>
 <div>
 <div id="pyodide-25" class="exercise-cell">
@@ -685,7 +679,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="imputing-nas" class="slide level2">
+<section id="imputing-nas" class="slide level2 center">
 <h2>Imputing NAs</h2>
 <p>Fill instead of dropping rows:</p>
 <div>
@@ -710,7 +704,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
           display:block!important;
       }</style></aside>
 </section>
-<section id="columns-and-sorts" class="slide level2">
+<section id="columns-and-sorts" class="slide level2 center">
 <h2>Columns and sorts</h2>
 <div>
 <div id="pyodide-28" class="exercise-cell">
@@ -720,14 +714,8 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiJkZltcIlRvdFByaWNlXCJdID0gZGZbXCJBbW91bnRcIl0gKiBkZltcIlF1YW50aXR5XCJdICAgIyBhZGRcbmRmID0gZGYuZHJvcChjb2x1bW5zPVtcIlRvdFByaWNlXCJdKSAgICAgICAgICAgICAgICMgZHJvcFxuZGYgPSBkZi5zb3J0X3ZhbHVlcyhcIkFtb3VudFwiLCBhc2NlbmRpbmc9RmFsc2UpXG5kZi5oZWFkKDMpIn0=
 </script>
 </div>
-<!-- ## Setting the index
-
-```vejycadcu
-df = df.set_index("Date").sort_index()
-df.head(3)
-``` -->
 </section>
-<section id="writing-to-.csv" class="slide level2">
+<section id="writing-to-.csv" class="slide level2 center">
 <h2>Writing to .csv</h2>
 <p>When done wrangling, write the data frame to file:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">"UpdToyData.csv"</span>, index <span class="op">=</span> <span class="va">True</span>)   <span class="co"># True because we set the index</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -740,14 +728,11 @@ df.head(3)
 <h1>Machine Learning</h1>
 
 </section>
-<section id="layers-of-intelligence" class="slide level2">
+<section id="layers-of-intelligence" class="slide level2 center">
 <h2>Layers of Intelligence</h2>
 <div style="display: flex; justify-content: center;">
-<p><img src="AIModelv1.svg" style="max-width: 95%; max-height: 440px; height: auto; width: auto;"></p>
+<p><img src="AIModel.svg" style="max-width: 95%; max-height: 440px; height: auto; width: auto;"></p>
 </div>
-<!-- <div style="display: flex; justify-content: center;">
-  <iframe src="AIModelv1.svg" style="width: 850px; max-width: 95%; max-height: 440px; height: 440px; border: none;"></iframe>
-</div> -->
 <aside class="notes">
 <p>The IBM supercomputer, Deep Blue, defeated chess grandmaster Garry Kasparov – in chess – in 1997. No learning was applied, the rules of chess were hard-coded – still AI.</p>
 <style type="text/css">
@@ -762,7 +747,7 @@ df.head(3)
           display:block!important;
       }</style></aside>
 </section>
-<section id="defining-ai-machine-learning-and-deep-learning" class="slide level2">
+<section id="defining-ai-machine-learning-and-deep-learning" class="slide level2 center">
 <h2>Defining AI, Machine Learning, and Deep Learning</h2>
 <ul>
 <li>Artificial intelligence is a set of learned rules</li>
@@ -780,65 +765,8 @@ df.head(3)
 <h1>The Forecasting Pipeline</h1>
 
 </section>
-<section id="the-forecasting-pipeline-1" class="slide level2">
+<section id="the-forecasting-pipeline-1" class="slide level2 center">
 <h2>The forecasting pipeline</h2>
-<!-- ::: {.overview}
-::: {.ov-row-inline}
-::: {.ov-label}
-Inspecting
-:::
-::: {.ov-desc}
-Explore distributions, check for NaNs and outliers
-:::
-:::
-::: {.ov-row-inline}
-::: {.ov-label}
-Splitting
-:::
-::: {.ov-desc}
-Reserve the test set before touching the data further
-:::
-:::
-::: {.ov-row-inline}
-::: {.ov-label}
-Lagging
-:::
-::: {.ov-desc}
-Construct predictors from past values only
-:::
-:::
-::: {.ov-row-inline}
-::: {.ov-label}
-Standardizing
-:::
-::: {.ov-desc}
-Fit the scaler on train, apply to both data sets
-:::
-:::
-::: {.ov-row-inline}
-::: {.ov-label}
-Tuning
-:::
-::: {.ov-desc}
-Cross-validate hyperparameters on the training set
-:::
-:::
-::: {.ov-row-inline}
-::: {.ov-label}
-Fitting
-:::
-::: {.ov-desc}
-Fit the model on the training and validation sets
-:::
-::: {.ov-row-inline}
-::: {.ov-label}
-Evaluating
-:::
-::: {.ov-desc}
-Compare models on the held-out test set
-:::
-:::
-::: -->
 <div class="overview">
 <div class="ov-row-inline">
 <div class="ov-label">
@@ -898,7 +826,7 @@ Compare models on the held-out test set
 </div>
 </div>
 </section>
-<section id="the-forecasting-task" class="slide level2">
+<section id="the-forecasting-task" class="slide level2 center">
 <h2>The Forecasting Task</h2>
 <div class="keypoint">
 <p>We distinguish between classification and regression, categorical and numerical targets</p>
@@ -928,7 +856,7 @@ Compare models on the held-out test set
 </div>
 </div>
 </section>
-<section id="data-inspection" class="slide level2">
+<section id="data-inspection" class="slide level2 center">
 <h2>Data inspection</h2>
 <p>Before modelling always inspect the raw data.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a>df.head()          <span class="co"># first rows</span></span>
@@ -942,7 +870,7 @@ Compare models on the held-out test set
 <li>Code translated from <code>R</code> to Python is available in the <a href="https://colab.research.google.com/drive/1JX1COhoV31ilURxSnsbkHhulN0A3FCxh#scrollTo=cxueYY40abwP">Colab Notebook “Chapter III”</a></li>
 </ul>
 </section>
-<section id="standardization" class="slide level2">
+<section id="standardization" class="slide level2 center">
 <h2>Standardization</h2>
 <p><span class="math inline">\(Z\)</span>-score standardization: Subtract the mean, divide by the standard deviation:</p>
 <p><span class="math display">\[
@@ -980,7 +908,7 @@ z_t = \frac{x_t - \hat{\mu}}{\hat{\sigma}}
 <p>Fit the scaler on <strong>training data only</strong>, then apply to the test set. Fitting on the full sample leaks future distributional information.</p>
 </div>
 </section>
-<section id="standardization-code" class="slide level2">
+<section id="standardization-code" class="slide level2 center">
 <h2>Standardization: code</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
 <span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
@@ -992,7 +920,7 @@ z_t = \frac{x_t - \hat{\mu}}{\hat{\sigma}}
 <p><code>fit_transform</code> on the test set leaks future distributional information into the model</p>
 </div>
 </section>
-<section id="sample-splitting" class="slide level2">
+<section id="sample-splitting" class="slide level2 center">
 <h2>Sample splitting</h2>
 <p>In <strong>cross-sectional modelling</strong>, data is usually split randomly</p>
 <p>In <strong>time series</strong>, data must be split chronologically</p>
@@ -1006,10 +934,10 @@ z_t = \frac{x_t - \hat{\mu}}{\hat{\sigma}}
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
-<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, shuffle<span class="op">=</span><span class="va">False</span></span>
+<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a>    X, y, train_size<span class="op">=</span><span class="fl">0.8</span>, shuffle<span class="op">=</span><span class="va">False</span></span>
 <span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="expanding-and-rolling-windows" class="slide level2">
+<section id="expanding-and-rolling-windows" class="slide level2 center">
 <h2>Expanding and rolling windows</h2>
 <p>For out-of-sample evaluation across many periods:</p>
 <div class="compare">
@@ -1039,13 +967,13 @@ z_t = \frac{x_t - \hat{\mu}}{\hat{\sigma}}
 </div>
 </div>
 </section>
-<section id="difference-between-rolling-and-expanding-windows" class="slide level2">
+<section id="difference-between-rolling-and-expanding-windows" class="slide level2 center">
 <h2>Difference Between Rolling and Expanding Windows</h2>
 <div style="display: flex; justify-content: center; margin-top: 0.3em;">
-<p><img src="RollingExpanding1.svg" style="max-height: 500px; width: auto;"></p>
+<p><img src="RollingExpanding.svg" style="max-height: 500px; width: auto;"></p>
 </div>
 </section>
-<section id="lagging-and-off-by-one-errors" class="slide level2">
+<section id="lagging-and-off-by-one-errors" class="slide level2 center">
 <h2>Lagging and off-by-one errors</h2>
 <p>We predict <span class="math inline">\(y_t\)</span> using information available at <span class="math inline">\(t-1\)</span>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a>y_raw <span class="op">=</span> ...        <span class="co"># the time series, length T</span></span>
@@ -1056,7 +984,7 @@ z_t = \frac{x_t - \hat{\mu}}{\hat{\sigma}}
 <p>You predict <span class="math inline">\(y_t\)</span> <strong>with</strong> <span class="math inline">\(y_t\)</span>. Training error collapses; out-of-sample performance is worthless.</p>
 </div>
 </section>
-<section id="the-bias-variance-trade-off" class="slide level2">
+<section id="the-bias-variance-trade-off" class="slide level2 center">
 <h2>The bias-variance trade-off</h2>
 <p>The expected squared forecast error decomposes as</p>
 <p><span class="math display">\[\mathrm{E}\!\left[(\hat{y} - y)^2\right] = \underbrace{\mathrm{Bias}^2}_{\text{underfitting}} + \underbrace{\mathrm{Variance}}_{\text{overfitting}} + \underbrace{\sigma^2}_{\text{irreducible}}\]</span></p>
@@ -1086,7 +1014,7 @@ z_t = \frac{x_t - \hat{\mu}}{\hat{\sigma}}
 </div>
 <p>Models applying regularisation, e.g., LASSO, ridge, and random forests, trade off bias for variance</p>
 </section>
-<section id="hyperparameter-tuning" class="slide level2">
+<section id="hyperparameter-tuning" class="slide level2 center">
 <h2>Hyperparameter tuning</h2>
 <p>Hyperparameters (e.g.&nbsp;<span class="math inline">\(\alpha\)</span> in LASSO) must be selected to optimize out-of-sample performance</p>
 <div class="keypoint">
@@ -1107,7 +1035,7 @@ z_t = \frac{x_t - \hat{\mu}}{\hat{\sigma}}
 <h1>scikit-learn</h1>
 
 </section>
-<section id="what-is-scikit-learn" class="slide level2">
+<section id="what-is-scikit-learn" class="slide level2 center">
 <h2>What is scikit-learn?</h2>
 <p>Primary modelling library covering a large array of models:</p>
 <ul>
@@ -1120,7 +1048,7 @@ z_t = \frac{x_t - \hat{\mu}}{\hat{\sigma}}
 <p>Advantage: unified and streamlined syntax — <code>fit</code>, <code>predict</code>, <code>score</code>.</p>
 </div>
 </section>
-<section id="importing" class="slide level2">
+<section id="importing" class="slide level2 center">
 <h2>Importing</h2>
 <p>Generally import functions as needed, e.g.,</p>
 <div>
@@ -1135,7 +1063,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 <p>Importing from <code>sklearn</code> and not <code>scikit-learn</code></p>
 </div>
 </section>
-<section id="practical-example-predicting-final-grades" class="slide level2">
+<section id="practical-example-predicting-final-grades" class="slide level2 center">
 <h2>Practical example predicting final grades</h2>
 <ul>
 <li>Data from <a href="https://archive.ics.uci.edu/ml/datasets/Student+Performance">UCI Machine Learning Repository</a></li>
@@ -1173,13 +1101,8 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
           display:block!important;
       }</style></aside>
 </section>
-<section id="variables-in-dataset" class="slide level2">
+<section id="variables-in-dataset" class="slide level2 center">
 <h2>Variables in dataset</h2>
-<!-- ```{python}
-#| echo: false
-import pandas as pd
-pd.read_csv("student_performance_variables.csv")[["name", "role", "type"]]
-``` -->
 <div style="height:560px;overflow-y:auto;width:100%;font-size:1.1em">
 <table class="dataframe caption-top" data-border="1">
 <thead>
@@ -1359,7 +1282,7 @@ pd.read_csv("student_performance_variables.csv")[["name", "role", "type"]]
 </table>
 </div>
 </section>
-<section id="data-pre-processing" class="slide level2">
+<section id="data-pre-processing" class="slide level2 center">
 <h2>Data pre-processing</h2>
 <ul>
 <li>We keep it simple, no categorical or binary variables</li>
@@ -1373,9 +1296,6 @@ pd.read_csv("student_performance_variables.csv")[["name", "role", "type"]]
 eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiJkZiA9IGRmLmRyb3AoY29sdW1ucyA9IFtcInNjaG9vbFwiLCBcInNleFwiLCBcImFkZHJlc3NcIiwgXCJmYW1zaXplXCIsIFwiUHN0YXR1c1wiLCBcIk1qb2JcIiwgXCJGam9iXCIsIFxuICAgICAgICAgICAgIFwicmVhc29uXCIsIFwiZ3VhcmRpYW5cIiwgXCJzY2hvb2xzdXBcIiwgXCJmYW1zdXBcIiwgXCJwYWlkXCIsIFwiYWN0aXZpdGllc1wiLCBcbiAgICAgICAgICAgICBcIm51cnNlcnlcIiwgXCJoaWdoZXJcIiwgXCJpbnRlcm5ldFwiLCBcInJvbWFudGljXCJdKSJ9
 </script>
 </div>
-<!-- df = df.drop(columns = ['school', 'sex', 'address', 'famsize', 'Pstatus', 'Mjob', 'Fjob', 
-             'reason', 'guardian', 'schoolsup', 'famsup', 'paid', 'activities', 
-             'nursery', 'higher', 'internet', 'romantic']) -->
 <p>Splitting data according to target (only the continuous target, <code>G3</code> is used) and covariates</p>
 <div>
 <div id="pyodide-32" class="exercise-cell">
@@ -1386,9 +1306,8 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="traintest-split" class="slide level2">
+<section id="traintest-split" class="slide level2 center">
 <h2>Train/test split</h2>
-<!-- Splitting into train/test set -->
 <div>
 <div id="pyodide-33" class="exercise-cell">
 
@@ -1398,7 +1317,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="visualising-target-data" class="slide level2">
+<section id="visualising-target-data" class="slide level2 center">
 <h2>Visualising target data</h2>
 <div>
 <div id="pyodide-34" class="exercise-cell">
@@ -1409,7 +1328,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="ordinary-least-squares-ols" class="slide level2">
+<section id="ordinary-least-squares-ols" class="slide level2 center">
 <h2>Ordinary Least Squares (OLS)</h2>
 <ul>
 <li><strong>The</strong> linear regression model</li>
@@ -1423,12 +1342,11 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 <ul>
 <li>Estimator, for your reference,</li>
 </ul>
-<!-- $$\hat{\beta} = (X^\top X)^{-1} X^\top y$$ -->
 <div style="margin-top: -1em">
 <p><span class="math display">\[\hat{\beta} = (X^\top X)^{-1} X^\top y\]</span></p>
 </div>
 </section>
-<section id="linear-regression-ols" class="slide level2">
+<section id="linear-regression-ols" class="slide level2 center">
 <h2>Linear regression (OLS)</h2>
 <div>
 <div id="pyodide-35" class="exercise-cell">
@@ -1439,7 +1357,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="ols-in-scikit-learn-ii" class="slide level2">
+<section id="ols-in-scikit-learn-ii" class="slide level2 center">
 <h2>OLS in scikit-learn II</h2>
 <p>Implementation on previous slide follows the standard scikit-learn blueprint,</p>
 <div class="overview">
@@ -1480,7 +1398,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 <p>The mean squared error is a common metric for model evaluation, but others exist as well</p>
 </div>
 </section>
-<section id="up-to-you-ols" class="slide level2">
+<section id="up-to-you-ols" class="slide level2 center">
 <h2>Up to you: OLS</h2>
 <p>Compute the <strong>in-sample</strong> fitted values from <code>ols</code> and the training MSE. The relevant data and fitted model are stored in the memory already, so you can proceed from here.</p>
 <script type="exercise-setup-ex_ols-contents">
@@ -1503,7 +1421,7 @@ print(f"Train MSE = {mse_train:.4f}")</code>
 <span id="interpolate-40-3"><a href="#interpolate-40-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Train MSE = </span><span class="sc">{</span>mse_train<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="penalized-regression-models" class="slide level2">
+<section id="penalized-regression-models" class="slide level2 center">
 <h2>Penalized regression models</h2>
 <ul>
 <li>Three primary penalized regression models; i) LASSO, ii) ridge, and iii) elastic net</li>
@@ -1543,7 +1461,7 @@ print(f"Train MSE = {mse_train:.4f}")</code>
           display:block!important;
       }</style></aside>
 </section>
-<section id="non-optimized-lasso-and-ridge" class="slide level2">
+<section id="non-optimized-lasso-and-ridge" class="slide level2 center">
 <h2>Non-optimized LASSO and Ridge</h2>
 <div>
 <div id="pyodide-41" class="exercise-cell">
@@ -1554,13 +1472,19 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="cross-validation" class="slide level2">
-<h2>Cross Validation</h2>
+<section id="cross-sectional-cross-validation" class="slide level2 center">
+<h2>Cross-Sectional Cross-Validation</h2>
 <div style="display: flex; justify-content: center; margin-top: 0.3em;">
-<p><img src="CrossValidation.svg" style="max-height: 500px; width: auto;"></p>
+<p><img src="CSCV.svg" style="max-height: 500px; width: auto;"></p>
 </div>
 </section>
-<section id="cross-validated-lasso-and-ridge" class="slide level2">
+<section id="time-series-cross-validation" class="slide level2 center">
+<h2>Time Series Cross-Validation</h2>
+<div style="display: flex; justify-content: center; margin-top: 0.3em;">
+<p><img src="TSCV.svg" style="max-height: 500px; width: auto;"></p>
+</div>
+</section>
+<section id="cross-validated-lasso-and-ridge" class="slide level2 center">
 <h2>Cross-validated LASSO and Ridge</h2>
 <div>
 <div id="pyodide-42" class="exercise-cell">
@@ -1571,7 +1495,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="random-forests" class="slide level2">
+<section id="random-forests" class="slide level2 center">
 <h2>Random Forests</h2>
 <div>
 <div id="pyodide-43" class="exercise-cell">
@@ -1585,7 +1509,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 <p>Note: Random forests is scale equivariant — no standardization required</p>
 </div>
 </section>
-<section id="comparing-results" class="slide level2">
+<section id="comparing-results" class="slide level2 center">
 <h2>Comparing Results</h2>
 <div>
 <div id="pyodide-44" class="exercise-cell">
@@ -1596,7 +1520,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="time-series-example" class="slide level2">
+<section id="time-series-example" class="slide level2 center">
 <h2>Time series example</h2>
 <ul>
 <li>Several things differ when we move from the cross-section to time series</li>
@@ -1610,7 +1534,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 <li>Lagging is required to avoid look-ahead bias</li>
 </ul>
 </section>
-<section id="dataset-simulated" class="slide level2">
+<section id="dataset-simulated" class="slide level2 center">
 <h2>Dataset — Simulated</h2>
 <ul>
 <li>Stationary AR(1) data emulating weather data</li>
@@ -1627,7 +1551,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="data-pre-processing-1" class="slide level2">
+<section id="data-pre-processing-1" class="slide level2 center">
 <h2>Data pre-processing</h2>
 <div>
 <div id="pyodide-46" class="exercise-cell">
@@ -1638,7 +1562,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="visualising-the-target" class="slide level2">
+<section id="visualising-the-target" class="slide level2 center">
 <h2>Visualising the target</h2>
 <div>
 <div id="pyodide-47" class="exercise-cell">
@@ -1649,7 +1573,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="the-random-walk-benchmark" class="slide level2">
+<section id="the-random-walk-benchmark" class="slide level2 center">
 <h2>The random walk benchmark</h2>
 <ul>
 <li>The random walk is commonly used as benchmark in time series forecasting</li>
@@ -1677,7 +1601,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
           display:block!important;
       }</style></aside>
 </section>
-<section id="random-walk-and-ols" class="slide level2">
+<section id="random-walk-and-ols" class="slide level2 center">
 <h2>Random Walk and OLS</h2>
 <div>
 <div id="pyodide-49" class="exercise-cell">
@@ -1688,7 +1612,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="non-optimized-lasso-and-ridge-1" class="slide level2">
+<section id="non-optimized-lasso-and-ridge-1" class="slide level2 center">
 <h2>Non-optimized LASSO and Ridge</h2>
 <div>
 <div id="pyodide-50" class="exercise-cell">
@@ -1699,7 +1623,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="time-series-cross-validated-lasso-and-ridge" class="slide level2">
+<section id="time-series-cross-validated-lasso-and-ridge" class="slide level2 center">
 <h2>Time-series cross-validated LASSO and Ridge</h2>
 <div>
 <div id="pyodide-51" class="exercise-cell">
@@ -1710,7 +1634,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="lasso-variable-selection" class="slide level2">
+<section id="lasso-variable-selection" class="slide level2 center">
 <h2>LASSO: variable selection</h2>
 <div>
 <div id="pyodide-52" class="exercise-cell">
@@ -1724,7 +1648,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 <p>LASSO sets irrelevant coefficients exactly to zero</p>
 </div>
 </section>
-<section id="random-forests-1" class="slide level2">
+<section id="random-forests-1" class="slide level2 center">
 <h2>Random Forests</h2>
 <div>
 <div id="pyodide-53" class="exercise-cell">
@@ -1735,7 +1659,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 </script>
 </div>
 </section>
-<section id="comparing-results-1" class="slide level2">
+<section id="comparing-results-1" class="slide level2 center">
 <h2>Comparing Results</h2>
 <div>
 <div id="pyodide-54" class="exercise-cell">
@@ -1849,7 +1773,7 @@ WyJUb3lEYXRhLmNzdiIsInN0dWRlbnRfcGVyZm9ybWFuY2UuY3N2IiwiZW5lcmd5X2RlbWFuZC5jc3Yi
         disableLayout: false,
 
         // Vertical centering of slides
-        center: false,
+        center: true,
 
         // Enables touch navigation on devices with touch input
         touch: true,
@@ -2010,6 +1934,20 @@ WyJUb3lEYXRhLmNzdiIsInN0dWRlbnRfcGVyZm9ybWFuY2UuY3N2IiwiZW5lcmd5X2RlbWFuZC5jc3Yi
         }
       }, true);
     })();
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var timer;
+      var observer = new MutationObserver(function () {
+        clearTimeout(timer);
+        timer = setTimeout(function () { Reveal.layout(); }, 100);
+      });
+      observer.observe(document.querySelector(".reveal .slides"), {
+        childList: true,
+        subtree: true
+      });
+    });
     </script>
     <script type="ojs-module-contents">
     eyJjb250ZW50cyI6W119

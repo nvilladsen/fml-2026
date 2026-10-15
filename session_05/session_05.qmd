@@ -5,7 +5,7 @@ author: "Natasia Villadsen"
 date: "November 9, 2026"
 format:
   live-revealjs:
-    theme: [default, custom3.scss]
+    theme: [default, custom7.scss]
     transition: none
     transition-speed: fast
     background-transition: none
@@ -36,10 +36,7 @@ pyodide:
   packages:
     - numpy
     - pandas
-#   resources:
-    # - BioNN5.jpg.pdf
 ---
-
 
 # Introduction {.divider}
 
@@ -55,7 +52,6 @@ pyodide:
 - Title: "Empirical Asset Pricing via Machine Learning"
 - Authors:
 
-<!-- ::: {.overview} -->
 ::: {.overview style="margin-top: -0.4em;"}
 ::: {.ov-row-inline}
 ::: {.ov-label}
@@ -85,8 +81,6 @@ University of Chicago, Booth School of Business
 
 - Research question: Can machine learning methods improve forecasting of asset returns?
 
-
-
 ## Agenda
 
 ::: {.cards}
@@ -107,7 +101,6 @@ University of Chicago, Booth School of Business
 [Model estimation and assessment]{.d}
 :::
 :::
-
 
 # Models
 
@@ -180,11 +173,9 @@ $$R^2_{\text{oos}} = 1 - \frac{\sum_{(i,t)\in\mathcal{T}_3}(r_{i,t+1} - \hat{r}_
 
 - where $\mathcal{T}_3$ signifies the test set.
 
-
 ## Huber Loss Function
 - Least squares loss sensitive to outliers due to squaring
 - Alternative: Huber loss function,
-
 
 $$ H(x;\xi) = \begin{cases} x^2, & \text{ if } \lvert x\rvert \le \xi \\ 2\xi \lvert x\rvert - \xi^2, & \text{ if } \lvert x\rvert > \xi \end{cases} $$
 
@@ -278,7 +269,5 @@ $$ r_{i,t+1} - \hat{r}_{i,t+1} = \underbrace{g^\ast(z_{i,t}) - g(z_{i,t};\theta)
 ## Bias-Variance Trade-Off II
 
 <div style="display: flex; flex-direction: column; align-items: center; margin-top: 0.2em;">
-<!-- <p style="font-size: 0.74em; font-weight: 600; color: #0d366b; margin-bottom: 0.35em;">Training, Validation, and Testing</p> -->
 <img src="bias_variance.svg" style="max-height: 490px; max-width: 100%; width: auto;">
 </div>
-

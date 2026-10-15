@@ -439,3 +439,6 @@ ol.steps > li > div > :last-child { margin-bottom: 0; }
 
 .paper h3 a { color: var(--head); text-decoration: none; }
 .paper h3 a:hover { color: var(--accent); text-decoration: underline; }
+
+table.files { table-layout: fixed; }
+table.files th:first-child { width: 30%; }
