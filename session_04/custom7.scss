@@ -682,6 +682,19 @@ i.fas.fa-bars {
   border-top-color: #86b6ef;
 }
 
+.compare.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.compare-col.cmp-mid {
+  border-top-color: #1c5cab;
+}
+
+.compare-col.cmp-mid h3,
+.compare-col.cmp-mid .cmp-title {
+  color: #1c5cab;
+}
+
 .compare-col h3,
 .compare-col .cmp-title {
   font-size: 0.92em;

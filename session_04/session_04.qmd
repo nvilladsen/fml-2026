@@ -1375,6 +1375,58 @@ I print these losses at the end of each epoch to monitor convergence
 :::
 ::::
 
+<!-- BLOCK D: Rolling and expanding windows -->
+## Fixed, Expanding, and Rolling Windows
+
+::: {.figblock .fb-s330}
+::: {.fig-title}
+Three Ways to Estimate Before Forecasting
+:::
+![](Windows.svg)
+:::
+
+::: {.keypoint}
+So far, the model is estimated once (fixed). Expanding and rolling windows re-estimate at every forecast origin, as a forecaster could have done in real time
+:::
+
+## Trade-Offs
+
+::: {.triad}
+::: {.triad-card}
+[Fixed]{.tc-tag}
+
+Cheapest: one estimation. The model can become stale
+:::
+::: {.triad-card .tc-light}
+[Expanding]{.tc-tag}
+
+Uses all data available at the origin, and is precise if the relationship is stable
+:::
+::: {.triad-card .tc-amber}
+[Rolling]{.tc-tag}
+
+Adapts to changes, but uses fewer observations, and the window length $W$ is a choice
+:::
+:::
+
+## Pseudo Out-of-Sample Forecasting
+
+At each origin $t$, estimate on rows `lo` to `t-1`, and forecast row `t`
+
+```{pyodide}
+def pseudo_oos(forecaster, X, y, start, window=None):
+    forecasts = []
+    for t in range(start, len(y)):
+        lo = 0 if window is None else t - window     # expanding or rolling
+        forecasts.append(forecaster(X[lo:t], y[lo:t], X[t:t + 1]))
+
+    return np.vstack(forecasts)
+
+def ols_forecaster(X_tr, y_tr, X_new):
+    return LinearRegression().fit(X_tr, y_tr).predict(X_new)
+```
+
+
 
 ## Limitations of Neural Networks
 
@@ -1439,8 +1491,6 @@ Frequently requires GPUs, high memory, and long compute times
 Example: Computer vision for health care
 :::
 
-No maths, only intuition
-
 ## Convolutional Neural Networks (CNNs)
 
 - Developed for computer vision tasks (LeCun et al., 1998)
@@ -1486,23 +1536,176 @@ Prediction
 <img src="ActPool.svg">
 </div>
 
-## Recurrent Networks and LSTMs
+## Forecasting from Images of Price Charts
 
-:::: {.compare}
+Jiang, Kelly and Xiu (2023) turn the recent price history of stocks into images, then use a 2D CNN to forecast the direction of future returns
+
+::: {.triad}
+::: {.triad-card}
+[Input]{.tc-tag}
+
+A black-and-white image of the open-high-low-close bars, a moving average and volume bars of the last 5, 20 or 60 days. 
+
+Each day is 3 pixels wide
+:::
+::: {.triad-card .tc-light}
+[Model]{.tc-tag}
+
+A 2D CNN architecture with convolution, batch normalization, leaky ReLU and max-pooling. 
+
+A fully connected layer with dropout and sigmoid activation produces the forecast
+:::
+::: {.triad-card .tc-amber}
+[Forecast]{.tc-tag}
+
+The probability that the subsequent return is positive
+:::
+:::
+
+::: {.keypoint}
+All stocks on NYSE, AMEX and NASDAQ
+:::
+
+## A Stylized Version: Shapes
+
+The input has shape `(batch, channels, height, width)`. A 20-day chart is 60 pixels wide, and we let $H$ denote its height
+
+::: {.overview}
+::: {.ov-row}
+::: {.ov-label}
+Input: Dimension `(batch, 1, H, 60)`
+:::
+::: {.ov-desc}
+`channels` = 1 $\to$ black and white image
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+Block 1: `Conv2d(1, 64, 3)`
+:::
+::: {.ov-desc}
+Components: Convolution, batch normalization, leaky ReLU, and max-pooling. `MaxPool2d(2)`: height and width are halved
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+Blocks 2 and 3: `Conv2d(64, 128, 3)` and `Conv2d(128, 256, 3)`
+:::
+::: {.ov-desc}
+Components: Convolution, batch normalization, leaky ReLU, and max-pooling. 64 to 128 and 128 to 256 channels, each halving height and width
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+`flatten(1)` and dropout
+:::
+::: {.ov-desc}
+`(batch, 256 * H/8 * 60/8)`, rounded down at each pooling. Division by 8 because `MaxPool2d(2)` is applied three times
+:::
+:::
+::: {.ov-row}
+::: {.ov-label}
+`torch.sigmoid(Linear(n_flat, 1))`
+:::
+::: {.ov-desc}
+`(batch, 1)`: one number, the probability of an up move
+:::
+:::
+:::
+
+## A Building Block (Helper)
+
+```{pyodide}
+#| autorun: false
+#| edit: true
+#| eval: true
+#| runbutton: false
+#| startover: false
+def block(c_in, c_out):
+    return nn.Sequential(
+        nn.Conv2d(c_in, c_out, kernel_size=3, padding=1),
+        nn.BatchNorm2d(c_out),
+        nn.LeakyReLU(),
+        nn.MaxPool2d(2),
+    )
+```
+
+Criterion is the binary cross-entropy loss, the loss function for a binary (yes/no) outcome, 
+
+```{pyodide}
+#| autorun: false
+#| edit: true
+#| eval: true
+#| runbutton: false
+#| startover: false
+criterion = nn.BCELoss() 
+```
+
+## The Network
+
+```{pyodide}
+#| autorun: false
+#| edit: true
+#| eval: true
+#| runbutton: false
+#| startover: false
+class ChartCNN(nn.Module):
+    def __init__(self, n_flat):                # n_flat: 256 * 8 * 7 if H = 64
+        super(ChartCNN, self).__init__()
+        self.features = nn.Sequential(block(1, 64), block(64, 128),
+                                      block(128, 256))
+        self.fc = nn.Sequential(nn.Dropout(0.5), nn.Linear(n_flat, 1))
+
+    def forward(self, x):                      # x: (batch, 1, H, 60)
+        return torch.sigmoid(self.fc(self.features(x).flatten(1)))
+```
+256 is `c_out` from block 3, and $H/8 = 8$ and $60/8 = 7$ if the input height is $H = 64$.
+
+## Recurrent Neural Networks (RNNs) and LSTMs
+:::: {.compare .cols-3}
+
 ::: {.compare-col}
+[Feedforward neural networks (FNNs)]{.cmp-title}
+
+- Input: variables from $t-1$ (time series forecasting)
+- Forecast: target in $t$
+- No notion of order or history
+
+:::
+::: {.compare-col .cmp-mid}
 [Recurrent neural networks (RNNs)]{.cmp-title}
 
 - Designed for sequential data, where the output at time $t$ depends on previous inputs and outputs
 - Sequential data common in time series and natural language processing
+
 :::
 ::: {.compare-col .cmp-alt}
 [Long short-term memory networks (LSTMs)]{.cmp-title}
 
 - A type of RNN that can learn long-term dependencies
 - Before 2017 (the transformer revolution, in a few slides), Google Translate used LSTMs
+- Twin network: The GRU (Gated Recurrent Unit)
 :::
+
 ::::
 
+## Forecasting Inflation from a Window of Quarters
+
+:::: {.compare}
+::: {.compare-col}
+[Feedforward network (so far)]{.cmp-title}
+
+- Input: the three variables of one quarter
+- Forecast: inflation in the next quarter
+:::
+::: {.compare-col .cmp-alt}
+[Recurrent network]{.cmp-title}
+
+- Input: the last 8 quarters of inflation, unemployment and the T-bill rate, in order
+- Forecast: inflation in the next quarter
+- The path matters, e.g., whether inflation is rising or falling
+:::
+::::
 
 ## Recurrent Neural Networks Visualized
 
@@ -1517,6 +1720,132 @@ Prediction
 <p class="fig-title"></p>
 <img src="LSTMUnit.svg">
 </div>
+
+## Windows of Quarters, Example
+
+<div class="figblock">
+<p class="fig-title"></p>
+<img src="lstmwind.svg">
+</div>
+
+Windows have shape `(samples, quarters, variables)` = (4, 4, 3) 
+Target has shape `(samples, 1)` = (4, 1)
+<!-- , and each window belongs to the sample in which it ends.
+- A window of 8 consecutive quarters of all three variables, and its target is inflation in the next quarter
+- Slide the window one quarter at a time: every position is one sample -->
+
+## Setting up Windows I
+
+`windows` has shape `(samples, quarters, variables)`, and each window belongs to the sample in which it ends. 
+
+```{pyodide}
+#| autorun: false
+#| edit: true
+#| eval: true
+#| runbutton: false
+#| startover: false
+qrts = 8                                    # quarters in a window
+windows = np.lib.stride_tricks.sliding_window_view(X, qrts, axis=0)
+windows = windows.transpose(0, 2, 1)        # (samples, quarters, variables)
+y_win = target[qrts - 1:]                   # target of the window ending in t
+
+n_train = len(y_train) - qrts + 1
+n_val = len(y_val)
+
+XSeq_train, XSeq_tmp, yseq_train, yseq_tmp = train_test_split(
+    windows, y_win, train_size=n_train, shuffle=False)
+XSeq_val, XSeq_test, yseq_val, yseq_test = train_test_split(
+    XSeq_tmp, yseq_tmp, train_size=n_val, shuffle=False)
+
+# cont'd on next slide
+```
+
+## Setting up Windows II
+
+```{pyodide}
+#| autorun: false
+#| edit: true
+#| eval: true
+#| runbutton: false
+#| startover: false
+# cont'd from previous slide
+
+X_scaler = StandardScaler().fit(XSeq_train.reshape(-1, 3))   # training only
+y_scaler = StandardScaler().fit(yseq_train)
+XSeq_train, XSeq_val, XSeq_test = (X_scaler.transform(W.reshape(-1, 3)).reshape(W.shape)
+                                   for W in (XSeq_train, XSeq_val, XSeq_test))
+yseq_train, yseq_val, yseq_test = (y_scaler.transform(y)
+                                   for y in (yseq_train, yseq_val, yseq_test))
+```
+
+## The Recurrent Idea
+
+A recurrent network reads the window one quarter at a time, and keeps a memory of what it has seen: the **hidden state**
+
+::: {.flow}
+::: {.fn-navy}
+Quarter 1
+[memory updated]{.fn-sub}
+:::
+::: {.fn}
+Quarters 2 through 7
+[memory updated]{.fn-sub}
+:::
+::: {.fn-amber}
+Quarter 8
+[forecast from the memory]{.fn-sub}
+:::
+:::
+
+- The same weights are used for every quarter
+- The forecast is made from the memory after the last quarter
+- The memory is the distinguishing characteristic of recurrent networks, LSTMs in particular
+
+## A Recurrent Network in PyTorch
+`T` indicates the number of windows
+```{pyodide}
+#| autorun: false
+#| edit: true
+#| eval: true
+#| runbutton: false
+#| startover: false
+class RecurrentNet(nn.Module):
+    def __init__(self, n_features, hidden=16, cell="LSTM"):
+        super(RecurrentNet, self).__init__()
+        rnn = {"RNN": nn.RNN, "GRU": nn.GRU, "LSTM": nn.LSTM}[cell]
+        self.rnn = rnn(n_features, hidden, batch_first=True)
+        self.fc = nn.Linear(hidden, 1)
+
+    def forward(self, x):                      # x: (batch, T, n_features)
+        output, _ = self.rnn(x)                # (batch, T, hidden)
+        x = self.fc(output[:, -1, :])          # the last quarter's hidden state
+
+        return x
+```
+
+## The LSTM Cell
+
+The LSTM keeps a long-term memory next to the hidden state. Three gates decide what happens to it, and each gate is a number between 0 (closed) and 1 (open)
+
+::: {.triad}
+::: {.triad-card}
+[Forget gate]{.tc-tag}
+
+How much of the old memory is kept. Is last year's inflation spike still relevant?
+:::
+::: {.triad-card .tc-light}
+[Input gate]{.tc-tag}
+
+How much of the new information is written to the memory. Is this quarter's jump in unemployment worth remembering?
+:::
+::: {.triad-card .tc-amber}
+[Output gate]{.tc-tag}
+
+How much of the memory is shown to the forecast. Which parts matter for next quarter?
+:::
+:::
+
+A plain RNN overwrites its memory in every quarter, so early quarters fade. The gates let the LSTM hold on to information for longer $\to$ long-memory modeling feasible
 
 ## The Transformer Revolution
 
@@ -1540,6 +1869,50 @@ The best intuitive introduction by far, in my opinion, is Section "The Transform
 
 Skip the code (which is geared towards TensorFlow) and focus on the intuition
 :::
+
+
+<!-- BLOCK C: Attention -->
+## Attention: The Idea
+
+The forecast uses a weighted average of all quarters of the window, with weights that depend on the data
+
+::: {.triad}
+::: {.triad-card}
+[Query]{.tc-tag}
+
+What is this quarter looking for?
+:::
+::: {.triad-card .tc-light}
+[Key]{.tc-tag}
+
+What does each quarter offer?
+:::
+::: {.triad-card .tc-amber}
+[Value]{.tc-tag}
+
+The information that is passed on
+:::
+:::
+
+$$\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d}}\right)\mathbf{V}$$
+
+## A Self-Attention Network
+
+```{pyodide}
+class AttentionNet(nn.Module):
+    def __init__(self, n_features, T, d=16):
+        super(AttentionNet, self).__init__()
+        self.embed = nn.Linear(n_features, d)
+        self.pos = nn.Parameter(torch.zeros(1, T, d))   # learned positions
+        self.attn = nn.MultiheadAttention(d, num_heads=1, batch_first=True)
+        self.fc = nn.Linear(d, 1)
+
+    def forward(self, x):                      # x: (batch, T, n_features)
+        x = self.embed(x) + self.pos           # (batch, T, d)
+        context, weights = self.attn(x, x, x)  # query = key = value = x
+        x = self.fc(context[:, -1, :])         # the last quarter's context
+        return x
+```
 
 ## LLMs are Forecasting Models
 
