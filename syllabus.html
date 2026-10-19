@@ -7,6 +7,16 @@
 <meta name="description" content="Schedule and literature for Forecasting with Machine Learning.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/site.css">
+<style>
+  /* Shared column widths so the schedule and cases tables line up */
+  table.aligned { table-layout: fixed; width: 100%; }
+  table.aligned col.c-lecture { width: 9%; }
+  table.aligned col.c-date    { width: 12%; }
+  table.aligned col.c-subject { width: 44%; }
+  table.aligned col.c-ref     { width: 25%; }
+  table.aligned col.c-lecturer{ width: 10%; }
+  table.aligned col.c-case    { width: 79%; }
+</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -35,42 +45,57 @@
     <h1>Syllabus</h1>
   </header>
 
-
-<!-- <main id="main">
-  <header class="page-head">
-    <h1>Schedule</h1>
-  </header> -->
-
   <div class="table-wrap">
-    <table>
+    <table class="aligned">
+      <colgroup>
+        <col class="c-lecture"><col class="c-date"><col class="c-subject"><col class="c-ref"><col class="c-lecturer">
+      </colgroup>
       <thead>
-        <tr><th>Lecture</th><th>Date-CW</th><th>Contents</th><th>Case</th><th>Lecturer</th></tr>
+        <tr><th>Lecture</th><th>Date-CW</th><th>Subject</th><th>Main reference</th><th>Lecturer</th></tr>
       </thead>
       <tbody>
-        <tr><td>1</td><td>26/10/26&#8209;44</td><td>Introduction, forecasting theory</td><td></td><td>BV</td></tr>
-        <tr><td>2</td><td>28/10/26&#8209;44</td><td>Forecasting theory</td><td></td><td>BV</td></tr>
-        <tr><td><a href="session_03/session_03.html">3</a></td><td>02/11/26&#8209;45</td><td>Programming in Python, machine learning focus</td><td></td><td>NV</td></tr>
-        <tr><td><a href="session_04/session_04.html">4</a></td><td>04/11/26&#8209;45</td><td>Programming in Python, deep learning focus</td><td>Vanilla DL, toy example</td><td>NV</td></tr>
-        <tr><td>5</td><td>09/11/26&#8209;46</td><td>Gu et al., (2020)</td><td></td><td>NV</td></tr>
-        <tr><td>6</td><td>11/11/26&#8209;46</td><td>Gu et al., (2020)</td><td>Rapach &amp; Zhou (2020)</td><td>NV</td></tr>
-        <tr><td>7</td><td>16/11/26&#8209;47</td><td>Goulet Coulombe et al., (2022)</td><td></td><td>BV</td></tr>
-        <tr><td>8</td><td>18/11/26&#8209;47</td><td>Medeiros et al., (2021)</td><td> Yoon (2021)</td><td>BV</td></tr>
+        <tr><td>1</td><td>26/10/26&#8209;44</td><td>Introduction to forecasting and machine learning</td><td></td><td>BV</td></tr>
+        <tr><td>2</td><td>28/10/26&#8209;44</td><td>Forecasting foundations: evaluation and comparison</td><td></td><td>BV</td></tr>
+        <tr><td><a href="session_03/session_03.html">3</a></td><td>02/11/26&#8209;45</td><td>Python for machine learning</td><td></td><td>NV</td></tr>
+        <tr><td><a href="session_04/session_04.html">4</a></td><td>04/11/26&#8209;45</td><td>Neural networks and deep learning in Python</td><td></td><td>NV</td></tr>
+        <tr><td>5</td><td>09/11/26&#8209;46</td><td>Machine learning for stock return prediction</td><td>Gu et al. (2020)</td><td>NV</td></tr>
+        <tr><td>6</td><td>11/11/26&#8209;46</td><td>Machine learning for stock return prediction</td><td>Gu et al. (2020)</td><td>NV</td></tr>
+        <tr><td>7</td><td>16/11/26&#8209;47</td><td>Machine learning for macroeconomic forecasting</td><td>Goulet Coulombe et al. (2022)</td><td>BV</td></tr>
+        <tr><td>8</td><td>18/11/26&#8209;47</td><td>Inflation forecasting with machine learning</td><td>Medeiros et al. (2021)</td><td>BV</td></tr>
         <tr><td>9</td><td>23/11/26&#8209;48</td><td>Introduction to high-frequency econometrics</td><td></td><td>KC</td></tr>
-        <tr><td>10</td><td>25/11/26&#8209;48</td><td>Bollerslev et al., (2016)</td><td> </td><td>KC</td></tr>
-        <tr><td>11</td><td>30/11/26&#8209;49</td><td>Christensen et al., (2023)</td><td></td><td>BV</td></tr>
-        <tr><td>12</td><td>02/12/26&#8209;49</td><td>Borup et al., (2023b)</td><td></td><td>BV</td></tr>
-        <tr><td>13</td><td>07/12/26&#8209;50</td><td>Lago et al., (2021)</td><td></td><td>KC</td></tr>
-        <tr><td>14</td><td>09/12/26&#8209;50</td><td>Zhang et al., (2019)</td><td>Energy Forecasting</td><td>KC</td></tr>
+        <tr><td>10</td><td>25/11/26&#8209;48</td><td>Realized volatility and volatility forecasting</td><td>Bollerslev et al. (2016)</td><td>KC</td></tr>
+        <tr><td>11</td><td>30/11/26&#8209;49</td><td>Machine learning for volatility forecasting</td><td>Christensen et al. (2023)</td><td>BV</td></tr>
+        <tr><td>12</td><td>02/12/26&#8209;49</td><td>Mixed-frequency machine learning and nowcasting</td><td>Borup et al. (2023)</td><td>BV</td></tr>
+        <tr><td>13</td><td>07/12/26&#8209;50</td><td>Electricity price forecasting with machine learning</td><td>Lago et al. (2021)</td><td>KC</td></tr>
+        <tr><td>14</td><td>09/12/26&#8209;50</td><td>Crude oil return forecasting with LASSO and elastic net</td><td>Zhang et al. (2019)</td><td>KC</td></tr>
       </tbody>
     </table>
   </div>
   <p class="muted">BV: Bezirgen (Ben) Veliyev, NV: Natasia Villadsen, KC: Kim Christensen.</p>
 
+  <h3>Cases (self-study)</h3>
+  <div class="table-wrap">
+    <table class="aligned">
+      <colgroup>
+        <col class="c-lecture"><col class="c-date"><col class="c-subject"><col class="c-ref"><col class="c-lecturer">
+      </colgroup>
+      <thead>
+        <tr><th>Lecture</th><th></th><th>Subject</th><th>Main reference</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr><td>4</td><td></td><td>Deep learning, toy example</td><td></td><td></td></tr>
+        <tr><td>5&#8211;6</td><td></td><td>Stock return forecasting</td><td>Rapach &amp; Zhou (2020)</td><td></td></tr>
+        <tr><td>7&#8211;8</td><td></td><td>GDP growth forecasting</td><td>Yoon (2021)</td><td></td></tr>
+        <tr><td>13&#8211;14</td><td></td><td>Energy forecasting</td><td></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
   <ul class="papers">
     <li class="paper">
       <h3><a href="https://doi.org/10.1093/rfs/hhaa009">Empirical Asset Pricing via Machine Learning</a></h3>
-      <p class="cite">Gu, S., Kelly, B. and Xiu, D. (2020). <em>Review of Financial Studies</em>.</p>
-      <p class="meta"><span class="chip">Return predictability</span><span class="chip amber">Lecture 5</span></p>
+      <p class="cite">Gu, S., Kelly, B. and Xiu, D. (2021). <em>Review of Financial Studies</em>.</p>
+      <p class="meta"><span class="chip">Return predictability</span><span class="chip amber">Lecture 5 &amp; 6</span></p>
     </li>
 
     <li class="paper">
@@ -84,7 +109,7 @@
       <p class="meta"><span class="chip">Macroeconomics</span><span class="chip amber">Lecture 7</span></p>
     </li>
     <li class="paper">
-      <h3><a href="10.1080/07350015.2019.1637745">Forecasting Inflation in a Data-Rich Environment: The Benefits of Machine Learning Methods</a></h3>
+      <h3><a href="https://doi.org/10.1080/07350015.2019.1637745">Forecasting Inflation in a Data-Rich Environment: The Benefits of Machine Learning Methods</a></h3>
       <p class="cite">Medeiros, M. C., Vasconcelos, G. F. R., Álvaro Veiga, & Zilberman, E (2021). <em>Journal of Business &amp; Economic Statistics</em>.</p>
       <p class="meta"><span class="chip">Macroeconomics</span><span class="chip amber">Lecture 8</span></p>
     </li>
