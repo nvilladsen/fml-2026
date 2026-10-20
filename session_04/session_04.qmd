@@ -532,6 +532,8 @@ We consider a general blueprint for forecasting with neural networks and a speci
 #| autorun: false
 #| runbutton: false
 #| startover: false
+import copy
+import time
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
@@ -717,7 +719,7 @@ class NN(nn.Module):
 ## Training a Neural Network II
 - We give this example in the $h = 1$ case, 
 
-$$f(\mathbf{X}) = \beta_0 + \sum_{k = 1}^{K_1} \beta_k A_k^{(1)} = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g_1\left(w_{k0}^{(1)}+\sum_{j=1}^p\omega_{kj}^{(1)}X_j \right)$$
+$$f(\mathbf{X}) = \beta_0 + \sum_{k = 1}^{K_1} \beta_k A_k^{(1)} = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g_1\left(\omega_{k0}^{(1)}+\sum_{j=1}^p\omega_{kj}^{(1)}X_j \right)$$
 
 The parameters to be estimated are
 
@@ -1346,11 +1348,11 @@ with torch.no_grad():
 
 forecasts = np.concatenate(lPred)
 forecasts_unstd = y_scaler.inverse_transform(forecasts)
-y_unstd = y_scaler.inverse_transform(y_test)
+y_unstd = y_scaler.inverse_transform(y_test.cpu())
 
 mse = np.mean((y_unstd - forecasts_unstd) ** 2)
 # Benchmark: training-sample mean forecast
-y_bench = y_scaler.inverse_transform(y_train).mean()
+y_bench = y_scaler.inverse_transform(y_train.cpu()).mean()
 r2_oos = 1 - np.sum((y_unstd - forecasts_unstd) ** 2) / np.sum((y_unstd - y_bench) ** 2)
 print(f"Test RMSE: {np.sqrt(mse):.2f} | Test OOS R2 (vs. train mean): {r2_oos:.3f}")
 ```
@@ -1752,10 +1754,10 @@ y_win = target[qrts - 1:]                   # target of the window ending in t
 n_train = len(y_train) - qrts + 1
 n_val = len(y_val)
 
-XSeq_train, XSeq_tmp, yseq_train, yseq_tmp = train_test_split(
+Xseq_train, Xseq_tmp, yseq_train, yseq_tmp = train_test_split(
     windows, y_win, train_size=n_train, shuffle=False)
-XSeq_val, XSeq_test, yseq_val, yseq_test = train_test_split(
-    XSeq_tmp, yseq_tmp, train_size=n_val, shuffle=False)
+Xseq_val, Xseq_test, yseq_val, yseq_test = train_test_split(
+    Xseq_tmp, yseq_tmp, train_size=n_val, shuffle=False)
 
 # cont'd on next slide
 ```
@@ -1770,10 +1772,10 @@ XSeq_val, XSeq_test, yseq_val, yseq_test = train_test_split(
 #| startover: false
 # cont'd from previous slide
 
-X_scaler = StandardScaler().fit(XSeq_train.reshape(-1, 3))   # training only
+X_scaler = StandardScaler().fit(Xseq_train.reshape(-1, 3))   # training only
 y_scaler = StandardScaler().fit(yseq_train)
-XSeq_train, XSeq_val, XSeq_test = (X_scaler.transform(W.reshape(-1, 3)).reshape(W.shape)
-                                   for W in (XSeq_train, XSeq_val, XSeq_test))
+Xseq_train, Xseq_val, Xseq_test = (X_scaler.transform(W.reshape(-1, 3)).reshape(W.shape)
+                                   for W in (Xseq_train, Xseq_val, Xseq_test))
 yseq_train, yseq_val, yseq_test = (y_scaler.transform(y)
                                    for y in (yseq_train, yseq_val, yseq_test))
 ```
@@ -1802,7 +1804,7 @@ Quarter 8
 - The memory is the distinguishing characteristic of recurrent networks, LSTMs in particular
 
 ## A Recurrent Network in PyTorch
-`T` indicates the number of windows
+`T` indicates the number of quarters (in this case) in a window
 ```{pyodide}
 #| autorun: false
 #| edit: true
@@ -1870,40 +1872,64 @@ The best intuitive introduction by far, in my opinion, is Section "The Transform
 Skip the code (which is geared towards TensorFlow) and focus on the intuition
 :::
 
-
-<!-- BLOCK C: Attention -->
 ## Attention: The Idea
 
-The forecast uses a weighted average of all quarters of the window, with weights that depend on the data
+We stay with our inflation forecasting example. 
+
+An LSTM squeezes the window into one memory. Attention lets the forecast look at **every quarter directly** and decide how much each one matters. 
 
 ::: {.triad}
 ::: {.triad-card}
-[Query]{.tc-tag}
+[Query: $\mathbf{Q}$]{.tc-tag}
 
 What is this quarter looking for?
 :::
 ::: {.triad-card .tc-light}
-[Key]{.tc-tag}
+[Key: $\mathbf{K}$]{.tc-tag}
 
 What does each quarter offer?
 :::
 ::: {.triad-card .tc-amber}
-[Value]{.tc-tag}
+[Value: $\mathbf{V}$]{.tc-tag}
 
-The information that is passed on
+Information passed on
 :::
 :::
 
 $$\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{d}}\right)\mathbf{V}$$
 
+
+## Attention: The Idea
+
+Intuitively, attention works like a lookup:
+
+::: {.vocab-wrap}
+| Search engine | | Attention |
+|:-------------------------------|:-:|:-----------------------------------|
+| Search term | $\Leftrightarrow$ | **Query**, $\mathbf{Q}$ |
+| Tags on the stored items | $\Leftrightarrow$ | **Key**, $\mathbf{K}$ |
+| The stored items | $\Leftrightarrow$ | **Value**, $\mathbf{V}$ |
+| Items returned, best match first | $\Leftrightarrow$ | Weighted average of the values |
+:::
+
+- Here, stored items are the quarters of the window, and the search is run once every quarter
+- The better the match, the larger the weight
+- Weights are learned by backpropagation
+
 ## A Self-Attention Network
 
+Self-attention: query, key and value all come from the same window. The forecast is made from the output of the last quarter
+
 ```{pyodide}
+#| autorun: false
+#| runbutton: false
+#| startover: false
 class AttentionNet(nn.Module):
     def __init__(self, n_features, T, d=16):
         super(AttentionNet, self).__init__()
-        self.embed = nn.Linear(n_features, d)
+        self.embed = nn.Linear(n_features, d)           # quarter -> vector
         self.pos = nn.Parameter(torch.zeros(1, T, d))   # learned positions
+        # contains W_Q, W_K and W_V
         self.attn = nn.MultiheadAttention(d, num_heads=1, batch_first=True)
         self.fc = nn.Linear(d, 1)
 
@@ -1911,10 +1937,61 @@ class AttentionNet(nn.Module):
         x = self.embed(x) + self.pos           # (batch, T, d)
         context, weights = self.attn(x, x, x)  # query = key = value = x
         x = self.fc(context[:, -1, :])         # the last quarter's context
+
         return x
 ```
 
-## LLMs are Forecasting Models
+Attention treats the window as a set, so `self.pos` is what tells the network the order of the quarters
+
+## From Attention to a Transformer
+
+Attention only recombines the quarters. We still need a non-linear activation. 
+
+A Transformer block (Vaswani et al., 2017) adds it, and blocks are stacked:
+
+:::: {.flow}
+::: {.fn-navy}
+Self-attention
+[information is mixed across quarters]{.fn-sub}
+:::
+::: {.fn}
+Add and normalize
+[residual connection and layer norm]{.fn-sub}
+:::
+::: {.fn}
+Feedforward network
+[two dense layers with ReLU, applied to each quarter]{.fn-sub}
+:::
+::: {.fn-amber}
+Add and normalize
+[residual connection and layer norm]{.fn-sub}
+:::
+::::
+
+::: {.spacer}
+:::
+
+[Three more ingredients]{.flow-label .fl-lg}
+
+:::: {.triad .strip}
+::: {.triad-card}
+[Multi-head]{.tc-tag}
+
+Several attention heads in parallel, so different patterns can be uncovered
+:::
+::: {.triad-card}
+[Positions]{.tc-tag}
+
+Attention is blind to order, so a position vector is added to each quarter (`self.pos` in the code)
+:::
+::: {.triad-card}
+[Causal mask]{.tc-tag}
+
+A quarter may only attend to itself and earlier quarters $\to$ no look-ahead bias
+:::
+::::
+
+<!-- ## LLMs are Forecasting Models
 
 When we chat with generative AI, we are sampling from the probability distribution of the next word given the previous words
 
@@ -1945,12 +2022,49 @@ Trained on large corpora of text data to learn the statistical properties of lan
 [T]{.tc-letter}
 [Transformers]{.tc-title}
 :::
+:::: -->
+
+## LLMs and Generative AI
+
+An LLM is a very large transformer with causal attention, trained to predict the next word. GPT like e.g., ChatGPT abbreviates "Generative Pre-trained **Transformer**"
+
+:::: {.triad .gpt}
+::: {.triad-card}
+[G]{.tc-letter}
+[Generative (AI)]{.tc-title}
+Produces new text one word at a time: predict, append, repeat (next slide)
+:::
+::: {.triad-card}
+[P]{.tc-letter}
+[Pre-trained]{.tc-title}
+Trained on large corpora of text data to learn the statistical properties of language, by predicting the next word
+:::
+::: {.triad-card}
+[T]{.tc-letter}
+[Transformers]{.tc-title}
+Stacked attention blocks with a causal mask, as on the previous slides
+:::
 ::::
+
+## LLMs are Forecasting Models
+
+When we chat with generative AI, the model **forecasts** the next word given all previous words, and we sample from this probability distribution,
+
+<div class="figblock fb-s330">
+<p class="fig-title">Prompt: "The central bank decided to raise the ..."</p>
+<img src="nexttoken.svg">
+</div>
+
+The sampled word is appended to the prompt, and the model forecasts again: a recursive multi-step forecast
+
+::: {.keypoint}
+The replies we receive are nothing but (incredibly good) predictions
+:::
 
 ## A friendly piece of advice
 
 ::: {.keypoint}
-We must keep in mind that the model is trained to retain our attention and engagement (like social media) $\Rightarrow$ will tend to tell us what we want to hear
+Must keep in mind that the model is trained to retain our attention and engagement $\to$ will tend to tell us what we want to hear
 :::
 
 ::: {.spacer}
@@ -1960,11 +2074,13 @@ Can mitigate this somewhat with being neutral in our prompts:
 
 :::: {.dodont}
 ::: {.dont-col}
+
 ### Leading prompt
 
 - "I am right about this, right?"
 :::
 ::: {.do-col}
+
 ### Neutral prompt
 
 - "Will you check the correctness of this statement?"
@@ -1973,6 +2089,10 @@ Can mitigate this somewhat with being neutral in our prompts:
 
 ::: {.spacer}
 :::
+
+::: {.spacer}
+:::
+
 
 - I often pose simpler questions with "Yes or no?"
 - Restarting a conversation or changing model (Gemini/Claude/ChatGPT) can also be helpful
