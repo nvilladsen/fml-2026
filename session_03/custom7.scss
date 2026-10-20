@@ -576,7 +576,7 @@ i.fas.fa-bars {
 .reveal .slides section div.cell-output table.dataframe,
 .reveal .slides section div.cell-output-pyodide table.dataframe {
   margin: 0.2em auto;
-  font-size: 0.42em !important;
+  font-size: 0.5em !important;
   line-height: 1.25;
   border-collapse: collapse;
 }
@@ -1190,4 +1190,9 @@ i.fas.fa-bars {
   width: 100%;
   margin: 0;
   box-shadow: none;
+}
+
+.pull-up {
+  height: 0;
+  margin-bottom: -0.8em;
 }
