@@ -432,7 +432,7 @@ i.fas.fa-bars {
   background: #fdf4f3;
   border: 1px solid #f0d4d2;
   border-left: 6px solid #2f6aa0;
-  color: #8a3129;
+  color: #e53935;
   overflow-x: auto;              // tracebacks may be wide
 }
 
@@ -977,11 +977,15 @@ i.fas.fa-bars {
 }
 
 .figblock .fig-src {
-  font-size: 0.42em;
+  font-size: 0.5em;
   color: #898781;
-  margin-top: 0.4em;
+  margin-top: -1em;
   text-align: center;
 }
+
+.reveal .figblock img { margin: 0; }
+.reveal .figblock .fig-src p,
+.reveal .figblock .fig-title p { margin: 0; }
 
 .figblock.fb-brain img { max-height: 450px; }
 .figblock.fb-w75 img { max-width: 75%; }

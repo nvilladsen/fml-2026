@@ -38,11 +38,9 @@ pyodide:
     - pandas
     - scikit-learn
     - matplotlib
+    - statsmodels
 resources:
   - ToyData.csv
-  - student_performance.csv
-  - student_performance_variables.csv
-  - energy_demand.csv
 ---
 
 
@@ -137,12 +135,11 @@ While R is used for machine learning, Python is used (nearly) exclusively for de
 :::
 :::
 
-
-# NumPy --- Numerical Python {.divider}
+# NumPy -- Numerical Python {.divider}
 
 ## What is NumPy?
 
-- Go-to library for numerical tasks --- mean, logs, etc.
+- Go-to library for numerical tasks -- mean, logs, etc.
 
 Always import library with the standard alias,
 
@@ -151,14 +148,15 @@ import numpy as np
 ```
 
 - Data is stored in **arrays**, say `arr`
-- Arrays general term for scalars, vectors, matrices and tensors:
+
+Arrays general term for scalars, vectors, matrices and tensors:
 
 $$
 \texttt{arr}\in\mathbb{R},\quad \texttt{arr}\in\mathbb{R}^n,\quad \texttt{arr}\in\mathbb{R}^{n\times m},\quad \texttt{arr}\in\mathbb{R}^{m_1\times \cdots \times m_n}
 $$
 
 ::: {.callout-tip}
-If not quite confident in ***scalars, vectors, matrices, tensors***, refer to the [Maths Brush-Up](https://github.com/nvilladsen/fml-2026/blob/main/Maths_Brush_Up__FwML.pdf). 
+If not quite confident in ***scalars, vectors, matrices, tensors***, refer to the [Maths Brush-Up](https://github.com/nvilladsen/fml-2026/blob/main/Maths_Brush_Up__FwML.pdf)
 :::
 
 ## Defining arrays
@@ -179,11 +177,17 @@ print(arrS.shape, arrV.shape, arrM.shape, arrT.shape)
 Print of dimension arrT is number of matrices, number of rows, number of columns
 :::
 
-## Visualising a 3D array
+## Visualizing a 3D array
+::: {.figblock}
+::: {.fig-title}
+:::
 
-<div style="display: flex; justify-content: center; margin-top: 0.3em;">
-<img src="3DArray.svg" style="max-height: 500px; width: auto;">
-</div>
+<img src="3DArray.svg">
+
+::: {.fig-src}
+Associated NumPy code: `arrT = np.array([[[4, 7], [2, 6]], [[3, 3], [1, 2]]])`
+:::
+:::
 
 ## Functions on arrays
 
@@ -205,7 +209,7 @@ So in this example, axis=0 is [[7, 10], [3, 8]], axis=1 is [[6, 9], [4, 8]], and
 
 ## Subsetting I
 
-- Important to get right --- differs from pandas
+- Important to get right -- differs from pandas
 - Python is **zero-indexed**: `arr[row, col]`
 
 ```{pyodide}
@@ -237,12 +241,12 @@ print(arrM[np.ix_(RowIdx, ColIdx)].shape)
 ```
 
 ::: {.keypoint}
-`arrM[RowIdx, ColIdx]` is wrong --- it only selects three data points.
+`arrM[RowIdx, ColIdx]` is wrong -- it only selects three data points
 :::
 
 ## Subsetting IV
 
-`::2` $\to$ every other index
+`::2` $\to$ every second index
 
 ```{pyodide}
 arrMEven = arrM[::2, :]
@@ -291,7 +295,7 @@ print(np.isnan(arrMNaN)) returns a matrix the same shape as arrMNaN, with True w
 :::
 
 ::: {.keypoint}
-`.copy()` is required --- otherwise it's the **same array**, and the original receives NaNs too.
+`.copy()` is required -- otherwise the original receives NaNs too
 :::
 
 ## NaNs II
@@ -305,7 +309,7 @@ print(f"NaNs present: {arrMNaN0}. Count: {arrMNaNCount}")
 
 Replacing NaNs with values of your choice, e.g., 0 or the mean (for time series, compute the mean on training data only),
 ```{pyodide}
-arrMNaN0s    = np.where(np.isnan(arrMNaN), 0, arrMNaN) # Replace NaNs with 0
+arrMNaN0s = np.where(np.isnan(arrMNaN), 0, arrMNaN) # Replace NaNs with 0
 arrMNaNMean = np.where(np.isnan(arrMNaN), np.nanmean(arrMNaN), arrMNaN) # Replace NaNs with mean
 ```
 
@@ -316,16 +320,18 @@ print(arrMNaN.shape, arrMNoNaN.shape)
 ```
 
 1. `np.isnan(arrMNaN)` identifies the NaNs
-2. `.any(axis=1)` --- identifies any NaN in each row
+2. `.any(axis=1)` -- identifies any NaN in each row
 3. `~` flips the selection to retain the clean rows
 
 ::: {.keypoint}
-Manipulating NaNs is dangerous --- choose replacement values with care
+Manipulating NaNs is dangerous -- choose replacement values with care
 :::
 
 ## Reshaping 1D arrays
 
-A 1D array has shape `(n,)`, but many functions expect a 2D array. Reshape it into a column vector with `.reshape(-1, 1)`:
+A 1D array has shape `(n,)`, but many functions expect a 2D array. 
+
+Reshape it into a column vector with `.reshape(-1, 1)`:
 
 ```{pyodide}
 rng = np.random.default_rng(160923)
@@ -337,17 +343,16 @@ print(arrX.shape)
 ```
 
 ::: {.keypoint}
-`-1` in rows is a placeholder to let Python determine the number of rows, while `1` dictates one column
+`-1` is a placeholder to let Python determine the number of rows, while `1` dictates one column
 :::
 
-
-# Pandas --- Panel Data {.divider}
+# Pandas -- Panel Data {.divider}
 
 ## What are pandas?
 
 - Developed to match `R`'s (at the time) superior data handling
-- Stores data in **data frames**; single variable data frames are called **series**
-- Series are most commonly used for univariate targets, i.e., $y$'s
+- Stores data in **data frames**. A single variable would be stored in a **series**
+- Series are most commonly used for univariate targets, i.e., $y$s
 
 Always import library with the standard alias,
 
@@ -355,7 +360,30 @@ Always import library with the standard alias,
 import pandas as pd
 ```
 
+## Preliminary: Dictionaries
+
+- Store **key–value pairs**: values are looked up by their key
+- Defined with curly braces, `{key: value}`
+
+```{pyodide}
+scores = {"OLS": 0.52, "LASSO": 0.48, "Ridge": 0.49}
+print(scores["LASSO"])                # look up by key
+scores["Random forest"] = 0.41        # add a new key
+print(scores)
+```
+
+::: {.keypoint}
+Keys are unique, usually strings; values can be anything. 
+We will use dictionaries for data frames, hyperparameter grids and collecting results
+:::
+
+::: {.notes}
+Contrast with NumPy arrays, which are indexed by position. A dictionary is indexed by name.
+:::
+
 ## Series
+
+Defining a pandas series,
 
 ```{pyodide}
 dfS = pd.Series([4, 7, 2], index=["A", "B", "C"])
@@ -365,6 +393,8 @@ dfS
 The left-most column is the index; it can also be set afterwards with `dfS.index=[...]`.
 
 ## Data frames
+
+Defining a pandas data frame,
 
 ```{pyodide}
 df = pd.DataFrame({
@@ -376,12 +406,12 @@ df
 
 ## Reading in data
 
-`pd.read_csv()` is an important function. We use `ToyData.csv`.
+`pd.read_csv()` is an important function. Example with `ToyData.csv`.
 
 ```{pyodide}
 df = pd.read_csv("ToyData.csv")
 print(df.shape)
-print(df.head())
+df.head()
 ```
 
 ::: {.notes}
@@ -396,11 +426,11 @@ print(df.dtypes)
 ```
 
 ::: {.keypoint}
-Also useful: `df.describe()`, `df.isna().sum()`, `df.dropna()`.
+Also useful: `df.describe()`, `df.isna().sum()`, `df.dropna()`
 :::
 
 ## Subsetting I
-Different than NumPy - use `.iloc` for integer-location based indexing, and `.loc` for label-based indexing
+Different than NumPy - use `.iloc` for index-based subsetting, `.loc` for label-based subsetting
 ```{pyodide}
 df.iloc[:3, :2].head(3)   # by position, rows 0-2 and columns 0-1, as in NumPy
 ```
@@ -416,7 +446,7 @@ Subsetting by name alone (cannot subset rows simultaneously),
 df[["Amount", "Quantity"]].head(3)   # by name
 ```
 
-Conditions,
+Subsetting by condition,
 
 ```{pyodide}
 df[df["Amount"] > 50].head(3)
@@ -424,22 +454,29 @@ df[df["Amount"] > 50].head(3)
 
 ## Writing to .csv
 
-When done wrangling, write the data frame to file:
+Data, results, and similar datasets can be written to file with `to_csv()`,
 
 ```python
 df.to_csv("UpdToyData.csv", index=False)  
 ```
 
 ::: {.keypoint}
-In the browser this only writes to a temporary file system --- run it in your own Notebook to save.
+In the browser this only writes to a temporary file system -- run it in your own Notebook to save.
 :::
 
 # Machine Learning {.divider}
 
 ## Layers of Intelligence
-<div style="display: flex; justify-content: center;">
-  <img src="AIModel.svg" style="max-width: 95%; max-height: 440px; height: auto; width: auto;">
-</div>
+::: {.figblock}
+::: {.fig-title}
+:::
+
+<img src="AIModel.svg">
+
+::: {.fig-src}
+Deep learning is a subset of machine learning, which in turn is a subset of artificial intelligence.
+:::
+:::
 
 ::: {.notes}
 The IBM supercomputer, Deep Blue, defeated chess grandmaster Garry Kasparov -- in chess -- in 1997. No learning was applied, the rules of chess were hard-coded -- still AI.
@@ -462,7 +499,7 @@ The IBM supercomputer, Deep Blue, defeated chess grandmaster Garry Kasparov -- i
 ::: {.overview}
 ::: {.ov-row-inline}
 ::: {.ov-label}
-Inspecting
+Pre-processing
 :::
 ::: {.ov-desc}
 Explore distributions, check for NaNs and outliers
@@ -547,7 +584,7 @@ Regression
 :::
 :::
 
-## Data inspection
+## Data pre-processing
 
 Before modelling always inspect the raw data.
 
@@ -559,13 +596,13 @@ df.dtypes          # check that data types are as expected
 ```
 
 - Data pre-processing is essential in the forecasting pipeline 
-- We cannot dedicate due time to all important steps in this lecture
+- We cannot dedicate due time to all the important steps in this lecture
 - Instead, refer to Chapter III of [Applied Predictive Modeling](https://vuquangnguyen2016.wordpress.com/wp-content/uploads/2018/03/applied-predictive-modeling-max-kuhn-kjell-johnson_1518.pdf) (Kuhn & Johnson, 2013)
 - Code translated from `R` to Python is available in the [Colab Notebook "Chapter III"](https://colab.research.google.com/drive/1JX1COhoV31ilURxSnsbkHhulN0A3FCxh#scrollTo=cxueYY40abwP)
 
 ## Lagging
 
-Prediction $Y_t \sim f(X_{t-1})$ --- to avoid look-ahead bias we must **lag** the data.
+Prediction $Y_t \sim f(X_{t-1})$ -- to avoid look-ahead bias we must **lag** the data.
 
 ```{pyodide}
 rng = np.random.default_rng(160923)
@@ -594,9 +631,9 @@ print(dfLag)                                    # 3 rows: (11, 2, 10), (12, 3, 1
 
 ## Sample splitting
 
-In **cross-sectional modelling**, data is usually split randomly
+In cross-sectional modeling, data is usually split randomly
 
-In **time series**, data must be split chronologically
+In **time series modeling**, data must be split chronologically, such as,
 
 ```python
 from sklearn.model_selection import train_test_split
@@ -607,12 +644,12 @@ X_train, X_test, y_train, y_test = train_test_split(
 ```
 
 ::: {.notes}
-sklean is the scikit-learn library which we will get to in more detail in a few slides.
+sklearn is the scikit-learn library which we will get to in more detail in a few slides.
 :::
 
 ## Standardization
 
-$Z$-score standardization: Subtract the mean, divide by the standard deviation:
+$Z$-score standardization: Subtract the mean, divide by the standard deviation,
 
 $$
 z_t = \frac{x_t - \hat{\mu}}{\hat{\sigma}}
@@ -626,7 +663,7 @@ Standardize
 :::
 - Shrinkage models (LASSO, ridge)
   - Penalty not scale-invariant
-- Neural networks --- gradient descent is sensitive to scale
+- Neural networks -- gradient descent is sensitive to scale
 :::
 ::: {.compare-col .cmp-alt}
 <!-- ### Standardization unnecessary -->
@@ -635,13 +672,14 @@ Standardization unnecessary
 :::
 - Tree-based models (random forests)
   - Splits are scale-invariant
-- OLS --- coefficients scale with data
+- OLS -- coefficients scale with data
 :::
 :::
 
 ::: {.keypoint}
 
-Fit the scaler on **training data only**, then apply to the test set. Fitting on the full sample leaks future distributional information.
+Fit the scaler on **training data only**, then apply to the test set. 
+Fitting on the full sample leaks future distributional information.
 
 :::
 
@@ -658,7 +696,7 @@ X_test_sc = scaler.transform(X_test)        # transform only on test
 
 ::: {.keypoint}
 
-`fit_transform` on the test set leaks future distributional information into the model
+`fit_transform` on the test set would leak future distributional information into the model
 
 :::
 
@@ -692,10 +730,16 @@ Rolling window
 :::
 
 ## Difference Between Rolling and Expanding Windows
+::: {.figblock}
+::: {.fig-title}
+:::
 
-<div style="display: flex; justify-content: center; margin-top: 0.3em;">
-<img src="RollingExpanding.svg" style="max-height: 500px; width: auto;">
-</div>
+<img src="windows.svg">
+
+::: {.fig-src}
+From top to bottom: expanding window, rolling window, and fixed window forecasting structures.
+:::
+:::
 
 ## The bias-variance trade-off
 
@@ -726,15 +770,29 @@ High variance
 
 Models applying regularization, e.g., LASSO, ridge, and random forests, trade off bias for variance
 
+## Bias-variance trade-off, an extreme example
+::: {.figblock}
+::: {.fig-title}
+:::
+
+<img src="bias_variance_fit.svg">
+
+::: {.fig-src}
+MSE OLS (left-hand side): 0.262, MSE spline (left-hand side): 0.000, MSE OLS (right-hand side): 0.209, MSE spline (right-hand side): 0.394.
+:::
+:::
+
 ## Hyperparameter tuning
 
 Hyperparameters (e.g. $\alpha$ in LASSO) must be selected to optimize out-of-sample performance
 
 ::: {.keypoint}
-**Never** select hyperparameters by performance on the test set --- this generates forward-looking bias
+**Never** select hyperparameters by performance on the test set -- generates forward-looking bias
 :::
 
-Standard approach: **time-series cross-validation** on the training set. Stylized code,
+Standard approach: **time-series cross-validation** on the training set. 
+
+Stylized code:
 
 ```python
 from sklearn.model_selection import TimeSeriesSplit, GridSearchCV
@@ -755,7 +813,7 @@ From SciPy (Scientific Python) and toolkit (scikit) and then learn
 
 ## What is scikit-learn?
 
-Primary modelling library covering a large array of models:
+Primary modeling library covering a large array of models:
 
 - Linear regression (OLS)
 - Shrinkage models (LASSO, ridge, elastic net)
@@ -763,7 +821,7 @@ Primary modelling library covering a large array of models:
 - Support vector regression/machines
 
 ::: {.keypoint}
-Advantage: unified and streamlined syntax --- `fit` $\to$ `predict` $\to$ `score`
+Advantage: unified and streamlined syntax -- `fit` $\to$ `predict` $\to$ `score` ($R^2$)
 :::
 
 ## Importing
@@ -782,314 +840,26 @@ from sklearn.metrics import mean_squared_error
 ::: {.keypoint}
 Importing from `sklearn` and not `scikit-learn`
 :::
-<!-- 
-## Practical example predicting final grades
-- Data from [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Student+Performance)
-- Data can be fetched directly to Python (and hence our slides), see Colab or link
-- Slows slide deck down, so we read in a .csv file instead,
-```{pyodide}
-df = pd.read_csv("student_performance.csv")
-```
 
-::: {.notes}
-Code for fetching data directly is provided below
-
-```python
-# Installing relevant library
-pip install ucimlrepo
-
-# Fetching dataset 
-student_performance = fetch_ucirepo(id=320) 
-
-# Extracting features and target
-X = student_performance.data.features 
-y = student_performance.data.targets 
-```
-:::
-
-## Variables in dataset
-
-```{python}
-#| echo: false
-#| output: asis
-import pandas as pd
-from IPython.display import HTML
-df = pd.read_csv("student_performance_variables.csv")[["name", "role", "type"]]
-display(HTML(f'<div style="height:560px;overflow-y:auto;width:100%;font-size:1.1em">{df.to_html(index=False)}</div>'))
-```
-
-## Data pre-processing
-- We keep it simple, no categorical or binary variables
-- Dropping variables of this type
+## Practical example: forecasting US inflation
+Quarterly US macroeconomic data, 1959Q1--2009Q3, from `statsmodels`
+- Target: inflation, `infl`
+- Predictors: lagged inflation, unemployment and the T-bill rate
 
 ```{pyodide}
-df = df.drop(columns = ["school", "sex", "address", "famsize", "Pstatus", "Mjob", "Fjob", 
-             "reason", "guardian", "schoolsup", "famsup", "paid", "activities", 
-             "nursery", "higher", "internet", "romantic"])
-```
-
-Splitting data according to target (only the continuous target, `G3` is used) and covariates
-```{pyodide}
-X = df.drop(columns=["G1", "G2", "G3"])
-y = df["G3"]
-```
-
-## Train/test split
-
-```{pyodide}
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, shuffle=True, random_state=42
-)
-print(f"Train dimension X: {X_train.shape}, Test dimension X: {X_test.shape}")
-print(f"Train dimension y: {y_train.shape}, Test dimension y: {y_test.shape}")
-```
-
-## Visualising target data
-```{pyodide}
-import matplotlib.pyplot as plt
-fig, ax = plt.subplots(figsize=(8, 2.5))
-ax.hist(y, bins=np.arange(-0.5, 21.5, 1), color="#86b6ef", edgecolor="#002546", linewidth=0.5)
-ax.set_xlabel("$G_3$"); ax.set_ylabel("Count"); ax.set_xlim(-0.5, 20.5)
-plt.tight_layout(); plt.show()
-```
-
-## Ordinary Least Squares (OLS)
-- **The** linear regression model
-- Determine how the target variable $y$ depends on a set of exogeneous variable, $X$
-- Compute the coefficients, $\beta$, by minimizing the sum of squared residuals,
-$$\hat\beta_{\text{OLS}} = \underset{\beta}{\arg\min} \sum_{t = 1}^T(y_t - \hat{y}_t)^2$$
-- The sum of squared distances between the observed data points and the fitted "line"
-
-::: {.keypoint}
-Intuitive and interpretable; challenged by heteroskedasticity and serial correlation
-:::
-
-- Estimator, for your reference,
-
-::: {style="margin-top: -1em"}
-$$\hat{\beta} = (X^\top X)^{-1} X^\top y$$
-:::
-
-## Linear regression (OLS) 
-```{pyodide}
-ols = LinearRegression()
-ols.fit(X_train, y_train)
-y_pred_ols = ols.predict(X_test)
-mse_ols    = mean_squared_error(y_test, y_pred_ols)
-print(f"OLS MSE = {mse_ols:.4f}")
-```
-
-## OLS in scikit-learn II
-Implementation on previous slide follows the standard scikit-learn blueprint,
-
-::: {.overview}
-::: {.ov-row}
-::: {.ov-label}
-Initialize model object
-:::
-::: {.ov-desc}
-`ols = LinearRegression()` assigns a linear regression object to `ols`
-:::
-:::
-::: {.ov-row}
-::: {.ov-label}
-Fitting/training model
-:::
-::: {.ov-desc}
-`.fit(X_train, y_train)` accepts the training covariates and target and fits/trains the model on this data
-:::
-:::
-::: {.ov-row}
-::: {.ov-label}
-Predicting
-:::
-::: {.ov-desc}
-`.predict(X_test)` uses the out-of-sample covariates to generate predictions of the target 
-:::
-:::
-::: {.ov-row}
-::: {.ov-label}
-Evaluating
-:::
-::: {.ov-desc}
-`mean_squared_error(y_test, y_pred_ols)` compares the $\hat{y}$ to the true values, $y$
-:::
-:::
-:::
-
-::: {.keypoint}
-The mean squared error is a common metric for model evaluation, but others exist as well
-:::
-
-## Up to you: OLS
-
-Compute the **in-sample** fitted values from `ols` and the training MSE. 
-The relevant data and fitted model are stored in the memory already, so you can proceed from here.
-
-```{pyodide}
-#| exercise: ex_ols
-#| setup: true
-import numpy as np
-import pandas as pd
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-
-df = pd.read_csv("energy_demand.csv")
-y = df["demand"]
-X = df.drop(columns=["date", "demand"]).shift(1).dropna()
-y = y.iloc[1:].reset_index(drop=True)
-X = X.reset_index(drop=True)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, shuffle=False
-)
-scaler = StandardScaler()
-X_train_sc = scaler.fit_transform(X_train)
-X_test_sc  = scaler.transform(X_test)
-ols = LinearRegression().fit(X_train_sc, y_train)
-```
-
-```{pyodide}
-#| exercise: ex_ols
-y_fitted  = ...
-mse_train = ...
-print(f"Train MSE = {mse_train:.4f}")
-```
-
-```{pyodide}
-#| exercise: ex_ols
-#| solution: true
-y_fitted  = ols.predict(X_train_sc)
-mse_train = mean_squared_error(y_train, y_fitted)
-print(f"Train MSE = {mse_train:.4f}")
-```
-
-## Penalized regression models
-- Three primary penalized regression models; i) LASSO, ii) ridge, and iii) elastic net
-- Each adds a penalty term to the ordinary least squares (OLS) objective function of $\ell_1$, $\ell_2$, and both, respectively
-
-$$\begin{aligned}
-\text{LASSO:}&\quad \hat\beta_{\text{LASSO}} &= \underset{\beta}{\arg\min} \sum_{t=1}^T(y_t - \hat{y}_t)^2 + \alpha \sum_{j=1}^p |\beta_j|\\
-\text{Ridge:}&\quad \hat\beta_{\text{Ridge}} &= \underset{\beta}{\arg\min} \sum_{t=1}^T(y_t - \hat{y}_t)^2 + \lambda \sum_{j=1}^p \beta_j^2
-\end{aligned}$$
-
-- The LASSO is a variable selection method, as, by virtue of the $\ell_1$ penalty, coefficients can be set to exactly zero
-
-::: {.keypoint}
-Penalized regression models trade off bias for variance relative to OLS
-:::
-
-::: {.notes}
-- Three primary penalized regression models; i) LASSO, ii) ridge, and iii) elastic net
-- Each adds a penalty term to the ordinary least squares (OLS) objective function of $\ell_1$, $\ell_2$, and both, respectively
-- The Least Absolute Shrinkage and Selection Operator (LASSO) penalizes according to the absolute value of the coefficients, the $\ell_1$ penalty
-- This makes the LASSO a variable selection method, as it can set coefficients exactly to zero
-- Ridge penalizes according to the squared value of the coefficients, the $\ell_2$ penalty
-- Elastic net combines the two penalties, $\ell_1$ and $\ell_2$, in a convex combination
-
-- Under regularity conditions, OLS is unbiased, but it can have high variance, especially in high-dimensional settings (many predictors)
-- Penalized regression handles high dimensionality well, but are fundamentally biased estimators
-- We trade off bias for variance
-:::
-
-## Non-optimized LASSO and Ridge
-```{pyodide}
-scaler     = StandardScaler()
-X_train_sc = scaler.fit_transform(X_train)
-X_test_sc  = scaler.transform(X_test)
-
-lasso = Lasso(alpha=0.05).fit(X_train_sc, y_train)
-ridge = Ridge(alpha=1.0).fit(X_train_sc, y_train)
-
-y_pred_lasso = lasso.predict(X_test_sc)
-y_pred_ridge = ridge.predict(X_test_sc)
-mse_lasso    = mean_squared_error(y_test, y_pred_lasso)
-mse_ridge    = mean_squared_error(y_test, y_pred_ridge)
-print(f"LASSO MSE = {mse_lasso:.4f}")
-print(f"Ridge MSE = {mse_ridge:.4f}")
-```
-
-## Cross-Sectional Cross-Validation
-<div style="display: flex; justify-content: center; margin-top: 0.3em;">
-<img src="CSCV.svg" style="max-height: 500px; width: auto;">
-</div>
-
-## Time Series Cross-Validation
-<div style="display: flex; justify-content: center; margin-top: 0.3em;">
-<img src="TSCV.svg" style="max-height: 500px; width: auto;">
-</div>
-
-## Cross-validated LASSO and Ridge
-```{pyodide}
-lasso = LassoCV(cv=5).fit(X_train_sc, y_train)
-ridge = RidgeCV(cv=5).fit(X_train_sc, y_train)
-
-y_pred_lasso = lasso.predict(X_test_sc)
-y_pred_ridge = ridge.predict(X_test_sc)
-mse_lasso    = mean_squared_error(y_test, y_pred_lasso)
-mse_ridge    = mean_squared_error(y_test, y_pred_ridge)
-print(f"LASSO alpha = {lasso.alpha_:.4f},  MSE = {mse_lasso:.4f}")
-print(f"Ridge alpha = {ridge.alpha_:.4f},  MSE = {mse_ridge:.4f}")
-```
-
-::: {.keypoint}
-The scaler is fitted before CV, so the validation folds influence it slightly
-:::
-
-## Random Forests
-```{pyodide}
-rf = RandomForestRegressor(n_estimators=200, max_depth=4, random_state=42)
-rf.fit(X_train, y_train)
-y_pred_rf = rf.predict(X_test)
-mse_rf    = mean_squared_error(y_test, y_pred_rf)
-print(f"Random forest   MSE = {mse_rf:.4f}")
-```
-
-::: {.keypoint}
-Note: Random forests is scale equivariant --- no standardization required
-:::
-
-## Comparing Results
-```{pyodide}
-results = {
-    "OLS":           mse_ols,
-    "LASSO":         mse_lasso,
-    "Ridge":         mse_ridge,
-    "Random forest": mse_rf,
-}
-for name, mse in results.items():
-    print(f"{name:20s}  MSE = {mse:.4f}")
-```
-
-## Time series example
-- Several things differ when we move from the cross-section to time series
-- In train/test splitting we cannot shuffle the data randomly
-- Nor can we do so in cross-validation
-
-::: {.keypoint}
-The temporal order of the data must be preserved
-:::
-
-- Lagging is required to avoid look-ahead bias
-
-## Dataset --- Simulated
-- Stationary AR(1) data emulating weather data
-- Avoiding seasonality, ensuring each fold draws from the same distribution
-- Demand is a non-linear function of yesterday's weather
-- 11 features contain signal, 14 are pure noise
-
-```{pyodide}
-df = pd.read_csv("energy_demand.csv")
-df.head()
+import statsmodels.api as sm
+df = sm.datasets.macrodata.load_pandas().data
+series = df[["infl", "unemp", "tbilrate"]].to_numpy()   # (T, 3)
+infl = series[:, 0]
+print(series.shape)
+df[["infl", "unemp", "tbilrate"]].head(3)
 ```
 
 ## Data pre-processing
 ```{pyodide}
-y = df["demand"]
-X = df.drop(columns=["date", "demand"]).shift(1).dropna()
-y = y.iloc[1:].reset_index(drop=True)
-X = X.reset_index(drop=True)
+X = series[:-1]     # (infl, unemp, tbilrate) at t-1: drop final observation
+y = infl[1:]        # infl at t: drop first observation
+features = ["infl_lag", "unemp_lag", "tbilrate_lag"]
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, shuffle=False
@@ -1102,143 +872,14 @@ X_train_sc = scaler.fit_transform(X_train)
 X_test_sc  = scaler.transform(X_test)
 ```
 
-## Visualising the target
+## Visualizing the target
 
 ```{pyodide}
 import matplotlib.pyplot as plt
 fig, ax = plt.subplots(figsize=(8, 2.5))
 ax.plot(range(len(y)), y, lw=0.8, color="#86b6ef")
 ax.axvline(len(y_train), color="#002546", lw=1, ls="--", label="Train / test split")
-ax.set_xlabel("$t$"); ax.set_ylabel("$y_t$"); ax.legend(fontsize=9)
-plt.tight_layout(); plt.show()
-```
-
-## The random walk benchmark
-
-- The random walk is commonly used as benchmark in time series forecasting
-- Predicts the next value as the previous value,
-$$ \hat{y}_t = y_{t-1} $$
-
-```{pyodide}
-y_pred_rw = y_test.shift(1)
-y_pred_rw.iloc[0] = y_train.iloc[-1]  
-mse_rw = mean_squared_error(y_test, y_pred_rw)
-print(f"Random walk   MSE = {mse_rw:.4f}")
-```
-
-::: {.notes}
-The random walk is a very commonly used benchmark in financial and macroeconomic forecasting.
-:::
-
-## Random Walk and OLS
-
-```{pyodide}
-ols = LinearRegression()
-ols.fit(X_train, y_train)
-y_pred_ols = ols.predict(X_test)
-mse_ols    = mean_squared_error(y_test, y_pred_ols)
-print(f"OLS MSE = {mse_ols:.4f}")
-```
-
-## Non-optimized LASSO and Ridge
-```{pyodide}
-lasso = Lasso(alpha=0.05).fit(X_train_sc, y_train)
-ridge = Ridge(alpha=1.0).fit(X_train_sc, y_train)
-
-y_pred_lasso = lasso.predict(X_test_sc)
-y_pred_ridge = ridge.predict(X_test_sc)
-mse_lasso    = mean_squared_error(y_test, y_pred_lasso)
-mse_ridge    = mean_squared_error(y_test, y_pred_ridge)
-print(f"LASSO MSE = {mse_lasso:.4f}")
-print(f"Ridge MSE = {mse_ridge:.4f}")
-```
-
-## Time-series cross-validated LASSO and Ridge
-```{pyodide}
-lasso = LassoCV(cv=TimeSeriesSplit()).fit(X_train_sc, y_train)
-ridge = RidgeCV(cv=TimeSeriesSplit()).fit(X_train_sc, y_train)
-
-y_pred_lasso = lasso.predict(X_test_sc)
-y_pred_ridge = ridge.predict(X_test_sc)
-mse_lasso    = mean_squared_error(y_test, y_pred_lasso)
-mse_ridge    = mean_squared_error(y_test, y_pred_ridge)
-print(f"LASSO alpha = {lasso.alpha_:.4f},  MSE = {mse_lasso:.4f}")
-print(f"Ridge alpha = {ridge.alpha_:.4f},  MSE = {mse_ridge:.4f}")
-```
-
-::: {.keypoint}
-The scaler is fitted before CV, so the validation folds influence it slightly
-:::
-
-## LASSO: variable selection
-```{pyodide}
-for name, coef in zip(X.columns, lasso.coef_):
-    print(f"{name:20s}  {coef:+.4f}")
-```
-
-::: {.keypoint}
-The idea is that LASSO will set irrelevant coefficients exactly to zero
-:::
-
-## Random Forests
-```{pyodide}
-rf = RandomForestRegressor(n_estimators=200, max_depth=4, random_state=42)
-rf.fit(X_train, y_train)
-y_pred_rf = rf.predict(X_test)
-mse_rf    = mean_squared_error(y_test, y_pred_rf)
-print(f"Random forest   MSE = {mse_rf:.4f}")
-```
-
-## Comparing Results
-```{pyodide}
-results = {
-    "RW":            mse_rw,
-    "OLS":           mse_ols,
-    "LASSO":         mse_lasso,
-    "Ridge":         mse_ridge,
-    "Random forest": mse_rf,
-}
-for name, mse in results.items():
-    print(f"{name:20s}  MSE = {mse:.4f}")
-``` -->
-
-## Practical example: forecasting energy demand
-Simulated data: stationary AR(1) features emulating weather data
-- Avoiding seasonality, ensuring each fold draws from the same distribution
-- Demand is a non-linear function of yesterday's weather
-- 11 features contain signal, 14 are pure noise
-
-```{pyodide}
-df = pd.read_csv("energy_demand.csv")
-df.head(3)
-```
-
-## Data pre-processing
-```{pyodide}
-y = df["demand"]
-X = df.drop(columns=["date", "demand"]).shift(1).dropna()
-y = y.iloc[1:].reset_index(drop=True)
-X = X.reset_index(drop=True)
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, shuffle=False
-)
-print(f"Train dimension X: {X_train.shape}, Test dimension X: {X_test.shape}")
-print(f"Train dimension y: {y_train.shape}, Test dimension y: {y_test.shape}")
-
-scaler     = StandardScaler()
-X_train_sc = scaler.fit_transform(X_train)
-X_test_sc  = scaler.transform(X_test)
-```
-
-## Visualising the target
-
-```{pyodide}
-import matplotlib.pyplot as plt
-fig, ax = plt.subplots(figsize=(8, 2.5))
-ax.plot(range(len(y)), y, lw=0.8, color="#86b6ef")
-ax.axvline(len(y_train), color="#002546", lw=1, ls="--", label="Train / test split")
-ax.set_xlabel("$t$"); ax.set_ylabel("$y_t$"); ax.legend(fontsize=9)
+ax.set_xlabel("quarter $t$"); ax.set_ylabel("Inflation, %"); ax.legend(fontsize=9)
 plt.tight_layout(); plt.show()
 ```
 
@@ -1252,8 +893,7 @@ $$ \hat{y}_t = y_{t-1} $$
 :::
 
 ```{pyodide}
-y_pred_rw = y_test.shift(1)
-y_pred_rw.iloc[0] = y_train.iloc[-1]  
+y_pred_rw = np.concatenate([[y_train[-1]], y_test[:-1]])   # previous value
 mse_rw = mean_squared_error(y_test, y_pred_rw)
 print(f"Random walk   MSE = {mse_rw:.4f}")
 ```
@@ -1265,15 +905,14 @@ The random walk is a very commonly used benchmark in financial and macroeconomic
 ## Ordinary Least Squares (OLS)
 - **The** linear regression model
 - Determine how the target variable $y$ depends on a set of exogeneous variable, $X$
-- Compute the coefficients, $\beta$, by minimizing the sum of squared residuals,
+  - Compute the coefficients, $\beta$, by minimizing the sum of squared residuals,
 $$\hat\beta_{\text{OLS}} = \underset{\beta}{\arg\min} \sum_{t = 1}^T(y_t - \hat{y}_t)^2$$
-- The sum of squared distances between the observed data points and the fitted "line"
 
 ::: {.keypoint}
-Intuitive and interpretable; challenged by heteroskedasticity and serial correlation
+Intuitive and interpretable, yet possibly challenged by heteroskedasticity and serial correlation
 :::
 
-- Estimator, for your reference,
+- Estimator,
 
 ::: {style="margin-top: -1em"}
 $$\hat{\beta} = (X^\top X)^{-1} X^\top y$$
@@ -1345,11 +984,10 @@ from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
-df = pd.read_csv("energy_demand.csv")
-y = df["demand"]
-X = df.drop(columns=["date", "demand"]).shift(1).dropna()
-y = y.iloc[1:].reset_index(drop=True)
-X = X.reset_index(drop=True)
+import statsmodels.api as sm
+df = sm.datasets.macrodata.load_pandas().data
+series = df[["infl", "unemp", "tbilrate"]].to_numpy()
+X, y = series[:-1], series[1:, 0]
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, shuffle=False
 )
@@ -1378,9 +1016,14 @@ print(f"Train MSE = {mse_train:.4f}")
 - Three primary penalized regression models; i) LASSO, ii) ridge, and iii) elastic net
 - Each adds a penalty term to the ordinary least squares (OLS) objective function of $\ell_1$, $\ell_2$, and both, respectively. LASSO and ridge are defined as,
 
-$$\begin{aligned}
+<!-- $$\begin{aligned}
 \text{LASSO:}&\quad \hat\beta_{\text{LASSO}} &= \underset{\beta}{\arg\min} \sum_{t=1}^T(y_t - \hat{y}_t)^2 + \alpha \sum_{j=1}^p |\beta_j|\\
 \text{Ridge:}&\quad \hat\beta_{\text{Ridge}} &= \underset{\beta}{\arg\min} \sum_{t=1}^T(y_t - \hat{y}_t)^2 + \lambda \sum_{j=1}^p \beta_j^2
+\end{aligned}$$ -->
+
+$$\begin{aligned}
+\text{LASSO:}\quad \hat\beta_{\text{LASSO}} &= \underset{\beta}{\arg\min} \sum_{t=1}^T(y_t - \hat{y}_t)^2 + \alpha \sum_{j=1}^p |\beta_j|\\
+\text{Ridge:}\quad \hat\beta_{\text{Ridge}} &= \underset{\beta}{\arg\min} \sum_{t=1}^T(y_t - \hat{y}_t)^2 + \lambda \sum_{j=1}^p \beta_j^2
 \end{aligned}$$
 
 - The LASSO is a variable selection method, as, by virtue of the $\ell_1$ penalty, coefficients can be set to exactly zero
@@ -1417,14 +1060,28 @@ print(f"Ridge MSE = {mse_ridge:.4f}")
 ```
 
 ## Cross-Sectional Cross-Validation
-<div style="display: flex; justify-content: center; margin-top: 0.3em;">
-<img src="CSCV.svg" style="max-height: 500px; width: auto;">
-</div>
+::: {.figblock}
+::: {.fig-title}
+:::
+
+<img src="CSCV.svg">
+
+::: {.fig-src}
+Cross-sectional cross-validation depicted for a 5-fold split.
+:::
+:::
 
 ## Time Series Cross-Validation
-<div style="display: flex; justify-content: center; margin-top: 0.3em;">
-<img src="TSCV.svg" style="max-height: 500px; width: auto;">
-</div>
+::: {.figblock}
+::: {.fig-title}
+:::
+
+<img src="TSCV.svg">
+
+::: {.fig-src}
+Time series cross-validation depicted for a 4-fold split.
+:::
+:::
 
 ## Cross-validated LASSO and Ridge
 ```{pyodide}
@@ -1446,16 +1103,16 @@ The scaler is fitted before CV, so the validation folds influence it slightly
 
 ## LASSO: variable selection
 ```{pyodide}
-pd.Series(lasso.coef_, index=X.columns).head(10)
+pd.Series(lasso.coef_, index=features).round(3)
 ```
 
 ::: {.keypoint}
-The idea is that LASSO will set irrelevant coefficients exactly to zero
+With only three predictors there is little to select -- LASSO mainly shrinks the coefficients
 :::
 
 ## Random Forests
 ```{pyodide}
-rf = RandomForestRegressor(n_estimators=200, max_depth=4, random_state=42)
+rf = RandomForestRegressor(n_estimators=200, max_depth=4, random_state=160923)
 rf.fit(X_train, y_train)
 y_pred_rf = rf.predict(X_test)
 mse_rf    = mean_squared_error(y_test, y_pred_rf)
@@ -1463,7 +1120,7 @@ print(f"Random forest   MSE = {mse_rf:.4f}")
 ```
 
 ::: {.keypoint}
-Note: Random forests is scale equivariant --- no standardization required
+Note: Random forests is scale equivariant -- no standardization required
 :::
 
 ## Comparing Results
