@@ -8,4 +8,14 @@ __pycache__/
 # session_NN_files/ holds the rendered deck's JS and CSS and is required for
 # the HTML to work (quarto-live cannot be self-contained). Keep it tracked.
 
+tools/
+.vscode/
+.DS_Store
+Thumbs.db
 /.quarto/
+
+session_03/
+session_04/
+session_05/
+session_06/
+cases/

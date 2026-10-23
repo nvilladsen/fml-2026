@@ -1,0 +1,970 @@
+---
+title: "Forecasting with Machine Learning: Introduction"
+subtitle: "Forecasting with Machine Learning"
+author: "Bezirgen (Ben) Veliyev"
+date: "October 26, 2026"
+format:
+  live-revealjs:
+    theme: [default, ../theme/fml.scss]
+    transition: none
+    transition-speed: fast
+    background-transition: none
+    progress: true
+    slide-number: c/t
+    footer: "Forecasting with Machine Learning"
+    include-after-body: ../theme/exercise.html
+    hash: true
+    center: true
+    width: 1280
+    height: 720
+    margin: 0.06
+    controls: false
+    history: false
+    auto-stretch: false
+    menu:
+      side: left
+      numbers: true
+    link-external-newwindow: true
+---
+
+# Introduction {.divider}
+
+## Outline for Today
+
+::: {.overview}
+::: {.ov-row-inline}
+::: {.ov-label}
+Course information
+:::
+::: {.ov-desc}
+Content, roadmap, format, and how to read the papers
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Forecasting problems and data structures
+:::
+::: {.ov-desc}
+Targets, horizons, time-series, cross-sectional, and panel data
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Forecasting information and predictors
+:::
+::: {.ov-desc}
+Lags, firm characteristics, mixed frequencies, feature construction
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Forecasting objectives and machine learning
+:::
+::: {.ov-desc}
+Loss functions, optimal forecasts, flexibility and overfitting
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Why Does ML Work?
+:::
+::: {.ov-desc}
+Variable Selection and Interpretation
+:::
+:::
+:::
+
+# Course Information {.divider}
+
+## Forecasting with Machine Learning
+
+This course combines modern machine learning methods with economic and financial forecasting
+
+::: {.triad}
+::: {.triad-card}
+[Component 1]{.tc-tag}
+
+[Forecasting foundations]{.tc-title}
+
+Construction, evaluation, and comparison of forecasts
+:::
+::: {.triad-card}
+[Component 2]{.tc-tag}
+
+[Machine learning methods]{.tc-title}
+
+Shrinkage, tree-based methods, neural networks, and Python implementation
+:::
+::: {.triad-card}
+[Component 3]{.tc-tag}
+
+[Empirical applications]{.tc-title}
+
+Research articles on stock returns, macroeconomics, volatility, and energy markets
+:::
+:::
+
+::: {.keypoint}
+The emphasis is on understanding how ML methods are used in actual forecasting problems, rather than on learning algorithms in isolation
+:::
+
+## Course Roadmap
+
+| Week | Main topics | Lecturer |
+|:--:|:------------------------------------------------------|:--:|
+| 1 | Forecasting foundations: construction, evaluation, and comparison | BV |
+| 2 | Python programming and neural networks | NV |
+| 3 | Machine learning for stock return prediction | NV |
+| 4 | Machine learning for macroeconomic forecasting and inflation | BV |
+| 5 | High-frequency econometrics and volatility forecasting | KC |
+| 6 | Machine learning for volatility forecasting; mixed-frequency nowcasting | BV |
+| 7 | Electricity and crude oil forecasting | KC |
+
+5 ECTS, seven weeks, two lectures of two hours per week
+
+## Teaching Format and Materials
+
+::: {.compare}
+::: {.compare-col}
+::: {.cmp-title}
+Teaching format
+:::
+- Traditional lectures and discussions
+- Python demonstrations and selected exercises
+- Applications based on research articles
+:::
+::: {.compare-col .cmp-alt}
+::: {.cmp-title}
+Literature, software, and materials
+:::
+- Selected research articles are the main teaching material; references are provided for each topic
+- Python is the primary programming language
+- Slides, code, and exercises are available on the course website and university platform
+:::
+:::
+
+## Learning from Research Articles
+
+The course uses research papers to study how ML is applied to real forecasting problems. When reading a paper, consider:
+
+::: {.steplist .t-md}
+::: {.step-row}
+::: {.step-num}
+1
+:::
+::: {.step-title}
+Forecasting problem
+:::
+::: {.step-desc}
+What is predicted, and at what horizon?
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+2
+:::
+::: {.step-title}
+Data and predictors
+:::
+::: {.step-desc}
+What information is used?
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+3
+:::
+::: {.step-title}
+Methods
+:::
+::: {.step-desc}
+Which ML methods are considered, and why?
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+4
+:::
+::: {.step-title}
+Evaluation
+:::
+::: {.step-desc}
+How are forecasts evaluated, and against which benchmarks?
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+5
+:::
+::: {.step-title}
+Findings
+:::
+::: {.step-desc}
+What do we learn about the usefulness of machine learning?
+:::
+:::
+:::
+
+::: {.keypoint}
+Focus on the main ideas and empirical findings, as well as the technical details
+:::
+
+## About Myself
+
+**Bezirgen (Ben) Veliyev**
+
+- Office: 1816-338
+- E-mail: bveliyev@econ.au.dk
+- Research interests: financial econometrics (high-frequency data), machine learning, microeconometrics, and quantitative finance
+- Teaching interests: econometrics, finance, machine learning, and mathematics
+- Faculty at Aarhus University (ECON) since 2014; professor since 2025
+- This is the 10th course I am (co-)teaching at AU since 2014
+
+# Forecasting Problems and Data Structures {.divider}
+
+## Why Forecast?
+
+Forecasting plays a central role in economic and financial decision-making. Examples from this course:
+
+::: {.overview}
+::: {.ov-row-inline}
+::: {.ov-label}
+Stock returns
+:::
+::: {.ov-desc}
+Which stocks are likely to perform better? Implications for portfolio allocation
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Macroeconomics
+:::
+::: {.ov-desc}
+How will inflation and economic activity evolve? Implications for economic policy
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Volatility
+:::
+::: {.ov-desc}
+How risky will financial markets be? Implications for risk management
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Energy markets
+:::
+::: {.ov-desc}
+What will electricity or oil prices be? Implications for trading and planning
+:::
+:::
+:::
+
+::: {.keypoint}
+The forecasting objective differs considerably across these applications
+:::
+
+## The Forecasting Problem
+
+At time $t$, we want to forecast an outcome $Y_{t+h}$, where $h$ is the **forecast horizon**. We have an information set $\mathcal{I}_t$ containing information available at time $t$. A forecasting method produces
+
+$$\widehat{Y}_{t+h|t} = f_t(\mathcal{I}_t)$$
+
+::: {.triad}
+::: {.triad-card}
+[Target]{.tc-tag}
+
+What do we forecast?
+:::
+::: {.triad-card}
+[Horizon]{.tc-tag}
+
+How far ahead?
+:::
+::: {.triad-card}
+[Information]{.tc-tag}
+
+What is known when the forecast is made?
+:::
+:::
+
+::: {.keypoint}
+A genuine forecast cannot use information that becomes available after the forecast origin
+:::
+
+## What Exactly Are We Forecasting?
+
+| Application | Typical target | Example |
+|:--------------|:----------------------------|:------------------------------------------|
+| Stock returns | Future return | Next month's stock return |
+| Macroeconomics | Growth rate or change | Quarterly inflation or GDP growth |
+| Volatility | Future variance or volatility | Next day's realized variance |
+| Energy | Price level or return | Tomorrow's hourly electricity prices; future crude oil returns |
+
+- Forecasting a price level is different from forecasting its return or change
+- Forecasting volatility is different from forecasting the direction of returns
+
+::: {.keypoint}
+The definition of the target influences the choice of models, predictors, and evaluation
+:::
+
+## Time-Series, Cross-Sectional and Panel Forecasting
+
+::: {.triad}
+::: {.triad-card}
+[Time-series forecasting]{.tc-tag}
+
+Predict future observations of a variable using historical information
+
+Example: US inflation over time
+:::
+::: {.triad-card}
+[Cross-sectional prediction]{.tc-tag}
+
+Predict differences across individual units
+
+Example: which stocks are expected to outperform others next month?
+:::
+::: {.triad-card}
+[Panel forecasting]{.tc-tag}
+
+Observations for many units over time: $Y_{i,t}$, $i = 1, \ldots, N$, $t = 1, \ldots, T$
+
+Example: monthly returns for thousands of individual stocks
+:::
+:::
+
+::: {.keypoint}
+**Important distinction**: Panel forecasting can involve both time-series prediction and cross-sectional comparisons
+:::
+
+## Example: Predicting Individual Stock Returns
+
+Suppose we observe monthly data for a large number of stocks. For each stock $i$ at time $t$, the objective is to predict next month's return,
+
+$$\widehat{r}_{i,t+1|t} = f(X_{i,t})$$
+
+where $X_{i,t}$ contains predictors available for stock $i$ at time $t$.
+
+| Stock | Month | Predictors | Target |
+|:--:|:--:|:--:|:--:|
+| A | January | $X_{A,\text{Jan}}$ | $r_{A,\text{Feb}}$ |
+| B | January | $X_{B,\text{Jan}}$ | $r_{B,\text{Feb}}$ |
+| A | February | $X_{A,\text{Feb}}$ | $r_{A,\text{Mar}}$ |
+| B | February | $X_{B,\text{Feb}}$ | $r_{B,\text{Mar}}$ |
+
+## Example: Predicting Individual Stock Returns II
+
+- The model uses information across both stocks and historical months
+- Predictions can be evaluated for individual stocks or used to rank stocks for portfolio construction
+
+## Different Forecasting Problems, Different Challenges
+
+::: {.overview}
+::: {.ov-row-inline}
+::: {.ov-label}
+Stock returns
+:::
+::: {.ov-desc}
+Returns contain substantial noise; predictive signals are often weak
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Inflation
+:::
+::: {.ov-desc}
+Inflation can be persistent, but predictive relationships may change across economic conditions
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Volatility
+:::
+::: {.ov-desc}
+Volatility exhibits strong persistence and clustering over time
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Electricity prices
+:::
+::: {.ov-desc}
+Strong daily and weekly patterns, together with occasional extreme price movements
+:::
+:::
+:::
+
+::: {.keypoint}
+Different forecasting problems have different data structures and sources of predictability. 
+
+No single forecasting method is necessarily best across all applications
+:::
+
+# Forecasting Information and Predictors {.divider}
+
+## Where Does Predictive Information Come From?
+
+A forecasting model uses observable information to predict an unknown future outcome,
+
+$$\widehat{Y}_{t+h|t} = f(X_t)$$
+
+where $X_t$ denotes the available predictors.
+
+## Where Does Predictive Information Come From? II
+
+Predictive information may come from:
+
+::: {.cards .cards-sm}
+::: {.card-box}
+[Past values of the target]{.t}
+[Lagged inflation, volatility, or electricity prices]{.d}
+:::
+::: {.card-box}
+[Other economic variables]{.t}
+[Interest rates, employment, economic activity, and firm characteristics]{.d}
+:::
+::: {.card-box}
+[Constructed features]{.t}
+[Moving averages, momentum measures, technical indicators, and interactions]{.d}
+:::
+::: {.card-box}
+[Alternative data]{.t}
+[Internet searches, news, or financial text]{.d}
+:::
+:::
+
+The usefulness of each information source depends on the forecasting problem
+
+## Persistence and Lagged Predictors
+
+Many economic and financial variables exhibit persistence: past values contain information about future outcomes. A simple autoregressive forecasting model is
+
+$$Y_{t+1} = \alpha + \sum_{j=0}^{p-1}\beta_j Y_{t-j} + \varepsilon_{t+1}$$
+
+Machine learning can use the same lagged inputs in a more flexible forecasting function,
+
+$$\widehat{Y}_{t+1|t} = f(Y_t, Y_{t-1}, \ldots, Y_{t-p+1}, Z_t)$$
+
+## Persistence and Lagged Predictors II
+
+Examples:
+
+::: {.overview}
+::: {.ov-row-inline}
+::: {.ov-label}
+Inflation
+:::
+::: {.ov-desc}
+Past inflation and other macroeconomic indicators
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Volatility
+:::
+::: {.ov-desc}
+Recent realized volatility
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Electricity prices
+:::
+::: {.ov-desc}
+Prices from previous hours and days
+:::
+:::
+:::
+
+::: {.keypoint}
+The relevance of lags depends on the variable, the horizon, and the stability of the underlying relationships
+:::
+
+## Example: Volatility Persistence
+
+- Financial market volatility exhibits substantial persistence: high-volatility periods often follow other high-volatility periods
+- The HAR model uses realized volatility measured over different historical horizons
+- Let $RV_t$ denote daily realized variance. Construct weekly and monthly averages,
+
+$$RV_t^{(w)} = \frac{1}{5}\sum_{j=0}^{4} RV_{t-j}, \qquad RV_t^{(m)} = \frac{1}{22}\sum_{j=0}^{21} RV_{t-j}$$
+
+## Example: The HAR Model
+
+A simple HAR forecasting specification is
+
+$$RV_{t+1} = \beta_0 + \beta_d RV_t + \beta_w RV_t^{(w)} + \beta_m RV_t^{(m)} + \varepsilon_{t+1}$$
+
+ML models can use these predictors while allowing nonlinear relationships and interactions
+
+::: {.keypoint}
+**Application**: Christensen et al. (2023) compare ML with HAR-type models
+:::
+
+## Example: Firm Characteristics and Stock Returns
+
+In stock return prediction, explanatory variables often differ across firms as well as over time. Common firm characteristics include:
+
+::: {.overview}
+::: {.ov-row-inline}
+::: {.ov-label}
+Size
+:::
+::: {.ov-desc}
+Market capitalization
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Valuation
+:::
+::: {.ov-desc}
+Book-to-market and related ratios
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Momentum
+:::
+::: {.ov-desc}
+Past stock returns over selected horizons
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Risk/trading activity
+:::
+::: {.ov-desc}
+Volatility, turnover, liquidity measures
+:::
+:::
+:::
+
+## Example: Firm Characteristics and Stock Returns II
+
+The forecasting model combines these variables,
+
+$$\widehat{r}_{i,t+1|t} = f(\text{Size}_{i,t}, \text{Momentum}_{i,t}, \text{Volatility}_{i,t}, \ldots)$$
+
+Predictors can also interact with aggregate economic and market conditions
+
+::: {.keypoint}
+**Application**: Gu et al. (2020) examine a large collection of firm characteristics and macroeconomic interactions
+:::
+
+## Predictors Observed at Different Frequencies
+
+Tasks often involve information observed at different frequencies. Examples:
+
+- Daily financial market data
+- Weekly unemployment claims
+- Monthly inflation and employment indicators
+- Quarterly GDP
+
+Mixed-frequency forecasting seeks to exploit information without necessarily reducing all predictors to the lowest frequency
+
+## Mixed Frequencies and Nowcasting
+
+- **Nowcasting**: estimating a current or very recent economic outcome before its official value becomes available
+- Example: Borup et al. (2023) use daily internet search data to nowcast and backcast weekly US initial unemployment claims
+
+::: {.keypoint}
+**Important**: The date an observation refers to and the date it becomes available are not necessarily the same
+:::
+
+## Feature Construction: Turning Data into Predictors
+
+Raw observations can be transformed into predictors that summarize relevant patterns. Common feature constructions:
+
+- **Lags**: $Y_t, Y_{t-1}, Y_{t-2}, \ldots$
+- **Moving averages**:
+
+$$Y_t^{(k)} = \frac{1}{k}\sum_{j=0}^{k-1} Y_{t-j}$$
+
+- **Changes and returns**: differences or percentage changes instead of levels
+- **Calendar variables**: hour of day, day of week, or season
+
+## Feature Construction II
+
+Examples from energy forecasting:
+
+::: {.compare}
+::: {.compare-col}
+::: {.cmp-title}
+Electricity
+:::
+- Lagged prices
+- Demand forecasts
+- Calendar effects
+:::
+::: {.compare-col .cmp-alt}
+::: {.cmp-title}
+Crude oil
+:::
+- Macroeconomic variables
+- Technical indicators
+:::
+:::
+
+::: {.keypoint}
+Features must be constructed using information available at the forecast origin
+:::
+
+# Forecasting Objectives and Machine Learning {.divider}
+
+## Forecast Errors and Loss Functions
+
+A forecasting method produces a prediction $\widehat{Y}_{t+h|t}$ of the future outcome $Y_{t+h}$. Once the outcome is observed, the forecast error is
+
+$$e_{t+h|t} = Y_{t+h} - \widehat{Y}_{t+h|t}$$
+
+Forecasting methods aim to minimize some measure of forecast error, represented by a **loss function**,
+
+$$L(Y_{t+h}, \widehat{Y}_{t+h|t}) = L(e_{t+h|t})$$
+
+::: {.keypoint}
+Different loss functions penalize forecasting mistakes differently. 
+
+The choice of loss function determines what the forecasting model seeks to predict
+:::
+
+## Squared and Absolute Error Loss
+
+Two commonly used loss functions are:
+
+::: {.compare}
+::: {.compare-col}
+::: {.cmp-title}
+Squared error loss
+:::
+$$L(e) = e^2$$
+
+Large errors receive disproportionately greater penalties
+:::
+::: {.compare-col .cmp-alt}
+::: {.cmp-title}
+Absolute error loss
+:::
+$$L(e) = |e|$$
+
+Loss increases linearly with the magnitude of the error
+:::
+:::
+
+For example, increasing the absolute error from 1 to 3:
+
+- Squared loss increases from 1 to 9
+- Absolute loss increases from 1 to 3
+
+::: {.keypoint}
+Squared loss is more sensitive to extreme forecast errors than absolute loss
+:::
+
+## Optimal Forecasts under Squared Loss
+
+Suppose we want to forecast $Y_{t+h}$ given information $\mathcal{I}_t$. Under squared loss, the optimal forecast $f_t^{*}$ solves
+
+$$\min_{f}\, \mathrm{E}\left[(Y_{t+h} - f)^2 \mid \mathcal{I}_t\right]$$
+
+The first-order condition is
+
+$$\mathrm{E}\left[Y_{t+h} - f_t^{*} \mid \mathcal{I}_t\right] = 0$$
+
+## Optimal Forecasts under Squared Loss II
+
+Hence,
+
+$$f_t^{*} = \mathrm{E}\left[Y_{t+h} \mid \mathcal{I}_t\right]$$
+
+- Under squared loss, the optimal point forecast is the conditional mean
+
+::: {.keypoint}
+**Implication**: Regression-based ML methods trained using squared loss aim to approximate the conditional mean
+:::
+
+## Different Loss Functions, Different Forecasts
+
+The optimal forecast depends on the loss function, not only on the available data.
+
+| Loss function | Optimal point forecast |
+|:----------------------------|:---------------------|
+| Squared error | Conditional mean |
+| Absolute error | Conditional median |
+| Asymmetric absolute error | Conditional quantile |
+
+- Example: forecasting electricity prices in the presence of occasional extreme spikes
+- Conditional means and medians may differ substantially when the predictive distribution is asymmetric or contains extreme outcomes
+- Most standard regression-based ML applications use squared loss, but alternative objectives can be used when appropriate
+
+## From Linear Forecasting to Machine Learning
+
+A traditional linear forecasting model:
+
+$$Y_{t+1} = \alpha + \beta' X_t + \varepsilon_{t+1}$$
+
+The forecast is a linear function of the predictors:
+
+$$\widehat{Y}_{t+1|t} = \widehat{\alpha} + \widehat{\beta}' X_t$$
+
+## From Linear Forecasting to Machine Learning II
+
+Machine learning allows more flexible forecasting functions,
+
+$$\widehat{Y}_{t+1|t} = \widehat{f}(X_t)$$
+
+::: {.triad}
+::: {.triad-card}
+[Ridge and LASSO]{.tc-title}
+
+Regularized linear models
+:::
+::: {.triad-card}
+[Random forests]{.tc-title}
+
+Nonlinearities and interactions
+:::
+::: {.triad-card}
+[Neural networks]{.tc-title}
+
+Flexible nonlinear functions
+:::
+:::
+
+These methods can share the same forecasting objective while differing in how they approximate the predictive relationship
+
+## Model Flexibility and Overfitting
+
+Flexible models can capture complex predictive relationships, but may also fit noise in the data. Two familiar problems:
+
+::: {.compare}
+::: {.compare-col}
+::: {.cmp-title}
+Underfitting
+:::
+- A model is too restrictive to capture relevant predictive patterns
+:::
+::: {.compare-col .cmp-alt}
+::: {.cmp-title}
+Overfitting
+:::
+- A model fits the training observations well but generalizes poorly to new observations
+:::
+:::
+
+The bias--variance trade-off illustrates the tension between model flexibility and estimation uncertainty
+
+## Model Flexibility and Overfitting II
+
+ML methods control complexity through:
+
+- Regularization in linear models
+- Restrictions on tree complexity
+- Regularization and early stopping in neural networks
+
+::: {.keypoint}
+**Central question**: when does additional model flexibility capture genuine predictive information rather than noise?
+:::
+
+# Why Does ML Work? Variable Selection and Interpretation {.divider}
+
+## Where Do ML Forecasting Gains Come From?
+
+Machine learning may improve forecasting through several distinct mechanisms:
+
+::: {.steplist .t-lg}
+::: {.step-row}
+::: {.step-num}
+1
+:::
+::: {.step-title}
+More predictive information
+:::
+::: {.step-desc}
+Incorporating additional variables and constructed features
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+2
+:::
+::: {.step-title}
+Regularization and variable selection
+:::
+::: {.step-desc}
+Controlling estimation uncertainty when many predictors are available
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+3
+:::
+::: {.step-title}
+Nonlinearities and interactions
+:::
+::: {.step-desc}
+Capturing predictive relationships that linear models may miss
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+4
+:::
+::: {.step-title}
+Model selection and tuning
+:::
+::: {.step-desc}
+Choosing specifications and hyperparameters based on predictive performance
+:::
+:::
+:::
+
+These mechanisms are related, but conceptually different
+
+::: {.keypoint}
+**Research connection**: Goulet Coulombe et al. (2022) investigate why ML improves macroeconomic forecasting, emphasizing nonlinearities, regularization, cross-validation, and loss functions
+:::
+
+## Many Predictors, But Which Ones Matter?
+
+Modern applications often contain large collections of predictors. Examples:
+
+- Stock returns: firm characteristics and macroeconomic variables
+- Inflation: a large set of macroeconomic and financial indicators
+- Oil returns: macroeconomic variables and technical indicators
+
+## Many Predictors, But Which Ones Matter? II
+
+Including more predictors does not necessarily improve forecasting:
+
+- Some predictors contain little information
+- Many predictors are strongly correlated
+- Estimation becomes less precise as model complexity increases
+
+## Many Predictors, But Which Ones Matter? III
+
+A central question is whether we can identify a relatively small set of useful predictors, or exploit many predictors without overfitting
+
+::: {.keypoint}
+**Applications**: Medeiros et al. (2021) study inflation forecasting with many predictors, while Zhang et al. (2019) examine LASSO-based predictor selection for crude oil returns
+:::
+
+## Variable Selection and Regularization
+
+Consider a linear forecasting model with $p$ predictors, $Y_{t+1} = \alpha + X_t'\beta + \varepsilon_{t+1}$. LASSO estimates coefficients by solving
+
+$$\min_{\alpha,\beta}\left\{\frac{1}{T}\sum_{t=1}^{T}\left(Y_{t+1} - \alpha - X_t'\beta\right)^2 + \lambda\sum_{j=1}^{p}|\beta_j|\right\}$$
+
+The penalty shrinks coefficients and can set some exactly to zero. Two potential benefits:
+
+- Reducing estimation uncertainty
+- Identifying a smaller set of predictors
+
+## Variable Selection and Regularization II
+
+- However, selection need not be stable: correlated predictors may substitute for one another
+
+::: {.keypoint}
+**Important distinction**: Selecting a variable because it improves prediction does not establish that the variable has a causal effect on the outcome
+:::
+
+## Nonlinearities and Interactions
+
+Linear forecasting models impose an additive relationship with constant coefficients,
+
+$$\widehat{Y}_{t+1|t} = \alpha + \beta_1 X_{1,t} + \beta_2 X_{2,t}$$
+
+Predictive relationships may instead involve nonlinearities and interactions,
+
+$$\widehat{Y}_{t+1|t} = \alpha + \beta_1 X_{1,t} + \beta_2 X_{2,t} + \gamma X_{1,t}X_{2,t}$$
+
+The predictive effect of $X_{1,t}$ now depends on the value of $X_{2,t}$,
+
+$$\frac{\partial \widehat{Y}_{t+1|t}}{\partial X_{1,t}} = \beta_1 + \gamma X_{2,t}$$
+
+## Nonlinearities and Interactions II
+
+Examples:
+
+- Relevance of financial predictor may depend on market conditions
+- Macroeconomic links may differ between expansions and recessions
+
+::: {.keypoint}
+Trees and neural networks can learn such relationships without specifying each interaction explicitly
+:::
+
+## How Can We Identify the Source of Forecasting Gains?
+
+Suppose a flexible ML model outperforms a traditional forecasting regression. Is the improvement due to:
+
+- Better predictors?
+- A more flexible functional form?
+- Regularization or model tuning?
+
+## How Can We Identify the Source of Forecasting Gains? II
+
+Controlled comparisons can help distinguish these possibilities:
+
+| Comparison | Predictors | Main question |
+|:------------------------------|:--------:|:----------------------------------|
+| OLS vs. LASSO | Same | Does regularization help? |
+| Linear vs. nonlinear ML | Same | Does flexibility improve prediction? |
+| ML with vs. without new features | Different | Do new predictors add information? |
+
+::: {.keypoint}
+These help explain why one approach performs better, rather than merely documenting which model has the lowest forecast error
+:::
+
+## Variable Selection, Importance, and Interpretation
+
+Three related but different questions:
+
+| Concept | Main question |
+|:------------------------|:------------------------------------------------------------|
+| Variable selection | Which predictors should enter the model? |
+| Variable importance | Which predictors contribute most to the fitted model's predictions or predictive performance? |
+| Model interpretation | How do the model's predictions change with particular predictor values? |
+
+## Variable Selection, Importance, and Interpretation II
+
+Examples of tools:
+
+- LASSO for variable selection
+- Permutation-based variable importance
+- Partial dependence and accumulated local effects for interpretation
+
+::: {.keypoint}
+Importance and interpretation depend on the fitted model and the data distribution
+
+Predictive importance does not imply economic/causal importance
+:::
+
+## What Do Forecasting Models Learn?
+
+| Application | Relevant questions | Research example |
+|:--------|:----------------------------------------------------|:------------------------|
+| Stock&nbsp;returns | Which characteristics help predict returns? Are nonlinear interactions important? | Gu et al. (2020) |
+| Inflation | Which macroeconomic indicators are informative? How nonlinear are the relationships? | Medeiros et al. (2021) |
+| Volatility | How important are daily, weekly, and monthly volatility components? | Christensen et al. (2023) |
+| Oil returns | Which variables are selected from a large predictor set? | Zhang et al. (2019) |
+
+## What Do Forecasting Models Learn? II
+
+- A forecasting model can be useful even when its predictions are difficult to interpret
+- However, understanding its predictive structure can help assess robustness, improve models, and generate new economic hypotheses
+
+## References
+
+::: {style="font-size: 0.5em; line-height: 1.3;"}
+Borup, D., Rapach, D. E., & Schütte, E. C. M. (2023). Mixed-frequency machine learning: Nowcasting and backcasting weekly initial claims with daily internet search volume data. *International Journal of Forecasting*, 39(3), 1122--1144.
+
+Christensen, K., Siggaard, M., & Veliyev, B. (2023). A machine learning approach to volatility forecasting. *Journal of Financial Econometrics*, 21(5), 1680--1727.
+
+Goulet Coulombe, P., Leroux, M., Stevanovic, D., & Surprenant, S. (2022). How is machine learning useful for macroeconomic forecasting? *Journal of Applied Econometrics*, 37(5), 920--964.
+
+Gu, S., Kelly, B., & Xiu, D. (2020). Empirical asset pricing via machine learning. *Review of Financial Studies*, 33(5), 2223--2273.
+
+Medeiros, M. C., Vasconcelos, G. F. R., Veiga, Á., & Zilberman, E. (2021). Forecasting inflation in a data-rich environment: The benefits of machine learning methods. *Journal of Business & Economic Statistics*, 39(1), 98--119.
+
+Zhang, Y., Ma, F., & Wang, Y. (2019). Forecasting crude oil prices with a large set of predictors: Can LASSO select powerful predictors? *Journal of Empirical Finance*, 54, 97--117.
+:::
