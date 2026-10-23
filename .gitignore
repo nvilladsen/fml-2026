@@ -5,9 +5,6 @@ __pycache__/
 *.pyc
 **/*.quarto_ipynb
 
-# session_NN_files/ holds the rendered deck's JS and CSS and is required for
-# the HTML to work (quarto-live cannot be self-contained). Keep it tracked.
-
 tools/
 .vscode/
 .DS_Store
