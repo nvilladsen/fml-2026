@@ -96,13 +96,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
   text-decoration: none;
   letter-spacing: -0.01em;
 }
-/* .brand::before {
-  content: "";
-  width: 0.85rem;
-  height: 0.85rem;
-  border-radius: 3px;
-  background: var(--deep);
-} */
+
 .brand::before {
   content: "";
   width: 1.6rem;
@@ -120,7 +114,7 @@ a { color: var(--accent); text-underline-offset: 2px; }
 }
 .topbar li a {
   display: block;
-  padding: 0.43rem 1.3rem;;
+  padding: 0.43rem 1.6rem;;
   border-radius: 6px;
   color: var(--muted);
   text-decoration: none;
@@ -421,7 +415,6 @@ ol.steps > li > div > :last-child { margin-bottom: 0; }
 
 .prose { max-width: 59.5rem; }
 
-/* .lead { margin: 0.5rem; max-width: 59.5rem; color: var(--muted); font-size: 1.1rem; } */
 .lead { margin: 0 0 0.4rem; max-width: 59.5rem; color: var(--muted); font-size: 1.1rem; }
 
 .statband.cols-2 { grid-template-columns: repeat(2, 1fr); }
@@ -442,3 +435,9 @@ ol.steps > li > div > :last-child { margin-bottom: 0; }
 
 table.files { table-layout: fixed; }
 table.files th:first-child { width: 30%; }
+
+hr {
+  border: 0;
+  border-top: 2.5px solid var(--faint);
+  margin: 2rem -0.5rem;
+}
