@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="session_02_files/libs/clipboard/clipboard.min.js"></script>
+<script src="session_02_files/libs/quarto-html/tabby.min.js"></script>
+<script src="session_02_files/libs/quarto-html/popper.min.js"></script>
+<script src="session_02_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="session_02_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="session_02_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="session_02_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="session_02_files/libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="session_02_files/libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Bezirgen (Ben) Veliyev">
+  <meta name="dcterms.date" content="2026-10-28">
+  <title>Forecasting with Machine Learning: Forecast Evaluation and Comparison</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="session_02_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="session_02_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="session_02_files/libs/revealjs/dist/theme/quarto-fc4e4b18b9601a83285ef4ae5599cfb6.css">
+  <link href="session_02_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="session_02_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="session_02_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="session_02_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script type="module" src="session_02_files/libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+  <link href="session_02_files/libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Forecasting with Machine Learning: Forecast Evaluation and Comparison</h1>
+  <p class="subtitle">Forecasting with Machine Learning</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Bezirgen (Ben) Veliyev
+</div>
+</div>
+</div>
+
+  <p class="date">2026-10-28</p>
+</section>
+<section id="outline-for-today" class="slide level2 center">
+<h2>Outline for Today</h2>
+<div class="overview">
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Designing an Out-of-Sample Forecasting Exercise</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Estimation and Forecasting Schemes</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Forecast Evaluation Across Applications</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Statistical Comparison of Forecasts</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Economic Value and Reliable Forecasting Research</p>
+</div>
+</div>
+</div>
+</section>
+<section>
+<section id="designing-an-out-of-sample-forecasting-exercise" class="title-slide slide level1 divider center">
+<h1>Designing an Out-of-Sample Forecasting Exercise</h1>
+
+</section>
+<section id="pseudo-out-of-sample-forecasting" class="slide level2 center">
+<h2>Pseudo-Out-of-Sample Forecasting</h2>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">Idea</span></p>
+<p>Use historical data (e.g., 2000–2025) to simulate forecasts that could have been made in real time.</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Forecast</span></p>
+<p>At each forecast origin <span class="math inline">\(t\)</span>, estimate or update the model using available information and predict</p>
+<p><span class="math display">\[\widehat{Y}_{t+1|t} = \widehat{f}_t(X_t).\]</span></p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Evaluate</span></p>
+<p>Once <span class="math inline">\(Y_{t+1}\)</span> is observed, record the forecast error</p>
+<p><span class="math display">\[e_{t+1|t} = Y_{t+1} - \widehat{Y}_{t+1|t}.\]</span></p>
+<p>Repeat over the test period to obtain out-of-sample forecast errors.</p>
+</div>
+</div>
+<div class="keypoint">
+<p><strong>Key Principle</strong>: Each forecast uses only information available at its forecast origin.</p>
+</div>
+</section>
+<section id="training-validation-and-testing" class="slide level2 compact center">
+<h2>Training, Validation, and Testing</h2>
+<ul>
+<li>In ML forecasting, the data typically serve three distinct purposes.</li>
+</ul>
+<div style="display: flex; justify-content: center;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Sample</th>
+<th style="text-align: left;">Example</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Training</td>
+<td style="text-align: left;">2000–2015</td>
+<td style="text-align: left;">Estimate model parameters</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Validation</td>
+<td style="text-align: left;">2016–2020</td>
+<td style="text-align: left;">Select models and tune hyperparameters</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Testing</td>
+<td style="text-align: left;">2021–2025</td>
+<td style="text-align: left;">Evaluate the selected forecasting procedure</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>Example: select the LASSO penalty <span class="math inline">\(\lambda\)</span> based on forecasting performance during 2016–2020.</li>
+<li>The test period should not influence the choice of <span class="math inline">\(\lambda\)</span> or other model decisions.</li>
+<li>After model selection, the chosen specification may be re-estimated using all pre-test data.</li>
+</ul>
+</section>
+<section id="why-chronological-splitting-matters" class="slide level2 center">
+<h2>Why Chronological Splitting Matters</h2>
+<ul>
+<li>Random train-test splits may use future observations for training (e.g., 2024 data to predict 2018 outcomes).</li>
+<li>They may also ignore time dependence and changes in economic relationships.</li>
+<li>Chronological splitting preserves the time ordering and tests whether a model generalizes to genuinely future observations.</li>
+</ul>
+</section>
+<section id="information-availability-and-look-ahead-bias" class="slide level2 compact center">
+<h2>Information Availability and Look-Ahead Bias</h2>
+<ul>
+<li>Chronological splitting alone does not prevent <strong>information leakage (look-ahead bias)</strong>. Examples:</li>
+</ul>
+<div class="pull-up">
+
+</div>
+<div class="overview">
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Publication delays</p>
+</div>
+<div class="ov-desc">
+<p>Using 2025 earnings in January 2026, before the annual report is released.</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Data revisions</p>
+</div>
+<div class="ov-desc">
+<p>Using today’s revised GDP figures to simulate forecasts made in 2020.</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Preprocessing</p>
+</div>
+<div class="ov-desc">
+<p>Standardizing 2020 data using means calculated with data through 2025.</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Model selection</p>
+</div>
+<div class="ov-desc">
+<p>Choosing the best model after examining test-period performance.</p>
+</div>
+</div>
+</div>
+<div class="spacer">
+
+</div>
+<div class="keypoint">
+<p><strong>Practical Principle</strong>: Prevent avoidable leakage. Account for publication delays and data revisions where feasible, and acknowledge remaining limitations.</p>
+</div>
+</section></section>
+<section>
+<section id="estimation-and-forecasting-schemes" class="title-slide slide level1 divider center">
+<h1>Estimation and Forecasting Schemes</h1>
+
+</section>
+<section id="updating-forecasting-models-over-time" class="slide level2 center">
+<h2>Updating Forecasting Models Over Time</h2>
+<ul>
+<li>As new observations become available, we must decide whether and how to update the forecasting model.</li>
+<li>Three common approaches:</li>
+</ul>
+<div class="pull-up">
+
+</div>
+<div class="steplist">
+<div class="step-row">
+<div class="step-num">
+<p>1</p>
+</div>
+<div class="step-title">
+<p>Fixed estimation</p>
+</div>
+<div class="step-desc">
+<p>Estimate the model once and keep its parameters unchanged.</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>2</p>
+</div>
+<div class="step-title">
+<p>Expanding window</p>
+</div>
+<div class="step-desc">
+<p>Re-estimate using all available historical observations.</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>3</p>
+</div>
+<div class="step-title">
+<p>Rolling window</p>
+</div>
+<div class="step-desc">
+<p>Re-estimate using a fixed number of the most recent observations.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="three-forecasting-schemes-formal-definition" class="slide level2 center">
+<h2>Three Forecasting Schemes: Formal Definition</h2>
+<ul>
+<li>Let <span class="math inline">\(\widehat{\theta}_t\)</span> denote the model parameters used at forecast origin <span class="math inline">\(t\)</span>.</li>
+<li>Let <span class="math inline">\(D_s\)</span> denote an observation available for estimation at date <span class="math inline">\(s\)</span>, and let <span class="math inline">\(T_0\)</span> be the initial estimation endpoint.</li>
+</ul>
+<div class="triad strip">
+<div class="triad-card">
+<p><span class="tc-tag">Fixed estimation</span></p>
+<p><span class="math display">\[\widehat{\theta}_t = \widehat{\theta}(D_1, \ldots, D_{T_0}).\]</span></p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Expanding window</span></p>
+<p><span class="math display">\[\widehat{\theta}_t = \widehat{\theta}(D_1, \ldots, D_t).\]</span></p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Rolling window of length <span class="math inline">\(W\)</span></span></p>
+<p><span class="math display">\[\widehat{\theta}_t = \widehat{\theta}(D_{t-W+1}, \ldots, D_t).\]</span></p>
+</div>
+</div>
+<ul>
+<li>In each case, the one-step-ahead forecast is constructed as</li>
+</ul>
+<p><span class="math display">\[\widehat{Y}_{t+1|t} = f(X_t; \widehat{\theta}_t).\]</span></p>
+</section>
+<section id="illustration-which-observations-are-used" class="slide level2 center">
+<h2>Illustration: Which Observations Are Used?</h2>
+<ul>
+<li>Suppose we initially estimate a model using observations 1–5.</li>
+<li>We generate forecasts for periods 6, 7, and 8.</li>
+</ul>
+<div style="display: flex; justify-content: center;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Scheme</th>
+<th style="text-align: center;">Forecast 6</th>
+<th style="text-align: center;">Forecast 7</th>
+<th style="text-align: center;">Forecast 8</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Fixed</td>
+<td style="text-align: center;">1:5</td>
+<td style="text-align: center;">1:5</td>
+<td style="text-align: center;">1:5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Expanding</td>
+<td style="text-align: center;">1:5</td>
+<td style="text-align: center;">1:6</td>
+<td style="text-align: center;">1:7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rolling (<span class="math inline">\(W = 5\)</span>)</td>
+<td style="text-align: center;">1:5</td>
+<td style="text-align: center;">2:6</td>
+<td style="text-align: center;">3:7</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>The table shows which observations are used to estimate each forecast.</li>
+</ul>
+</section>
+<section id="which-estimation-scheme-should-we-use" class="slide level2 center">
+<h2>Which Estimation Scheme Should We Use?</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 42%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Scheme</th>
+<th style="text-align: left;">Main advantage</th>
+<th style="text-align: left;">Main limitation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Fixed</td>
+<td style="text-align: left;">Simple; computationally cheap</td>
+<td style="text-align: left;">Does not adapt to new data</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Expanding</td>
+<td style="text-align: left;">Larger estimation sample</td>
+<td style="text-align: left;">Older data may be less relevant</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rolling</td>
+<td style="text-align: left;">Adapts to changing relationships</td>
+<td style="text-align: left;">Smaller sample; window choice</td>
+</tr>
+</tbody>
+</table>
+<div class="keypoint">
+<p><strong>Key Trade-off</strong>: Estimation precision versus adaptation to structural change.</p>
+</div>
+</section>
+<section id="forecasting-schemes-in-machine-learning" class="slide level2 compact center">
+<h2>Forecasting Schemes in Machine Learning</h2>
+<ul>
+<li>In ML forecasting, distinguish three decisions:</li>
+</ul>
+<div class="triad strip">
+<div class="triad-card">
+<p><span class="tc-tag">Prediction frequency</span></p>
+<p>How often are forecasts generated?</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Re-estimation frequency</span></p>
+<p>How often are model parameters updated?</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Tuning frequency</span></p>
+<p>How often are hyperparameters reconsidered?</p>
+</div>
+</div>
+<ul>
+<li>These frequencies need not coincide. Consider this illustrative example from stock return forecasting:
+<ul>
+<li>Predict monthly.</li>
+<li>Re-estimate annually.</li>
+<li>Retune every three years.</li>
+</ul></li>
+<li>Periodic updating offers a compromise between fixed models and re-estimation at every forecast date, reducing computational costs, especially for complex ML models.</li>
+</ul>
+</section></section>
+<section>
+<section id="forecast-evaluation-across-applications" class="title-slide slide level1 divider center">
+<h1>Forecast Evaluation Across Applications</h1>
+
+</section>
+<section id="evaluating-forecasting-performance" class="slide level2 center">
+<h2>Evaluating Forecasting Performance</h2>
+<ul>
+<li>Suppose two models produce out-of-sample forecasts. How do we compare their performance?</li>
+<li>Four important considerations:</li>
+</ul>
+<div class="pull-up">
+
+</div>
+<div class="steplist align-md">
+<div class="step-row">
+<div class="step-num">
+<p>1</p>
+</div>
+<div class="step-title">
+<p>Accuracy measure</p>
+</div>
+<div class="step-desc">
+<p>How are forecast errors measured?</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>2</p>
+</div>
+<div class="step-title">
+<p>Benchmark</p>
+</div>
+<div class="step-desc">
+<p>What alternative should the model beat?</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>3</p>
+</div>
+<div class="step-title">
+<p>Forecast horizon</p>
+</div>
+<div class="step-desc">
+<p>How far ahead are we predicting?</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>4</p>
+</div>
+<div class="step-title">
+<p>Evaluation sample</p>
+</div>
+<div class="step-desc">
+<p>Which periods or observations are included?</p>
+</div>
+</div>
+</div>
+<div class="spacer">
+
+</div>
+<ul>
+<li>These choices can affect which forecasting method performs best.</li>
+</ul>
+</section>
+<section id="common-measures-of-forecast-accuracy" class="slide level2 center">
+<h2>Common Measures of Forecast Accuracy</h2>
+<ul>
+<li>Given forecast errors <span class="math inline">\(e_1, \ldots, e_P\)</span>, commonly used measures are:</li>
+</ul>
+<p><span class="math display">\[\mathrm{MSE} = \frac{1}{P}\sum_{t=1}^{P} e_t^2, \qquad \mathrm{RMSE} = \sqrt{\frac{1}{P}\sum_{t=1}^{P} e_t^2}, \qquad \mathrm{MAE} = \frac{1}{P}\sum_{t=1}^{P} |e_t|.\]</span></p>
+<ul>
+<li><strong>MSE/RMSE</strong> penalize large errors more strongly than MAE.</li>
+<li>RMSE and MAE have the same units as the forecast target; MSE has squared units.</li>
+<li>The appropriate measure depends on the forecasting application.</li>
+</ul>
+</section>
+<section id="three-common-forecast-benchmarks" class="slide level2 center">
+<h2>Three Common Forecast Benchmarks</h2>
+<div class="compare cols-3">
+<div class="compare-col" style="font-size: 0.86em;">
+<div class="cmp-title">
+<p>1. Historical mean</p>
+</div>
+<p><span class="math display">\[\widehat{Y}^{B}_{t+1|t} = \frac{1}{t}\sum_{s=1}^{t} Y_s.\]</span></p>
+<p>Common benchmark for aggregate stock returns.</p>
+</div>
+<div class="compare-col cmp-mid" style="font-size: 0.86em;">
+<div class="cmp-title">
+<p>2. Random walk (no change)</p>
+</div>
+<p><span class="math display">\[\widehat{Y}^{B}_{t+1|t} = Y_t.\]</span></p>
+<p>Common for persistent economic and financial series.</p>
+</div>
+<div class="compare-col cmp-alt" style="font-size: 0.86em;">
+<div class="cmp-title">
+<p>3. Autoregressive forecast</p>
+</div>
+<p><span class="math display">\[\widehat{Y}^{B}_{t+1|t} = \widehat{\alpha}_t + \widehat{\rho}_t Y_t.\]</span></p>
+<p>Exploits estimated historical dependence.</p>
+</div>
+</div>
+<div class="keypoint">
+<p><strong>Important</strong>: Benchmarks must use the same information available to competing ML models.</p>
+</div>
+</section>
+<section id="choosing-appropriate-forecast-benchmarks" class="slide level2 center">
+<h2>Choosing Appropriate Forecast Benchmarks</h2>
+<ul>
+<li>A forecasting method should be compared with a relevant benchmark.</li>
+</ul>
+<table class="caption-top">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 44%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Application</th>
+<th style="text-align: left;">Typical benchmarks</th>
+<th style="text-align: left;">Research examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Stock returns</td>
+<td style="text-align: left;">Zero return, historical mean, simple linear models</td>
+<td style="text-align: left;">Gu et al.&nbsp;(2020)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Inflation</td>
+<td style="text-align: left;">Autoregressive and other traditional macro forecasting models</td>
+<td style="text-align: left;">Medeiros et al.&nbsp;(2021)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Volatility</td>
+<td style="text-align: left;">HAR models using daily, weekly, and monthly volatility</td>
+<td style="text-align: left;">Christensen et al.&nbsp;(2023)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Electricity prices</td>
+<td style="text-align: left;">Seasonal naive forecasts, established autoregressive models</td>
+<td style="text-align: left;">Lago et al.&nbsp;(2021)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="out-of-sample-r2-the-benchmark-matters" class="slide level2 compact center">
+<h2>Out-of-Sample <span class="math inline">\(R^2\)</span>: The Benchmark Matters</h2>
+<ul>
+<li><p>A general benchmark-relative measure is</p>
+<p><span class="math display">\[R^2_{\mathrm{OS}} = 1 - \frac{\sum_{t\in\mathcal{T}}(Y_t - \widehat{Y}_t)^2}{\sum_{t\in\mathcal{T}}(Y_t - \widehat{Y}^{B}_t)^2}.\]</span></p></li>
+<li><p><span class="math inline">\(R^2_{\mathrm{OS}} &gt; 0\)</span> indicates better forecasting performance than the benchmark; <span class="math inline">\(R^2_{\mathrm{OS}} &lt; 0\)</span> indicates worse performance.</p></li>
+<li><p>The benchmark depends on the application:</p>
+<ul>
+<li>Aggregate returns: Historical mean.</li>
+<li>Individual stock returns (Gu et al., 2020): Zero excess return.</li>
+</ul></li>
+<li><p>In Gu et al.&nbsp;(2020), the sums run over all stock-month observations, giving an <strong>uncentered panel <span class="math inline">\(R^2\)</span></strong>.</p></li>
+</ul>
+</section>
+<section id="illustration-interpreting-out-of-sample-r2" class="slide level2 center">
+<h2>Illustration: Interpreting Out-of-Sample <span class="math inline">\(R^2\)</span></h2>
+<ul>
+<li>Suppose models A and B have out-of-sample mean squared errors:</li>
+</ul>
+<p><span class="math display">\[\mathrm{MSE}_A = 0.018, \qquad \mathrm{MSE}_B = 0.020.\]</span></p>
+<ul>
+<li>Taking model B as the benchmark:</li>
+</ul>
+<p><span class="math display">\[R^2_{\mathrm{OS}} = 1 - \frac{0.018}{0.020} = 0.10.\]</span></p>
+<ul>
+<li>Model A reduces MSE by <strong>10%</strong> relative to model B.</li>
+</ul>
+<div class="keypoint">
+<p><strong>Question</strong>: Does a 10% reduction in MSE imply a statistically significant improvement?</p>
+</div>
+</section>
+<section id="volatility-forecasting-a-different-evaluation-problem" class="slide level2 compact center">
+<h2>Volatility Forecasting: A Different Evaluation Problem</h2>
+<ul>
+<li><p>Volatility is not directly observed; realized variance <span class="math inline">\(RV_{t+1}\)</span> serves as a proxy. For a variance forecast <span class="math inline">\(\widehat{v}_{t+1|t} &gt; 0\)</span>, two common losses are:</p>
+<p><span class="math display">\[\begin{aligned} L_{\mathrm{MSE}} &amp;= (RV_{t+1} - \widehat{v}_{t+1|t})^2, \\ L_{\mathrm{QLIKE}} &amp;= \log(\widehat{v}_{t+1|t}) + \frac{RV_{t+1}}{\widehat{v}_{t+1|t}}. \end{aligned}\]</span></p></li>
+<li><p>Both losses are robust to noise in a conditionally unbiased volatility proxy.</p></li>
+<li><p>Unlike MSE, QLIKE penalizes underprediction more strongly. Underestimating volatility may lead to excessive risk exposure.</p></li>
+</ul>
+<div class="keypoint">
+<p><strong>Application</strong>: Christensen et al.&nbsp;(2023) compare ML methods with HAR-type volatility forecasts.</p>
+</div>
+</section>
+<section id="electricity-prices-evaluating-hourly-forecasts" class="slide level2 center">
+<h2>Electricity Prices: Evaluating Hourly Forecasts</h2>
+<ul>
+<li><p>Day-ahead forecasts predict 24 hourly prices. Let <span class="math inline">\(p_{d,h}\)</span> and <span class="math inline">\(\widehat{p}_{d,h}\)</span> denote actual and forecast prices.</p></li>
+<li><p>For <span class="math inline">\(D\)</span> days, the mean absolute error is</p>
+<p><span class="math display">\[\mathrm{MAE} = \frac{1}{24D}\sum_{d=1}^{D}\sum_{h=1}^{24} |p_{d,h} - \widehat{p}_{d,h}|.\]</span></p></li>
+<li><p>Lago et al.&nbsp;(2021) emphasize MAE and relative MAE (rMAE), strong benchmarks, and evaluation across markets and long test periods.</p></li>
+<li><p>Percentage errors (MAPE) can be misleading when prices are near zero.</p></li>
+</ul>
+</section>
+<section id="what-can-average-forecast-accuracy-hide" class="slide level2 center">
+<h2>What Can Average Forecast Accuracy Hide?</h2>
+<ul>
+<li>Average forecast accuracy may hide important differences across applications:</li>
+</ul>
+<div class="pull-up">
+
+</div>
+<div class="overview">
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Stock returns</p>
+</div>
+<div class="ov-desc">
+<p>Small versus large firms?</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Macroeconomics</p>
+</div>
+<div class="ov-desc">
+<p>Recessions versus expansions?</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Volatility</p>
+</div>
+<div class="ov-desc">
+<p>Short versus long forecast horizons?</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Electricity prices</p>
+</div>
+<div class="ov-desc">
+<p>Different hours, seasons, or markets?</p>
+</div>
+</div>
+</div>
+<div class="spacer">
+
+</div>
+<ul>
+<li>Researchers therefore examine performance across subperiods, horizons, and groups of observations.</li>
+</ul>
+</section></section>
+<section>
+<section id="statistical-comparison-of-forecasts" class="title-slide slide level1 divider center">
+<h1>Statistical Comparison of Forecasts</h1>
+
+</section>
+<section id="comparing-forecast-losses" class="slide level2 compact center">
+<h2>Comparing Forecast Losses</h2>
+<ul>
+<li><p>For two forecasting models A and B, define the <strong>loss differential</strong>:</p>
+<p><span class="math display">\[d_t = L(Y_t, \widehat{Y}^{A}_t) - L(Y_t, \widehat{Y}^{B}_t).\]</span></p></li>
+<li><p>Under squared error loss:</p>
+<p><span class="math display">\[d_t = (e^{A}_t)^2 - (e^{B}_t)^2.\]</span></p>
+<p><span class="math inline">\(d_t &lt; 0\)</span> favors model A; <span class="math inline">\(d_t &gt; 0\)</span> favors B.</p></li>
+<li><p>The average loss differential is</p>
+<p><span class="math display">\[\overline{d} = \frac{1}{P}\sum_{t=1}^{P} d_t.\]</span></p></li>
+<li><p><span class="math inline">\(\overline{d} &lt; 0\)</span> indicates lower average loss for A, but not necessarily a statistically significant improvement.</p></li>
+</ul>
+</section>
+<section id="the-dieboldmariano-test" class="slide level2 compact-xs center">
+<h2>The Diebold–Mariano Test</h2>
+<ul>
+<li><p>The <strong>Diebold–Mariano (DM) test</strong> compares the expected forecast losses of two models:</p>
+<p><span class="math display">\[H_0 : \mathbb{E}[d_t] = 0.\]</span></p></li>
+<li><p>The test statistic is</p>
+<p><span class="math display">\[DM = \frac{\overline{d}}{\widehat{\mathrm{se}}(\overline{d})}.\]</span></p></li>
+<li><p>Under suitable regularity conditions,</p>
+<p><span class="math display">\[DM \xrightarrow{d} N(0,1) \qquad \text{under } H_0.\]</span></p></li>
+<li><p>At the 5% level:</p>
+<ul>
+<li><strong>Two-sided</strong>: Reject if <span class="math inline">\(|DM| &gt; 1.96\)</span>.</li>
+<li><strong>One-sided</strong>: Reject if <span class="math inline">\(DM &lt; -1.645\)</span> when testing whether model A outperforms B.</li>
+</ul></li>
+</ul>
+</section>
+<section id="serial-dependence-and-the-dm-test" class="slide level2 center">
+<h2>Serial Dependence and the DM Test</h2>
+<ul>
+<li>Forecast loss differentials <span class="math inline">\(d_t\)</span> may be serially correlated, especially when forecast horizons overlap.</li>
+<li>Ignoring serial dependence can lead to incorrect standard errors and misleading significance tests.</li>
+<li>The DM statistic therefore uses a <strong>HAC standard error</strong> for <span class="math inline">\(\overline{d}\)</span>, accounting for serial correlation in the loss differentials.</li>
+</ul>
+<div class="keypoint">
+<p><strong>Caution</strong>: Standard DM inference may require adjustments in certain settings, including nested models.</p>
+</div>
+</section>
+<section id="illustration-is-the-improvement-significant" class="slide level2 compact-xs center">
+<h2>Illustration: Is the Improvement Significant?</h2>
+<ul>
+<li><p>Recall our earlier example:</p>
+<p><span class="math display">\[\mathrm{MSE}_A = 0.018, \qquad \mathrm{MSE}_B = 0.020.\]</span></p></li>
+<li><p>The average loss differential is</p>
+<p><span class="math display">\[\overline{d} = 0.018 - 0.020 = -0.002.\]</span></p></li>
+<li><p>Suppose <span class="math inline">\(\widehat{\mathrm{se}}(\overline{d}) = 0.0008\)</span>:</p>
+<p><span class="math display">\[DM = \frac{-0.002}{0.0008} = -2.5.\]</span></p>
+<p>The two-sided <span class="math inline">\(p\)</span>-value is approximately 0.012: model A performs significantly better.</p></li>
+</ul>
+<div class="keypoint">
+<p><strong>Key Distinction</strong>: <span class="math inline">\(R^2_{\mathrm{OS}} = 10\%\)</span> measures the improvement; DM tests its statistical significance.</p>
+</div>
+<p><strong>Question</strong>: What if the standard error were twice as large?</p>
+</section>
+<section id="comparing-many-models-model-confidence-set" class="slide level2 compact center">
+<h2>Comparing Many Models: Model Confidence Set</h2>
+<ul>
+<li>Suppose we compare five models: AR, LASSO, Random Forest, XGBoost, and Neural Network.</li>
+<li>Comparing five models requires 10 pairwise tests, creating a <strong>multiple-comparison problem</strong>.</li>
+<li>The <strong>Model Confidence Set (MCS)</strong> provides a joint procedure:</li>
+</ul>
+<div class="flow">
+<div class="fn-navy">
+<p>Test equal predictive ability.</p>
+</div>
+<div class="fn">
+<p>If rejected, eliminate a poorly performing model.</p>
+</div>
+<div class="fn-amber">
+<p>Repeat until equality is no longer rejected.</p>
+</div>
+</div>
+<ul>
+<li>The remaining models form a <strong>shortlist of best-performing candidates</strong>, which cannot be statistically distinguished.</li>
+</ul>
+<div class="keypoint">
+<p><strong>Illustration</strong>: MCS = {Random Forest, XGBoost, Neural Network}. This does not imply identical true performance.</p>
+</div>
+</section></section>
+<section>
+<section id="economic-value-and-reliable-forecasting-research" class="title-slide slide level1 divider center">
+<h1>Economic Value and Reliable Forecasting Research</h1>
+
+</section>
+<section id="forecast-accuracy-versus-economic-value" class="slide level2 center">
+<h2>Forecast Accuracy versus Economic Value</h2>
+<ul>
+<li>Statistical accuracy (MSE, MAE, OOS <span class="math inline">\(R^2\)</span>) does not necessarily imply economic value.</li>
+<li>Example: Stock return prediction.
+<ul>
+<li>Model A predicts individual returns more accurately.</li>
+<li>Model B better identifies which stocks will outperform.</li>
+<li>Model B may be more useful for portfolio construction.</li>
+</ul></li>
+</ul>
+<div class="keypoint">
+<p><strong>Main Distinction</strong>: Statistical evaluation measures forecast accuracy; economic evaluation measures usefulness for particular decisions.</p>
+</div>
+</section>
+<section id="from-stock-return-forecasts-to-portfolios" class="slide level2 compact-xs center">
+<h2>From Stock Return Forecasts to Portfolios</h2>
+<ul>
+<li><p>An ML model predicts next month’s return for each stock:</p>
+<p><span class="math display">\[\widehat{r}_{i,t+1|t} = \widehat{f}(X_{i,t}).\]</span></p></li>
+<li><p>Each month, rank stocks by predicted returns.</p></li>
+<li><p>Form two portfolios:</p>
+<ul>
+<li><strong>High</strong>: Highest predicted returns.</li>
+<li><strong>Low</strong>: Lowest predicted returns.</li>
+</ul></li>
+<li><p>A long-short strategy buys High and shorts Low:</p></li>
+</ul>
+<p><span class="math display">\[R^{LS}_{t+1} = R^{High}_{t+1} - R^{Low}_{t+1}.\]</span></p>
+<div class="keypoint">
+<p><strong>Application</strong>: Gu, Kelly, and Xiu (2020) evaluate ML forecasts using portfolios sorted by predicted returns.</p>
+</div>
+</section>
+<section id="evaluating-portfolio-performance" class="slide level2 compact-xs center">
+<h2>Evaluating Portfolio Performance</h2>
+<ul>
+<li>Key performance measures:</li>
+</ul>
+<div class="pull-up">
+
+</div>
+<div class="overview">
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Average return</p>
+</div>
+<div class="ov-desc">
+<p>How profitable is the strategy?</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Sharpe ratio</p>
+</div>
+<div class="ov-desc">
+<p>Return relative to volatility.</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Risk exposures</p>
+</div>
+<div class="ov-desc">
+<p>Exposure to market and other factors.</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Turnover and trading costs</p>
+</div>
+<div class="ov-desc">
+<p>Costs of portfolio rebalancing.</p>
+</div>
+</div>
+</div>
+<div class="spacer">
+
+</div>
+<ul>
+<li>For monthly long-short returns, the annualized Sharpe ratio is approximately</li>
+</ul>
+<p><span class="math display">\[SR_{\mathrm{ann}} \approx \sqrt{12}\,\frac{\overline{R^{LS}}}{s(R^{LS})}.\]</span></p>
+<div class="keypoint">
+<p><strong>Important</strong>: Better return predictions need not imply higher net investment performance.</p>
+</div>
+</section>
+<section id="searching-across-many-forecasting-models" class="slide level2 compact center">
+<h2>Searching Across Many Forecasting Models</h2>
+<ul>
+<li>ML research often compares many specifications:
+<ul>
+<li>Predictors and transformations.</li>
+<li>Algorithms and hyperparameters.</li>
+<li>Sample periods and forecast horizons.</li>
+</ul></li>
+<li>Searching across many models can produce strong results by chance, exaggerating apparent forecasting gains.</li>
+<li>Model selection using <strong>validation data</strong> is legitimate.</li>
+<li>Repeatedly adjusting models after examining <strong>test results</strong> compromises out-of-sample evaluation.</li>
+</ul>
+<div class="keypoint">
+<p><strong>Important Distinction</strong>: MCS addresses comparisons among candidate models, but not repeated use of test data for model development.</p>
+</div>
+</section>
+<section id="what-makes-empirical-forecasting-evidence-convincing" class="slide level2 center">
+<h2>What Makes Empirical Forecasting Evidence Convincing?</h2>
+<ul>
+<li>Before accepting reported ML gains, consider five questions:</li>
+</ul>
+<div class="pull-up">
+
+</div>
+<div class="steplist align-md">
+<div class="step-row">
+<div class="step-num">
+<p>1</p>
+</div>
+<div class="step-title">
+<p>Benchmarks</p>
+</div>
+<div class="step-desc">
+<p>Does ML beat strong alternatives?</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>2</p>
+</div>
+<div class="step-title">
+<p>Evaluation design</p>
+</div>
+<div class="step-desc">
+<p>Was the test sample kept out of model development?</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>3</p>
+</div>
+<div class="step-title">
+<p>Robustness</p>
+</div>
+<div class="step-desc">
+<p>Do results hold across periods, horizons, or markets?</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>4</p>
+</div>
+<div class="step-title">
+<p>Economic relevance</p>
+</div>
+<div class="step-desc">
+<p>Are the gains useful after costs and risks?</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>5</p>
+</div>
+<div class="step-title">
+<p>Transparency</p>
+</div>
+<div class="step-desc">
+<p>Are data and methods reproducible?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="references" class="slide level2 center">
+<h2>References</h2>
+<div style="font-size: 0.5em; line-height: 1.3;">
+<p>Christensen, K., Siggaard, M., &amp; Veliyev, B. (2023). A machine learning approach to volatility forecasting. <em>Journal of Financial Econometrics</em>, 21(5), 1680–1727.</p>
+<p>Gu, S., Kelly, B., &amp; Xiu, D. (2020). Empirical asset pricing via machine learning. <em>Review of Financial Studies</em>, 33(5), 2223–2273.</p>
+<p>Lago, J., Marcjasz, G., De Schutter, B., &amp; Weron, R. (2021). Forecasting day-ahead electricity prices: A review of state-of-the-art algorithms, best practices and an open-access benchmark. <em>Applied Energy</em>, 293, 116983.</p>
+<p>Medeiros, M. C., Vasconcelos, G. F. R., Veiga, Á., &amp; Zilberman, E. (2021). Forecasting inflation in a data-rich environment: The benefits of machine learning methods. <em>Journal of Business &amp; Economic Statistics</em>, 39(1), 98–119.</p>
+</div>
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Forecasting with Machine Learning</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="session_02_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="session_02_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="session_02_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="session_02_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="session_02_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="session_02_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="session_02_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="session_02_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="session_02_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="session_02_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"numbers":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'fast',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 6.0e-2,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script>
+    // Start Over also hides the revealed solution (and brings back "Show Solution").
+    (function () {
+      var pending = {};
+      document.addEventListener('click', function (ev) {
+        var btn = ev.target.closest && ev.target.closest('a, button');
+        if (!btn) return;
+        var cell = btn.closest('.exercise-cell');
+        if (btn.classList.contains('btn-exercise-solution')) {
+          var header = btn.parentElement;
+          pending.parent = header; pending.className = btn.className; pending.html = btn.innerHTML;
+          return;
+        }
+        if (btn.classList.contains('btn-outline-dark') && /Start Over/.test(btn.textContent) && cell) {
+          var ex = null;
+          document.querySelectorAll('.exercise-solution').forEach(function (sol) {
+            if (!sol.classList.contains('d-none')) {
+              sol.classList.add('d-none');
+              if (pending.parent) {
+                var again = document.createElement('a');
+                again.className = pending.className; again.innerHTML = pending.html;
+                again.setAttribute('role', 'button'); again.tabIndex = 0;
+                again.onclick = function () { sol.classList.remove('d-none'); again.remove(); };
+                pending.parent.prepend(again);
+                pending = {};
+              }
+            }
+          });
+        }
+      }, true);
+    })();
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var timer;
+      var observer = new MutationObserver(function () {
+        clearTimeout(timer);
+        timer = setTimeout(function () { Reveal.layout(); }, 100);
+      });
+      observer.observe(document.querySelector(".reveal .slides"), {
+        childList: true,
+        subtree: true
+      });
+    });
+    </script>
+
+    <script>
+    const t = setInterval(() => {
+      const pages = document.querySelectorAll(".pdf-page");
+      if (!pages.length) return;
+      clearInterval(t);
+      pages.forEach((p, i) => {
+        const s = p.querySelector(".slide-number-pdf");
+        if (s) s.textContent = (i + 1) + " / " + pages.length;
+      });
+    }, 300);
+    </script>
+    <script type="ojs-module-contents">
+    eyJjb250ZW50cyI6W119
+    </script>
+    <script type="module">
+    if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+    window._ojs.paths.runtimeToDoc = "../../..";
+    window._ojs.paths.runtimeToRoot = "../../../..";
+    window._ojs.paths.docToRoot = "..";
+    window._ojs.selfContained = false;
+    window._ojs.runtime.interpretFromScriptTags();
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+                // target, if specified
+                link.setAttribute("target", "_blank");
+                if (link.getAttribute("rel") === null) {
+                  link.setAttribute("rel", "noopener");
+                }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

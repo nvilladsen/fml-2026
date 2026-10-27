@@ -1237,3 +1237,30 @@ html.print-pdf .reveal .slides .pdf-page > section {
 
 .steplist.t-md .step-title { min-width: 9.5em; }
 .steplist.t-lg .step-title { min-width: 17em; }
+
+// ---------- compact slide ----------
+// smaller body text and tighter spacing for dense slides; the title is unchanged.
+// Usage: ## Slide title {.compact}   (or {.compact-xs} for very dense slides)
+.reveal .slides section.compact > :not(h2) {
+  font-size: 0.88em;
+}
+
+.reveal .slides section.compact-xs > :not(h2) {
+  font-size: 0.8em;
+}
+
+.reveal .slides section.compact li,
+.reveal .slides section.compact-xs li {
+  margin-bottom: 0.25em;
+}
+
+.reveal .slides section.compact .keypoint,
+.reveal .slides section.compact-xs .keypoint {
+  margin: 0.3em 0;
+}
+
+// ---------- aligned step titles ----------
+// same description start in every row; usage: ::: {.steplist .align-md}
+.steplist.align-md .step-title {
+  min-width: 11em;
+}

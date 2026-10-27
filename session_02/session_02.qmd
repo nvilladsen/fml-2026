@@ -1,0 +1,778 @@
+---
+title: "Forecasting with Machine Learning: Forecast Evaluation and Comparison"
+subtitle: "Forecasting with Machine Learning"
+author: "Bezirgen (Ben) Veliyev"
+date: "October 28, 2026"
+format:
+  live-revealjs:
+    theme: [default, ../theme/fml.scss]
+    transition: none
+    transition-speed: fast
+    background-transition: none
+    progress: true
+    slide-number: c/t
+    footer: "Forecasting with Machine Learning"
+    include-after-body: ../theme/exercise.html
+    hash: true
+    center: true
+    width: 1280
+    height: 720
+    margin: 0.06
+    controls: false
+    history: false
+    auto-stretch: false
+    menu:
+      side: left
+      numbers: true
+    link-external-newwindow: true
+---
+
+## Outline for Today
+
+::: {.overview}
+::: {.ov-row-inline}
+::: {.ov-label}
+Designing an Out-of-Sample Forecasting Exercise
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Estimation and Forecasting Schemes
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Forecast Evaluation Across Applications
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Statistical Comparison of Forecasts
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Economic Value and Reliable Forecasting Research
+:::
+:::
+:::
+
+# Designing an Out-of-Sample Forecasting Exercise {.divider}
+
+## Pseudo-Out-of-Sample Forecasting
+
+:::: {.triad}
+::: {.triad-card}
+[Idea]{.tc-tag}
+
+Use historical data (e.g., 2000–2025) to simulate forecasts that could have been made in real time.
+:::
+::: {.triad-card}
+[Forecast]{.tc-tag}
+
+At each forecast origin $t$, estimate or update the model using available information and predict
+
+$$\widehat{Y}_{t+1|t} = \widehat{f}_t(X_t).$$
+:::
+::: {.triad-card}
+[Evaluate]{.tc-tag}
+
+Once $Y_{t+1}$ is observed, record the forecast error
+
+$$e_{t+1|t} = Y_{t+1} - \widehat{Y}_{t+1|t}.$$
+
+Repeat over the test period to obtain out-of-sample forecast errors.
+:::
+::::
+
+::: {.keypoint}
+**Key Principle**: Each forecast uses only information available at its forecast origin.
+:::
+
+## Training, Validation, and Testing {.compact}
+
+- In ML forecasting, the data typically serve three distinct purposes.
+
+::: {style="display: flex; justify-content: center;"}
+
+| Sample | Example | Purpose |
+|:----------|:----------|:--------------------------------------|
+| Training | 2000–2015 | Estimate model parameters |
+| Validation | 2016–2020 | Select models and tune hyperparameters |
+| Testing | 2021–2025 | Evaluate the selected forecasting procedure |
+
+:::
+
+- Example: select the LASSO penalty $\lambda$ based on forecasting performance during 2016–2020.
+- The test period should not influence the choice of $\lambda$ or other model decisions.
+- After model selection, the chosen specification may be re-estimated using all pre-test data.
+
+## Why Chronological Splitting Matters
+
+- Random train-test splits may use future observations for training (e.g., 2024 data to predict 2018 outcomes).
+- They may also ignore time dependence and changes in economic relationships.
+- Chronological splitting preserves the time ordering and tests whether a model generalizes to genuinely future observations.
+
+## Information Availability and Look-Ahead Bias {.compact}
+
+- Chronological splitting alone does not prevent **information leakage (look-ahead bias)**. Examples:
+
+::: {.pull-up}
+:::
+
+::: {.overview}
+::: {.ov-row-inline}
+::: {.ov-label}
+Publication delays
+:::
+::: {.ov-desc}
+Using 2025 earnings in January 2026, before the annual report is released.
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Data revisions
+:::
+::: {.ov-desc}
+Using today's revised GDP figures to simulate forecasts made in 2020.
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Preprocessing
+:::
+::: {.ov-desc}
+Standardizing 2020 data using means calculated with data through 2025.
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Model selection
+:::
+::: {.ov-desc}
+Choosing the best model after examining test-period performance.
+:::
+:::
+:::
+
+::: {.spacer}
+:::
+
+::: {.keypoint}
+**Practical Principle**: Prevent avoidable leakage. Account for publication delays and data revisions where feasible, and acknowledge remaining limitations.
+:::
+
+# Estimation and Forecasting Schemes {.divider}
+
+## Updating Forecasting Models Over Time
+
+- As new observations become available, we must decide whether and how to update the forecasting model.
+- Three common approaches:
+
+::: {.pull-up}
+:::
+
+::: {.steplist}
+::: {.step-row}
+::: {.step-num}
+1
+:::
+::: {.step-title}
+Fixed estimation
+:::
+::: {.step-desc}
+Estimate the model once and keep its parameters unchanged.
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+2
+:::
+::: {.step-title}
+Expanding window
+:::
+::: {.step-desc}
+Re-estimate using all available historical observations.
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+3
+:::
+::: {.step-title}
+Rolling window
+:::
+::: {.step-desc}
+Re-estimate using a fixed number of the most recent observations.
+:::
+:::
+:::
+
+## Three Forecasting Schemes: Formal Definition
+
+- Let $\widehat{\theta}_t$ denote the model parameters used at forecast origin $t$.
+- Let $D_s$ denote an observation available for estimation at date $s$, and let $T_0$ be the initial estimation endpoint.
+
+:::: {.triad .strip}
+::: {.triad-card}
+[Fixed estimation]{.tc-tag}
+
+$$\widehat{\theta}_t = \widehat{\theta}(D_1, \ldots, D_{T_0}).$$
+:::
+::: {.triad-card}
+[Expanding window]{.tc-tag}
+
+$$\widehat{\theta}_t = \widehat{\theta}(D_1, \ldots, D_t).$$
+:::
+::: {.triad-card}
+[Rolling window of length $W$]{.tc-tag}
+
+$$\widehat{\theta}_t = \widehat{\theta}(D_{t-W+1}, \ldots, D_t).$$
+:::
+::::
+
+- In each case, the one-step-ahead forecast is constructed as
+
+$$\widehat{Y}_{t+1|t} = f(X_t; \widehat{\theta}_t).$$
+
+## Illustration: Which Observations Are Used?
+
+- Suppose we initially estimate a model using observations 1–5.
+- We generate forecasts for periods 6, 7, and 8.
+
+::: {style="display: flex; justify-content: center;"}
+
+| Scheme | Forecast 6 | Forecast 7 | Forecast 8 |
+|:----------------|:--------:|:--------:|:--------:|
+| Fixed | 1:5 | 1:5 | 1:5 |
+| Expanding | 1:5 | 1:6 | 1:7 |
+| Rolling ($W = 5$) | 1:5 | 2:6 | 3:7 |
+
+:::
+
+- The table shows which observations are used to estimate each forecast.
+
+## Which Estimation Scheme Should We Use?
+
+| Scheme | Main advantage | Main limitation |
+|:----------|:--------------------------------|:--------------------------------|
+| Fixed | Simple; computationally cheap | Does not adapt to new data |
+| Expanding | Larger estimation sample | Older data may be less relevant |
+| Rolling | Adapts to changing relationships | Smaller sample; window choice |
+
+::: {.keypoint}
+**Key Trade-off**: Estimation precision versus adaptation to structural change.
+:::
+
+## Forecasting Schemes in Machine Learning {.compact}
+
+- In ML forecasting, distinguish three decisions:
+
+:::: {.triad .strip}
+::: {.triad-card}
+[Prediction frequency]{.tc-tag}
+
+How often are forecasts generated?
+:::
+::: {.triad-card}
+[Re-estimation frequency]{.tc-tag}
+
+How often are model parameters updated?
+:::
+::: {.triad-card}
+[Tuning frequency]{.tc-tag}
+
+How often are hyperparameters reconsidered?
+:::
+::::
+
+- These frequencies need not coincide. Consider this illustrative example from stock return forecasting:
+  - Predict monthly.
+  - Re-estimate annually.
+  - Retune every three years.
+- Periodic updating offers a compromise between fixed models and re-estimation at every forecast date, reducing computational costs, especially for complex ML models.
+
+# Forecast Evaluation Across Applications {.divider}
+
+## Evaluating Forecasting Performance
+
+- Suppose two models produce out-of-sample forecasts. How do we compare their performance?
+- Four important considerations:
+
+::: {.pull-up}
+:::
+
+::: {.steplist .align-md}
+::: {.step-row}
+::: {.step-num}
+1
+:::
+::: {.step-title}
+Accuracy measure
+:::
+::: {.step-desc}
+How are forecast errors measured?
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+2
+:::
+::: {.step-title}
+Benchmark
+:::
+::: {.step-desc}
+What alternative should the model beat?
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+3
+:::
+::: {.step-title}
+Forecast horizon
+:::
+::: {.step-desc}
+How far ahead are we predicting?
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+4
+:::
+::: {.step-title}
+Evaluation sample
+:::
+::: {.step-desc}
+Which periods or observations are included?
+:::
+:::
+:::
+
+::: {.spacer}
+:::
+
+- These choices can affect which forecasting method performs best.
+
+## Common Measures of Forecast Accuracy
+
+- Given forecast errors $e_1, \ldots, e_P$, commonly used measures are:
+
+$$\mathrm{MSE} = \frac{1}{P}\sum_{t=1}^{P} e_t^2, \qquad \mathrm{RMSE} = \sqrt{\frac{1}{P}\sum_{t=1}^{P} e_t^2}, \qquad \mathrm{MAE} = \frac{1}{P}\sum_{t=1}^{P} |e_t|.$$
+
+- **MSE/RMSE** penalize large errors more strongly than MAE.
+- RMSE and MAE have the same units as the forecast target; MSE has squared units.
+- The appropriate measure depends on the forecasting application.
+
+## Three Common Forecast Benchmarks
+
+::: {.compare .cols-3}
+::: {.compare-col style="font-size: 0.86em;"}
+::: {.cmp-title}
+1\. Historical mean
+:::
+$$\widehat{Y}^{B}_{t+1|t} = \frac{1}{t}\sum_{s=1}^{t} Y_s.$$
+
+Common benchmark for aggregate stock returns.
+:::
+::: {.compare-col .cmp-mid style="font-size: 0.86em;"}
+::: {.cmp-title}
+2\. Random walk (no change)
+:::
+$$\widehat{Y}^{B}_{t+1|t} = Y_t.$$
+
+Common for persistent economic and financial series.
+:::
+::: {.compare-col .cmp-alt style="font-size: 0.86em;"}
+::: {.cmp-title}
+3\. Autoregressive forecast
+:::
+$$\widehat{Y}^{B}_{t+1|t} = \widehat{\alpha}_t + \widehat{\rho}_t Y_t.$$
+
+Exploits estimated historical dependence.
+:::
+:::
+
+::: {.keypoint}
+**Important**: Benchmarks must use the same information available to competing ML models.
+:::
+
+## Choosing Appropriate Forecast Benchmarks
+
+- A forecasting method should be compared with a relevant benchmark.
+
+| Application | Typical benchmarks | Research examples |
+|:------------------|:------------------------------------|:--------------------------|
+| Stock returns | Zero return, historical mean, simple linear models | Gu et al. (2020) |
+| Inflation | Autoregressive and other traditional macro forecasting models | Medeiros et al. (2021) |
+| Volatility | HAR models using daily, weekly, and monthly volatility | Christensen et al. (2023) |
+| Electricity prices | Seasonal naive forecasts, established autoregressive models | Lago et al. (2021) |
+
+## Out-of-Sample $R^2$: The Benchmark Matters {.compact}
+
+- A general benchmark-relative measure is
+
+  $$R^2_{\mathrm{OS}} = 1 - \frac{\sum_{t\in\mathcal{T}}(Y_t - \widehat{Y}_t)^2}{\sum_{t\in\mathcal{T}}(Y_t - \widehat{Y}^{B}_t)^2}.$$
+
+- $R^2_{\mathrm{OS}} > 0$ indicates better forecasting performance than the benchmark; $R^2_{\mathrm{OS}} < 0$ indicates worse performance.
+- The benchmark depends on the application:
+  - Aggregate returns: Historical mean.
+  - Individual stock returns (Gu et al., 2020): Zero excess return.
+- In Gu et al. (2020), the sums run over all stock-month observations, giving an **uncentered panel $R^2$**.
+
+## Illustration: Interpreting Out-of-Sample $R^2$
+
+- Suppose models A and B have out-of-sample mean squared errors:
+
+$$\mathrm{MSE}_A = 0.018, \qquad \mathrm{MSE}_B = 0.020.$$
+
+- Taking model B as the benchmark:
+
+$$R^2_{\mathrm{OS}} = 1 - \frac{0.018}{0.020} = 0.10.$$
+
+- Model A reduces MSE by **10%** relative to model B.
+
+::: {.keypoint}
+**Question**: Does a 10% reduction in MSE imply a statistically significant improvement?
+:::
+
+## Volatility Forecasting: A Different Evaluation Problem {.compact}
+
+- Volatility is not directly observed; realized variance $RV_{t+1}$ serves as a proxy. For a variance forecast $\widehat{v}_{t+1|t} > 0$, two common losses are:
+
+  $$\begin{aligned} L_{\mathrm{MSE}} &= (RV_{t+1} - \widehat{v}_{t+1|t})^2, \\ L_{\mathrm{QLIKE}} &= \log(\widehat{v}_{t+1|t}) + \frac{RV_{t+1}}{\widehat{v}_{t+1|t}}. \end{aligned}$$
+
+- Both losses are robust to noise in a conditionally unbiased volatility proxy.
+- Unlike MSE, QLIKE penalizes underprediction more strongly. Underestimating volatility may lead to excessive risk exposure.
+
+::: {.keypoint}
+**Application**: Christensen et al. (2023) compare ML methods with HAR-type volatility forecasts.
+:::
+
+## Electricity Prices: Evaluating Hourly Forecasts
+
+- Day-ahead forecasts predict 24 hourly prices. Let $p_{d,h}$ and $\widehat{p}_{d,h}$ denote actual and forecast prices.
+- For $D$ days, the mean absolute error is
+
+  $$\mathrm{MAE} = \frac{1}{24D}\sum_{d=1}^{D}\sum_{h=1}^{24} |p_{d,h} - \widehat{p}_{d,h}|.$$
+
+- Lago et al. (2021) emphasize MAE and relative MAE (rMAE), strong benchmarks, and evaluation across markets and long test periods.
+- Percentage errors (MAPE) can be misleading when prices are near zero.
+
+## What Can Average Forecast Accuracy Hide?
+
+- Average forecast accuracy may hide important differences across applications:
+
+::: {.pull-up}
+:::
+
+::: {.overview}
+::: {.ov-row-inline}
+::: {.ov-label}
+Stock returns
+:::
+::: {.ov-desc}
+Small versus large firms?
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Macroeconomics
+:::
+::: {.ov-desc}
+Recessions versus expansions?
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Volatility
+:::
+::: {.ov-desc}
+Short versus long forecast horizons?
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Electricity prices
+:::
+::: {.ov-desc}
+Different hours, seasons, or markets?
+:::
+:::
+:::
+
+::: {.spacer}
+:::
+
+- Researchers therefore examine performance across subperiods, horizons, and groups of observations.
+
+# Statistical Comparison of Forecasts {.divider}
+
+## Comparing Forecast Losses {.compact}
+
+- For two forecasting models A and B, define the **loss differential**:
+
+  $$d_t = L(Y_t, \widehat{Y}^{A}_t) - L(Y_t, \widehat{Y}^{B}_t).$$
+
+- Under squared error loss:
+
+  $$d_t = (e^{A}_t)^2 - (e^{B}_t)^2.$$
+
+  $d_t < 0$ favors model A; $d_t > 0$ favors B.
+
+- The average loss differential is
+
+  $$\overline{d} = \frac{1}{P}\sum_{t=1}^{P} d_t.$$
+
+- $\overline{d} < 0$ indicates lower average loss for A, but not necessarily a statistically significant improvement.
+
+## The Diebold–Mariano Test {.compact-xs}
+
+- The **Diebold–Mariano (DM) test** compares the expected forecast losses of two models:
+
+  $$H_0 : \mathbb{E}[d_t] = 0.$$
+
+- The test statistic is
+
+  $$DM = \frac{\overline{d}}{\widehat{\mathrm{se}}(\overline{d})}.$$
+
+- Under suitable regularity conditions,
+
+  $$DM \xrightarrow{d} N(0,1) \qquad \text{under } H_0.$$
+
+- At the 5% level:
+  - **Two-sided**: Reject if $|DM| > 1.96$.
+  - **One-sided**: Reject if $DM < -1.645$ when testing whether model A outperforms B.
+
+## Serial Dependence and the DM Test
+
+- Forecast loss differentials $d_t$ may be serially correlated, especially when forecast horizons overlap.
+- Ignoring serial dependence can lead to incorrect standard errors and misleading significance tests.
+- The DM statistic therefore uses a **HAC standard error** for $\overline{d}$, accounting for serial correlation in the loss differentials.
+
+::: {.keypoint}
+**Caution**: Standard DM inference may require adjustments in certain settings, including nested models.
+:::
+
+## Illustration: Is the Improvement Significant? {.compact-xs}
+
+- Recall our earlier example:
+
+  $$\mathrm{MSE}_A = 0.018, \qquad \mathrm{MSE}_B = 0.020.$$
+
+- The average loss differential is
+
+  $$\overline{d} = 0.018 - 0.020 = -0.002.$$
+
+- Suppose $\widehat{\mathrm{se}}(\overline{d}) = 0.0008$:
+
+  $$DM = \frac{-0.002}{0.0008} = -2.5.$$
+
+  The two-sided $p$-value is approximately 0.012: model A performs significantly better.
+
+::: {.keypoint}
+**Key Distinction**: $R^2_{\mathrm{OS}} = 10\%$ measures the improvement; DM tests its statistical significance.
+:::
+
+**Question**: What if the standard error were twice as large?
+
+## Comparing Many Models: Model Confidence Set {.compact}
+
+- Suppose we compare five models: AR, LASSO, Random Forest, XGBoost, and Neural Network.
+- Comparing five models requires 10 pairwise tests, creating a **multiple-comparison problem**.
+- The **Model Confidence Set (MCS)** provides a joint procedure:
+
+:::: {.flow}
+::: {.fn-navy}
+Test equal predictive ability.
+:::
+::: {.fn}
+If rejected, eliminate a poorly performing model.
+:::
+::: {.fn-amber}
+Repeat until equality is no longer rejected.
+:::
+::::
+
+- The remaining models form a **shortlist of best-performing candidates**, which cannot be statistically distinguished.
+
+::: {.keypoint}
+**Illustration**: MCS = {Random Forest, XGBoost, Neural Network}. This does not imply identical true performance.
+:::
+
+# Economic Value and Reliable Forecasting Research {.divider}
+
+
+## Forecast Accuracy versus Economic Value
+
+- Statistical accuracy (MSE, MAE, OOS $R^2$) does not necessarily imply economic value.
+- Example: Stock return prediction.
+  - Model A predicts individual returns more accurately.
+  - Model B better identifies which stocks will outperform.
+  - Model B may be more useful for portfolio construction.
+
+::: {.keypoint}
+**Main Distinction**: Statistical evaluation measures forecast accuracy; economic evaluation measures usefulness for particular decisions.
+:::
+
+## From Stock Return Forecasts to Portfolios {.compact-xs}
+
+- An ML model predicts next month's return for each stock:
+
+  $$\widehat{r}_{i,t+1|t} = \widehat{f}(X_{i,t}).$$
+
+- Each month, rank stocks by predicted returns.
+- Form two portfolios:
+  - **High**: Highest predicted returns.
+  - **Low**: Lowest predicted returns.
+- A long-short strategy buys High and shorts Low:
+
+$$R^{LS}_{t+1} = R^{High}_{t+1} - R^{Low}_{t+1}.$$
+
+::: {.keypoint}
+**Application**: Gu, Kelly, and Xiu (2020) evaluate ML forecasts using portfolios sorted by predicted returns.
+:::
+
+## Evaluating Portfolio Performance {.compact-xs}
+
+- Key performance measures:
+
+::: {.pull-up}
+:::
+
+::: {.overview}
+::: {.ov-row-inline}
+::: {.ov-label}
+Average return
+:::
+::: {.ov-desc}
+How profitable is the strategy?
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Sharpe ratio
+:::
+::: {.ov-desc}
+Return relative to volatility.
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Risk exposures
+:::
+::: {.ov-desc}
+Exposure to market and other factors.
+:::
+:::
+::: {.ov-row-inline}
+::: {.ov-label}
+Turnover and trading costs
+:::
+::: {.ov-desc}
+Costs of portfolio rebalancing.
+:::
+:::
+:::
+
+::: {.spacer}
+:::
+
+- For monthly long-short returns, the annualized Sharpe ratio is approximately
+
+$$SR_{\mathrm{ann}} \approx \sqrt{12}\,\frac{\overline{R^{LS}}}{s(R^{LS})}.$$
+
+::: {.keypoint}
+**Important**: Better return predictions need not imply higher net investment performance.
+:::
+
+## Searching Across Many Forecasting Models {.compact}
+
+- ML research often compares many specifications:
+  - Predictors and transformations.
+  - Algorithms and hyperparameters.
+  - Sample periods and forecast horizons.
+- Searching across many models can produce strong results by chance, exaggerating apparent forecasting gains.
+- Model selection using **validation data** is legitimate.
+- Repeatedly adjusting models after examining **test results** compromises out-of-sample evaluation.
+
+::: {.keypoint}
+**Important Distinction**: MCS addresses comparisons among candidate models, but not repeated use of test data for model development.
+:::
+
+## What Makes Empirical Forecasting Evidence Convincing?
+
+- Before accepting reported ML gains, consider five questions:
+
+::: {.pull-up}
+:::
+
+::: {.steplist .align-md}
+::: {.step-row}
+::: {.step-num}
+1
+:::
+::: {.step-title}
+Benchmarks
+:::
+::: {.step-desc}
+Does ML beat strong alternatives?
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+2
+:::
+::: {.step-title}
+Evaluation design
+:::
+::: {.step-desc}
+Was the test sample kept out of model development?
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+3
+:::
+::: {.step-title}
+Robustness
+:::
+::: {.step-desc}
+Do results hold across periods, horizons, or markets?
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+4
+:::
+::: {.step-title}
+Economic relevance
+:::
+::: {.step-desc}
+Are the gains useful after costs and risks?
+:::
+:::
+::: {.step-row}
+::: {.step-num}
+5
+:::
+::: {.step-title}
+Transparency
+:::
+::: {.step-desc}
+Are data and methods reproducible?
+:::
+:::
+:::
+
+## References
+
+::: {style="font-size: 0.5em; line-height: 1.3;"}
+Christensen, K., Siggaard, M., & Veliyev, B. (2023). A machine learning approach to volatility forecasting. *Journal of Financial Econometrics*, 21(5), 1680--1727.
+
+Gu, S., Kelly, B., & Xiu, D. (2020). Empirical asset pricing via machine learning. *Review of Financial Studies*, 33(5), 2223--2273.
+
+Lago, J., Marcjasz, G., De Schutter, B., & Weron, R. (2021). Forecasting day-ahead electricity prices: A review of state-of-the-art algorithms, best practices and an open-access benchmark. *Applied Energy*, 293, 116983.
+
+Medeiros, M. C., Vasconcelos, G. F. R., Veiga, Á., & Zilberman, E. (2021). Forecasting inflation in a data-rich environment: The benefits of machine learning methods. *Journal of Business & Economic Statistics*, 39(1), 98--119.
+:::
