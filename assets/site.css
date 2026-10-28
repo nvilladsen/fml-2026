@@ -441,3 +441,7 @@ hr {
   border-top: 2.5px solid var(--faint);
   margin: 2rem -0.5rem;
 }
+
+body { min-height: 100vh; display: flex; flex-direction: column; }
+main { width: 100%; }
+.foot { margin-top: auto; }
