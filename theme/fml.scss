@@ -522,6 +522,12 @@ i.fas.fa-bars {
   box-sizing: border-box !important;
 }
 
+// error text in exercise cells
+.reveal div.exercise-cell-output.cell-output-stderr pre code,
+.reveal div.exercise-cell-output pre code span.cell-output-stderr {
+  color: #cc0000 !important;
+}
+
 // tall live output (help() dumps, DataFrames, figures) scrolls in place
 // instead of pushing content off the slide
 .reveal .cell-output-pyodide pre,
@@ -1078,6 +1084,12 @@ i.fas.fa-bars {
 .triad.cols-2 > .triad-card:nth-child(1) { --tc: #1c5cab; }
 .triad.cols-2 > .triad-card:nth-child(2) { --tc: #86b6ef; }
 .triad .triad-card.tc-brick:nth-child(n) { --tc: #b3402f; }
+
+// .triad .triad-card.tc-navy:nth-child(n) { --tc: #002546; }
+// .triad .triad-card.tc-light:nth-child(n) { --tc: #86b6ef; }
+
+.triad.cols-2.dark-light > .triad-card:nth-child(1) { --tc: #002546; }
+.triad.cols-2.dark-light > .triad-card:nth-child(2) { --tc: #86b6ef; }
 
 .triad-card .tc-letter {
   display: block;
