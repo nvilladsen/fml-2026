@@ -889,17 +889,17 @@ The random walk is a very commonly used benchmark in financial and macroeconomic
 - *The* linear regression model
 - Determine how the target variable $y$ depends linearly on a set of exogenous variables, $X$,
   - Compute the coefficients, $\beta$, by minimizing the sum of squared residuals,
-$$\hat\beta_{\text{OLS}} = \underset{\beta}{\arg\min} \left\{ \sum_{t = 1}^T(y_t - \hat{y}_t)^2 \right\}$$
+$$\hat\beta_{\text{OLS}} = \underset{\beta}{\arg\min} \left\{ \sum_{t=1}^T(y_t - x_t^\top\beta)^2 \right\}$$
 
 ::: {.keypoint}
 Intuitive and interpretable, yet possibly challenged by heteroskedasticity and serial correlation
 :::
 
-- Estimator,
+<!-- - Estimator,
 
 ::: {style="margin-top: -1em"}
 $$\hat{\beta} = (X^\top X)^{-1} X^\top y$$
-:::
+::: -->
 
 ## Linear Regression (OLS) in Code
 ```{pyodide}
