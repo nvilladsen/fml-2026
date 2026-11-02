@@ -1267,17 +1267,11 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6
 <li><em>The</em> linear regression model</li>
 <li>Determine how the target variable <span class="math inline">\(y\)</span> depends linearly on a set of exogenous variables, <span class="math inline">\(X\)</span>,
 <ul>
-<li>Compute the coefficients, <span class="math inline">\(\beta\)</span>, by minimizing the sum of squared residuals, <span class="math display">\[\hat\beta_{\text{OLS}} = \underset{\beta}{\arg\min} \left\{ \sum_{t = 1}^T(y_t - \hat{y}_t)^2 \right\}\]</span></li>
+<li>Compute the coefficients, <span class="math inline">\(\beta\)</span>, by minimizing the sum of squared residuals, <span class="math display">\[\hat\beta_{\text{OLS}} = \underset{\beta}{\arg\min} \left\{ \sum_{t=1}^T(y_t - x_t^\top\beta)^2 \right\}\]</span></li>
 </ul></li>
 </ul>
 <div class="keypoint">
 <p>Intuitive and interpretable, yet possibly challenged by heteroskedasticity and serial correlation</p>
-</div>
-<ul>
-<li>Estimator,</li>
-</ul>
-<div style="margin-top: -1em">
-<p><span class="math display">\[\hat{\beta} = (X^\top X)^{-1} X^\top y\]</span></p>
 </div>
 </section>
 <section id="linear-regression-ols-in-code" class="slide level2 center">

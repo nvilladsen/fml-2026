@@ -895,12 +895,6 @@ $$\hat\beta_{\text{OLS}} = \underset{\beta}{\arg\min} \left\{ \sum_{t=1}^T(y_t -
 Intuitive and interpretable, yet possibly challenged by heteroskedasticity and serial correlation
 :::
 
-<!-- - Estimator,
-
-::: {style="margin-top: -1em"}
-$$\hat{\beta} = (X^\top X)^{-1} X^\top y$$
-::: -->
-
 ## Linear Regression (OLS) in Code
 ```{pyodide}
 ols = LinearRegression()
