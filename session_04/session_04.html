@@ -1,0 +1,2803 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="session_04_files/libs/clipboard/clipboard.min.js"></script>
+<script src="session_04_files/libs/quarto-html/tabby.min.js"></script>
+<script src="session_04_files/libs/quarto-html/popper.min.js"></script>
+<script src="session_04_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="session_04_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="session_04_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="session_04_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="session_04_files/libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="session_04_files/libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Natasia Villadsen">
+  <meta name="dcterms.date" content="2026-11-04">
+  <title>Programming in Python and Deep Learning</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="session_04_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="session_04_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="session_04_files/libs/revealjs/dist/theme/quarto-30b8ea342387485333bc4b1ecb95606c.css">
+  <link href="session_04_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="session_04_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="session_04_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="session_04_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script type="module" src="session_04_files/libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+  <link href="session_04_files/libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Programming in Python and Deep Learning</h1>
+  <p class="subtitle">Forecasting with Machine Learning</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Natasia Villadsen
+</div>
+</div>
+</div>
+
+  <p class="date">2026-11-04</p>
+</section>
+<section>
+<section id="introduction" class="title-slide slide level1 divider center">
+<h1>Introduction</h1>
+<style>
+.reveal .slides .list-gap li {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-bottom: var(--gap, 0.5em) !important;
+}
+.reveal .slides .list-gap li p { margin: 0 !important; }
+.reveal .bp .flow-label { margin: 0.5em 0 0.2em; }
+.reveal .bp .flow { margin: 0.4em 0; }
+.reveal .bp .math.display { margin: 0.4em 0; }
+.reveal .bp p { margin: 0.4em 0; }
+.reveal .rank-note { font-size: 0.5em; color: #141413; }
+</style>
+<script>
+(function () {
+  function centre(section) {
+    var s = Reveal.getScale();
+    var sr = section.getBoundingClientRect();
+    section.querySelectorAll('ol ul li > p > span.math.display').forEach(function (m) {
+      var p = m.parentElement;
+      p.style.marginLeft = '0px';
+      p.style.width = 'auto';
+      var pr = p.getBoundingClientRect();
+      p.style.marginLeft = (-(pr.left - sr.left) / s) + 'px';
+      p.style.width = (sr.width / s) + 'px';
+    });
+  }
+  function run() {
+    var c = Reveal.getCurrentSlide();
+    if (c) centre(c);
+  }
+  window.addEventListener('load', function () {
+    Reveal.on('ready', run);
+    Reveal.on('slidechanged', run);
+    run();
+  });
+})();
+</script>
+</section>
+<section id="today" class="slide level2 center">
+<h2>Today</h2>
+<div class="overview">
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Brains and history</p>
+</div>
+<div class="ov-desc">
+<p>From biological neurons to the renaissance of neural networks</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Anatomy of a network</p>
+</div>
+<div class="ov-desc">
+<p>Layers, activations, and the forecast</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Training</p>
+</div>
+<div class="ov-desc">
+<p>Objective, optimization, backpropagation</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Regularization</p>
+</div>
+<div class="ov-desc">
+<p>Dropout, penalties, and early stopping</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Implementation</p>
+</div>
+<div class="ov-desc">
+<p>The PyTorch pipeline, from data to evaluation</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Beyond feed-forward neural networks</p>
+</div>
+<div class="ov-desc">
+<p>CNNs, LSTMs, and Transformers</p>
+</div>
+</div>
+</div>
+</section>
+<section id="why-pytorch" class="slide level2 center">
+<h2>Why PyTorch?</h2>
+<p><strong>PyTorch</strong> is the deep learning framework of this course</p>
+<div class="statband">
+<div class="stat">
+<p><span class="stat-big">40.5% vs.&nbsp;34.7%</span> <span class="stat-label">Job postings (PyTorch vs.&nbsp;TF)</span></p>
+</div>
+<div class="stat">
+<p><span class="stat-big">248,163 vs.&nbsp;17,342</span> <span class="stat-label">Hugging Face models (PyTorch vs.&nbsp;TF)</span></p>
+</div>
+<div class="stat">
+<p><span class="stat-big">86.2M vs.&nbsp;16.7M</span> <span class="stat-label">PyPI downloads (PyTorch vs.&nbsp;TF), (Aug 2026)</span></p>
+</div>
+</div>
+<div class="figblock">
+<div class="fig-src">
+<p>Sources: Huntr (Jul 2026); Second Talent (2026)</p>
+</div>
+</div>
+<ul>
+<li><strong>Tutorials</strong></li>
+</ul>
+<div class="keypoint">
+<p>PyTorch is the framework of instruction, but you are free to use TensorFlow</p>
+</div>
+</section></section>
+<section>
+<section id="neural-networks-are-inspired-by-brains" class="title-slide slide level1 divider center">
+<h1>Neural Networks are Inspired by Brains</h1>
+
+</section>
+<section id="a-neural-network-of-the-brain-of-a-mouse-i" class="slide level2 center">
+<h2>A Neural Network of the Brain of a Mouse I</h2>
+<div class="figblock fb-brain fb-w75">
+<div class="fig-title">
+<p>Extract from 1 mm³ of Mouse Brain</p>
+</div>
+<p><img src="../assets/figures/mouse_brain_large.svg"></p>
+<div class="fig-src">
+<p>Source: MICrONS Explorer Render, Daniel Berger &amp; MICrONS Explorer Consortium Team. Google Research and Harvard University.</p>
+</div>
+</div>
+</section>
+<section id="a-neural-network-of-the-brain-of-a-mouse-ii" class="slide level2 center">
+<h2>A Neural Network of the Brain of a Mouse II</h2>
+<div class="figblock fb-brain">
+<div class="fig-title">
+<p>Extract from 1 mm³ of Mouse Brain — Closer Look</p>
+</div>
+<p><img src="../assets/figures/mouse_brain_medium.svg"></p>
+<div class="fig-src">
+<p>Source: MICrONS Explorer Render, Daniel Berger &amp; MICrONS Explorer Consortium Team. Google Research and Harvard University.</p>
+</div>
+</div>
+</section>
+<section id="a-neural-network-of-the-brain-of-a-mouse-iii" class="slide level2 center">
+<h2>A Neural Network of the Brain of a Mouse III</h2>
+<div class="figblock fb-brain">
+<div class="fig-title">
+<p>Extract from 1 mm³ of Mouse Brain — Even Closer Look</p>
+</div>
+<p><img src="../assets/figures/mouse_brain_small.svg"></p>
+<div class="fig-src">
+<p>Source: MICrONS Explorer Render, Daniel Berger &amp; MICrONS Explorer Consortium Team. Google Research and Harvard University.</p>
+<p><a href="https://www.microns-explorer.org/cortical-mm3" target="_blank">Explore the network yourself.</a></p>
+</div>
+</div>
+</section>
+<section id="a-neuron-i" class="slide level2 center">
+<h2>A Neuron I</h2>
+<div class="figblock">
+<div class="fig-title">
+<p>A Biological Neuron</p>
+</div>
+<p><img src="../assets/figures/neuron.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Dendrites: receive signals (inputs)</li>
+<li>Soma: sums the inputs and decides whether to fire (weighted sum + activation)</li>
+<li>Nucleus: holds the DNA and keeps the cell running; not part of the signalling</li>
+<li>Axon: carries the signal away from the soma (output)</li>
+<li>Axon terminals: release the signal to the next neuron</li>
+<li>Synapse: the junction between neurons; its strength is what learning changes (weights)</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-neuron-ii" class="slide level2 center">
+<h2>A Neuron II</h2>
+<div class="figblock">
+<div class="fig-title">
+<p>Artificial Analogue to Neuron</p>
+</div>
+<p><img src="../assets/figures/nn_soma_axon.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+</section>
+<section id="the-neurological-network" class="slide level2 center">
+<h2>The Neurological Network</h2>
+<div class="figblock">
+<div class="fig-title">
+
+</div>
+<p><img src="../assets/figures/neurological_network.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+</section>
+<section id="the-artificial-network" class="slide level2 center">
+<h2>The Artificial Network</h2>
+<div class="figblock">
+<div class="fig-title">
+
+</div>
+<p><img src="../assets/figures/artificial_network.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+</section>
+<section id="neural-networks-are-supported-by" class="slide level2 center">
+<h2>Neural Networks are Supported by…</h2>
+<div class="cards cards-sm">
+<div class="card-box">
+<p><span class="t">Computational Power</span> <span class="d">Exponentially growing computing power, GPUs</span></p>
+</div>
+<div class="card-box">
+<p><span class="t">Backpropagation</span> <span class="d">Efficient gradient computation for deep networks</span></p>
+</div>
+<div class="card-box">
+<p><span class="t">Pre-trained Models</span> <span class="d">Including custom tuning</span></p>
+</div>
+<div class="card-box">
+<p><span class="t">Frameworks</span> <span class="d">PyTorch, TensorFlow, and similar</span></p>
+</div>
+</div>
+<div class="keypoint">
+<p>Next challenge: Physical limits of silicon-based chips reached.</p>
+<p>Possible solution: quantum computing</p>
+</div>
+</section></section>
+<section>
+<section id="neural-networks" class="title-slide slide level1 divider center">
+<h1>Neural Networks</h1>
+
+</section>
+<section id="forecasting-us-inflation-benchmarks-vs.-a-neural-network" class="slide level2 center">
+<h2>Forecasting US Inflation: Benchmarks vs.&nbsp;a Neural Network</h2>
+<p>US quarterly inflation, test sample (last 15% of quarters)</p>
+<table class="bars caption-top">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Forecast</th>
+<th colspan="2" data-quarto-table-cell-role="th">Test MSE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Random walk</td>
+<td class="bt" style="--w: 99.3%"></td>
+<td class="bv">13.8971</td>
+</tr>
+<tr class="even">
+<td>OLS</td>
+<td class="bt" style="--w: 70.9%"></td>
+<td class="bv">9.9284</td>
+</tr>
+<tr class="odd">
+<td>LASSO</td>
+<td class="bt" style="--w: 67.9%"></td>
+<td class="bv">9.5005</td>
+</tr>
+<tr class="even">
+<td>Ridge</td>
+<td class="bt" style="--w: 68.6%"></td>
+<td class="bv">9.5995</td>
+</tr>
+<tr class="odd">
+<td>Random forest</td>
+<td class="bt" style="--w: 71.1%"></td>
+<td class="bv">9.9475</td>
+</tr>
+<tr class="even">
+<td>Feedforward neural network - basic</td>
+<td class="bt" style="--w: 77.6%"></td>
+<td class="bv">10.8601</td>
+</tr>
+</tbody>
+</table>
+<div class="keypoint">
+<p>Today: how do we construct and train this network?</p>
+</div>
+</section>
+<section id="a-neural-network" class="slide level2 center">
+<h2>A Neural Network</h2>
+<div class="figblock">
+<div class="fig-title">
+<p>A Neural Network</p>
+</div>
+<p><img src="../assets/figures/neural_network.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+</section>
+<section id="the-layers-of-a-neural-network" class="slide level2 center">
+<h2>The Layers of a Neural Network</h2>
+<p>Layers are indexed by <span class="math inline">\(h\)</span>, <span class="math inline">\(h = 0, \ldots, H+1\)</span>. There are <span class="math inline">\(K_h\)</span> <strong>neurons</strong> in each layer <span class="math inline">\(h\)</span>, with <strong>activations</strong> <span class="math inline">\(A_k^{(h)}\)</span></p>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">One input layer</span></p>
+<p><span class="tc-title"><span class="math inline">\(h = 0\)</span></span></p>
+<p>The neurons are the <span class="math inline">\(p\)</span> input features, <span class="math inline">\(\mathbf{X} = (X_1, X_2, \ldots, X_p)\)</span></p>
+<p><span class="math inline">\(A_j^{(0)} = X_j\)</span>, <span class="math inline">\(\quad j = 1,\ldots,p\)</span></p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag"><span class="math inline">\(H\)</span> hidden layers</span></p>
+<p><span class="tc-title"><span class="math inline">\(h = 1, \ldots, H\)</span></span></p>
+<p>Essential computations here</p>
+</div>
+<div class="triad-card tc-amber">
+<p><span class="tc-tag">One output layer</span></p>
+<p><span class="tc-title"><span class="math inline">\(h = H+1\)</span></span></p>
+<p>Produces the forecast</p>
+</div>
+</div>
+</section>
+<section id="the-hidden-layers" class="slide level2 center">
+<h2>The Hidden Layers</h2>
+<p>The essential computations occur in the <strong>hidden</strong> layers (<span class="math inline">\(h = 1,...,H\)</span>), with activations <span class="math inline">\(A_k^{(h)}\)</span>, weights <span class="math inline">\(\omega_{kj}^{(h)}\)</span>, biases <span class="math inline">\(\omega_{k0}^{(h)}\)</span>, and activation functions <span class="math inline">\(g_h\)</span>,</p>
+<p><span class="math display">\[A_k^{(h)} = g_h\left(\omega_{k0}^{(h)}+\sum_{j=1}^{K_{h-1}}\omega_{kj}^{(h)}A_j^{(h-1)}\right), \qquad k = 1,...,K_h\]</span></p>
+<div class="triad cols-2">
+<div class="triad-card">
+<p><span class="tc-tag">Weighted sum</span></p>
+<p>Weights times the activations of the previous layer</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Activation function</span></p>
+<p><span class="math inline">\(g_h\)</span> introduces non-linearity to layer <span class="math inline">\(h\)</span></p>
+</div>
+</div>
+</section>
+<section id="the-first-hidden-layer" class="slide level2 center">
+<h2>The First Hidden Layer</h2>
+<p>The first hidden layer is a special case, with <span class="math inline">\(K_0 = p\)</span> and <span class="math inline">\(A_j^{(0)} = X_j\)</span>,</p>
+<p><span class="math display">\[A_k^{(1)} = g_1\left(\omega_{k0}^{(1)}+\sum_{j=1}^{p}\omega_{kj}^{(1)}X_j\right), \qquad k = 1,...,K_1\]</span></p>
+</section>
+<section id="forecasts" class="slide level2 center">
+<h2>Forecasts</h2>
+<p>In the regression task, the <strong>output</strong> layer (<span class="math inline">\(h = H+1\)</span>) produces forecasts, with weights <span class="math inline">\(\beta_k\)</span> and intercept <span class="math inline">\(\beta_0\)</span>, <span class="math display">\[f(\mathbf{X}) = \beta_0 + \sum_{k = 1}^{K_H}\beta_k A_k^{(H)}\]</span></p>
+<p>Evaluating in the activations of the last hidden layer,</p>
+<p><span class="math display">\[f(\mathbf{X}) = \beta_0 + \sum_{k = 1}^{K_H}\beta_k\, g_H\left(\omega_{k0}^{(H)}+\sum_{j=1}^{K_{H-1}}\omega_{kj}^{(H)}A_j^{(H-1)}\right)\]</span></p>
+</section>
+<section id="similarity-to-neurons-revisited" class="slide level2 center">
+<h2>Similarity to Neurons Revisited</h2>
+<div class="figblock">
+<div class="fig-title">
+<p>Artificial Analogue to Neuron</p>
+</div>
+<p><img src="../assets/figures/nn_soma_axon.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+</section></section>
+<section>
+<section id="implementation" class="title-slide slide level1 divider center">
+<h1>Implementation</h1>
+
+</section>
+<section id="the-blueprint" class="slide level2 center">
+<h2>The Blueprint</h2>
+<div class="steplist">
+<div class="step-row">
+<div class="step-num">
+<p>1</p>
+</div>
+<div class="step-title">
+<p>Data</p>
+</div>
+<div class="step-desc">
+<p>Target variable and predictors</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>2</p>
+</div>
+<div class="step-title">
+<p>Split and scale</p>
+</div>
+<div class="step-desc">
+<p>Chronological training, validation and test split, standardization fitted on the training sample only</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>3</p>
+</div>
+<div class="step-title">
+<p>DataLoaders</p>
+</div>
+<div class="step-desc">
+<p>Tensors in mini-batches</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>4</p>
+</div>
+<div class="step-title">
+<p>Model</p>
+</div>
+<div class="step-desc">
+<p>An <code>nn.Module</code> defining the architecture</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>5</p>
+</div>
+<div class="step-title">
+<p>Ingredients</p>
+</div>
+<div class="step-desc">
+<p>Objective, optimizer, regularization, loss</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>6</p>
+</div>
+<div class="step-title">
+<p>Training loop</p>
+</div>
+<div class="step-desc">
+<p>Training and validation over epochs</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>7</p>
+</div>
+<div class="step-title">
+<p>Evaluation</p>
+</div>
+<div class="step-desc">
+<p>Out-of-sample accuracy measures on the test sample</p>
+</div>
+</div>
+</div>
+</section>
+<section id="preliminaries" class="slide level2 center">
+<h2>Preliminaries</h2>
+<p>Importing libraries and selecting device</p>
+<div>
+<div id="pyodide-1" class="exercise-cell">
+
+</div>
+<script type="pyodide-1-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiJpbXBvcnQgY29weVxuaW1wb3J0IHRpbWVcbmltcG9ydCBudW1weSBhcyBucFxuaW1wb3J0IHN0YXRzbW9kZWxzLmFwaSBhcyBzbVxuZnJvbSBza2xlYXJuLnByZXByb2Nlc3NpbmcgaW1wb3J0IFN0YW5kYXJkU2NhbGVyXG5mcm9tIHNrbGVhcm4ubGluZWFyX21vZGVsIGltcG9ydCBMaW5lYXJSZWdyZXNzaW9uXG5mcm9tIHNrbGVhcm4ubW9kZWxfc2VsZWN0aW9uIGltcG9ydCB0cmFpbl90ZXN0X3NwbGl0XG5cbiMgaW1wb3J0IHRvcmNoXG4jIGltcG9ydCB0b3JjaC5ubiBhcyBublxuIyBpbXBvcnQgdG9yY2gubm4uZnVuY3Rpb25hbCBhcyBGXG4jIGZyb20gdG9yY2gudXRpbHMuZGF0YSBpbXBvcnQgVGVuc29yRGF0YXNldCwgRGF0YUxvYWRlclxuXG4jIGRldmljZSA9IHRvcmNoLmRldmljZShcImN1ZGFcIiBpZiB0b3JjaC5jdWRhLmlzX2F2YWlsYWJsZSgpIGVsc2UgXCJjcHVcIikifQ==
+</script>
+</div>
+</section>
+<section id="empirical-data" class="slide level2 center">
+<h2>Empirical Data</h2>
+<p>US quarterly macro data 1959Q1-2009Q3 (no missing values).</p>
+<div>
+<div id="pyodide-2" class="exercise-cell">
+
+</div>
+<script type="pyodide-2-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiJkZiA9IHNtLmRhdGFzZXRzLm1hY3JvZGF0YS5sb2FkX3BhbmRhcygpLmRhdGEuaWxvY1sxOl0gIyBObyBpbmZsYXRpb24gaW4gdGhlIGZpcnN0IHF1YXJ0ZXJcbmZlYXR1cmVzID0gZGZbW1wiaW5mbFwiLCBcInVuZW1wXCIsIFwidGJpbHJhdGVcIl1dLnRvX251bXB5KCkgICAjIChULCAzKVxuaW5mbCA9IGZlYXR1cmVzWzosIDBdIn0=
+</script>
+</div>
+<p>Lagging features: inflation, unemployment and the T-bill rate at time <span class="math inline">\(t\)</span> are used to predict inflation at time <span class="math inline">\(t+1\)</span>,</p>
+<div>
+<div id="pyodide-3" class="exercise-cell">
+
+</div>
+<script type="pyodide-3-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiJYID0gZmVhdHVyZXNbOi0xXVxudGFyZ2V0ID0gaW5mbFsxOl0ucmVzaGFwZSgtMSwgMSkifQ==
+</script>
+</div>
+</section>
+<section id="temporally-conscious-data-splitting" class="slide level2 center">
+<h2>Temporally Conscious Data Splitting</h2>
+<p>Chronological split (shuffle=False) to preserve temporal order (split: 70:15:15)</p>
+<div class="splitbar">
+<div class="sb-train" style="flex: 70">
+<p>Train (70%)</p>
+</div>
+<div class="sb-val" style="flex: 15">
+<p>Validation (15%)</p>
+</div>
+<div class="sb-test" style="flex: 15">
+<p>Test (15%)</p>
+</div>
+</div>
+<div>
+<div id="pyodide-4" class="exercise-cell">
+
+</div>
+<script type="pyodide-4-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiJYX3RyYWluLCBYX3RtcCwgeV90cmFpbiwgeV90bXAgPSB0cmFpbl90ZXN0X3NwbGl0KFgsIHRhcmdldCwgdHJhaW5fc2l6ZT0wLjcsIHNodWZmbGU9RmFsc2UpXG5YX3ZhbCwgWF90ZXN0LCB5X3ZhbCwgeV90ZXN0ID0gdHJhaW5fdGVzdF9zcGxpdChYX3RtcCwgeV90bXAsIHRyYWluX3NpemU9MC41LCBzaHVmZmxlPUZhbHNlKVxuXG5wcmludChmXCJUcmFpbjoge1hfdHJhaW4uc2hhcGV9LCBWYWxpZGF0aW9uOiB7WF92YWwuc2hhcGV9LCBUZXN0OiB7WF90ZXN0LnNoYXBlfVwiKSJ9
+</script>
+</div>
+</section>
+<section id="standardization" class="slide level2 center">
+<h2>Standardization</h2>
+<p>Standardization, fitting on the training sample only,</p>
+<div>
+<div id="pyodide-5" class="exercise-cell">
+
+</div>
+<script type="pyodide-5-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiJYX3NjYWxlciA9IFN0YW5kYXJkU2NhbGVyKClcbnlfc2NhbGVyID0gU3RhbmRhcmRTY2FsZXIoKVxuXG5YX3RyYWluID0gWF9zY2FsZXIuZml0X3RyYW5zZm9ybShYX3RyYWluKVxuWF92YWwgPSBYX3NjYWxlci50cmFuc2Zvcm0oWF92YWwpXG5YX3Rlc3QgPSBYX3NjYWxlci50cmFuc2Zvcm0oWF90ZXN0KVxuXG55X3RyYWluID0geV9zY2FsZXIuZml0X3RyYW5zZm9ybSh5X3RyYWluKVxueV92YWwgPSB5X3NjYWxlci50cmFuc2Zvcm0oeV92YWwpXG55X3Rlc3QgPSB5X3NjYWxlci50cmFuc2Zvcm0oeV90ZXN0KSJ9
+</script>
+</div>
+</section>
+<section id="tensors" class="slide level2 center">
+<h2>Tensors</h2>
+<div class="flow">
+<div class="fn-navy">
+<p>NumPy array</p>
+</div>
+<div class="fn">
+<p><code>torch.Tensor</code></p>
+</div>
+<div class="fn">
+<p><code>TensorDataset</code></p>
+</div>
+<div class="fn">
+<p><code>DataLoader</code></p>
+</div>
+</div>
+<p>The input data is converted to the format that PyTorch expects/receives,</p>
+<div>
+<div id="pyodide-6" class="exercise-cell">
+
+</div>
+<script type="pyodide-6-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IlhfdHJhaW4gPSB0b3JjaC5mcm9tX251bXB5KFhfdHJhaW4pLmZsb2F0KCkudG8oZGV2aWNlKVxuWF92YWwgPSB0b3JjaC5mcm9tX251bXB5KFhfdmFsKS5mbG9hdCgpLnRvKGRldmljZSlcblhfdGVzdCA9IHRvcmNoLmZyb21fbnVtcHkoWF90ZXN0KS5mbG9hdCgpLnRvKGRldmljZSlcbnlfdHJhaW4gPSB0b3JjaC5mcm9tX251bXB5KHlfdHJhaW4pLmZsb2F0KCkudG8oZGV2aWNlKVxueV92YWwgPSB0b3JjaC5mcm9tX251bXB5KHlfdmFsKS5mbG9hdCgpLnRvKGRldmljZSlcbnlfdGVzdCA9IHRvcmNoLmZyb21fbnVtcHkoeV90ZXN0KS5mbG9hdCgpLnRvKGRldmljZSkifQ==
+</script>
+</div>
+</section>
+<section id="constructing-dataloaders" class="slide level2 center">
+<h2>Constructing DataLoaders</h2>
+<p>This is incredibly efficient for large or specialized datasets,</p>
+<div>
+<div id="pyodide-7" class="exercise-cell">
+
+</div>
+<script type="pyodide-7-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImRmVHJhaW4gPSBUZW5zb3JEYXRhc2V0KFhfdHJhaW4sIHlfdHJhaW4pXG5kZlZhbCA9IFRlbnNvckRhdGFzZXQoWF92YWwsIHlfdmFsKVxuZGZUZXN0ID0gVGVuc29yRGF0YXNldChYX3Rlc3QsIHlfdGVzdClcblxubFRyYWluID0gRGF0YUxvYWRlcihkZlRyYWluLCBiYXRjaF9zaXplPTMyLCBzaHVmZmxlPVRydWUpXG5sVmFsID0gRGF0YUxvYWRlcihkZlZhbCwgYmF0Y2hfc2l6ZT0zMiwgc2h1ZmZsZT1GYWxzZSlcbmxUZXN0ID0gRGF0YUxvYWRlcihkZlRlc3QsIGJhdGNoX3NpemU9MzIsIHNodWZmbGU9RmFsc2UpIn0=
+</script>
+</div>
+</section>
+<section id="the-simple-neural-network-i" class="slide level2 center">
+<h2>The Simple Neural Network I</h2>
+<div>
+<div id="pyodide-8" class="exercise-cell">
+
+</div>
+<script type="pyodide-8-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNsYXNzIE5OKG5uLk1vZHVsZSk6XG4gICAgZGVmIF9faW5pdF9fKHNlbGYsIG5faW4sIG5faGlkZGVuMT0xNiwgbl9oaWRkZW4yPTgpOlxuICAgICAgICBzdXBlcihOTiwgc2VsZikuX19pbml0X18oKVxuICAgICAgICBzZWxmLmZjMSA9IG5uLkxpbmVhcihuX2luLCBuX2hpZGRlbjEpXG4gICAgICAgIHNlbGYuZmMyID0gbm4uTGluZWFyKG5faGlkZGVuMSwgbl9oaWRkZW4yKVxuICAgICAgICBzZWxmLmZjMyA9IG5uLkxpbmVhcihuX2hpZGRlbjIsIDEpXG5cbiAgICBkZWYgZm9yd2FyZChzZWxmLCB4KTpcbiAgICAgICAgeCA9IEYucmVsdShzZWxmLmZjMSh4KSlcbiAgICAgICAgeCA9IEYucmVsdShzZWxmLmZjMih4KSlcbiAgICAgICAgeCA9IHNlbGYuZmMzKHgpXG5cbiAgICAgICAgcmV0dXJuIHgifQ==
+</script>
+</div>
+<p>Parameters are passed after <code>self</code> (here <code>n_in</code>, <code>n_hidden1</code> and <code>n_hidden2</code>)</p>
+<aside class="notes">
+<p>A class is a blueprint for building an object that bundles its own parameters with the functions that use them. In PyTorch, the model is a class that inherits from nn.Module: <strong>init</strong> creates the layers (the parameters), and forward describes how data flows through them. “self” just means ‘this model’, so self.layer1 is a layer that belongs to it. The class is called model (here NN), and calling model(x) runs the forward pass. (i.e.&nbsp;here model = NN(…) is an instance of it)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="the-simple-neural-network-ii" class="slide level2 center">
+<h2>The Simple Neural Network II</h2>
+<p>PyTorch neural networks are defined as subclasses of <code>nn.Module</code></p>
+<div class="flow">
+<div class="fn-navy">
+<p>Input <span class="fn-sub"><code>n_in</code> features</span></p>
+</div>
+<div class="fn">
+<p><code>fc1</code> + ReLU <span class="fn-sub"><code>n_hidden1</code> neurons</span></p>
+</div>
+<div class="fn">
+<p><code>fc2</code> + ReLU <span class="fn-sub"><code>n_hidden2</code> neurons</span></p>
+</div>
+<div class="fn-amber">
+<p><code>fc3</code> <span class="fn-sub">1 output</span></p>
+</div>
+</div>
+<ul>
+<li><code>n_in</code> is the number of input features, <code>n_hidden1</code> and <code>n_hidden2</code> are the numbers of neurons in the first and second hidden layer</li>
+<li>The network on the previous slide has two hidden layers</li>
+</ul>
+</section>
+<section id="non-linear-activation-functions" class="slide level2 center">
+<h2>Non-Linear Activation Functions</h2>
+<p>Introduce non-linearity, allowing the model to learn complex patterns</p>
+<div class="act-table">
+<table class="caption-top">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 32%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Function</th>
+<th style="text-align: center;">Map</th>
+<th style="text-align: center;">Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>ReLU</strong> (Rectified Linear Unit)<br><span class="small">most prevalent today</span></td>
+<td style="text-align: center;"><span class="math inline">\(f: \mathbb{R} \to [0, \infty)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(f(x) = \max\{0, x\}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>tanh</strong> (hyperbolic tangent)</td>
+<td style="text-align: center;"><span class="math inline">\(\text{tanh}: \mathbb{R} \to (-1, 1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\text{tanh}(x) = \dfrac{e^x - e^{-x}}{e^x + e^{-x}}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>sigmoid</strong></td>
+<td style="text-align: center;"><span class="math inline">\(\sigma: \mathbb{R} \to (0, 1)\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(\sigma(x) = \dfrac{1}{1 + e^{-x}}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="pull-up">
+
+</div>
+<p><span class="flow-label fl-lg">Sigmoid: The first activation function</span></p>
+<div class="triad cols-2 strip">
+<div class="triad-card">
+<p><span class="math inline">\(\sigma(x) \approx 0\)</span>: the neuron does not fire</p>
+</div>
+<div class="triad-card">
+<p><span class="math inline">\(\sigma(x) \approx 1\)</span>: the neuron fires <span class="math inline">\(\Rightarrow\)</span> the neuron contributes to the output of the network</p>
+</div>
+</div>
+</section>
+<section id="activation-functions-and-their-derivatives" class="slide level2 center">
+<h2>Activation Functions and Their Derivatives</h2>
+<div class="figblock">
+<div class="fig-title">
+<p>ReLU, tanh and Sigmoid with Their Derivatives</p>
+</div>
+<p><img src="../assets/figures/activation_functions.svg"></p>
+<div class="fig-src">
+<p>ReLU: <span class="math inline">\(g'(x) = 0\)</span> for <span class="math inline">\(x &lt; 0\)</span>, <span class="math inline">\(g'(x) = 1\)</span> for <span class="math inline">\(x &gt; 0\)</span>. tanh: <span class="math inline">\(g'(x) = 1 - \tanh^2(x)\)</span>. sigmoid: <span class="math inline">\(g'(x) = \sigma(x)(1 - \sigma(x))\)</span>.</p>
+</div>
+</div>
+<div class="keypoint">
+<p>The derivative <span class="math inline">\(g'\)</span> enters every backpropagation step (coming up).</p>
+<p>Note: the sigmoid derivative is maximized at <span class="math inline">\(x = 0 \to \sigma'(x) = 0.25\)</span> – risk of vanishing gradients</p>
+</div>
+</section>
+<section id="specifying-the-activation-function" class="slide level2 center">
+<h2>Specifying the Activation Function</h2>
+<p>Specifying the activation function in the forward pass,</p>
+<div>
+<div id="pyodide-9" class="exercise-cell">
+
+</div>
+<script type="pyodide-9-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6InggPSBGLnJlbHUoc2VsZi5mYzEoeCkpIn0=
+</script>
+</div>
+<p>Alternatives: <code>torch.tanh(self.fc1(x))</code>, <code>torch.sigmoid(self.fc1(x))</code></p>
+</section>
+<section id="up-to-you-activation-functions" class="slide level2 center">
+<h2>Up to you: Activation Functions</h2>
+<p>The vanishing gradient problem pertains to the maximum of the sigmoid derivative being 0.25. A product of many such derivatives will with high likelihood approach zero.</p>
+<p>Using the derivative functions of the ReLU and sigmoid activation functions, <code>d_sigmoid</code> and <code>d_relu</code>, compute the product of each evaluated at <span class="math inline">\(x = 1\)</span>, ten times (the vector <code>np.full(10, 1.0)</code>).</p>
+<script type="exercise-setup-ex_vg-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfdmciLCJzZXR1cCI6dHJ1ZSwic3RhcnRvdmVyIjp0cnVlfSwiY29kZSI6ImltcG9ydCBudW1weSBhcyBucFxuZGVmIGRfc2lnbW9pZCh6KTpcbiAgICBzID0gMSAvICgxICsgbnAuZXhwKC16KSlcbiAgICByZXR1cm4gcyAqICgxIC0gcylcbmRlZiBkX3JlbHUoeik6XG4gICAgcmV0dXJuICh6ID4gMCkuYXN0eXBlKGZsb2F0KSJ9
+</script>
+<div>
+<div id="pyodide-11" class="exercise-cell">
+
+</div>
+<script type="pyodide-11-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJleGVyY2lzZSI6ImV4X3ZnIiwic3RhcnRvdmVyIjp0cnVlfSwiY29kZSI6InggPSBucC5mdWxsKDEwLCAxLjApXG5wcm9kX3NpZyAgPSAuLi5cbnByb2RfcmVsdSA9IC4uLlxucHJpbnQoZlwiU2lnbW9pZDoge3Byb2Rfc2lnOi4xZX0gfCBSZUxVOiB7cHJvZF9yZWx1Oi4xZX1cIikifQ==
+</script>
+</div>
+<div class="pyodide-ojs-exercise exercise-solution d-none" data-exercise="ex_vg">
+<code id="interpolate-13" class="solution-code d-none">x = np.full(10, 1.0)
+prod_sig  = np.prod(d_sigmoid(x))
+prod_relu = np.prod(d_relu(x))
+print(f"Sigmoid: {prod_sig:.1e} | ReLU: {prod_relu:.1e}")</code>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="interpolate-14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="interpolate-14-1"><a href="#interpolate-14-1" aria-label="1"></a>x <span class="op">=</span> np.full(<span class="dv">10</span>, <span class="fl">1.0</span>)</span>
+<span id="interpolate-14-2"><a href="#interpolate-14-2" aria-label="2"></a>prod_sig  <span class="op">=</span> np.prod(d_sigmoid(x))</span>
+<span id="interpolate-14-3"><a href="#interpolate-14-3" aria-label="3"></a>prod_relu <span class="op">=</span> np.prod(d_relu(x))</span>
+<span id="interpolate-14-4"><a href="#interpolate-14-4" aria-label="4"></a><span class="bu">print</span>(<span class="ss">f"Sigmoid: </span><span class="sc">{</span>prod_sig<span class="sc">:.1e}</span><span class="ss"> | ReLU: </span><span class="sc">{</span>prod_relu<span class="sc">:.1e}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="training-a-neural-network-i" class="slide level2 center">
+<h2>Training a Neural Network I</h2>
+<div class="figblock">
+<div class="fig-title">
+<p>xkcd #1838</p>
+</div>
+<p><img src="../assets/figures/xkcd.svg"></p>
+<div class="fig-src">
+<p>Source: Randall Munroe, <a href="https://xkcd.com/1838/">https://xkcd.com/1838/</a>, CC BY-NC 2.5.</p>
+</div>
+</div>
+</section>
+<section id="training-a-neural-network-ii" class="slide level2 center">
+<h2>Training a Neural Network II</h2>
+<p>We give this example in the <span class="math inline">\(h = 1\)</span> case,</p>
+<p><span class="math display">\[f(\mathbf{X}) = \beta_0 + \sum_{k = 1}^{K_1} \beta_k A_k^{(1)} = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g_1\left(\omega_{k0}^{(1)}+\sum_{j=1}^p\omega_{kj}^{(1)}X_j \right)\]</span></p>
+<p>The parameters to be estimated are,</p>
+<div class="triad cols-2">
+<div class="triad-card">
+<p><span class="tc-tag">Output layer</span></p>
+<p><span class="math inline">\(\boldsymbol{\beta} = \beta_0, \beta_1, \ldots, \beta_{K_1}\)</span></p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Hidden layer</span></p>
+<p><span class="math inline">\(\boldsymbol{\omega}^{(1)} = \omega_{kj}^{(1)}\)</span> for <span class="math inline">\(k = 1, \ldots, K_1\)</span> and <span class="math inline">\(j = 0, \ldots, p\)</span></p>
+</div>
+</div>
+<p>Stack the parameters into a vector: <span class="math inline">\(\theta = (\boldsymbol{\beta}, \boldsymbol{\omega}^{(1)})\)</span></p>
+</section>
+<section id="objective-function" class="slide level2 center">
+<h2>Objective Function</h2>
+<p>We assume a squared loss function to estimate parameters <span class="math inline">\(\theta\)</span>.</p>
+<p>For a single-hidden-layer network (<span class="math inline">\(H=1\)</span>), the model forecast for observation <span class="math inline">\(i\)</span> is,</p>
+<p><span class="math display">\[ f_\theta(x_i) = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g_1\left(\omega_{k0}^{(1)}+\sum_{j=1}^p\omega_{kj}^{(1)}x_{ij} \right) \]</span></p>
+<p>Vectorising the parameters into <span class="math inline">\(\theta\)</span>, we minimize the objective function <span class="math inline">\(R(\theta)\)</span>:</p>
+<p><span class="math display">\[ \min_\theta \{R(\theta)\}, \quad R(\theta) = \frac12\sum_{i = 1}^n(y_i - f_\theta(x_i))^2 \]</span></p>
+<aside class="notes">
+<p>The factor 1/2 cancels the 2 from differentiating the square. nn.MSELoss averages instead of summing and has no 1/2. This rescales the gradient by a constant, which the step size absorbs.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="numerical-optimization-i" class="slide level2 compact center">
+<h2>Numerical Optimization I</h2>
+<div class="flow">
+<div class="fn-navy">
+<p>Non-convex and high-dimensional problem <span class="fn-sub">no closed form, no analytical solution</span></p>
+</div>
+<div class="fn">
+<p>Numerical optimization <span class="fn-sub">gradient descent is a common algorithm</span></p>
+</div>
+<div class="fn-amber">
+<p>Too heavy computationally <span class="fn-sub">stochastic gradient descent (SGD) is used instead</span></p>
+</div>
+</div>
+<p>SGD uses only a small batch of data to compute the gradient</p>
+</section>
+<section id="numerical-optimization-ii-gradient-descent" class="slide level2 center">
+<h2>Numerical Optimization II — Gradient Descent</h2>
+<ul>
+<li>Given a differentiable function <span class="math inline">\(f: \mathbb{R}^p\to \mathbb{R}\)</span> to be minimized with respect to the vector <span class="math inline">\(\mathbf{\theta}\in\mathbb{R}^p\)</span> and step size <span class="math inline">\(s\)</span>,</li>
+</ul>
+<ol type="1">
+<li><p>Initialize with some starting value <span class="math inline">\(\mathbf{\theta}^\ast_{(0)}\)</span></p></li>
+<li><p>Then, for each iteration, <span class="math inline">\(i\)</span>,</p>
+<ul>
+<li><p>Compute the gradient at <span class="math inline">\(\mathbf{\theta}_{(i)}^\ast\)</span>, i.e.,</p>
+<p><span class="math display">\[ \nabla f(\mathbf{\theta}_{(i)}^\ast) = \frac{\partial f(\mathbf{\theta})}{\partial \mathbf{\theta}}\Bigg\vert_{\mathbf{\theta} = \mathbf{\theta}_{(i)}^\ast}\]</span></p></li>
+<li><p>Set <span class="math inline">\(\mathbf{\theta}_{(i+1)}^\ast = \mathbf{\theta}_{(i)}^\ast - s\nabla f(\mathbf{\theta}_{(i)}^\ast)\)</span></p></li>
+</ul></li>
+<li><p>Repeat until convergence. A convergence criterion could be a sufficiently small gradient, <span class="math inline">\(\lVert \nabla f(\theta_{(i)}^\ast)\rVert &lt;\varepsilon\)</span> with a maximal number of iterations at which the algorithm terminates – and reports non-convergence.</p></li>
+</ol>
+</section>
+<section id="numerical-optimization-iii-stochastic-gradient-descent" class="slide level2 center">
+<h2>Numerical Optimization III — Stochastic Gradient Descent</h2>
+<ul>
+<li>Given <span class="math inline">\(f(\mathbf{\theta}) = \frac{1}{n}\sum_{j=1}^{n} f_j(\mathbf{\theta})\)</span> to be minimized with respect to <span class="math inline">\(\mathbf{\theta}\in\mathbb{R}^p\)</span> and step sizes <span class="math inline">\(s_i\)</span>,</li>
+</ul>
+<ol type="1">
+<li><p>Initialize with some starting value <span class="math inline">\(\mathbf{\theta}^\ast_{(0)}\)</span></p></li>
+<li><p>Then, for each iteration, <span class="math inline">\(i\)</span>,</p>
+<ul>
+<li><p>Draw an index <span class="math inline">\(j_i\)</span> uniformly at random from <span class="math inline">\(\{1,\dots,n\}\)</span> and compute the gradient of that single term at <span class="math inline">\(\mathbf{\theta}_{(i)}^\ast\)</span>, i.e.,</p>
+<p><span class="math display">\[ \nabla f_{j_i}(\mathbf{\theta}_{(i)}^\ast) = \frac{\partial f_{j_i}(\mathbf{\theta})}{\partial \mathbf{\theta}}\Bigg\vert_{\mathbf{\theta} = \mathbf{\theta}_{(i)}^\ast}\]</span></p></li>
+<li><p>Set <span class="math inline">\(\mathbf{\theta}_{(i+1)}^\ast = \mathbf{\theta}_{(i)}^\ast - s_i\nabla f_{j_i}(\mathbf{\theta}_{(i)}^\ast)\)</span></p></li>
+</ul></li>
+<li><p>Repeat until convergence</p></li>
+</ol>
+<aside class="notes">
+<ul>
+<li>The choice of step sizes <span class="math inline">\(s_i\)</span> is crucial for the convergence of the algorithm.</li>
+<li>Common choices include a decreasing step size, or an adaptive step size, both according to some schedule. A constant stepsize is also possible, but may lead to oscillations around the minimum. Here a decay is often added later. Another option is halving the step decay after a certain number of epochs. The reason is that each step of SGD uses the gradient of a single randomly chosen term, a noisy approximation of the true gradient. With a constant step size, the iterations never settle down and keep bouncing around the minimum due to this noise. Shrinking the step size over time dampens this noise, allowing for convergence.</li>
+</ul>
+<p><span class="math inline">\(f_j(\theta)\)</span> is the loss of one observation, and so <span class="math inline">\(f(\theta)\)</span> is the average loss of all observations. Due to <span class="math inline">\(j_i\)</span> being uniform, the single-term gradient is correct on average, an unbiased estimate, at a fraction of the cost.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="numerical-optimization-iv" class="slide level2 center">
+<h2>Numerical Optimization IV</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/figures/gradient_descent_gif.webp" class="quarto-figure quarto-figure-center" height="480"></p>
+</figure>
+</div>
+</section>
+<section id="backpropagation-i" class="slide level2 center">
+<h2>Backpropagation I</h2>
+<div class="triad cols-2">
+<div class="triad-card tc-brick">
+<p><span class="tc-tag">The problem</span></p>
+<ul>
+<li>The numerical optimization, even in the SGD case, has incredibly high computational overhead</li>
+<li>Weights require the chain rule to compute derivatives</li>
+</ul>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">The solution</span></p>
+<ul>
+<li>Backpropagation is a recursive application of the chain rule to compute the gradient of the loss</li>
+<li>Therefore, backpropagation eases the computational burden of training</li>
+</ul>
+</div>
+</div>
+<p>Each SGD step uses a mini-batch <span class="math inline">\(B\)</span> of observations (batch_size=32), so backpropagation computes the gradient of the batch-averaged loss rather than of a single <span class="math inline">\(R_i\)</span>.</p>
+</section>
+<section id="backpropagation-ii" class="slide level2 center">
+<h2>Backpropagation II</h2>
+<p>Recall the objective,</p>
+<p><span class="math display">\[ R(\theta) = \sum_{i = 1}^n R_i(\theta) = \frac12\sum_{i = 1}^n(y_i - f_\theta(x_i))^2\]</span></p>
+<p>A sum, which means the gradient is a sum over the <span class="math inline">\(n\)</span> observations, so we need only consider one of these,</p>
+<p><span class="math display">\[R_i(\theta) = \frac12\left(y_i - \beta_0- \sum_{k = 1}^{K_1}\beta_k g_1\left(\omega_{k0}+\sum_{j = 1}^p\omega_{kj}x_{ij}\right)\right)^2\]</span></p>
+<aside class="notes">
+<p>The derivative of a sum is the sum of the derivatives.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="backpropagation-iii" class="slide level2 bp center">
+<h2>Backpropagation III</h2>
+<p>Let <span class="math inline">\(z_{ik} = \omega_{k0} + \sum_{j = 1}^p\omega_{kj}x_{ij}\Rightarrow f_\theta(x_i) = \beta_0 + \sum_{k = 1}^{K_1}\beta_k g_1(z_{ik})\)</span>. Update <span class="math inline">\(\beta_k\)</span> in one training step,</p>
+<div class="flow-label">
+<p>Forward pass: compute the forecast and the loss</p>
+</div>
+<div class="flow">
+<div class="fn">
+<p><span class="math inline">\(\beta_k\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(f_\theta(x_i)\)</span></p>
+</div>
+<div class="fn-navy">
+<p><span class="math inline">\(R_i(\theta)\)</span></p>
+</div>
+</div>
+<div class="flow-label">
+<p>Backward pass: multiply the derivatives (chain rule)</p>
+</div>
+<div class="flow back">
+<div class="fn">
+<p><span class="math inline">\(\dfrac{\partial f_\theta(x_i)}{\partial \beta_k} = g_1(z_{ik})\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)} = -(y_i - f_\theta(x_i))\)</span></p>
+</div>
+</div>
+<p>Computing the derivative w.r.t. <span class="math inline">\(\beta_k\)</span>,</p>
+<div class="pull-up">
+
+</div>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial R_i(\theta)}{\partial \beta_k} &amp;= \frac{\partial R_i(\theta)}{\partial f_\theta(x_i)} \cdot \frac{\partial f_\theta(x_i)}{\partial \beta_k} \\ &amp;= -(y_i - f_\theta(x_i)) \cdot g_1(z_{ik})
+\end{aligned}
+\]</span></p>
+</section>
+<section id="backpropagation-iv" class="slide level2 bp center">
+<h2>Backpropagation IV</h2>
+<p>Let <span class="math inline">\(z_{ik} = \omega_{k0} + \sum_{j = 1}^p\omega_{kj}x_{ij}\)</span>. Update <span class="math inline">\(\omega_{kj}\)</span> in one training step,</p>
+<div class="flow-label">
+<p>Forward pass: compute the forecast and the loss</p>
+</div>
+<div class="flow">
+<div class="fn">
+<p><span class="math inline">\(\omega_{kj}\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(z_{ik}\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(g_1(z_{ik})\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(f_\theta(x_i)\)</span></p>
+</div>
+<div class="fn-navy">
+<p><span class="math inline">\(R_i(\theta)\)</span></p>
+</div>
+</div>
+<div class="flow-label">
+<p>Backward pass: multiply the derivatives (chain rule)</p>
+</div>
+<div class="flow back">
+<div class="fn">
+<p><span class="math inline">\(\dfrac{\partial z_{ik}}{\partial \omega_{kj}} = x_{ij}\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(\dfrac{\partial g_1(z_{ik})}{\partial z_{ik}} = g'_1(z_{ik})\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(\dfrac{\partial f_\theta(x_i)}{\partial g_1(z_{ik})} = \beta_k\)</span></p>
+</div>
+<div class="fn">
+<p><span class="math inline">\(\dfrac{\partial R_i(\theta)}{\partial f_\theta(x_i)} = -(y_i - f_\theta(x_i))\)</span></p>
+</div>
+</div>
+<p>Computing the derivative w.r.t. <span class="math inline">\(\omega_{kj}\)</span>,</p>
+<div class="pull-up">
+
+</div>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial R_i(\theta)}{\partial \omega_{kj}} &amp;= \frac{\partial R_i(\theta)}{\partial f_\theta(x_i)} \cdot \frac{\partial f_\theta(x_i)}{\partial g_1(z_{ik})} \cdot \frac{\partial g_1(z_{ik})}{\partial z_{ik}} \cdot \frac{\partial z_{ik}}{\partial \omega_{kj}} \\ &amp;= -(y_i - f_\theta(x_i)) \cdot \beta_k \cdot g'_1(z_{ik}) \cdot x_{ij}
+\end{aligned}
+\]</span></p>
+</section>
+<section id="backpropagation-v-update-rules" class="slide level2 center">
+<h2>Backpropagation V: Update Rules</h2>
+<p>The two derivatives form the basis for the update rules, with step size <span class="math inline">\(s\)</span> and one observation <span class="math inline">\(i\)</span> per step</p>
+<div class="triad cols-2 big">
+<div class="triad-card">
+<p><span class="tc-tag">Output weight</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\beta_k^{(t + 1)} &amp;= \beta_k^{(t)} - s\,\frac{\partial R_i}{\partial \beta_k} \\
+&amp;= \beta_k^{(t)} + s\,(y_i - f_\theta(x_i))\,g_1(z_{ik})
+\end{aligned}
+\]</span></p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Hidden weight</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\omega_{kj}^{(t + 1)} &amp;= \omega_{kj}^{(t)} - s\,\frac{\partial R_i}{\partial \omega_{kj}} \\
+&amp;= \omega_{kj}^{(t)} + s\,(y_i - f_\theta(x_i))\,\beta_k\,g'(z_{ik})\,x_{ij}
+\end{aligned}
+\]</span></p>
+</div>
+</div>
+<ul>
+<li>Both updates contain the forecast error <span class="math inline">\((y_i - f_\theta(x_i))\)</span></li>
+<li>This error term is attributed to the parameters via the terms <span class="math inline">\(g(z_{ik})\)</span> and <span class="math inline">\(\beta_k g'(z_{ik}) x_{ij}\)</span></li>
+</ul>
+</section>
+<section id="optimization-algorithms" class="slide level2 center">
+<h2>Optimization Algorithms</h2>
+<div class="keypoint">
+<p>Stochastic Gradient Descent is rarely used in practice today</p>
+</div>
+<div class="triad">
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Building block</span></p>
+<p><span class="tc-title">RMSProp</span></p>
+<p>Uses smaller steps for parameters with large recent gradients</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Building block</span></p>
+<p><span class="tc-title">Momentum</span></p>
+<p>Averages past gradients to smooth noise and speed up</p>
+</div>
+<div class="triad-card tc-navy">
+<p><span class="tc-tag">Commonly preferred</span></p>
+<p><span class="tc-title">ADAM</span></p>
+<p>A combination of RMSProp and momentum (Kingma &amp; Ba, 2014)</p>
+</div>
+</div>
+</section>
+<section id="specifying-the-optimizer" class="slide level2 center">
+<h2>Specifying the Optimizer</h2>
+<div>
+<div id="pyodide-15" class="exercise-cell">
+
+</div>
+<script type="pyodide-15-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6Im9wdGltaXplciA9IHRvcmNoLm9wdGltLkFkYW0obW9kZWwucGFyYW1ldGVycygpLCBscj0wLjAwMSkifQ==
+</script>
+</div>
+<p>Common alternatives: <code>torch.optim.SGD</code>, <code>torch.optim.RMSprop</code>, <code>torch.optim.AdamW</code></p>
+<ul>
+<li><code>lr=0.001</code> is default for the <code>torch.optim.Adam</code> function.</li>
+<li><code>model</code> is a name we specify for the neural network object, e.g., <code>model = NN(n_in=3)</code></li>
+</ul>
+</section>
+<section id="guards-against-overfitting" class="slide level2 center">
+<h2>Guards Against Overfitting</h2>
+<!-- ## Guarding Against Overfitting -->
+<div class="overview">
+<div class="ov-row">
+<div class="ov-label">
+<p>Dropout</p>
+</div>
+<div class="ov-desc">
+<p>Randomly sets neurons to zero in each training step</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p><span class="math inline">\(\ell_1\)</span> regularization</p>
+</div>
+<div class="ov-desc">
+<p>Penalizes the absolute value of the weights, favouring sparse networks</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p><span class="math inline">\(\ell_2\)</span> regularization (weight decay)</p>
+</div>
+<div class="ov-desc">
+<p>Shrinks the weights towards zero</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>Early stopping</p>
+</div>
+<div class="ov-desc">
+<p>Stops training when the validation loss no longer improves</p>
+</div>
+</div>
+</div>
+</section>
+<section id="dropout" class="slide level2 center">
+<h2>Dropout</h2>
+<div class="columns">
+<div class="column fs-sm" style="width:48%;">
+<ul>
+<li>Dropout (Srivastava et al., 2014): <code>nn.Dropout(p)</code> is applied in every training step</li>
+<li>Each neuron in the layer is set to zero with probability <span class="math inline">\(p\)</span>, e.g., <span class="math inline">\(p = 0.5\)</span></li>
+<li>Neurons are made more independent, so the network behaves like an average of many thinned networks (think bagged trees)</li>
+<li>Dropout is not applied in evaluation</li>
+</ul>
+</div><div class="column" style="width:52%;">
+<div class="figblock">
+<div class="fig-title">
+<p>Neural Network with Dropout = 0.5</p>
+</div>
+<p><img src="../assets/figures/nn_dropout.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+</div></div>
+<aside class="notes">
+<p>The dropped out units vary every mini-batch</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="dropout-in-pytorch" class="slide level2 th-slide center">
+<h2>Dropout in PyTorch</h2>
+<p>Applying dropout to layer <code>fc1</code> with specified probability <code>p=0.5</code></p>
+<div>
+<div id="pyodide-16" class="exercise-cell">
+
+</div>
+<script type="pyodide-16-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IiMgaW4gX19pbml0X19cbnNlbGYuZHJvcG91dCA9IG5uLkRyb3BvdXQocD0wLjUpXG5cbiMgaW4gZm9yd2FyZFxueCA9IHNlbGYuZHJvcG91dChGLnJlbHUoc2VsZi5mYzEoeCkpKSJ9
+</script>
+</div>
+<div class="th"><span class="th-arrow">↑</span><span class="th-line"></span><span class="th-ref" style="bottom:19.11%"><b>Basic NN</b></span><span class="th-dot" style="bottom:5.23%"></span><span class="th-val" style="bottom:5.23%">10.235</span></div>
+</section>
+<section id="ell_1-and-ell_2-regularization" class="slide level2 center">
+<h2><span class="math inline">\(\ell_1\)</span> and <span class="math inline">\(\ell_2\)</span> Regularization</h2>
+<div class="compare">
+<div class="compare-col">
+<p><span class="cmp-title"><span class="math inline">\(\ell_1\)</span>: absolute value</span></p>
+<p>Penalizes the absolute value of the weights, favouring sparse networks, with penalty added to the loss,</p>
+<p><span class="math display">\[\mathcal{L}(\omega) + \lambda\sum_{h,k,j}\left|\omega_{kj}^{(h)}\right|\]</span></p>
+</div>
+<div class="compare-col cmp-alt">
+<p><span class="cmp-title"><span class="math inline">\(\ell_2\)</span>: weight decay</span></p>
+<p>Weight decay (<span class="math inline">\(\ell_2\)</span>) adds a penalty to the loss, shrinking the weights towards zero,</p>
+<p><span class="math display">\[\mathcal{L}(\omega) + \frac{\lambda}{2}\sum_{h,k,j}\left(\omega_{kj}^{(h)}\right)^2\]</span></p>
+</div>
+</div>
+</section>
+<section id="ell_1-regularization-in-pytorch" class="slide level2 th-slide center">
+<h2><span class="math inline">\(\ell_1\)</span> Regularization in PyTorch</h2>
+<div>
+<div id="pyodide-17" class="exercise-cell">
+
+</div>
+<script type="pyodide-17-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImwxX2xhbWJkYSA9IDAuMDAwMVxuXG5mb3IgaW5wdXRzLCB0YXJnZXRzIGluIGxUcmFpbjpcbiAgICAuLi5cbiAgICBsb3NzID0gY3JpdGVyaW9uKG91dHB1dHMsIHRhcmdldHMpXG4gICAgbG9zcyA9IGxvc3MgKyBsMV9sYW1iZGEgKiBzdW0ocGFyYW0uYWJzKCkuc3VtKCkgZm9yIHBhcmFtIGluIG1vZGVsLnBhcmFtZXRlcnMoKSkifQ==
+</script>
+</div>
+<div class="th"><span class="th-arrow">↑</span><span class="th-line"></span><span class="th-ref" style="bottom:19.11%"><b>Basic NN</b></span><span class="th-dot" style="bottom:3.43%"></span><span class="th-val" style="bottom:3.43%">10.154</span></div>
+</section>
+<section id="ell_2-regularization-in-pytorch" class="slide level2 th-slide center">
+<h2><span class="math inline">\(\ell_2\)</span> Regularization in PyTorch</h2>
+<p>Weight decay is passed as an argument to the optimizer, e.g., <code>weight_decay=1e-4</code> in <code>Adam</code>,</p>
+<div>
+<div id="pyodide-18" class="exercise-cell">
+
+</div>
+<script type="pyodide-18-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6Im9wdGltaXplciA9IHRvcmNoLm9wdGltLkFkYW0obW9kZWwucGFyYW1ldGVycygpLCBscj0wLjAwMSwgd2VpZ2h0X2RlY2F5PTFlLTQpIn0=
+</script>
+</div>
+<div class="th"><span class="th-arrow">↑</span><span class="th-line"></span><span class="th-ref" style="bottom:19.11%"><b>Basic NN</b></span><span class="th-dot" style="bottom:3.33%"></span><span class="th-val" style="bottom:3.33%">10.150</span></div>
+</section>
+<section id="up-to-you-penalties" class="slide level2 center">
+<h2>Up to you: Penalties</h2>
+<p>Compute <span class="math inline">\(\sum |\omega|\)</span> (the <span class="math inline">\(\ell_1\)</span> term) and <span class="math inline">\(\sum \omega^2\)</span> (the <span class="math inline">\(\ell_2\)</span> term) for the weights <span class="math inline">\(\omega = (0.5, -1, 2)\)</span>.</p>
+<script type="exercise-setup-ex_pen-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsImV4ZXJjaXNlIjoiZXhfcGVuIiwic2V0dXAiOnRydWUsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiJpbXBvcnQgbnVtcHkgYXMgbnAifQ==
+</script>
+<div>
+<div id="pyodide-20" class="exercise-cell">
+
+</div>
+<script type="pyodide-20-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJleGVyY2lzZSI6ImV4X3BlbiIsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiJ3ID0gbnAuYXJyYXkoWzAuNSwgLTEuMCwgMi4wXSlcbmwxID0gLi4uXG5sMiA9IC4uLlxucHJpbnQoZlwiTDEgPSB7bDE6LjJmfSwgTDIgPSB7bDI6LjJmfVwiKSJ9
+</script>
+</div>
+<div class="pyodide-ojs-exercise exercise-solution d-none" data-exercise="ex_pen">
+<code id="interpolate-22" class="solution-code d-none">w = np.array([0.5, -1.0, 2.0])
+l1 = np.sum(np.abs(w))
+l2 = np.sum(w ** 2)
+print(f"L1 = {l1:.2f}, L2 = {l2:.2f}")</code>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="interpolate-23"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="interpolate-23-1"><a href="#interpolate-23-1" aria-label="1"></a>w <span class="op">=</span> np.array([<span class="fl">0.5</span>, <span class="op">-</span><span class="fl">1.0</span>, <span class="fl">2.0</span>])</span>
+<span id="interpolate-23-2"><a href="#interpolate-23-2" aria-label="2"></a>l1 <span class="op">=</span> np.<span class="bu">sum</span>(np.<span class="bu">abs</span>(w))</span>
+<span id="interpolate-23-3"><a href="#interpolate-23-3" aria-label="3"></a>l2 <span class="op">=</span> np.<span class="bu">sum</span>(w <span class="op">**</span> <span class="dv">2</span>)</span>
+<span id="interpolate-23-4"><a href="#interpolate-23-4" aria-label="4"></a><span class="bu">print</span>(<span class="ss">f"L1 = </span><span class="sc">{</span>l1<span class="sc">:.2f}</span><span class="ss">, L2 = </span><span class="sc">{</span>l2<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="epochs" class="slide level2 center">
+<h2>Epochs</h2>
+<div class="keypoint">
+<p>An epoch is a complete pass through the entire training dataset</p>
+</div>
+<p>The training process is iterative and involves multiple <strong>epochs</strong>. The number of epochs can be 1) prespecified, 2) tuned, or 3) determined by early stopping</p>
+</section>
+<section id="early-stopping-i" class="slide level2 center">
+<h2>Early Stopping I</h2>
+<div class="figblock">
+<div class="fig-title">
+<p>Early Stopping</p>
+</div>
+<p><img src="../assets/figures/early_stopping.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+</section>
+<section id="early-stopping-ii" class="slide level2 th-slide center">
+<h2>Early Stopping II</h2>
+<div class="flow">
+<div class="fn-navy">
+<p>When the training accuracy keeps increasing, we continue training</p>
+</div>
+<div class="fn">
+<p>The validation accuracy, our ability to generalize, starts to decrease after a certain point</p>
+</div>
+<div class="fn-amber">
+<p>No improvement for #<code>patience</code> epochs: stop and restore the best model state</p>
+</div>
+</div>
+<p>Early stopping adds a few lines to the training loop. Refer to Lecture 4 Exercises</p>
+<div class="th"><span class="th-arrow">↑</span><span class="th-line"></span><span class="th-ref" style="bottom:19.11%"><b>Basic NN</b></span><span class="th-dot" style="bottom:14.64%"></span><span class="th-val" style="bottom:14.64%">10.659</span></div>
+</section>
+<section id="loss-functions" class="slide level2 center">
+<h2>Loss Functions</h2>
+<p>We still consider only the regression task. Typical loss functions include,</p>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-title"><code>nn.MSELoss</code></span></p>
+<p>Squared error</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-title"><code>nn.L1Loss</code></span></p>
+<p>Absolute error</p>
+</div>
+<div class="triad-card tc-amber">
+<p><span class="tc-title"><code>nn.HuberLoss</code></span></p>
+<p>Squared for small errors, absolute for large (Huber, 1964) – remember for later</p>
+</div>
+</div>
+<p>Example for the mean squared error,</p>
+<div>
+<div id="pyodide-24" class="exercise-cell">
+
+</div>
+<script type="pyodide-24-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNyaXRlcmlvbiA9IG5uLk1TRUxvc3MoKVxuXG5mb3IgaW5wdXRzLCB0YXJnZXRzIGluIGxUcmFpbjpcbiAgICAuLi5cbiAgICBsb3NzID0gY3JpdGVyaW9uKG91dHB1dHMsIHRhcmdldHMpIn0=
+</script>
+</div>
+<p>We can write our own loss functions, but this is up to you if you wish to do so.</p>
+</section></section>
+<section>
+<section id="training-in-pytorch" class="title-slide slide level1 divider center">
+<h1>Training in PyTorch</h1>
+
+</section>
+<section id="initializing-training" class="slide level2 center">
+<h2>Initializing Training</h2>
+<ul>
+<li>The model is initialized and moved to the appropriate device (CPU or GPU)</li>
+<li>The loss function and optimizer are specified</li>
+<li>The number of epochs is set to 20</li>
+</ul>
+<div>
+<div id="pyodide-25" class="exercise-cell">
+
+</div>
+<script type="pyodide-25-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6Im1vZGVsID0gTk4obl9pbj1YX3RyYWluLnNoYXBlWzFdKS50byhkZXZpY2UpXG5cbmNyaXRlcmlvbiA9IG5uLk1TRUxvc3MoKVxub3B0aW1pemVyID0gdG9yY2gub3B0aW0uQWRhbShtb2RlbC5wYXJhbWV0ZXJzKCksIGxyPTAuMDAxKVxubl9lcG9jaHMgPSAyMCJ9
+</script>
+</div>
+</section>
+<section id="one-training-step" class="slide level2 center">
+<h2>One Training Step</h2>
+<div class="overview">
+<div class="ov-row">
+<div class="ov-label">
+<p>1. <code>optimizer.zero_grad()</code></p>
+</div>
+<div class="ov-desc">
+<p>Reset the gradients</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>2. <code>model(inputs)</code></p>
+</div>
+<div class="ov-desc">
+<p>Forward pass: compute the forecasts</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>3. <code>criterion(outputs, targets)</code></p>
+</div>
+<div class="ov-desc">
+<p>Compute the loss</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>4. <code>loss.backward()</code></p>
+</div>
+<div class="ov-desc">
+<p>Backpropagation: compute the gradients</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>5. <code>optimizer.step()</code></p>
+</div>
+<div class="ov-desc">
+<p>Update the parameters</p>
+</div>
+</div>
+</div>
+</section>
+<section id="main-training-and-validation-loop-i" class="slide level2 center">
+<h2>Main Training and Validation Loop I</h2>
+<div>
+<div id="pyodide-26" class="exercise-cell">
+
+</div>
+<script type="pyodide-26-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImZvciBlcG9jaCBpbiByYW5nZShuX2Vwb2Nocyk6XG4gICAgbW9kZWwudHJhaW4oKVxuICAgIGZvciBpbnB1dHMsIHRhcmdldHMgaW4gbFRyYWluOlxuICAgICAgICBpbnB1dHMsIHRhcmdldHMgPSBpbnB1dHMudG8oZGV2aWNlKSwgdGFyZ2V0cy50byhkZXZpY2UpXG5cbiAgICAgICAgb3B0aW1pemVyLnplcm9fZ3JhZCgpXG4gICAgICAgIG91dHB1dHMgPSBtb2RlbChpbnB1dHMpXG4gICAgICAgIGxvc3MgPSBjcml0ZXJpb24ob3V0cHV0cywgdGFyZ2V0cylcbiAgICAgICAgbG9zcy5iYWNrd2FyZCgpXG5cbiAgICAgICAgb3B0aW1pemVyLnN0ZXAoKVxuICAuLi5cbiMgQ29udGludWVkIG9uIG5leHQgc2xpZGUifQ==
+</script>
+</div>
+</section>
+<section id="main-training-and-validation-loop-ii" class="slide level2 center">
+<h2>Main Training and Validation Loop II</h2>
+<div>
+<div id="pyodide-27" class="exercise-cell">
+
+</div>
+<script type="pyodide-27-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImZvciBlcG9jaCBpbiByYW5nZShuX2Vwb2Nocyk6XG4gIC4uLlxuIyBDb250aW51ZWQgZnJvbSBwcmV2aW91cyBzbGlkZVxuICAgIG1vZGVsLmV2YWwoKVxuICAgIHZhbF9sb3NzID0gMC4wXG4gICAgd2l0aCB0b3JjaC5ub19ncmFkKCk6XG4gICAgICAgIGZvciBpbnB1dHMsIHRhcmdldHMgaW4gbFZhbDpcbiAgICAgICAgICAgIGlucHV0cywgdGFyZ2V0cyA9IGlucHV0cy50byhkZXZpY2UpLCB0YXJnZXRzLnRvKGRldmljZSlcblxuICAgICAgICAgICAgb3V0cHV0cyA9IG1vZGVsKGlucHV0cylcbiAgICAgICAgICAgIGxvc3MgPSBjcml0ZXJpb24ob3V0cHV0cywgdGFyZ2V0cylcbiAgICAgICAgICAgIHZhbF9sb3NzICs9IGxvc3MuaXRlbSgpICogaW5wdXRzLnNpemUoMClcblxuICAgIHZhbF9sb3NzIC89IGxlbihsVmFsLmRhdGFzZXQpXG4gICAgcHJpbnQoZlwiRXBvY2gge2Vwb2NoICsgMX06IHZhbGlkYXRpb24gbG9zcyB7dmFsX2xvc3M6LjRmfVwiKSJ9
+</script>
+</div>
+<aside class="notes">
+<p>Validation for early stopping, hyperparameter tuning, and monitoring of convergence.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="one-validation-step" class="slide level2 center">
+<h2>One Validation Step</h2>
+<div class="overview">
+<div class="ov-row">
+<div class="ov-label">
+<p>1. <code>model.eval()</code></p>
+</div>
+<div class="ov-desc">
+<p>Switches to evaluation mode (leaving out dropout, batch normalization, etc.)</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>2. <code>torch.no_grad()</code></p>
+</div>
+<div class="ov-desc">
+<p>Disables gradient computations</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>3. <code>model(inputs)</code>, <code>criterion(outputs, targets)</code></p>
+</div>
+<div class="ov-desc">
+<p>Computes forecasts and loss</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>4. <code>val_loss += loss.item() * inputs.size(0)</code></p>
+</div>
+<div class="ov-desc">
+<p>Adds the batch’s summed loss to <code>val_loss</code></p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>5. <code>val_loss /= len(lVal.dataset)</code></p>
+</div>
+<div class="ov-desc">
+<p>Divides <code>val_loss</code> by the number of validation observations to get the validation MSE</p>
+</div>
+</div>
+</div>
+</section>
+<section id="one-evaluation-pass" class="slide level2 center">
+<h2>One Evaluation Pass</h2>
+<div class="overview">
+<div class="ov-row">
+<div class="ov-label">
+<p>1. <code>model.eval()</code> and <code>torch.no_grad()</code></p>
+</div>
+<div class="ov-desc">
+<p>Switches to evaluation mode (leaving out dropout, batch normalization, etc.) and disables gradient computation</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>2. <code>model(inputs)</code> over <code>lTest</code></p>
+</div>
+<div class="ov-desc">
+<p>Computes the forecasts for the test sample</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>3. <code>y_scaler.inverse_transform</code></p>
+</div>
+<div class="ov-desc">
+<p>Transforms the forecasts and the ground truth back to the original scale</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>4. Test MSE</p>
+</div>
+<div class="ov-desc">
+<p>Computes the mean squared error</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>5. OOS <span class="math inline">\(R^2\)</span> vs.&nbsp;training mean</p>
+</div>
+<div class="ov-desc">
+<p>Computes the out-of-sample <span class="math inline">\(R^2\)</span> relative to the training-mean forecast</p>
+</div>
+</div>
+</div>
+</section>
+<section id="model-evaluation" class="slide level2 center">
+<h2>Model Evaluation</h2>
+<div>
+<div id="pyodide-28" class="exercise-cell">
+
+</div>
+<script type="pyodide-28-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6Im1vZGVsLmV2YWwoKVxubFByZWQgPSBbXVxuXG53aXRoIHRvcmNoLm5vX2dyYWQoKTpcbiAgICBmb3IgaW5wdXRzLCBfIGluIGxUZXN0OlxuICAgICAgICBsUHJlZC5hcHBlbmQobW9kZWwoaW5wdXRzLnRvKGRldmljZSkpLmNwdSgpLm51bXB5KCkpXG5cbmZvcmVjYXN0cyA9IG5wLmNvbmNhdGVuYXRlKGxQcmVkKVxuZm9yZWNhc3RzX3Vuc3RkID0geV9zY2FsZXIuaW52ZXJzZV90cmFuc2Zvcm0oZm9yZWNhc3RzKVxueV91bnN0ZCA9IHlfc2NhbGVyLmludmVyc2VfdHJhbnNmb3JtKHlfdGVzdC5jcHUoKSlcblxubXNlID0gbnAubWVhbigoeV91bnN0ZCAtIGZvcmVjYXN0c191bnN0ZCkgKiogMilcbiMgQmVuY2htYXJrOiB0cmFpbmluZy1zYW1wbGUgbWVhbiBmb3JlY2FzdFxueV9iZW5jaCA9IHlfc2NhbGVyLmludmVyc2VfdHJhbnNmb3JtKHlfdHJhaW4uY3B1KCkpLm1lYW4oKVxucjJfb29zID0gMSAtIG5wLnN1bSgoeV91bnN0ZCAtIGZvcmVjYXN0c191bnN0ZCkgKiogMikgLyBucC5zdW0oKHlfdW5zdGQgLSB5X2JlbmNoKSAqKiAyKVxucHJpbnQoZlwiVGVzdCBNU0U6IHttc2U6LjRmfSB8IFRlc3QgT09TIFIyICh2cy4gdHJhaW4gbWVhbik6IHtyMl9vb3M6LjNmfVwiKSJ9
+</script>
+</div>
+</section>
+<section id="an-extended-pipeline-my-preferred-approach" class="slide level2 center">
+<h2>An Extended Pipeline (My Preferred Approach)</h2>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-title">Reproducible</span></p>
+<p>I set the seed for reproducibility</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-title">Tracked</span></p>
+<p>I store the training and validation losses, time the run, and keep running loss book-keeping for each epoch to keep track of the training process</p>
+</div>
+<div class="triad-card tc-amber">
+<p><span class="tc-title">Monitored</span></p>
+<p>I print these losses at the end of each epoch to monitor convergence</p>
+</div>
+</div>
+</section>
+<section id="limitations-of-neural-networks" class="slide level2 center">
+<h2>Limitations of Neural Networks</h2>
+<div class="overview">
+<div class="ov-row">
+<div class="ov-label">
+<p>Jagged Intelligence</p>
+</div>
+<div class="ov-desc">
+<p>Models have incredible power, yet struggle with tasks like telling time (<a href="https://hai.stanford.edu/ai-index/2026-ai-index-report">Stanford 2026 AI Index Report</a>)</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>Black Box</p>
+</div>
+<div class="ov-desc">
+<p>Models are not interpretable with potentially harmful consequences</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>Data Hungry</p>
+</div>
+<div class="ov-desc">
+<p>Models require large amounts of data to train effectively, which may not be available in all domains</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>Computational overhead</p>
+</div>
+<div class="ov-desc">
+<p>Frequently requires GPUs, high memory, and long compute times</p>
+</div>
+</div>
+</div>
+</section></section>
+<section>
+<section id="beyond-feed-forward-neural-networks" class="title-slide slide level1 divider center">
+<h1>Beyond Feed-Forward Neural Networks</h1>
+
+</section>
+<section id="broader-applications-of-deep-learning" class="slide level2 center">
+<h2>Broader Applications of Deep Learning</h2>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">Computer vision</span></p>
+<p><span class="tc-title">Convolutional Neural Networks</span></p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Time series modelling</span></p>
+<p><span class="tc-title">Recurrent Neural Networks, LSTMs, Transformers</span></p>
+</div>
+<div class="triad-card tc-amber">
+<p><span class="tc-tag">Natural language processing</span></p>
+<p><span class="tc-title">Transformers (!) <span class="math inline">\(\to\)</span> Large Language Models</span></p>
+</div>
+</div>
+<div class="keypoint">
+<p>Example: Computer vision for health care</p>
+</div>
+</section>
+<section id="convolutional-neural-networks-cnns" class="slide level2 center">
+<h2>Convolutional Neural Networks (CNNs)</h2>
+<ul>
+<li>Developed for computer vision tasks (LeCun et al., 1998)</li>
+<li>The classic deep learning architecture for image recognition and classification</li>
+<li>Pipeline consists of convolutional and pooling operations</li>
+</ul>
+<div class="flow">
+<div class="fn-navy">
+<p>Image</p>
+</div>
+<div class="fn">
+<p>Convolution</p>
+</div>
+<div class="fn">
+<p>Activation</p>
+</div>
+<div class="fn">
+<p>Pooling</p>
+</div>
+<div class="fn-amber">
+<p>Prediction</p>
+</div>
+</div>
+</section>
+<section id="a-convolutional-neural-network-visualized" class="slide level2 center">
+<h2>A Convolutional Neural Network Visualized</h2>
+<div class="figblock">
+<div class="fig-title">
+
+</div>
+<p><img src="../assets/figures/cnn.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+</section>
+<section id="the-convolutional-operation" class="slide level2 center">
+<h2>The Convolutional Operation</h2>
+<div class="figblock">
+<div class="fig-title">
+
+</div>
+<p><img src="../assets/figures/conv.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+</section>
+<section id="applying-activations-and-pooling" class="slide level2 center">
+<h2>Applying Activations and Pooling</h2>
+<div class="figblock">
+<div class="fig-title">
+
+</div>
+<p><img src="../assets/figures/activation_pooling.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+</section>
+<section id="forecasting-from-images-of-price-charts" class="slide level2 center">
+<h2>Forecasting from Images of Price Charts</h2>
+<p>Jiang, Kelly and Xiu (2023) turn the recent price history of stocks into images, then use a 2D CNN to forecast the direction of future returns</p>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">Input</span></p>
+<p>A black-and-white image of the open-high-low-close bars, a moving average and volume bars of the last 5, 20 or 60 days.</p>
+<p>Each day is 3 pixels wide</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Model</span></p>
+<p>A 2D CNN architecture with convolution, batch normalization, leaky ReLU and max-pooling.</p>
+<p>A fully connected layer with dropout and sigmoid activation produces the forecast</p>
+</div>
+<div class="triad-card tc-amber">
+<p><span class="tc-tag">Forecast</span></p>
+<p>The probability that the subsequent return is positive</p>
+</div>
+</div>
+<div class="keypoint">
+<p>All stocks on NYSE, AMEX and NASDAQ</p>
+</div>
+</section>
+<section id="a-stylized-version-shapes" class="slide level2 center">
+<h2>A Stylized Version: Shapes</h2>
+<div class="pull-up">
+
+</div>
+<p>The input has shape <code>(batch, channels, height, width)</code>. A 20-day chart is 60 pixels wide, and we let <span class="math inline">\(H\)</span> denote its height</p>
+<div class="pull-up">
+
+</div>
+<div class="overview">
+<div class="ov-row">
+<div class="ov-label">
+<p>Input: Dimension <code>(batch, 1, H, 60)</code></p>
+</div>
+<div class="ov-desc">
+<p><code>channels</code> = 1 <span class="math inline">\(\to\)</span> black and white image</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>Block 1: <code>Conv2d(1, 64, 3)</code></p>
+</div>
+<div class="ov-desc">
+<p>Components: Convolution, batch normalization, leaky ReLU, and max-pooling. <code>MaxPool2d(2)</code>: height and width are halved</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>Blocks 2 and 3: <code>Conv2d(64, 128, 3)</code> and <code>Conv2d(128, 256, 3)</code></p>
+</div>
+<div class="ov-desc">
+<p>Components: Convolution, batch normalization, leaky ReLU, and max-pooling. 64 to 128 and 128 to 256 channels, each halving height and width</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p><code>flatten(1)</code> and dropout</p>
+</div>
+<div class="ov-desc">
+<p><code>(batch, 256 * H/8 * 60/8)</code>, rounded down at each pooling. Division by 8 because <code>MaxPool2d(2)</code> is applied three times</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p><code>torch.sigmoid(Linear(n_flat, 1))</code></p>
+</div>
+<div class="ov-desc">
+<p><code>(batch, 1)</code>: one number, the probability of an up move</p>
+</div>
+</div>
+</div>
+</section>
+<section id="a-building-block-helper" class="slide level2 center">
+<h2>A Building Block (Helper)</h2>
+<div>
+<div id="pyodide-29" class="exercise-cell">
+
+</div>
+<script type="pyodide-29-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImRlZiBibG9jayhjX2luLCBjX291dCk6XG4gICAgcmV0dXJuIG5uLlNlcXVlbnRpYWwoXG4gICAgICAgIG5uLkNvbnYyZChjX2luLCBjX291dCwga2VybmVsX3NpemU9MywgcGFkZGluZz0xKSxcbiAgICAgICAgbm4uQmF0Y2hOb3JtMmQoY19vdXQpLFxuICAgICAgICBubi5MZWFreVJlTFUoKSxcbiAgICAgICAgbm4uTWF4UG9vbDJkKDIpLFxuICAgICkifQ==
+</script>
+</div>
+<p>Criterion is the binary cross-entropy loss, the loss function for a binary (yes/no) outcome,</p>
+<div>
+<div id="pyodide-30" class="exercise-cell">
+
+</div>
+<script type="pyodide-30-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNyaXRlcmlvbiA9IG5uLkJDRUxvc3MoKSAifQ==
+</script>
+</div>
+</section>
+<section id="the-network" class="slide level2 center">
+<h2>The Network</h2>
+<div>
+<div id="pyodide-31" class="exercise-cell">
+
+</div>
+<script type="pyodide-31-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNsYXNzIENoYXJ0Q05OKG5uLk1vZHVsZSk6XG4gICAgZGVmIF9faW5pdF9fKHNlbGYsIG5fZmxhdCk6ICAgICAgICAgICAgICAgICMgbl9mbGF0OiAyNTYgKiA4ICogNyBpZiBIID0gNjRcbiAgICAgICAgc3VwZXIoQ2hhcnRDTk4sIHNlbGYpLl9faW5pdF9fKClcbiAgICAgICAgc2VsZi5mZWF0dXJlcyA9IG5uLlNlcXVlbnRpYWwoYmxvY2soMSwgNjQpLCBibG9jayg2NCwgMTI4KSxcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYmxvY2soMTI4LCAyNTYpKVxuICAgICAgICBzZWxmLmZjID0gbm4uU2VxdWVudGlhbChubi5Ecm9wb3V0KDAuNSksIG5uLkxpbmVhcihuX2ZsYXQsIDEpKVxuXG4gICAgZGVmIGZvcndhcmQoc2VsZiwgeCk6ICAgICAgICAgICAgICAgICAgICAgICMgeDogKGJhdGNoLCAxLCBILCA2MClcbiAgICAgICAgcmV0dXJuIHRvcmNoLnNpZ21vaWQoc2VsZi5mYyhzZWxmLmZlYXR1cmVzKHgpLmZsYXR0ZW4oMSkpKSJ9
+</script>
+</div>
+<p>256 is <code>c_out</code> from block 3, and <span class="math inline">\(H/8 = 8\)</span> and <span class="math inline">\(60/8 = 7\)</span> if the input height is <span class="math inline">\(H = 64\)</span>.</p>
+</section>
+<section id="recurrent-neural-networks-rnns-and-lstms" class="slide level2 center">
+<h2>Recurrent Neural Networks (RNNs) and LSTMs</h2>
+<div class="compare cols-3">
+<div class="compare-col">
+<p><span class="cmp-title">Feedforward neural networks (FNNs)</span></p>
+<ul>
+<li>Input: variables from <span class="math inline">\(t-1\)</span> (time series forecasting)</li>
+<li>Forecast: target in <span class="math inline">\(t\)</span></li>
+<li>No notion of order or history</li>
+</ul>
+</div>
+<div class="compare-col cmp-mid">
+<p><span class="cmp-title">Recurrent neural networks (RNNs)</span></p>
+<ul>
+<li>Designed for sequential data, where the output at time <span class="math inline">\(t\)</span> depends on previous inputs and outputs</li>
+<li>Sequential data common in time series and natural language processing</li>
+</ul>
+</div>
+<div class="compare-col cmp-alt">
+<p><span class="cmp-title">Long short-term memory networks (LSTMs)</span></p>
+<ul>
+<li>A type of RNN that can learn long-term dependencies</li>
+<li>Before 2017 (the transformer revolution, in a few slides), Google Translate used LSTMs</li>
+<li>Twin network: The GRU (Gated Recurrent Unit)</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="forecasting-inflation-from-a-window-of-quarters" class="slide level2 center">
+<h2>Forecasting Inflation from a Window of Quarters</h2>
+<div class="compare">
+<div class="compare-col">
+<p><span class="cmp-title">Feedforward network (so far)</span></p>
+<ul>
+<li>Input: the three variables of one quarter</li>
+<li>Forecast: inflation in the next quarter</li>
+</ul>
+</div>
+<div class="compare-col cmp-alt">
+<p><span class="cmp-title">Recurrent network</span></p>
+<ul>
+<li>Input: the last 8 quarters of inflation, unemployment and the T-bill rate, in order</li>
+<li>Forecast: inflation in the next quarter</li>
+<li>The path matters, e.g., whether inflation is rising or falling</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="recurrent-neural-networks-visualized" class="slide level2 center">
+<h2>Recurrent Neural Networks Visualized</h2>
+<div class="figblock">
+<div class="fig-title">
+
+</div>
+<p><img src="../assets/figures/rnn.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+</section>
+<section id="lstm-unit-visualized" class="slide level2 center">
+<h2>LSTM Unit Visualized</h2>
+<div class="figblock">
+<div class="fig-title">
+
+</div>
+<p><img src="../assets/figures/lstm_unit.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+</section>
+<section id="windows-of-quarters-example" class="slide level2 center">
+<h2>Windows of Quarters, Example</h2>
+<div class="figblock">
+<div class="fig-title">
+
+</div>
+<p><img src="../assets/figures/lstm_windows.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+<p>Windows have shape <code>(samples, quarters, variables)</code> = (4, 4, 3)</p>
+<p>Target has shape <code>(samples, 1)</code> = (4, 1)</p>
+</section>
+<section id="setting-up-windows-i" class="slide level2 center">
+<h2>Setting up Windows I</h2>
+<p><code>windows</code> has shape <code>(samples, quarters, variables)</code>, and each window belongs to the sample in which it ends.</p>
+<div>
+<div id="pyodide-32" class="exercise-cell">
+
+</div>
+<script type="pyodide-32-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6InFydHMgPSA4ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyBxdWFydGVycyBpbiBhIHdpbmRvd1xud2luZG93cyA9IG5wLmxpYi5zdHJpZGVfdHJpY2tzLnNsaWRpbmdfd2luZG93X3ZpZXcoWCwgcXJ0cywgYXhpcz0wKVxud2luZG93cyA9IHdpbmRvd3MudHJhbnNwb3NlKDAsIDIsIDEpICAgICAgICAjIChzYW1wbGVzLCBxdWFydGVycywgdmFyaWFibGVzKVxueV93aW4gPSB0YXJnZXRbcXJ0cyAtIDE6XSAgICAgICAgICAgICAgICAgICAjIHRhcmdldCBvZiB0aGUgd2luZG93IGVuZGluZyBpbiB0XG5cbm5fdHJhaW4gPSBsZW4oeV90cmFpbikgLSBxcnRzICsgMSAgICMgZmlyc3QgcXJ0cy0xIHF1YXJ0ZXJzIGhhdmUgbm8gZnVsbCB3aW5kb3dcbm5fdmFsID0gbGVuKHlfdmFsKSAgICAgICAgICAgICAgICAgICMgdmFsaWRhdGlvbiBhbmQgdGVzdCBrZWVwIHRoZWlyIHNpemVcblxuWHNlcV90cmFpbiwgWHNlcV90bXAsIHlzZXFfdHJhaW4sIHlzZXFfdG1wID0gdHJhaW5fdGVzdF9zcGxpdChcbiAgICB3aW5kb3dzLCB5X3dpbiwgdHJhaW5fc2l6ZT1uX3RyYWluLCBzaHVmZmxlPUZhbHNlKVxuWHNlcV92YWwsIFhzZXFfdGVzdCwgeXNlcV92YWwsIHlzZXFfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoXG4gICAgWHNlcV90bXAsIHlzZXFfdG1wLCB0cmFpbl9zaXplPW5fdmFsLCBzaHVmZmxlPUZhbHNlKVxuXG4jIGNvbnQnZCBvbiBuZXh0IHNsaWRlIn0=
+</script>
+</div>
+</section>
+<section id="setting-up-windows-ii" class="slide level2 center">
+<h2>Setting up Windows II</h2>
+<div>
+<div id="pyodide-33" class="exercise-cell">
+
+</div>
+<script type="pyodide-33-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IiMgY29udCdkIGZyb20gcHJldmlvdXMgc2xpZGVcblxuWF9zY2FsZXIgPSBTdGFuZGFyZFNjYWxlcigpLmZpdChYc2VxX3RyYWluLnJlc2hhcGUoLTEsIDMpKSAgICMgdHJhaW5pbmcgb25seVxueV9zY2FsZXIgPSBTdGFuZGFyZFNjYWxlcigpLmZpdCh5c2VxX3RyYWluKVxuWHNlcV90cmFpbiwgWHNlcV92YWwsIFhzZXFfdGVzdCA9IChYX3NjYWxlci50cmFuc2Zvcm0oVy5yZXNoYXBlKC0xLCAzKSkucmVzaGFwZShXLnNoYXBlKVxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBmb3IgVyBpbiAoWHNlcV90cmFpbiwgWHNlcV92YWwsIFhzZXFfdGVzdCkpXG55c2VxX3RyYWluLCB5c2VxX3ZhbCwgeXNlcV90ZXN0ID0gKHlfc2NhbGVyLnRyYW5zZm9ybSh5KVxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBmb3IgeSBpbiAoeXNlcV90cmFpbiwgeXNlcV92YWwsIHlzZXFfdGVzdCkpIn0=
+</script>
+</div>
+</section>
+<section id="the-recurrent-idea" class="slide level2 center">
+<h2>The Recurrent Idea</h2>
+<p>A recurrent network reads the window one quarter at a time, and keeps a memory of what it has seen: the <strong>hidden state</strong></p>
+<div class="flow">
+<div class="fn-navy">
+<p>Quarter 1 <span class="fn-sub">memory updated</span></p>
+</div>
+<div class="fn">
+<p>Quarters 2 through 7 <span class="fn-sub">memory updated</span></p>
+</div>
+<div class="fn-amber">
+<p>Quarter 8 <span class="fn-sub">forecast from the memory</span></p>
+</div>
+</div>
+<ul>
+<li>The same weights are used for every quarter</li>
+<li>The forecast is made from the memory after the last quarter</li>
+<li>The memory is the distinguishing characteristic of recurrent networks, LSTMs in particular</li>
+</ul>
+</section>
+<section id="a-recurrent-network-in-pytorch" class="slide level2 center">
+<h2>A Recurrent Network in PyTorch</h2>
+<p><code>qrts</code> indicates the number of quarters (in this case) in a window</p>
+<div>
+<div id="pyodide-34" class="exercise-cell">
+
+</div>
+<script type="pyodide-34-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNsYXNzIFJlY3VycmVudE5ldChubi5Nb2R1bGUpOlxuICAgIGRlZiBfX2luaXRfXyhzZWxmLCBuX2ZlYXR1cmVzLCBoaWRkZW49MTYsIGNlbGw9XCJMU1RNXCIpOlxuICAgICAgICBzdXBlcihSZWN1cnJlbnROZXQsIHNlbGYpLl9faW5pdF9fKClcbiAgICAgICAgcm5uID0ge1wiUk5OXCI6IG5uLlJOTiwgXCJHUlVcIjogbm4uR1JVLCBcIkxTVE1cIjogbm4uTFNUTX1bY2VsbF1cbiAgICAgICAgc2VsZi5ybm4gPSBybm4obl9mZWF0dXJlcywgaGlkZGVuLCBiYXRjaF9maXJzdD1UcnVlKVxuICAgICAgICBzZWxmLmZjID0gbm4uTGluZWFyKGhpZGRlbiwgMSlcblxuICAgIGRlZiBmb3J3YXJkKHNlbGYsIHgpOiAgICAgICAgICAgICAgICAgICAgICAjIHg6IChiYXRjaCwgcXJ0cywgbl9mZWF0dXJlcykgXG4gICAgICAgIG91dHB1dCwgXyA9IHNlbGYucm5uKHgpICAgICAgICAgICAgICAgICMgKGJhdGNoLCBxcnRzLCBoaWRkZW4pXG4gICAgICAgIHggPSBzZWxmLmZjKG91dHB1dFs6LCAtMSwgOl0pICAgICAgICAgICMgdGhlIGxhc3QgcXVhcnRlcidzIGhpZGRlbiBzdGF0ZVxuXG4gICAgICAgIHJldHVybiB4In0=
+</script>
+</div>
+</section>
+<section id="the-lstm-cell" class="slide level2 th-slide th-wide center">
+<h2>The LSTM Cell</h2>
+<p>The LSTM keeps a long-term memory next to the hidden state. Three gates decide what happens. Each gate is a number between 0 (closed) and 1 (open)</p>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">Forget gate</span></p>
+<p>How much of the old memory is kept. Is last year’s inflation spike still relevant?</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Input gate</span></p>
+<p>How much of the new information is written to the memory. Is this quarter’s jump in unemployment worth remembering?</p>
+</div>
+<div class="triad-card tc-amber">
+<p><span class="tc-tag">Output gate</span></p>
+<p>How much of the memory is shown to the forecast. Which parts matter for next quarter?</p>
+</div>
+</div>
+<p>A plain RNN overwrites its memory in every quarter, so early quarters fade. The gates let the LSTM hold on to information for longer <span class="math inline">\(\to\)</span> long-memory modeling feasible</p>
+<div class="th"><span class="th-arrow">↑</span><span class="th-line"></span><span class="th-ref" style="bottom:19.11%"><b>Basic NN</b></span><span class="th-dot" style="bottom:26.10%"></span><span class="th-val" style="bottom:26.10%">RNN 11.174</span><span class="th-dot" style="bottom:15.93%"></span><span class="th-val" style="bottom:15.93%">LSTM 10.717</span></div>
+</section>
+<section id="the-transformer-revolution" class="slide level2 center">
+<h2>The Transformer Revolution</h2>
+<p><strong>Transformers</strong> (Vaswani et al., 2017) are the foundation of Large Language Models (LLMs)</p>
+<div class="triad cols-2">
+<div class="triad-card">
+<p><span class="tc-tag">Self-attention</span></p>
+<p>Transformers use self-attention mechanisms to process sequential data in parallel, allowing for better scalability and performance</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Attention</span></p>
+<p>A mechanism that allows the model to focus on relevant parts of the input sequence when making predictions</p>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>The best intuitive introduction by far, in my opinion, is Section “The Transformer Architecture”, Chapter 15 of <a href="https://deeplearningwithpython.io/chapters/chapter15_language-models-and-the-transformer/#the-transformer-architecture">Deep Learning with Python</a> (Chollet, 3rd edition, 2025).</p>
+<p>Skip the code (which is geared towards TensorFlow) and focus on the intuition</p>
+</div>
+</div>
+</div>
+</section>
+<section id="attention-the-idea" class="slide level2 center">
+<h2>Attention: The Idea</h2>
+<p>We stay with our inflation forecasting example.</p>
+<p>An LSTM squeezes the window into one memory. Attention lets the forecast look at <strong>every quarter directly</strong> and decide how much each one matters.</p>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">Query: <span class="math inline">\(\mathbf{Q}\)</span></span></p>
+<p>What information is this quarter looking for?</p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Key: <span class="math inline">\(\mathbf{K}\)</span></span></p>
+<p>What information does each quarter offer?</p>
+</div>
+<div class="triad-card tc-amber">
+<p><span class="tc-tag">Value: <span class="math inline">\(\mathbf{V}\)</span></span></p>
+<p>Information passed on</p>
+</div>
+</div>
+<p><span class="math display">\[\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^\intercal}{\sqrt{d}}\right)\mathbf{V}\]</span></p>
+</section>
+<section id="attention-as-a-lookup" class="slide level2 center">
+<h2>Attention as a Lookup</h2>
+<p>Intuitively, attention works like a lookup/search engine:</p>
+<div class="vocab-wrap">
+<table class="caption-top">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 4%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Search engine</th>
+<th style="text-align: center;"></th>
+<th style="text-align: left;">Attention</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Search term</td>
+<td style="text-align: center;"><span class="math inline">\(\Leftrightarrow\)</span></td>
+<td style="text-align: left;"><strong>Query</strong>, <span class="math inline">\(\mathbf{Q}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tags on the stored items</td>
+<td style="text-align: center;"><span class="math inline">\(\Leftrightarrow\)</span></td>
+<td style="text-align: left;"><strong>Key</strong>, <span class="math inline">\(\mathbf{K}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">The stored items</td>
+<td style="text-align: center;"><span class="math inline">\(\Leftrightarrow\)</span></td>
+<td style="text-align: left;"><strong>Value</strong>, <span class="math inline">\(\mathbf{V}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Items returned, best match first</td>
+<td style="text-align: center;"><span class="math inline">\(\Leftrightarrow\)</span></td>
+<td style="text-align: left;">Weighted average of the values</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>Here, stored items are the quarters of the window, and the search is run once every quarter</li>
+<li>The better the match, the larger the weight</li>
+<li>Weights are learned via backpropagation</li>
+</ul>
+</section>
+<section id="a-self-attention-network-i" class="slide level2 center">
+<h2>A Self-Attention Network I</h2>
+<p>Self-attention: query, key and value all come from the same window. The forecast is made from the output of the last quarter</p>
+<div>
+<div id="pyodide-35" class="exercise-cell">
+
+</div>
+<script type="pyodide-35-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNsYXNzIEF0dGVudGlvbk5ldChubi5Nb2R1bGUpOlxuICAgIGRlZiBfX2luaXRfXyhzZWxmLCBuX2ZlYXR1cmVzLCBxcnRzLCBkPTE2KTpcbiAgICAgICAgc3VwZXIoQXR0ZW50aW9uTmV0LCBzZWxmKS5fX2luaXRfXygpXG4gICAgICAgIHNlbGYuZW1iZWQgPSBubi5MaW5lYXIobl9mZWF0dXJlcywgZCkgICAgICAgICAgICMgcXVhcnRlciAtPiB2ZWN0b3JcbiAgICAgICAgc2VsZi5wb3MgPSBubi5QYXJhbWV0ZXIodG9yY2guemVyb3MoMSwgcXJ0cywgZCkpICAgIyBsZWFybmVkIHBvc2l0aW9uc1xuICAgICAgICBzZWxmLmF0dG4gPSBubi5NdWx0aWhlYWRBdHRlbnRpb24oZCwgbnVtX2hlYWRzPTEsIGJhdGNoX2ZpcnN0PVRydWUpICMgY29udGFpbnMgV19RLCBXX0sgYW5kIFdfVlxuICAgICAgICBzZWxmLmZjID0gbm4uTGluZWFyKGQsIDEpXG5cbiMgQ29udGludWVkIG9uIG5leHQgc2xpZGUifQ==
+</script>
+</div>
+</section>
+<section id="a-self-attention-network-ii" class="slide level2 th-slide center">
+<h2>A Self-Attention Network II</h2>
+<div>
+<div id="pyodide-36" class="exercise-cell">
+
+</div>
+<script type="pyodide-36-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IiMgQ29udGludWVkIGZyb20gcHJldmlvdXMgc2xpZGVcbiAgICBkZWYgZm9yd2FyZChzZWxmLCB4KTogICAgICAgICAgICAgICAgICAgICAgIyB4OiAoYmF0Y2gsIHFydHMsIG5fZmVhdHVyZXMpXG4gICAgICAgIHggPSBzZWxmLmVtYmVkKHgpICsgc2VsZi5wb3MgICAgICAgICAgICMgKGJhdGNoLCBxcnRzLCBkKVxuICAgICAgICBjb250ZXh0LCB3ZWlnaHRzID0gc2VsZi5hdHRuKHgsIHgsIHgpICAjIHF1ZXJ5ID0ga2V5ID0gdmFsdWUgPSB4XG4gICAgICAgIHggPSBzZWxmLmZjKGNvbnRleHRbOiwgLTEsIDpdKSAgICAgICAgICMgdGhlIGxhc3QgcXVhcnRlcidzIGNvbnRleHRcblxuICAgICAgICByZXR1cm4geCJ9
+</script>
+</div>
+<p>Attention treats the window as a set, so <code>self.pos</code> tells the network the order of the quarters</p>
+<div class="th"><span class="th-arrow">↑</span><span class="th-line"></span><span class="th-ref" style="bottom:19.11%"><b>Basic NN</b></span><span class="th-dot" style="bottom:63.40%"></span><span class="th-val" style="bottom:63.40%">12.853</span></div>
+</section>
+<section id="from-attention-to-a-transformer" class="slide level2 center">
+<h2>From Attention to a Transformer</h2>
+<p>Attention only recombines the quarters. We still need non-linear activations.</p>
+<p>A Transformer block (Vaswani et al., 2017) adds them, and blocks are stacked:</p>
+<div class="flow">
+<div class="fn-navy">
+<p>Self-attention <span class="fn-sub">information is mixed across quarters</span></p>
+</div>
+<div class="fn">
+<p>Add and normalize <span class="fn-sub">residual connection and layer norm</span></p>
+</div>
+<div class="fn">
+<p>Feedforward network <span class="fn-sub">two dense layers with ReLU, applied to each quarter</span></p>
+</div>
+<div class="fn-amber">
+<p>Add and normalize <span class="fn-sub">residual connection and layer norm</span></p>
+</div>
+</div>
+<div class="spacer">
+
+</div>
+<p><span class="flow-label fl-lg">Three more ingredients</span></p>
+<div class="triad strip">
+<div class="triad-card">
+<p><span class="tc-tag">Multi-head</span></p>
+<p>Several attention heads in parallel, so different patterns can be uncovered</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Positions</span></p>
+<p>Attention is blind to order, so a position vector is added to each quarter (<code>self.pos</code> in the code)</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Causal mask</span></p>
+<p>A quarter may only attend to itself and earlier quarters <span class="math inline">\(\to\)</span> no look-ahead bias</p>
+</div>
+</div>
+</section>
+<section id="llms-and-generative-ai" class="slide level2 center">
+<h2>LLMs and Generative AI</h2>
+<p>An LLM is a very large transformer with causal attention, trained to predict the next token. GPTs like e.g., ChatGPT abbreviates “Generative Pre-trained <strong>Transformer</strong>”</p>
+<div class="triad gpt">
+<div class="triad-card">
+<p><span class="tc-letter">G</span> <span class="tc-title">Generative (AI)</span> Produces new text one word at a time: predict, append, repeat (next slide)</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-letter">P</span> <span class="tc-title">Pre-trained</span> Trained on large corpora of text data to learn the statistical properties of language, by predicting the next word</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-letter">T</span> <span class="tc-title">Transformers</span> Stacked attention blocks with a causal mask, as on the previous slides</p>
+</div>
+</div>
+</section>
+<section id="llms-are-forecasting-models" class="slide level2 center">
+<h2>LLMs are Forecasting Models</h2>
+<div class="pull-up">
+
+</div>
+<p>When we chat with generative AI, the model <strong>forecasts</strong> the next word given all previous words, and we sample from this probability distribution,</p>
+<div class="figblock">
+<div class="fig-title">
+<p>Prompt: “The central bank decided to raise the …”</p>
+</div>
+<p><img src="../assets/figures/next_token.svg"></p>
+<div class="fig-src">
+
+</div>
+</div>
+<div class="pull-up">
+
+</div>
+<p>The sampled word is appended and the model forecasts again: a recursive multi-step forecast</p>
+<div class="keypoint">
+<p>The replies we receive are nothing but (incredibly good) predictions</p>
+</div>
+</section>
+<section id="recent-deep-learning-breakthroughs" class="slide level2 center">
+<h2>Recent Deep Learning Breakthroughs</h2>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">Hardware</span></p>
+<p>Training the Chinese LLM LongCat-2.0 Model without NVIDIA GPUs <span class="faint">(Reuters, 2026)</span></p>
+</div>
+<div class="triad-card tc-light">
+<p><span class="tc-tag">Computer vision meets music</span></p>
+<p>MuSViT reads sheet music like computer vision models read images <span class="faint">(Penarrubia et al., 2026)</span></p>
+</div>
+<div class="triad-card tc-amber">
+<p><span class="tc-tag">Mathematics</span></p>
+<p>OpenAI and Anthropic (and others) are making progress in the field of mathematics</p>
+</div>
+</div>
+</section>
+<section id="all-models-compared" class="slide level2 center">
+<h2>All Models Compared</h2>
+<div class="rank">
+<div class="rank-row best"><span class="rank-name">L2</span><span class="rank-track"><span class="rank-ref" style="left:19.11%"></span><span class="rank-seg gain" style="left:3.3%;width:15.8%"></span><span class="rank-dot" style="left:3.3%"></span></span><span class="rank-val">10.150</span></div>
+<div class="rank-row"><span class="rank-name">L1</span><span class="rank-track"><span class="rank-ref" style="left:19.11%"></span><span class="rank-seg gain" style="left:3.4%;width:15.7%"></span><span class="rank-dot" style="left:3.4%"></span></span><span class="rank-val">10.154</span></div>
+<div class="rank-row"><span class="rank-name">Dropout</span><span class="rank-track"><span class="rank-ref" style="left:19.11%"></span><span class="rank-seg gain" style="left:5.2%;width:13.9%"></span><span class="rank-dot" style="left:5.2%"></span></span><span class="rank-val">10.235</span></div>
+<div class="rank-row"><span class="rank-name">Early stopping</span><span class="rank-track"><span class="rank-ref" style="left:19.11%"></span><span class="rank-seg gain" style="left:14.6%;width:4.5%"></span><span class="rank-dot" style="left:14.6%"></span></span><span class="rank-val">10.659</span></div>
+<div class="rank-row"><span class="rank-name">LSTM</span><span class="rank-track"><span class="rank-ref" style="left:19.11%"></span><span class="rank-seg gain" style="left:15.9%;width:3.2%"></span><span class="rank-dot" style="left:15.9%"></span></span><span class="rank-val">10.717</span></div>
+<div class="rank-row base"><span class="rank-name">Basic NN (20 epochs)</span><span class="rank-track"><span class="rank-ref" style="left:19.11%"></span><span class="rank-dot" style="left:19.1%"></span></span><span class="rank-val">10.860</span></div>
+<div class="rank-row"><span class="rank-name">RNN</span><span class="rank-track"><span class="rank-ref" style="left:19.11%"></span><span class="rank-seg loss" style="left:19.1%;width:7.0%"></span><span class="rank-dot" style="left:26.1%"></span></span><span class="rank-val">11.174</span></div>
+<div class="rank-row bench"><span class="rank-name">OLS</span><span class="rank-track"><span class="rank-ref" style="left:19.11%"></span><span class="rank-seg loss" style="left:19.1%;width:34.3%"></span><span class="rank-dot" style="left:53.4%"></span></span><span class="rank-val">12.403</span></div>
+<div class="rank-row"><span class="rank-name">Self-attention</span><span class="rank-track"><span class="rank-ref" style="left:19.11%"></span><span class="rank-seg loss" style="left:19.1%;width:44.3%"></span><span class="rank-dot" style="left:63.4%"></span></span><span class="rank-val">12.853</span></div>
+<div class="rank-row bench"><span class="rank-name">Training mean</span><span class="rank-track"><span class="rank-ref" style="left:19.11%"></span><span class="rank-seg loss" style="left:19.1%;width:72.7%"></span><span class="rank-dot" style="left:91.8%"></span></span><span class="rank-val">14.132</span></div>
+<div class="rank-axis"><span></span><span class="rank-ticks"><span style="left:0%">10</span><span style="left:22.2%">11</span><span style="left:44.4%">12</span><span style="left:66.7%">13</span><span style="left:88.9%">14</span></span><span></span></div>
+</div>
+<p><span class="rank-note">Dashed line: basic NN.</span></p>
+</section>
+<section id="references" class="slide level2 center">
+<h2>References</h2>
+<div style="font-size: 0.5em; line-height: 1.3;">
+<p>Chollet, F. (2025). <em>Deep Learning with Python</em> (3rd ed.). Manning.</p>
+<p>Huber, P. J. (1964). Robust estimation of a location parameter. <em>Annals of Mathematical Statistics</em>, 35(1), 73–101.</p>
+<p>Huntr. (2026, 28 July). <em>Machine learning skills: What 10,704 job posts require (2026)</em>. https://huntr.co/resume-skills/machine-learning</p>
+<p>Jiang, J., Kelly, B., &amp; Xiu, D. (2023). (Re-)Imag(in)ing price trends. <em>Journal of Finance</em>, 78(6), 3193–3249.</p>
+<p>Kingma, D. P., &amp; Ba, J. (2014). Adam: A method for stochastic optimization. <em>arXiv:1412.6980</em>.</p>
+<p>LeCun, Y., Bottou, L., Bengio, Y., &amp; Haffner, P. (1998). Gradient-based learning applied to document recognition. <em>Proceedings of the IEEE</em>, 86(11), 2278–2324.</p>
+<p>Penarrubia, C., et al.&nbsp;(2026). MuSViT: A foundation vision model for sheet music representation. <em>ECCV</em>. https://grfia.dlsi.ua.es/musvit/</p>
+<p>Reuters. (2026, 30 June). Meituan releases LongCat-2.0, trained without NVIDIA chips.</p>
+<p>Second Talent. (2026, 21 September). <em>PyTorch vs.&nbsp;TensorFlow: Usage, popularity and performance</em>. https://www.secondtalent.com/resources/pytorch-vs-tensorflow-usage-popularity-and-performance/</p>
+<p>Srivastava, N., Hinton, G., Krizhevsky, A., Sutskever, I., &amp; Salakhutdinov, R. (2014). Dropout: A simple way to prevent neural networks from overfitting. <em>Journal of Machine Learning Research</em>, 15(56), 1929–1958.</p>
+<p>Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, Ł., &amp; Polosukhin, I. (2017). Attention is all you need. <em>NeurIPS</em>, 30.</p>
+</div>
+
+<script type="pyodide-data">
+eyJvcHRpb25zIjp7ImVudiI6eyJQTE9UTFlfUkVOREVSRVIiOiJwbG90bHlfbWltZXR5cGUifSwiaW5kZXhVUkwiOiJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvcHlvZGlkZS92MC4yOC4xL2Z1bGwvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsicHlvZGlkZV9odHRwIiwibWljcm9waXAiLCJpcHl0aG9uIiwic2Npa2l0LWxlYXJuIiwic3RhdHNtb2RlbHMiXX19
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJweW9kaWRlLTM2IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMzYgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTM2LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMzYtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8zNiA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMzYsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTM1IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMzUgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTM1LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMzUtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8zNSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMzUsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTM0IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMzQgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTM0LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMzQtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8zNCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMzQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTMzIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMzMgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTMzLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMzMtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8zMyA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMzMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTMyIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMzIgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTMyLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMzItY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8zMiA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMzIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTMxIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMzEgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTMxLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMzEtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8zMSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMzEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTMwIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMzAgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTMwLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMzAtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8zMCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMzAsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTI5IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMjkgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTI5LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMjktY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8yOSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMjksIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTI4IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMjggPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTI4LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMjgtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8yOCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMjgsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTI3IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMjcgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTI3LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMjctY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8yNyA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMjcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTI2IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMjYgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTI2LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMjYtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8yNiA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMjYsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTI1IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMjUgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTI1LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMjUtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8yNSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMjUsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTI0IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMjQgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTI0LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMjQtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKFxuICAgIHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsXG4gICAgYmxvY2suY29kZSxcbiAgICBvcHRpb25zXG4gICk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fcHlvZGlkZV92YWx1ZV8yNCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMjQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTIwIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfcHlvZGlkZV9lZGl0b3JfMjAgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTIwLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgLy8gRGVmYXVsdCBleGVyY2lzZSBjb25maWd1cmF0aW9uXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKFxuICAgIHtcbiAgICAgIGlkOiBcInB5b2RpZGUtMjAtY29udGVudHNcIixcbiAgICAgIGVudmlyOiBgZXhlcmNpc2UtZW52LSR7YmxvY2suYXR0ci5leGVyY2lzZX1gLFxuICAgICAgZXJyb3I6IGZhbHNlLFxuICAgICAgY2FwdGlvbjogJ0V4ZXJjaXNlJyxcbiAgICB9LFxuICAgIGJsb2NrLmF0dHJcbiAgKTtcblxuICBjb25zdCBlZGl0b3IgPSBuZXcgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yKHB5b2RpZGVPanMucHlvZGlkZVByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbnZpZXdvZiBfcHlvZGlkZV92YWx1ZV8yMCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMjAsIHt9KTtcbl9weW9kaWRlX2ZlZWRiYWNrXzIwID0ge1xuICBjb25zdCB7IFB5b2RpZGVHcmFkZXIgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGVtcHR5RmVlZGJhY2sgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcblxuICBjb25zdCBncmFkZXIgPSBuZXcgUHlvZGlkZUdyYWRlcihfcHlvZGlkZV92YWx1ZV8yMC5ldmFsdWF0b3IpO1xuICBjb25zdCBmZWVkYmFjayA9IGF3YWl0IGdyYWRlci5ncmFkZUV4ZXJjaXNlKCk7XG4gIGlmICghZmVlZGJhY2spIHJldHVybiBlbXB0eUZlZWRiYWNrO1xuICByZXR1cm4gZmVlZGJhY2s7XG59XG4ifSx7ImNlbGxOYW1lIjoicHlvZGlkZS0xOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzE4ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0xOC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGBweW9kaWRlLTE4LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihcbiAgICBweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLFxuICAgIGJsb2NrLmNvZGUsXG4gICAgb3B0aW9uc1xuICApO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3B5b2RpZGVfdmFsdWVfMTggPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzE4LCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoicHlvZGlkZS0xNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzE3ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0xNy1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGBweW9kaWRlLTE3LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihcbiAgICBweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLFxuICAgIGJsb2NrLmNvZGUsXG4gICAgb3B0aW9uc1xuICApO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3B5b2RpZGVfdmFsdWVfMTcgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzE3LCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoicHlvZGlkZS0xNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzE2ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0xNi1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGBweW9kaWRlLTE2LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihcbiAgICBweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLFxuICAgIGJsb2NrLmNvZGUsXG4gICAgb3B0aW9uc1xuICApO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3B5b2RpZGVfdmFsdWVfMTYgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzE2LCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoicHlvZGlkZS0xNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzE1ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0xNS1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGBweW9kaWRlLTE1LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihcbiAgICBweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLFxuICAgIGJsb2NrLmNvZGUsXG4gICAgb3B0aW9uc1xuICApO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3B5b2RpZGVfdmFsdWVfMTUgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzE1LCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoicHlvZGlkZS0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzExID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0xMS1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIC8vIERlZmF1bHQgZXhlcmNpc2UgY29uZmlndXJhdGlvblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbihcbiAgICB7XG4gICAgICBpZDogXCJweW9kaWRlLTExLWNvbnRlbnRzXCIsXG4gICAgICBlbnZpcjogYGV4ZXJjaXNlLWVudi0ke2Jsb2NrLmF0dHIuZXhlcmNpc2V9YCxcbiAgICAgIGVycm9yOiBmYWxzZSxcbiAgICAgIGNhcHRpb246ICdFeGVyY2lzZScsXG4gICAgfSxcbiAgICBibG9jay5hdHRyXG4gICk7XG5cbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG52aWV3b2YgX3B5b2RpZGVfdmFsdWVfMTEgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzExLCB7fSk7XG5fcHlvZGlkZV9mZWVkYmFja18xMSA9IHtcbiAgY29uc3QgeyBQeW9kaWRlR3JhZGVyIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBlbXB0eUZlZWRiYWNrID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7XG5cbiAgY29uc3QgZ3JhZGVyID0gbmV3IFB5b2RpZGVHcmFkZXIoX3B5b2RpZGVfdmFsdWVfMTEuZXZhbHVhdG9yKTtcbiAgY29uc3QgZmVlZGJhY2sgPSBhd2FpdCBncmFkZXIuZ3JhZGVFeGVyY2lzZSgpO1xuICBpZiAoIWZlZWRiYWNrKSByZXR1cm4gZW1wdHlGZWVkYmFjaztcbiAgcmV0dXJuIGZlZWRiYWNrO1xufVxuIn0seyJjZWxsTmFtZSI6InB5b2RpZGUtOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzkgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTktY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgcHlvZGlkZS05LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihcbiAgICBweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLFxuICAgIGJsb2NrLmNvZGUsXG4gICAgb3B0aW9uc1xuICApO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3B5b2RpZGVfdmFsdWVfOSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfOSwge30pO1xuIn0seyJjZWxsTmFtZSI6InB5b2RpZGUtOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzggPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTgtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgcHlvZGlkZS04LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihcbiAgICBweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLFxuICAgIGJsb2NrLmNvZGUsXG4gICAgb3B0aW9uc1xuICApO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3B5b2RpZGVfdmFsdWVfOCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfOCwge30pO1xuIn0seyJjZWxsTmFtZSI6InB5b2RpZGUtNyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzcgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTctY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgcHlvZGlkZS03LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihcbiAgICBweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLFxuICAgIGJsb2NrLmNvZGUsXG4gICAgb3B0aW9uc1xuICApO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3B5b2RpZGVfdmFsdWVfNyA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfNywge30pO1xuIn0seyJjZWxsTmFtZSI6InB5b2RpZGUtNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzYgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTYtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgcHlvZGlkZS02LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihcbiAgICBweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLFxuICAgIGJsb2NrLmNvZGUsXG4gICAgb3B0aW9uc1xuICApO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3B5b2RpZGVfdmFsdWVfNiA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfNiwge30pO1xuIn0seyJjZWxsTmFtZSI6InB5b2RpZGUtNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzUgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTUtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgcHlvZGlkZS01LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihcbiAgICBweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLFxuICAgIGJsb2NrLmNvZGUsXG4gICAgb3B0aW9uc1xuICApO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3B5b2RpZGVfdmFsdWVfNSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfNSwge30pO1xuIn0seyJjZWxsTmFtZSI6InB5b2RpZGUtNCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzQgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTQtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgcHlvZGlkZS00LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihcbiAgICBweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLFxuICAgIGJsb2NrLmNvZGUsXG4gICAgb3B0aW9uc1xuICApO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3B5b2RpZGVfdmFsdWVfNCA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfNCwge30pO1xuIn0seyJjZWxsTmFtZSI6InB5b2RpZGUtMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzMgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTMtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgcHlvZGlkZS0zLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihcbiAgICBweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLFxuICAgIGJsb2NrLmNvZGUsXG4gICAgb3B0aW9uc1xuICApO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3B5b2RpZGVfdmFsdWVfMyA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMywge30pO1xuIn0seyJjZWxsTmFtZSI6InB5b2RpZGUtMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzIgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTItY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgcHlvZGlkZS0yLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihcbiAgICBweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLFxuICAgIGJsb2NrLmNvZGUsXG4gICAgb3B0aW9uc1xuICApO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3B5b2RpZGVfdmFsdWVfMiA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMiwge30pO1xuIn0seyJjZWxsTmFtZSI6InB5b2RpZGUtMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3B5b2RpZGVfZWRpdG9yXzEgPSB7XG4gIGNvbnN0IHsgUHlvZGlkZUV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgcHlvZGlkZS0xLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFB5b2RpZGVFeGVyY2lzZUVkaXRvcihcbiAgICBweW9kaWRlT2pzLnB5b2RpZGVQcm9taXNlLFxuICAgIGJsb2NrLmNvZGUsXG4gICAgb3B0aW9uc1xuICApO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3B5b2RpZGVfdmFsdWVfMSA9IHB5b2RpZGVPanMucHJvY2VzcyhfcHlvZGlkZV9lZGl0b3JfMSwge30pO1xuIn0seyJjZWxsTmFtZSI6ImludGVycG9sYXRlLTEzIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICBjb25zdCB7IGludGVycG9sYXRlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBibG9ja19pZCA9IFwiMTNcIjtcbiAgY29uc3QgbGFuZ3VhZ2UgPSBcIm5vbmVcIjtcbiAgY29uc3QgZGVmX21hcCA9IHtcbn07XG4gIGNvbnN0IGVsZW0gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChgaW50ZXJwb2xhdGUtJHtibG9ja19pZH1gKTtcblxuICAvLyBTdG9yZSBvcmlnaW5hbCB0ZW1wbGF0ZWQgSFRNTCBmb3IgcmVmZXJlbmNlIGluIGZ1dHVyZSByZWFjdGl2ZSB1cGRhdGVzXG4gIGlmICghZWxlbS5vcmlnSFRNTCkgZWxlbS5vcmlnSFRNTCA9IGVsZW0uaW5uZXJIVE1MO1xuXG4gIC8vIEludGVycG9sYXRlIHJlYWN0aXZlIE9KUyB2YXJpYWJsZXMgaW50byBlc3RhYmxpc2hlZCBIVE1MIGVsZW1lbnRcbiAgZWxlbS5pbm5lckhUTUwgPSBlbGVtLm9yaWdIVE1MO1xuICBPYmplY3Qua2V5cyhkZWZfbWFwKS5mb3JFYWNoKChkZWYpID0+XG4gICAgaW50ZXJwb2xhdGUoZWxlbSwgXCIke1wiICsgZGVmICsgXCJ9XCIsIGRlZl9tYXBbZGVmXSwgbGFuZ3VhZ2UpXG4gICk7XG59XG4ifSx7ImNlbGxOYW1lIjoiaW50ZXJwb2xhdGUtMTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIGNvbnN0IHsgaW50ZXJwb2xhdGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGJsb2NrX2lkID0gXCIxNFwiO1xuICBjb25zdCBsYW5ndWFnZSA9IFwicHl0aG9uXCI7XG4gIGNvbnN0IGRlZl9tYXAgPSB7XG59O1xuICBjb25zdCBlbGVtID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoYGludGVycG9sYXRlLSR7YmxvY2tfaWR9YCk7XG5cbiAgLy8gU3RvcmUgb3JpZ2luYWwgdGVtcGxhdGVkIEhUTUwgZm9yIHJlZmVyZW5jZSBpbiBmdXR1cmUgcmVhY3RpdmUgdXBkYXRlc1xuICBpZiAoIWVsZW0ub3JpZ0hUTUwpIGVsZW0ub3JpZ0hUTUwgPSBlbGVtLmlubmVySFRNTDtcblxuICAvLyBJbnRlcnBvbGF0ZSByZWFjdGl2ZSBPSlMgdmFyaWFibGVzIGludG8gZXN0YWJsaXNoZWQgSFRNTCBlbGVtZW50XG4gIGVsZW0uaW5uZXJIVE1MID0gZWxlbS5vcmlnSFRNTDtcbiAgT2JqZWN0LmtleXMoZGVmX21hcCkuZm9yRWFjaCgoZGVmKSA9PlxuICAgIGludGVycG9sYXRlKGVsZW0sIFwiJHtcIiArIGRlZiArIFwifVwiLCBkZWZfbWFwW2RlZl0sIGxhbmd1YWdlKVxuICApO1xufVxuIn0seyJjZWxsTmFtZSI6ImludGVycG9sYXRlLTIyIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICBjb25zdCB7IGludGVycG9sYXRlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBibG9ja19pZCA9IFwiMjJcIjtcbiAgY29uc3QgbGFuZ3VhZ2UgPSBcIm5vbmVcIjtcbiAgY29uc3QgZGVmX21hcCA9IHtcbn07XG4gIGNvbnN0IGVsZW0gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChgaW50ZXJwb2xhdGUtJHtibG9ja19pZH1gKTtcblxuICAvLyBTdG9yZSBvcmlnaW5hbCB0ZW1wbGF0ZWQgSFRNTCBmb3IgcmVmZXJlbmNlIGluIGZ1dHVyZSByZWFjdGl2ZSB1cGRhdGVzXG4gIGlmICghZWxlbS5vcmlnSFRNTCkgZWxlbS5vcmlnSFRNTCA9IGVsZW0uaW5uZXJIVE1MO1xuXG4gIC8vIEludGVycG9sYXRlIHJlYWN0aXZlIE9KUyB2YXJpYWJsZXMgaW50byBlc3RhYmxpc2hlZCBIVE1MIGVsZW1lbnRcbiAgZWxlbS5pbm5lckhUTUwgPSBlbGVtLm9yaWdIVE1MO1xuICBPYmplY3Qua2V5cyhkZWZfbWFwKS5mb3JFYWNoKChkZWYpID0+XG4gICAgaW50ZXJwb2xhdGUoZWxlbSwgXCIke1wiICsgZGVmICsgXCJ9XCIsIGRlZl9tYXBbZGVmXSwgbGFuZ3VhZ2UpXG4gICk7XG59XG4ifSx7ImNlbGxOYW1lIjoiaW50ZXJwb2xhdGUtMjMiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIGNvbnN0IHsgaW50ZXJwb2xhdGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IGJsb2NrX2lkID0gXCIyM1wiO1xuICBjb25zdCBsYW5ndWFnZSA9IFwicHl0aG9uXCI7XG4gIGNvbnN0IGRlZl9tYXAgPSB7XG59O1xuICBjb25zdCBlbGVtID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoYGludGVycG9sYXRlLSR7YmxvY2tfaWR9YCk7XG5cbiAgLy8gU3RvcmUgb3JpZ2luYWwgdGVtcGxhdGVkIEhUTUwgZm9yIHJlZmVyZW5jZSBpbiBmdXR1cmUgcmVhY3RpdmUgdXBkYXRlc1xuICBpZiAoIWVsZW0ub3JpZ0hUTUwpIGVsZW0ub3JpZ0hUTUwgPSBlbGVtLmlubmVySFRNTDtcblxuICAvLyBJbnRlcnBvbGF0ZSByZWFjdGl2ZSBPSlMgdmFyaWFibGVzIGludG8gZXN0YWJsaXNoZWQgSFRNTCBlbGVtZW50XG4gIGVsZW0uaW5uZXJIVE1MID0gZWxlbS5vcmlnSFRNTDtcbiAgT2JqZWN0LmtleXMoZGVmX21hcCkuZm9yRWFjaCgoZGVmKSA9PlxuICAgIGludGVycG9sYXRlKGVsZW0sIFwiJHtcIiArIGRlZiArIFwifVwiLCBkZWZfbWFwW2RlZl0sIGxhbmd1YWdlKVxuICApO1xufVxuIn0seyJjZWxsTmFtZSI6InB5b2RpZGUtcHJlbHVkZSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6InB5b2RpZGVPanMgPSB7XG4gIGNvbnN0IHtcbiAgICBQeW9kaWRlRXZhbHVhdG9yLFxuICAgIFB5b2RpZGVFbnZpcm9ubWVudE1hbmFnZXIsXG4gICAgc2V0dXBQeXRob24sXG4gICAgc3RhcnRQeW9kaWRlV29ya2VyLFxuICAgIGI2NERlY29kZSxcbiAgICBjb2xsYXBzZVBhdGgsXG4gIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHN0YXR1c0NvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiZXhlcmNpc2UtbG9hZGluZy1zdGF0dXNcIik7XG4gIGNvbnN0IGluZGljYXRvckNvbnRhaW5lciA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKFwiZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGluZGljYXRvckNvbnRhaW5lci5jbGFzc0xpc3QucmVtb3ZlKFwiZC1ub25lXCIpO1xuXG4gIGxldCBzdGF0dXNUZXh0ID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudChcImRpdlwiKVxuICBzdGF0dXNUZXh0LmNsYXNzTGlzdCA9IFwiZXhlcmNpc2UtbG9hZGluZy1kZXRhaWxzXCI7XG4gIHN0YXR1c1RleHQgPSBzdGF0dXNDb250YWluZXIuYXBwZW5kQ2hpbGQoc3RhdHVzVGV4dCk7XG4gIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5pdGlhbGlzZWA7XG5cbiAgLy8gSG9pc3QgaW5kaWNhdG9yIG91dCBmcm9tIGZpbmFsIHNsaWRlIHdoZW4gcnVubmluZyB1bmRlciByZXZlYWxcbiAgY29uc3QgcmV2ZWFsU3RhdHVzID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgLmV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpZiAocmV2ZWFsU3RhdHVzKSB7XG4gICAgcmV2ZWFsU3RhdHVzLnJlbW92ZSgpO1xuICAgIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsID4gLnNsaWRlc1wiKS5hcHBlbmRDaGlsZChyZXZlYWxTdGF0dXMpO1xuICB9XG5cbiAgLy8gTWFrZSBhbnkgcmV2ZWFsIHNsaWRlcyB3aXRoIGxpdmUgY2VsbHMgc2Nyb2xsYWJsZVxuICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKFwiLnJldmVhbCAuZXhlcmNpc2UtY2VsbFwiKS5mb3JFYWNoKChlbCkgPT4ge1xuICAgIGVsLmNsb3Nlc3QoJ3NlY3Rpb24uc2xpZGUnKS5jbGFzc0xpc3QuYWRkKFwic2Nyb2xsYWJsZVwiKTtcbiAgfSlcblxuICAvLyBQeW9kaWRlIHN1cHBsZW1lbnRhbCBkYXRhIGFuZCBvcHRpb25zXG4gIGNvbnN0IGRhdGFDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInB5b2RpZGUtZGF0YVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGRhdGEgPSBKU09OLnBhcnNlKGI2NERlY29kZShkYXRhQ29udGVudCkpO1xuXG4gIC8vIEdyYWIgbGlzdCBvZiByZXNvdXJjZXMgdG8gYmUgZG93bmxvYWRlZFxuICBjb25zdCBmaWxlc0NvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwidmZzLWZpbGVcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBmaWxlcyA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGZpbGVzQ29udGVudCkpO1xuXG4gIGxldCBweW9kaWRlUHJvbWlzZSA9IChhc3luYyAoKSA9PiB7XG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBQeW9kaWRlYDtcbiAgICBjb25zdCBweW9kaWRlID0gYXdhaXQgc3RhcnRQeW9kaWRlV29ya2VyKGRhdGEub3B0aW9ucyk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHBhY2thZ2U6IG1pY3JvcGlwYDtcbiAgICBhd2FpdCBweW9kaWRlLmxvYWRQYWNrYWdlKFwibWljcm9waXBcIik7XG4gICAgY29uc3QgbWljcm9waXAgPSBhd2FpdCBweW9kaWRlLnB5aW1wb3J0KFwibWljcm9waXBcIik7XG4gICAgYXdhaXQgZGF0YS5wYWNrYWdlcy5wa2dzLm1hcCgocGtnKSA9PiAoKSA9PiB7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHBhY2thZ2U6ICR7cGtnfWA7XG4gICAgICByZXR1cm4gbWljcm9waXAuaW5zdGFsbChwa2cpO1xuICAgIH0pLnJlZHVjZSgoY3VyLCBuZXh0KSA9PiBjdXIudGhlbihuZXh0KSwgUHJvbWlzZS5yZXNvbHZlKCkpO1xuICAgIGF3YWl0IG1pY3JvcGlwLmRlc3Ryb3koKTtcblxuICAgIC8vIERvd25sb2FkIGFuZCBpbnN0YWxsIHJlc291cmNlc1xuICAgIGF3YWl0IGZpbGVzLm1hcCgoZmlsZSkgPT4gYXN5bmMgKCkgPT4ge1xuICAgICAgY29uc3QgbmFtZSA9IGZpbGUuc3Vic3RyaW5nKGZpbGUubGFzdEluZGV4T2YoJy8nKSArIDEpO1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyByZXNvdXJjZTogJHtuYW1lfWA7XG4gICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGZldGNoKGZpbGUpO1xuICAgICAgaWYgKCFyZXNwb25zZS5vaykge1xuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYENhbid0IGRvd25sb2FkIFxcYCR7ZmlsZX1cXGAuIEVycm9yICR7cmVzcG9uc2Uuc3RhdHVzfTogXCIke3Jlc3BvbnNlLnN0YXR1c1RleHR9XCIuYCk7XG4gICAgICB9XG4gICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzcG9uc2UuYXJyYXlCdWZmZXIoKTtcblxuICAgICAgLy8gU3RvcmUgVVJMcyBpbiB0aGUgY3dkIHdpdGhvdXQgYW55IHN1YmRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGlmIChmaWxlLmluY2x1ZGVzKFwiOi8vXCIpKSB7XG4gICAgICAgIGZpbGUgPSBuYW1lO1xuICAgICAgfVxuXG4gICAgICAvLyBDb2xsYXBzZSBoaWdoZXIgZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgZmlsZSA9IGNvbGxhcHNlUGF0aChmaWxlKTtcblxuICAgICAgLy8gQ3JlYXRlIGRpcmVjdG9yeSB0cmVlLCBpZ25vcmluZyBcImRpcmVjdG9yeSBleGlzdHNcIiBWRlMgZXJyb3JzXG4gICAgICBjb25zdCBwYXJ0cyA9IGZpbGUuc3BsaXQoJy8nKS5zbGljZSgwLCAtMSk7XG4gICAgICBsZXQgcGF0aCA9ICcnO1xuICAgICAgd2hpbGUgKHBhcnRzLmxlbmd0aCA+IDApIHtcbiAgICAgICAgcGF0aCArPSBwYXJ0cy5zaGlmdCgpICsgJy8nO1xuICAgICAgICB0cnkge1xuICAgICAgICAgIGF3YWl0IHB5b2RpZGUuRlMubWtkaXIocGF0aCk7XG4gICAgICAgIH0gY2F0Y2ggKGUpIHtcbiAgICAgICAgICBpZiAoZS5uYW1lICE9PSBcIkVycm5vRXJyb3JcIikgdGhyb3cgZTtcbiAgICAgICAgICBpZiAoZS5lcnJubyAhPT0gMjApIHtcbiAgICAgICAgICAgIGNvbnN0IGVycm9yVGV4dFB0ciA9IGF3YWl0IHB5b2RpZGUuX21vZHVsZS5fc3RyZXJyb3IoZS5lcnJubyk7XG4gICAgICAgICAgICBjb25zdCBlcnJvclRleHQgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuVVRGOFRvU3RyaW5nKGVycm9yVGV4dFB0cik7XG4gICAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYEZpbGVzeXN0ZW0gRXJyb3IgJHtlLmVycm5vfSBcIiR7ZXJyb3JUZXh0fVwiLmApO1xuICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgfVxuXG4gICAgICAvLyBXcml0ZSB0aGlzIGZpbGUgdG8gdGhlIFZGU1xuICAgICAgdHJ5IHtcbiAgICAgICAgcmV0dXJuIGF3YWl0IHB5b2RpZGUuRlMud3JpdGVGaWxlKGZpbGUsIG5ldyBVaW50OEFycmF5KGRhdGEpKTtcbiAgICAgIH0gY2F0Y2ggKGUpIHtcbiAgICAgICAgaWYgKGUubmFtZSAhPT0gXCJFcnJub0Vycm9yXCIpIHRocm93IGU7XG4gICAgICAgIGNvbnN0IGVycm9yVGV4dFB0ciA9IGF3YWl0IHB5b2RpZGUuX21vZHVsZS5fc3RyZXJyb3IoZS5lcnJubyk7XG4gICAgICAgIGNvbnN0IGVycm9yVGV4dCA9IGF3YWl0IHB5b2RpZGUuX21vZHVsZS5VVEY4VG9TdHJpbmcoZXJyb3JUZXh0UHRyKTtcbiAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBGaWxlc3lzdGVtIEVycm9yICR7ZS5lcnJub30gXCIke2Vycm9yVGV4dH1cIi5gKTtcbiAgICAgIH1cbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgUHlvZGlkZSBlbnZpcm9ubWVudCBzZXR1cGA7XG4gICAgYXdhaXQgc2V0dXBQeXRob24ocHlvZGlkZSk7XG5cbiAgICBzdGF0dXNUZXh0LnJlbW92ZSgpO1xuICAgIGlmIChzdGF0dXNDb250YWluZXIuY2hpbGRyZW4ubGVuZ3RoID09IDApIHtcbiAgICAgIHN0YXR1c0NvbnRhaW5lci5wYXJlbnROb2RlLnJlbW92ZSgpO1xuICAgIH1cbiAgICByZXR1cm4gcHlvZGlkZTtcbiAgfSkoKS5jYXRjaCgoZXJyKSA9PiB7XG4gICAgc3RhdHVzVGV4dC5zdHlsZS5jb2xvciA9IFwidmFyKC0tZXhlcmNpc2UtZWRpdG9yLWhsLWVyLCAjQUQwMDAwKVwiO1xuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBlcnIubWVzc2FnZTtcbiAgICAvL2luZGljYXRvckNvbnRhaW5lci5xdWVyeVNlbGVjdG9yKFwiLnNwaW5uZXItZ3Jvd1wiKS5jbGFzc0xpc3QuYWRkKFwiZC1ub25lXCIpO1xuICAgIHRocm93IGVycjtcbiAgfSk7XG5cbiAgLy8gS2VlcCB0cmFjayBvZiBpbml0aWFsIE9KUyBibG9jayByZW5kZXJcbiAgY29uc3QgcmVuZGVyZWRPanMgPSB7fTtcblxuICBjb25zdCBwcm9jZXNzID0gYXN5bmMgKGNvbnRleHQsIGlucHV0cykgPT4ge1xuICAgIGNvbnN0IHB5b2RpZGUgPSBhd2FpdCBweW9kaWRlUHJvbWlzZTtcbiAgICBjb25zdCBldmFsdWF0b3IgPSBuZXcgUHlvZGlkZUV2YWx1YXRvcihweW9kaWRlLCBjb250ZXh0KTtcbiAgICBhd2FpdCBldmFsdWF0b3IucHJvY2VzcyhpbnB1dHMpO1xuICAgIHJldHVybiBldmFsdWF0b3IuY29udGFpbmVyO1xuICB9XG5cbiAgcmV0dXJuIHtcbiAgICBweW9kaWRlUHJvbWlzZSxcbiAgICByZW5kZXJlZE9qcyxcbiAgICBwcm9jZXNzLFxuICB9O1xufVxuIn1dfQ==
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Forecasting with Machine Learning</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="session_04_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="session_04_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="session_04_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="session_04_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="session_04_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="session_04_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="session_04_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="session_04_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="session_04_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="session_04_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"numbers":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'fast',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 6.0e-2,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script>
+    // Start Over also hides the revealed solution (and brings back "Show Solution").
+    (function () {
+      var pending = {};
+      document.addEventListener('click', function (ev) {
+        var btn = ev.target.closest && ev.target.closest('a, button');
+        if (!btn) return;
+        var cell = btn.closest('.exercise-cell');
+        if (btn.classList.contains('btn-exercise-solution')) {
+          var header = btn.parentElement;
+          pending.parent = header; pending.className = btn.className; pending.html = btn.innerHTML;
+          return;
+        }
+        if (btn.classList.contains('btn-outline-dark') && /Start Over/.test(btn.textContent) && cell) {
+          var ex = null;
+          document.querySelectorAll('.exercise-solution').forEach(function (sol) {
+            if (!sol.classList.contains('d-none')) {
+              sol.classList.add('d-none');
+              if (pending.parent) {
+                var again = document.createElement('a');
+                again.className = pending.className; again.innerHTML = pending.html;
+                again.setAttribute('role', 'button'); again.tabIndex = 0;
+                again.onclick = function () { sol.classList.remove('d-none'); again.remove(); };
+                pending.parent.prepend(again);
+                pending = {};
+              }
+            }
+          });
+        }
+      }, true);
+    })();
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var timer;
+      var observer = new MutationObserver(function () {
+        clearTimeout(timer);
+        timer = setTimeout(function () { Reveal.layout(); }, 100);
+      });
+      observer.observe(document.querySelector(".reveal .slides"), {
+        childList: true,
+        subtree: true
+      });
+    });
+    </script>
+
+    <script>
+    const t = setInterval(() => {
+      const pages = document.querySelectorAll(".pdf-page");
+      if (!pages.length) return;
+      clearInterval(t);
+      pages.forEach((p, i) => {
+        const s = p.querySelector(".slide-number-pdf");
+        if (s) s.textContent = (i + 1) + " / " + pages.length;
+      });
+    }, 300);
+    </script>
+    <script type="ojs-module-contents">
+    eyJjb250ZW50cyI6W119
+    </script>
+    <script type="module">
+    if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+    window._ojs.paths.runtimeToDoc = "../../..";
+    window._ojs.paths.runtimeToRoot = "../../../..";
+    window._ojs.paths.docToRoot = "..";
+    window._ojs.selfContained = false;
+    window._ojs.runtime.interpretFromScriptTags();
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+                // target, if specified
+                link.setAttribute("target", "_blank");
+                if (link.getAttribute("rel") === null) {
+                  link.setAttribute("rel", "noopener");
+                }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
