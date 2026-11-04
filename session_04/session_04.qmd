@@ -620,6 +620,9 @@ lVal = DataLoader(dfVal, batch_size=32, shuffle=False)
 lTest = DataLoader(dfTest, batch_size=32, shuffle=False)
 ```
 
+::: {.notes}
+A standard network has no memory between days, so shuffling can’t remove time information. It only gives better batches.
+:::
 
 ## The Simple Neural Network I
 
