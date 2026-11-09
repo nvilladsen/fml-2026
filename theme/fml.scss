@@ -683,6 +683,10 @@ i.fas.fa-bars {
   margin-top: 0.6em;
 }
 
+.compare.cmp-sm .compare-col {
+  font-size: 0.64em;   // default is 0.72em
+}
+
 .compare-col {
   border: 1px solid #e6e5df;
   border-top: 5px solid #002546;
@@ -1379,3 +1383,17 @@ html.print-pdf .reveal .slides .pdf-page > section {
 .reveal table.bars td.bt::before { content: ""; display: block; width: var(--w); height: .7em;
   background: #86b6ef; border-radius: 3px; }
 .reveal table.bars td.bv { width: 14%; text-align: right; font-variant-numeric: tabular-nums; }
+
+.splitbar .sb-test {
+  background: #f4f9ff;
+  border: 1px solid #86b6ef;
+  color: #0d366b;
+  white-space: nowrap;
+}
+
+// years not used by this refit (tested by later refits)
+.splitbar .sb-rest {
+  background: transparent;
+  border: 1px dashed #c3c2b7;
+  color: #a8a69f;
+}

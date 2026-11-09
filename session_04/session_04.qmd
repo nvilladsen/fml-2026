@@ -1441,6 +1441,20 @@ for epoch in range(n_epochs):
 ```
 
 ::: {.notes}
+Normalizing the loss by the size of the batch, the number of observations in the batch. 
+
+val_loss = (L_1*n_1 + L_2*n_2 + ... + L_B*n_B) / (n_1 + n_2 + ... + n_B)
+
+or in sum form:
+
+val_loss = sum_{i=1}^{B} (L_i * n_i) / sum_{i=1}^{B} n_i
+
+L_i = mean loss of batch i
+n_i = number of samples in batch i
+B   = number of batches
+:::
+
+::: {.notes}
 Validation for early stopping, hyperparameter tuning, and monitoring of convergence.
 :::
 
@@ -1700,22 +1714,107 @@ Prediction
 :::
 :::
 
-## Forecasting from Images of Price Charts
+## A Stylized Example: Handwritten Digits {.compact}
 
-Jiang, Kelly and Xiu (2023) turn the recent price history of stocks into images, then use a 2D CNN to forecast the direction of future returns
+Classic image dataset: 1,797 grayscale images of $8 \times 8$ pixels, showing the digits 0 to 9,
 
-::: {.triad}
+::: {.pull-up}
+:::
+
+```{pyodide}
+from sklearn.datasets import load_digits
+digits = load_digits()
+
+print(f"Label examples: {digits.target[0:20]}")
+print(digits.images[0].astype(int))
+```
+
+The CNN input has shape `(batch, channels, height, width)`. A grayscale image has `channels` = 1
+
+## A Minimal CNN
+
+:::: {.flow}
+::: {.fn-navy}
+Input
+[`(batch, 1, 8, 8)`]{.fn-sub}
+:::
+::: {.fn}
+`Conv2d` + ReLU
+[`(batch, 4, 8, 8)`]{.fn-sub}
+:::
+::: {.fn}
+`MaxPool2d(2)`
+[`(batch, 4, 4, 4)`]{.fn-sub}
+:::
+::: {.fn}
+`flatten(1)`
+[`(batch, 64)`]{.fn-sub}
+:::
+::: {.fn-amber}
+`Linear`
+[`(batch, 10)`]{.fn-sub}
+:::
+::::
+
+```{pyodide}
+#| autorun: false
+#| runbutton: false
+#| startover: false
+class SimpleCNN(nn.Module):
+    def __init__(self):
+        super(SimpleCNN, self).__init__()
+        self.conv = nn.Conv2d(1, 4, kernel_size=3, padding=1)  # 4 filters of size 3x3
+        self.pool = nn.MaxPool2d(2)
+        self.fc = nn.Linear(4 * 4 * 4, 10)                     # one score per digit
+
+    def forward(self, x):                                      # x: (batch, 1, 8, 8)
+        x = self.pool(F.relu(self.conv(x)))
+        return self.fc(x.flatten(1))
+```
+
+## Training the CNN
+
+The task is classification into 10 classes, so the loss is chosen to be the **cross-entropy**,
+
+```{pyodide}
+#| autorun: false
+#| runbutton: false
+#| startover: false
+model = SimpleCNN().to(device)
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+
+# training loop: identical to the feedforward network
+
+# evaluation: the predicted class is the one with the highest score
+pred = model(X_test).argmax(dim=1)
+accuracy = (pred == y_test).float().mean()
+```
+
+::: {.keypoint}
+Only the input shape, the layers and the loss change. The training loop stays the same
+:::
+
+::: {.notes}
+Cross-entropy measures how much probability the model assigned to the correct class: it is the negative log of that probability, so it is near 0 when the model is confident and right, and grows large when the model gives the true class a low probability. Averaged over all observations, it penalizes confident wrong answers heavily.
+:::
+
+## Forecasting from Images of Price Charts I 
+
+A more relevant application: Jiang, Kelly and Xiu (2023) turn the recent price history of stocks into images, then use a 2D CNN to forecast the direction of future returns
+
+:::: {.triad}
 ::: {.triad-card}
 [Input]{.tc-tag}
 
-A black-and-white image of the open-high-low-close bars, a moving average and volume bars of the last 5, 20 or 60 days. 
+A black-and-white image of the open-high-low-close bars, a moving average and volume bars of the last 5, 20 or 60 days.
 
-Each day is 3 pixels wide
+All stocks on NYSE, AMEX, and NASDAQ
 :::
 ::: {.triad-card .tc-light}
 [Model]{.tc-tag}
 
-A 2D CNN architecture with convolution, batch normalization, leaky ReLU and max-pooling. 
+The same ingredients as our example, only deeper: convolution, batch normalization, leaky ReLU and max-pooling, stacked in blocks.
 
 A fully connected layer with dropout and sigmoid activation produces the forecast
 :::
@@ -1724,112 +1823,23 @@ A fully connected layer with dropout and sigmoid activation produces the forecas
 
 The probability that the subsequent return is positive
 :::
+::::
+
+## Forecasting from Images of Price Charts II
+
+::: {.figblock}
+::: {.fig-title}
+60 day OHLC image
 :::
 
-::: {.keypoint}
-All stocks on NYSE, AMEX and NASDAQ
-:::
+<img src="../assets/figures/jiangetal2023.svg">
 
-## A Stylized Version: Shapes
+::: {.fig-src}
+From Jiang, Kelly and Xiu (2023), "(Re-)Imag(in)ing Price Trends". *Generated OHLC images with volume bar and moving average line. 
 
-::: {.pull-up}
-:::
-
-The input has shape `(batch, channels, height, width)`. A 20-day chart is 60 pixels wide, and we let $H$ denote its height
-
-::: {.pull-up}
-:::
-
-::: {.overview}
-::: {.ov-row}
-::: {.ov-label}
-Input: Dimension `(batch, 1, H, 60)`
-:::
-::: {.ov-desc}
-`channels` = 1 $\to$ black and white image
+This figure displays market data image for 60 days of data.*
 :::
 :::
-::: {.ov-row}
-::: {.ov-label}
-Block 1: `Conv2d(1, 64, 3)`
-:::
-::: {.ov-desc}
-Components: Convolution, batch normalization, leaky ReLU, and max-pooling. `MaxPool2d(2)`: height and width are halved
-:::
-:::
-::: {.ov-row}
-::: {.ov-label}
-Blocks 2 and 3: `Conv2d(64, 128, 3)` and `Conv2d(128, 256, 3)`
-:::
-::: {.ov-desc}
-Components: Convolution, batch normalization, leaky ReLU, and max-pooling. 64 to 128 and 128 to 256 channels, each halving height and width
-:::
-:::
-::: {.ov-row}
-::: {.ov-label}
-`flatten(1)` and dropout
-:::
-::: {.ov-desc}
-`(batch, 256 * H/8 * 60/8)`, rounded down at each pooling. Division by 8 because `MaxPool2d(2)` is applied three times
-:::
-:::
-::: {.ov-row}
-::: {.ov-label}
-`torch.sigmoid(Linear(n_flat, 1))`
-:::
-::: {.ov-desc}
-`(batch, 1)`: one number, the probability of an up move
-:::
-:::
-:::
-
-## A Building Block (Helper)
-
-```{pyodide}
-#| autorun: false
-#| edit: true
-#| eval: true
-#| runbutton: false
-#| startover: false
-def block(c_in, c_out):
-    return nn.Sequential(
-        nn.Conv2d(c_in, c_out, kernel_size=3, padding=1),
-        nn.BatchNorm2d(c_out),
-        nn.LeakyReLU(),
-        nn.MaxPool2d(2),
-    )
-```
-
-Criterion is the binary cross-entropy loss, the loss function for a binary (yes/no) outcome, 
-
-```{pyodide}
-#| autorun: false
-#| edit: true
-#| eval: true
-#| runbutton: false
-#| startover: false
-criterion = nn.BCELoss() 
-```
-
-## The Network
-
-```{pyodide}
-#| autorun: false
-#| edit: true
-#| eval: true
-#| runbutton: false
-#| startover: false
-class ChartCNN(nn.Module):
-    def __init__(self, n_flat):                # n_flat: 256 * 8 * 7 if H = 64
-        super(ChartCNN, self).__init__()
-        self.features = nn.Sequential(block(1, 64), block(64, 128),
-                                      block(128, 256))
-        self.fc = nn.Sequential(nn.Dropout(0.5), nn.Linear(n_flat, 1))
-
-    def forward(self, x):                      # x: (batch, 1, H, 60)
-        return torch.sigmoid(self.fc(self.features(x).flatten(1)))
-```
-256 is `c_out` from block 3, and $H/8 = 8$ and $60/8 = 7$ if the input height is $H = 64$.
 
 ## Recurrent Neural Networks (RNNs) and LSTMs
 :::: {.compare .cols-3}
@@ -1859,24 +1869,6 @@ class ChartCNN(nn.Module):
 
 ::::
 
-## Forecasting Inflation from a Window of Quarters
-
-:::: {.compare}
-::: {.compare-col}
-[Feedforward network (so far)]{.cmp-title}
-
-- Input: the three variables of one quarter
-- Forecast: inflation in the next quarter
-:::
-::: {.compare-col .cmp-alt}
-[Recurrent network]{.cmp-title}
-
-- Input: the last 8 quarters of inflation, unemployment and the T-bill rate, in order
-- Forecast: inflation in the next quarter
-- The path matters, e.g., whether inflation is rising or falling
-:::
-::::
-
 ## Recurrent Neural Networks Visualized
 
 ::: {.figblock}
@@ -1889,17 +1881,28 @@ class ChartCNN(nn.Module):
 :::
 :::
 
-## LSTM Unit Visualized
-
-::: {.figblock}
-::: {.fig-title}
+::: {.notes}
+The input data arrow indicates the input data sequence, which is indicated below the elements, it is not a secondary source of input. $h_t$ indicates the outputs. The forecasts will be made from $h_t$ passed to something akin to $\hat{y} = W_y h_t + b_y$.
 :::
 
-<img src="../assets/figures/lstm_unit.svg">
+## Forecasting Inflation from a Window of Quarters
 
-::: {.fig-src}
+We continue our inflation forecasting example, now in a recurrent setting, supporting time series consciousness
+
+:::: {.compare}
+::: {.compare-col}
+[Feedforward network (so far)]{.cmp-title}
+
+- Input: the three variables of one quarter
+- Forecast: inflation in the next quarter
 :::
+::: {.compare-col .cmp-alt}
+[Recurrent network]{.cmp-title}
+
+- Input: the last 8 quarters of inflation, unemployment and the T-bill rate
+- Forecast: inflation in the next quarter
 :::
+::::
 
 ## Windows of Quarters, Example
 
@@ -1913,13 +1916,13 @@ class ChartCNN(nn.Module):
 :::
 :::
 
-Windows have shape `(samples, quarters, variables)` = (4, 4, 3) 
+Windows have shape `(samples, quarters, variables)` = (4, 3, 3) 
 
 Target has shape `(samples, 1)` = (4, 1)
 
 ## Setting up Windows I
 
-`windows` has shape `(samples, quarters, variables)`, and each window belongs to the sample in which it ends. 
+`windows` has shape `(samples, quarters, variables)`, 
 
 ```{pyodide}
 #| autorun: false
@@ -1943,6 +1946,10 @@ Xseq_val, Xseq_test, yseq_val, yseq_test = train_test_split(
 # cont'd on next slide
 ```
 
+::: {.notes}
+`np.lib.stride_tricks.sliding_window_view()` is a NumPy function that creates a sliding window view of an array. `qrts` is the window length, `axis=0` means the window slides along the rows, here: through time.
+:::
+
 ## Setting up Windows II
 
 ```{pyodide}
@@ -1953,22 +1960,42 @@ Xseq_val, Xseq_test, yseq_val, yseq_test = train_test_split(
 #| startover: false
 # cont'd from previous slide
 
-X_scaler = StandardScaler().fit(Xseq_train.reshape(-1, 3))   # training only
-y_scaler = StandardScaler().fit(yseq_train)
-Xseq_train, Xseq_val, Xseq_test = (X_scaler.transform(W.reshape(-1, 3)).reshape(W.shape)
-                                   for W in (Xseq_train, Xseq_val, Xseq_test))
-yseq_train, yseq_val, yseq_test = (y_scaler.transform(y)
-                                   for y in (yseq_train, yseq_val, yseq_test))
+X_scaler = StandardScaler()
+y_scaler = StandardScaler()
+
+# The scaler expects 2D input, so reshape to (rows, 3) and back
+Xseq_train = X_scaler.fit_transform(Xseq_train.reshape(-1, 3)).reshape(Xseq_train.shape)
+Xseq_val = X_scaler.transform(Xseq_val.reshape(-1, 3)).reshape(Xseq_val.shape)
+Xseq_test = X_scaler.transform(Xseq_test.reshape(-1, 3)).reshape(Xseq_test.shape)
+
+yseq_train = y_scaler.fit_transform(yseq_train)
+yseq_val = y_scaler.transform(yseq_val)
+yseq_test = y_scaler.transform(yseq_test)
 ```
+
+::: {.notes}
+train original:         (133, 8, 3)
+train after reshape:    (1064, 3)
+train after scaler:     (1064, 3)
+train back to original: (133, 8, 3)
+val original:           (30, 8, 3)
+val after reshape:      (240, 3)
+val after scaler:       (240, 3)
+val back to original:   (30, 8, 3)
+test original:          (31, 8, 3)
+test after reshape:     (248, 3)
+test after scaler:      (248, 3)
+test back to original:  (31, 8, 3)
+:::
 
 ## The Recurrent Idea
 
-A recurrent network reads the window one quarter at a time, and keeps a memory of what it has seen: the **hidden state**
+A recurrent network reads the window one quarter at a time, and keeps a memory of what it has seen: the **hidden state**,
 
 ::: {.flow}
 ::: {.fn-navy}
 Quarter 1
-[memory updated]{.fn-sub}
+[initializes memory]{.fn-sub}
 :::
 ::: {.fn}
 Quarters 2 through 7
@@ -1984,7 +2011,42 @@ Quarter 8
 - The forecast is made from the memory after the last quarter
 - The memory is the distinguishing characteristic of recurrent networks, LSTMs in particular
 
-## A Recurrent Network in PyTorch
+## LSTM Unit Visualized
+
+::: {.figblock}
+::: {.fig-title}
+:::
+
+<img src="../assets/figures/lstm_unit.svg">
+
+::: {.fig-src}
+:::
+:::
+
+## The LSTM Cell 
+The LSTM adds a cell state, a long-term memory, next to the hidden state. Gates between 0 (closed) and 1 (open) control it,
+
+::: {.triad}
+::: {.triad-card}
+[Forget gate]{.tc-tag}
+
+How much of the old memory is kept. Is last year's inflation spike still relevant?
+:::
+::: {.triad-card .tc-light}
+[Input gate]{.tc-tag}
+
+How much of the new information is written to the memory. Is this quarter's jump in unemployment worth remembering?
+:::
+::: {.triad-card .tc-amber}
+[Output gate]{.tc-tag}
+
+How much of the memory is shown to the forecast. Which parts matter for next quarter?
+:::
+:::
+
+A plain RNN rewrites its entire memory every quarter, so early quarters fade. The LSTM gates edit the cell state instead, so information persists $\to$ long-memory modeling feasible
+
+## A Recurrent Network in PyTorch {.th-slide .th-wide}
 `qrts` indicates the number of quarters (in this case) in a window
 ```{pyodide}
 #| autorun: false
@@ -2006,29 +2068,13 @@ class RecurrentNet(nn.Module):
         return x
 ```
 
-## The LSTM Cell {.th-slide .th-wide}
-
-The LSTM keeps a long-term memory next to the hidden state. Three gates decide what happens. Each gate is a number between 0 (closed) and 1 (open)
-
-::: {.triad}
-::: {.triad-card}
-[Forget gate]{.tc-tag}
-
-How much of the old memory is kept. Is last year's inflation spike still relevant?
-:::
-::: {.triad-card .tc-light}
-[Input gate]{.tc-tag}
-
-How much of the new information is written to the memory. Is this quarter's jump in unemployment worth remembering?
-:::
-::: {.triad-card .tc-amber}
-[Output gate]{.tc-tag}
-
-How much of the memory is shown to the forecast. Which parts matter for next quarter?
-:::
+::: {.notes}
+`[cell]` is a dictionary look-up matching the passed string to the corresponding PyTorch  model. The `batch_first=True` argument makes the input shape `(batch, qrts, n_features)` instead of `(qrts, batch, n_features)`.
 :::
 
-A plain RNN overwrites its memory in every quarter, so early quarters fade. The gates let the LSTM hold on to information for longer $\to$ long-memory modeling feasible
+::: {.notes}
+The `self.rnn` returns the output and the hidden state, but we do not need the first thing here, hence the placeholder. The output is returned as (batch, qrts, hidden), and output[:, -1, :] extracts the final qrts, the last position, such that our output is (batch, hidden). This is passed to the linear layer. 
+:::
 
 ```{=html}
 <div class="th"><span class="th-arrow">↑</span><span class="th-line"></span><span class="th-ref" style="bottom:19.11%"><b>Basic NN</b></span><span class="th-dot" style="bottom:26.10%"></span><span class="th-val" style="bottom:26.10%">RNN 11.174</span><span class="th-dot" style="bottom:15.93%"></span><span class="th-val" style="bottom:15.93%">LSTM 10.717</span></div>
@@ -2039,15 +2085,15 @@ A plain RNN overwrites its memory in every quarter, so early quarters fade. The 
 **Transformers** (Vaswani et al., 2017) are the foundation of Large Language Models (LLMs)
 
 :::: {.triad .cols-2}
-::: {.triad-card}
-[Self-attention]{.tc-tag}
-
-Transformers use self-attention mechanisms to process sequential data in parallel, allowing for better scalability and performance
-:::
 ::: {.triad-card .tc-light}
 [Attention]{.tc-tag}
 
 A mechanism that allows the model to focus on relevant parts of the input sequence when making predictions
+:::
+::: {.triad-card}
+[Self-attention]{.tc-tag}
+
+Transformers use self-attention mechanisms to process sequential data in parallel, allowing for better scalability and performance
 :::
 ::::
 
@@ -2081,6 +2127,14 @@ Information passed on
 :::
 :::
 
+::: {.spacer}
+:::
+
+Maths to decorate the slide,
+
+::: {.pull-up}
+:::
+
 $$\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^\intercal}{\sqrt{d}}\right)\mathbf{V}$$
 
 ## Attention as a Lookup
@@ -2102,7 +2156,7 @@ Intuitively, attention works like a lookup/search engine:
 
 ## A Self-Attention Network I
 
-Self-attention: query, key and value all come from the same window. The forecast is made from the output of the last quarter
+**Self-attention:** query, key and value all come from the same window. The forecast is made from the output of the last quarter,
 
 ```{pyodide}
 #| autorun: false
@@ -2116,7 +2170,7 @@ class AttentionNet(nn.Module):
         self.attn = nn.MultiheadAttention(d, num_heads=1, batch_first=True) # contains W_Q, W_K and W_V
         self.fc = nn.Linear(d, 1)
 
-# Continued on next slide
+# cont'd on next slide
 ```
 
 ## A Self-Attention Network II {.th-slide}
@@ -2125,7 +2179,7 @@ class AttentionNet(nn.Module):
 #| autorun: false
 #| runbutton: false
 #| startover: false
-# Continued from previous slide
+# cont'd from previous slide
     def forward(self, x):                      # x: (batch, qrts, n_features)
         x = self.embed(x) + self.pos           # (batch, qrts, d)
         context, weights = self.attn(x, x, x)  # query = key = value = x
@@ -2134,7 +2188,7 @@ class AttentionNet(nn.Module):
         return x
 ```
 
-Attention treats the window as a set, so `self.pos` tells the network the order of the quarters
+`d` sets the size of the query, key and value vectors. A larger `d` stores more information per vector, but adds more parameters to learn
 
 ```{=html}
 <div class="th"><span class="th-arrow">↑</span><span class="th-line"></span><span class="th-ref" style="bottom:19.11%"><b>Basic NN</b></span><span class="th-dot" style="bottom:63.40%"></span><span class="th-val" style="bottom:63.40%">12.853</span></div>
@@ -2144,7 +2198,7 @@ Attention treats the window as a set, so `self.pos` tells the network the order 
 
 Attention only recombines the quarters. We still need non-linear activations.
 
-A Transformer block (Vaswani et al., 2017) adds them, and blocks are stacked:
+A Transformer block (Vaswani et al., 2017) adds them, and blocks are stacked,
 
 :::: {.flow}
 ::: {.fn-navy}
@@ -2243,7 +2297,9 @@ The replies we receive are nothing but (incredibly good) predictions
 ::: {.triad-card}
 [Hardware]{.tc-tag}
 
-Training the Chinese LLM LongCat-2.0 Model without NVIDIA GPUs [(Reuters, 2026)]{.faint}
+The Chinese LLM LongCat-2.0 Model is trained without NVIDIA GPUs [(Reuters, 2026)]{.faint}
+
+<!-- Training the Chinese LLM LongCat-2.0 Model without NVIDIA GPUs [(Reuters, 2026)]{.faint} -->
 :::
 ::: {.triad-card .tc-light}
 [Computer vision meets music]{.tc-tag}
@@ -2253,7 +2309,7 @@ MuSViT reads sheet music like computer vision models read images [(Penarrubia et
 ::: {.triad-card .tc-amber}
 [Mathematics]{.tc-tag}
 
-OpenAI and Anthropic (and others) are making progress in the field of mathematics
+OpenAI and Anthropic (etc.) make progress in the field of mathematics
 :::
 ::::
 

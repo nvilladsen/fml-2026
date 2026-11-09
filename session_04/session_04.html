@@ -104,7 +104,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="session_04_files/libs/revealjs/dist/theme/quarto-30b8ea342387485333bc4b1ecb95606c.css">
+  <link rel="stylesheet" href="session_04_files/libs/revealjs/dist/theme/quarto-8bcdbce38147dfd44e32676820f9c5c3.css">
   <link href="session_04_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="session_04_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="session_04_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -785,6 +785,19 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImRmVHJhaW4gPSBUZW5zb3JEYXRhc2V0KFhfdHJhaW4sIHlfdHJhaW4pXG5kZlZhbCA9IFRlbnNvckRhdGFzZXQoWF92YWwsIHlfdmFsKVxuZGZUZXN0ID0gVGVuc29yRGF0YXNldChYX3Rlc3QsIHlfdGVzdClcblxubFRyYWluID0gRGF0YUxvYWRlcihkZlRyYWluLCBiYXRjaF9zaXplPTMyLCBzaHVmZmxlPVRydWUpXG5sVmFsID0gRGF0YUxvYWRlcihkZlZhbCwgYmF0Y2hfc2l6ZT0zMiwgc2h1ZmZsZT1GYWxzZSlcbmxUZXN0ID0gRGF0YUxvYWRlcihkZlRlc3QsIGJhdGNoX3NpemU9MzIsIHNodWZmbGU9RmFsc2UpIn0=
 </script>
 </div>
+<aside class="notes">
+<p>A standard network has no memory between days, so shuffling can’t remove time information. It only gives better batches.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="the-simple-neural-network-i" class="slide level2 center">
 <h2>The Simple Neural Network I</h2>
@@ -1556,6 +1569,23 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 </script>
 </div>
 <aside class="notes">
+<p>Normalizing the loss by the size of the batch, the number of observations in the batch.</p>
+<p>val_loss = (L_1<em>n_1 + L_2</em>n_2 + … + L_B*n_B) / (n_1 + n_2 + … + n_B)</p>
+<p>or in sum form:</p>
+<p>val_loss = sum_{i=1}^{B} (L_i * n_i) / sum_{i=1}^{B} n_i</p>
+<p>L_i = mean loss of batch i n_i = number of samples in batch i B = number of batches</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<aside class="notes">
 <p>Validation for early stopping, hyperparameter tuning, and monitoring of convergence.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -1810,18 +1840,90 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 </div>
 </div>
 </section>
-<section id="forecasting-from-images-of-price-charts" class="slide level2 center">
-<h2>Forecasting from Images of Price Charts</h2>
-<p>Jiang, Kelly and Xiu (2023) turn the recent price history of stocks into images, then use a 2D CNN to forecast the direction of future returns</p>
+<section id="a-stylized-example-handwritten-digits" class="slide level2 compact center">
+<h2>A Stylized Example: Handwritten Digits</h2>
+<p>Classic image dataset: 1,797 grayscale images of <span class="math inline">\(8 \times 8\)</span> pixels, showing the digits 0 to 9,</p>
+<div class="pull-up">
+
+</div>
+<div>
+<div id="pyodide-29" class="exercise-cell">
+
+</div>
+<script type="pyodide-29-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiJmcm9tIHNrbGVhcm4uZGF0YXNldHMgaW1wb3J0IGxvYWRfZGlnaXRzXG5kaWdpdHMgPSBsb2FkX2RpZ2l0cygpXG5cbnByaW50KGZcIkxhYmVsIGV4YW1wbGVzOiB7ZGlnaXRzLnRhcmdldFswOjIwXX1cIilcbnByaW50KGRpZ2l0cy5pbWFnZXNbMF0uYXN0eXBlKGludCkpIn0=
+</script>
+</div>
+<p>The CNN input has shape <code>(batch, channels, height, width)</code>. A grayscale image has <code>channels</code> = 1</p>
+</section>
+<section id="a-minimal-cnn" class="slide level2 center">
+<h2>A Minimal CNN</h2>
+<div class="flow">
+<div class="fn-navy">
+<p>Input <span class="fn-sub"><code>(batch, 1, 8, 8)</code></span></p>
+</div>
+<div class="fn">
+<p><code>Conv2d</code> + ReLU <span class="fn-sub"><code>(batch, 4, 8, 8)</code></span></p>
+</div>
+<div class="fn">
+<p><code>MaxPool2d(2)</code> <span class="fn-sub"><code>(batch, 4, 4, 4)</code></span></p>
+</div>
+<div class="fn">
+<p><code>flatten(1)</code> <span class="fn-sub"><code>(batch, 64)</code></span></p>
+</div>
+<div class="fn-amber">
+<p><code>Linear</code> <span class="fn-sub"><code>(batch, 10)</code></span></p>
+</div>
+</div>
+<div>
+<div id="pyodide-30" class="exercise-cell">
+
+</div>
+<script type="pyodide-30-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNsYXNzIFNpbXBsZUNOTihubi5Nb2R1bGUpOlxuICAgIGRlZiBfX2luaXRfXyhzZWxmKTpcbiAgICAgICAgc3VwZXIoU2ltcGxlQ05OLCBzZWxmKS5fX2luaXRfXygpXG4gICAgICAgIHNlbGYuY29udiA9IG5uLkNvbnYyZCgxLCA0LCBrZXJuZWxfc2l6ZT0zLCBwYWRkaW5nPTEpICAjIDQgZmlsdGVycyBvZiBzaXplIDN4M1xuICAgICAgICBzZWxmLnBvb2wgPSBubi5NYXhQb29sMmQoMilcbiAgICAgICAgc2VsZi5mYyA9IG5uLkxpbmVhcig0ICogNCAqIDQsIDEwKSAgICAgICAgICAgICAgICAgICAgICMgb25lIHNjb3JlIHBlciBkaWdpdFxuXG4gICAgZGVmIGZvcndhcmQoc2VsZiwgeCk6ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAjIHg6IChiYXRjaCwgMSwgOCwgOClcbiAgICAgICAgeCA9IHNlbGYucG9vbChGLnJlbHUoc2VsZi5jb252KHgpKSlcbiAgICAgICAgcmV0dXJuIHNlbGYuZmMoeC5mbGF0dGVuKDEpKSJ9
+</script>
+</div>
+</section>
+<section id="training-the-cnn" class="slide level2 center">
+<h2>Training the CNN</h2>
+<p>The task is classification into 10 classes, so the loss is chosen to be the <strong>cross-entropy</strong>,</p>
+<div>
+<div id="pyodide-31" class="exercise-cell">
+
+</div>
+<script type="pyodide-31-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6Im1vZGVsID0gU2ltcGxlQ05OKCkudG8oZGV2aWNlKVxuY3JpdGVyaW9uID0gbm4uQ3Jvc3NFbnRyb3B5TG9zcygpXG5vcHRpbWl6ZXIgPSB0b3JjaC5vcHRpbS5BZGFtKG1vZGVsLnBhcmFtZXRlcnMoKSwgbHI9MC4wMDEpXG5cbiMgdHJhaW5pbmcgbG9vcDogaWRlbnRpY2FsIHRvIHRoZSBmZWVkZm9yd2FyZCBuZXR3b3JrXG5cbiMgZXZhbHVhdGlvbjogdGhlIHByZWRpY3RlZCBjbGFzcyBpcyB0aGUgb25lIHdpdGggdGhlIGhpZ2hlc3Qgc2NvcmVcbnByZWQgPSBtb2RlbChYX3Rlc3QpLmFyZ21heChkaW09MSlcbmFjY3VyYWN5ID0gKHByZWQgPT0geV90ZXN0KS5mbG9hdCgpLm1lYW4oKSJ9
+</script>
+</div>
+<div class="keypoint">
+<p>Only the input shape, the layers and the loss change. The training loop stays the same</p>
+</div>
+<aside class="notes">
+<p>Cross-entropy measures how much probability the model assigned to the correct class: it is the negative log of that probability, so it is near 0 when the model is confident and right, and grows large when the model gives the true class a low probability. Averaged over all observations, it penalizes confident wrong answers heavily.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="forecasting-from-images-of-price-charts-i" class="slide level2 center">
+<h2>Forecasting from Images of Price Charts I</h2>
+<p>A more relevant application: Jiang, Kelly and Xiu (2023) turn the recent price history of stocks into images, then use a 2D CNN to forecast the direction of future returns</p>
 <div class="triad">
 <div class="triad-card">
 <p><span class="tc-tag">Input</span></p>
 <p>A black-and-white image of the open-high-low-close bars, a moving average and volume bars of the last 5, 20 or 60 days.</p>
-<p>Each day is 3 pixels wide</p>
+<p>All stocks on NYSE, AMEX, and NASDAQ</p>
 </div>
 <div class="triad-card tc-light">
 <p><span class="tc-tag">Model</span></p>
-<p>A 2D CNN architecture with convolution, batch normalization, leaky ReLU and max-pooling.</p>
+<p>The same ingredients as our example, only deeper: convolution, batch normalization, leaky ReLU and max-pooling, stacked in blocks.</p>
 <p>A fully connected layer with dropout and sigmoid activation produces the forecast</p>
 </div>
 <div class="triad-card tc-amber">
@@ -1829,93 +1931,19 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 <p>The probability that the subsequent return is positive</p>
 </div>
 </div>
-<div class="keypoint">
-<p>All stocks on NYSE, AMEX and NASDAQ</p>
-</div>
 </section>
-<section id="a-stylized-version-shapes" class="slide level2 center">
-<h2>A Stylized Version: Shapes</h2>
-<div class="pull-up">
-
+<section id="forecasting-from-images-of-price-charts-ii" class="slide level2 center">
+<h2>Forecasting from Images of Price Charts II</h2>
+<div class="figblock">
+<div class="fig-title">
+<p>60 day OHLC image</p>
 </div>
-<p>The input has shape <code>(batch, channels, height, width)</code>. A 20-day chart is 60 pixels wide, and we let <span class="math inline">\(H\)</span> denote its height</p>
-<div class="pull-up">
-
-</div>
-<div class="overview">
-<div class="ov-row">
-<div class="ov-label">
-<p>Input: Dimension <code>(batch, 1, H, 60)</code></p>
-</div>
-<div class="ov-desc">
-<p><code>channels</code> = 1 <span class="math inline">\(\to\)</span> black and white image</p>
+<p><img src="../assets/figures/jiangetal2023.svg"></p>
+<div class="fig-src">
+<p>From Jiang, Kelly and Xiu (2023), “(Re-)Imag(in)ing Price Trends”. *Generated OHLC images with volume bar and moving average line.</p>
+<p>This figure&nbsp;displays market data image for 60 days of data.*</p>
 </div>
 </div>
-<div class="ov-row">
-<div class="ov-label">
-<p>Block 1: <code>Conv2d(1, 64, 3)</code></p>
-</div>
-<div class="ov-desc">
-<p>Components: Convolution, batch normalization, leaky ReLU, and max-pooling. <code>MaxPool2d(2)</code>: height and width are halved</p>
-</div>
-</div>
-<div class="ov-row">
-<div class="ov-label">
-<p>Blocks 2 and 3: <code>Conv2d(64, 128, 3)</code> and <code>Conv2d(128, 256, 3)</code></p>
-</div>
-<div class="ov-desc">
-<p>Components: Convolution, batch normalization, leaky ReLU, and max-pooling. 64 to 128 and 128 to 256 channels, each halving height and width</p>
-</div>
-</div>
-<div class="ov-row">
-<div class="ov-label">
-<p><code>flatten(1)</code> and dropout</p>
-</div>
-<div class="ov-desc">
-<p><code>(batch, 256 * H/8 * 60/8)</code>, rounded down at each pooling. Division by 8 because <code>MaxPool2d(2)</code> is applied three times</p>
-</div>
-</div>
-<div class="ov-row">
-<div class="ov-label">
-<p><code>torch.sigmoid(Linear(n_flat, 1))</code></p>
-</div>
-<div class="ov-desc">
-<p><code>(batch, 1)</code>: one number, the probability of an up move</p>
-</div>
-</div>
-</div>
-</section>
-<section id="a-building-block-helper" class="slide level2 center">
-<h2>A Building Block (Helper)</h2>
-<div>
-<div id="pyodide-29" class="exercise-cell">
-
-</div>
-<script type="pyodide-29-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImRlZiBibG9jayhjX2luLCBjX291dCk6XG4gICAgcmV0dXJuIG5uLlNlcXVlbnRpYWwoXG4gICAgICAgIG5uLkNvbnYyZChjX2luLCBjX291dCwga2VybmVsX3NpemU9MywgcGFkZGluZz0xKSxcbiAgICAgICAgbm4uQmF0Y2hOb3JtMmQoY19vdXQpLFxuICAgICAgICBubi5MZWFreVJlTFUoKSxcbiAgICAgICAgbm4uTWF4UG9vbDJkKDIpLFxuICAgICkifQ==
-</script>
-</div>
-<p>Criterion is the binary cross-entropy loss, the loss function for a binary (yes/no) outcome,</p>
-<div>
-<div id="pyodide-30" class="exercise-cell">
-
-</div>
-<script type="pyodide-30-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNyaXRlcmlvbiA9IG5uLkJDRUxvc3MoKSAifQ==
-</script>
-</div>
-</section>
-<section id="the-network" class="slide level2 center">
-<h2>The Network</h2>
-<div>
-<div id="pyodide-31" class="exercise-cell">
-
-</div>
-<script type="pyodide-31-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNsYXNzIENoYXJ0Q05OKG5uLk1vZHVsZSk6XG4gICAgZGVmIF9faW5pdF9fKHNlbGYsIG5fZmxhdCk6ICAgICAgICAgICAgICAgICMgbl9mbGF0OiAyNTYgKiA4ICogNyBpZiBIID0gNjRcbiAgICAgICAgc3VwZXIoQ2hhcnRDTk4sIHNlbGYpLl9faW5pdF9fKClcbiAgICAgICAgc2VsZi5mZWF0dXJlcyA9IG5uLlNlcXVlbnRpYWwoYmxvY2soMSwgNjQpLCBibG9jayg2NCwgMTI4KSxcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgYmxvY2soMTI4LCAyNTYpKVxuICAgICAgICBzZWxmLmZjID0gbm4uU2VxdWVudGlhbChubi5Ecm9wb3V0KDAuNSksIG5uLkxpbmVhcihuX2ZsYXQsIDEpKVxuXG4gICAgZGVmIGZvcndhcmQoc2VsZiwgeCk6ICAgICAgICAgICAgICAgICAgICAgICMgeDogKGJhdGNoLCAxLCBILCA2MClcbiAgICAgICAgcmV0dXJuIHRvcmNoLnNpZ21vaWQoc2VsZi5mYyhzZWxmLmZlYXR1cmVzKHgpLmZsYXR0ZW4oMSkpKSJ9
-</script>
-</div>
-<p>256 is <code>c_out</code> from block 3, and <span class="math inline">\(H/8 = 8\)</span> and <span class="math inline">\(60/8 = 7\)</span> if the input height is <span class="math inline">\(H = 64\)</span>.</p>
 </section>
 <section id="recurrent-neural-networks-rnns-and-lstms" class="slide level2 center">
 <h2>Recurrent Neural Networks (RNNs) and LSTMs</h2>
@@ -1945,26 +1973,6 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 </div>
 </div>
 </section>
-<section id="forecasting-inflation-from-a-window-of-quarters" class="slide level2 center">
-<h2>Forecasting Inflation from a Window of Quarters</h2>
-<div class="compare">
-<div class="compare-col">
-<p><span class="cmp-title">Feedforward network (so far)</span></p>
-<ul>
-<li>Input: the three variables of one quarter</li>
-<li>Forecast: inflation in the next quarter</li>
-</ul>
-</div>
-<div class="compare-col cmp-alt">
-<p><span class="cmp-title">Recurrent network</span></p>
-<ul>
-<li>Input: the last 8 quarters of inflation, unemployment and the T-bill rate, in order</li>
-<li>Forecast: inflation in the next quarter</li>
-<li>The path matters, e.g., whether inflation is rising or falling</li>
-</ul>
-</div>
-</div>
-</section>
 <section id="recurrent-neural-networks-visualized" class="slide level2 center">
 <h2>Recurrent Neural Networks Visualized</h2>
 <div class="figblock">
@@ -1976,16 +1984,37 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 
 </div>
 </div>
+<aside class="notes">
+<p>The input data arrow indicates the input data sequence, which is indicated below the elements, it is not a secondary source of input. <span class="math inline">\(h_t\)</span> indicates the outputs. The forecasts will be made from <span class="math inline">\(h_t\)</span> passed to something akin to <span class="math inline">\(\hat{y} = W_y h_t + b_y\)</span>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
-<section id="lstm-unit-visualized" class="slide level2 center">
-<h2>LSTM Unit Visualized</h2>
-<div class="figblock">
-<div class="fig-title">
-
+<section id="forecasting-inflation-from-a-window-of-quarters" class="slide level2 center">
+<h2>Forecasting Inflation from a Window of Quarters</h2>
+<p>We continue our inflation forecasting example, now in a recurrent setting, supporting time series consciousness</p>
+<div class="compare">
+<div class="compare-col">
+<p><span class="cmp-title">Feedforward network (so far)</span></p>
+<ul>
+<li>Input: the three variables of one quarter</li>
+<li>Forecast: inflation in the next quarter</li>
+</ul>
 </div>
-<p><img src="../assets/figures/lstm_unit.svg"></p>
-<div class="fig-src">
-
+<div class="compare-col cmp-alt">
+<p><span class="cmp-title">Recurrent network</span></p>
+<ul>
+<li>Input: the last 8 quarters of inflation, unemployment and the T-bill rate</li>
+<li>Forecast: inflation in the next quarter</li>
+</ul>
 </div>
 </div>
 </section>
@@ -2000,12 +2029,12 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 
 </div>
 </div>
-<p>Windows have shape <code>(samples, quarters, variables)</code> = (4, 4, 3)</p>
+<p>Windows have shape <code>(samples, quarters, variables)</code> = (4, 3, 3)</p>
 <p>Target has shape <code>(samples, 1)</code> = (4, 1)</p>
 </section>
 <section id="setting-up-windows-i" class="slide level2 center">
 <h2>Setting up Windows I</h2>
-<p><code>windows</code> has shape <code>(samples, quarters, variables)</code>, and each window belongs to the sample in which it ends.</p>
+<p><code>windows</code> has shape <code>(samples, quarters, variables)</code>,</p>
 <div>
 <div id="pyodide-32" class="exercise-cell">
 
@@ -2014,6 +2043,19 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6InFydHMgPSA4ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyBxdWFydGVycyBpbiBhIHdpbmRvd1xud2luZG93cyA9IG5wLmxpYi5zdHJpZGVfdHJpY2tzLnNsaWRpbmdfd2luZG93X3ZpZXcoWCwgcXJ0cywgYXhpcz0wKVxud2luZG93cyA9IHdpbmRvd3MudHJhbnNwb3NlKDAsIDIsIDEpICAgICAgICAjIChzYW1wbGVzLCBxdWFydGVycywgdmFyaWFibGVzKVxueV93aW4gPSB0YXJnZXRbcXJ0cyAtIDE6XSAgICAgICAgICAgICAgICAgICAjIHRhcmdldCBvZiB0aGUgd2luZG93IGVuZGluZyBpbiB0XG5cbm5fdHJhaW4gPSBsZW4oeV90cmFpbikgLSBxcnRzICsgMSAgICMgZmlyc3QgcXJ0cy0xIHF1YXJ0ZXJzIGhhdmUgbm8gZnVsbCB3aW5kb3dcbm5fdmFsID0gbGVuKHlfdmFsKSAgICAgICAgICAgICAgICAgICMgdmFsaWRhdGlvbiBhbmQgdGVzdCBrZWVwIHRoZWlyIHNpemVcblxuWHNlcV90cmFpbiwgWHNlcV90bXAsIHlzZXFfdHJhaW4sIHlzZXFfdG1wID0gdHJhaW5fdGVzdF9zcGxpdChcbiAgICB3aW5kb3dzLCB5X3dpbiwgdHJhaW5fc2l6ZT1uX3RyYWluLCBzaHVmZmxlPUZhbHNlKVxuWHNlcV92YWwsIFhzZXFfdGVzdCwgeXNlcV92YWwsIHlzZXFfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoXG4gICAgWHNlcV90bXAsIHlzZXFfdG1wLCB0cmFpbl9zaXplPW5fdmFsLCBzaHVmZmxlPUZhbHNlKVxuXG4jIGNvbnQnZCBvbiBuZXh0IHNsaWRlIn0=
 </script>
 </div>
+<aside class="notes">
+<p><code>np.lib.stride_tricks.sliding_window_view()</code> is a NumPy function that creates a sliding window view of an array. <code>qrts</code> is the window length, <code>axis=0</code> means the window slides along the rows, here: through time.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="setting-up-windows-ii" class="slide level2 center">
 <h2>Setting up Windows II</h2>
@@ -2022,16 +2064,29 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 
 </div>
 <script type="pyodide-33-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IiMgY29udCdkIGZyb20gcHJldmlvdXMgc2xpZGVcblxuWF9zY2FsZXIgPSBTdGFuZGFyZFNjYWxlcigpLmZpdChYc2VxX3RyYWluLnJlc2hhcGUoLTEsIDMpKSAgICMgdHJhaW5pbmcgb25seVxueV9zY2FsZXIgPSBTdGFuZGFyZFNjYWxlcigpLmZpdCh5c2VxX3RyYWluKVxuWHNlcV90cmFpbiwgWHNlcV92YWwsIFhzZXFfdGVzdCA9IChYX3NjYWxlci50cmFuc2Zvcm0oVy5yZXNoYXBlKC0xLCAzKSkucmVzaGFwZShXLnNoYXBlKVxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBmb3IgVyBpbiAoWHNlcV90cmFpbiwgWHNlcV92YWwsIFhzZXFfdGVzdCkpXG55c2VxX3RyYWluLCB5c2VxX3ZhbCwgeXNlcV90ZXN0ID0gKHlfc2NhbGVyLnRyYW5zZm9ybSh5KVxuICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBmb3IgeSBpbiAoeXNlcV90cmFpbiwgeXNlcV92YWwsIHlzZXFfdGVzdCkpIn0=
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IiMgY29udCdkIGZyb20gcHJldmlvdXMgc2xpZGVcblxuWF9zY2FsZXIgPSBTdGFuZGFyZFNjYWxlcigpXG55X3NjYWxlciA9IFN0YW5kYXJkU2NhbGVyKClcblxuIyBUaGUgc2NhbGVyIGV4cGVjdHMgMkQgaW5wdXQsIHNvIHJlc2hhcGUgdG8gKHJvd3MsIDMpIGFuZCBiYWNrXG5Yc2VxX3RyYWluID0gWF9zY2FsZXIuZml0X3RyYW5zZm9ybShYc2VxX3RyYWluLnJlc2hhcGUoLTEsIDMpKS5yZXNoYXBlKFhzZXFfdHJhaW4uc2hhcGUpXG5Yc2VxX3ZhbCA9IFhfc2NhbGVyLnRyYW5zZm9ybShYc2VxX3ZhbC5yZXNoYXBlKC0xLCAzKSkucmVzaGFwZShYc2VxX3ZhbC5zaGFwZSlcblhzZXFfdGVzdCA9IFhfc2NhbGVyLnRyYW5zZm9ybShYc2VxX3Rlc3QucmVzaGFwZSgtMSwgMykpLnJlc2hhcGUoWHNlcV90ZXN0LnNoYXBlKVxuXG55c2VxX3RyYWluID0geV9zY2FsZXIuZml0X3RyYW5zZm9ybSh5c2VxX3RyYWluKVxueXNlcV92YWwgPSB5X3NjYWxlci50cmFuc2Zvcm0oeXNlcV92YWwpXG55c2VxX3Rlc3QgPSB5X3NjYWxlci50cmFuc2Zvcm0oeXNlcV90ZXN0KSJ9
 </script>
 </div>
+<aside class="notes">
+<p>train original: (133, 8, 3) train after reshape: (1064, 3) train after scaler: (1064, 3) train back to original: (133, 8, 3) val original: (30, 8, 3) val after reshape: (240, 3) val after scaler: (240, 3) val back to original: (30, 8, 3) test original: (31, 8, 3) test after reshape: (248, 3) test after scaler: (248, 3) test back to original: (31, 8, 3)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="the-recurrent-idea" class="slide level2 center">
 <h2>The Recurrent Idea</h2>
-<p>A recurrent network reads the window one quarter at a time, and keeps a memory of what it has seen: the <strong>hidden state</strong></p>
+<p>A recurrent network reads the window one quarter at a time, and keeps a memory of what it has seen: the <strong>hidden state</strong>,</p>
 <div class="flow">
 <div class="fn-navy">
-<p>Quarter 1 <span class="fn-sub">memory updated</span></p>
+<p>Quarter 1 <span class="fn-sub">initializes memory</span></p>
 </div>
 <div class="fn">
 <p>Quarters 2 through 7 <span class="fn-sub">memory updated</span></p>
@@ -2046,21 +2101,21 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 <li>The memory is the distinguishing characteristic of recurrent networks, LSTMs in particular</li>
 </ul>
 </section>
-<section id="a-recurrent-network-in-pytorch" class="slide level2 center">
-<h2>A Recurrent Network in PyTorch</h2>
-<p><code>qrts</code> indicates the number of quarters (in this case) in a window</p>
-<div>
-<div id="pyodide-34" class="exercise-cell">
+<section id="lstm-unit-visualized" class="slide level2 center">
+<h2>LSTM Unit Visualized</h2>
+<div class="figblock">
+<div class="fig-title">
 
 </div>
-<script type="pyodide-34-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNsYXNzIFJlY3VycmVudE5ldChubi5Nb2R1bGUpOlxuICAgIGRlZiBfX2luaXRfXyhzZWxmLCBuX2ZlYXR1cmVzLCBoaWRkZW49MTYsIGNlbGw9XCJMU1RNXCIpOlxuICAgICAgICBzdXBlcihSZWN1cnJlbnROZXQsIHNlbGYpLl9faW5pdF9fKClcbiAgICAgICAgcm5uID0ge1wiUk5OXCI6IG5uLlJOTiwgXCJHUlVcIjogbm4uR1JVLCBcIkxTVE1cIjogbm4uTFNUTX1bY2VsbF1cbiAgICAgICAgc2VsZi5ybm4gPSBybm4obl9mZWF0dXJlcywgaGlkZGVuLCBiYXRjaF9maXJzdD1UcnVlKVxuICAgICAgICBzZWxmLmZjID0gbm4uTGluZWFyKGhpZGRlbiwgMSlcblxuICAgIGRlZiBmb3J3YXJkKHNlbGYsIHgpOiAgICAgICAgICAgICAgICAgICAgICAjIHg6IChiYXRjaCwgcXJ0cywgbl9mZWF0dXJlcykgXG4gICAgICAgIG91dHB1dCwgXyA9IHNlbGYucm5uKHgpICAgICAgICAgICAgICAgICMgKGJhdGNoLCBxcnRzLCBoaWRkZW4pXG4gICAgICAgIHggPSBzZWxmLmZjKG91dHB1dFs6LCAtMSwgOl0pICAgICAgICAgICMgdGhlIGxhc3QgcXVhcnRlcidzIGhpZGRlbiBzdGF0ZVxuXG4gICAgICAgIHJldHVybiB4In0=
-</script>
+<p><img src="../assets/figures/lstm_unit.svg"></p>
+<div class="fig-src">
+
+</div>
 </div>
 </section>
-<section id="the-lstm-cell" class="slide level2 th-slide th-wide center">
+<section id="the-lstm-cell" class="slide level2 center">
 <h2>The LSTM Cell</h2>
-<p>The LSTM keeps a long-term memory next to the hidden state. Three gates decide what happens. Each gate is a number between 0 (closed) and 1 (open)</p>
+<p>The LSTM adds a cell state, a long-term memory, next to the hidden state. Gates between 0 (closed) and 1 (open) control it,</p>
 <div class="triad">
 <div class="triad-card">
 <p><span class="tc-tag">Forget gate</span></p>
@@ -2075,20 +2130,58 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 <p>How much of the memory is shown to the forecast. Which parts matter for next quarter?</p>
 </div>
 </div>
-<p>A plain RNN overwrites its memory in every quarter, so early quarters fade. The gates let the LSTM hold on to information for longer <span class="math inline">\(\to\)</span> long-memory modeling feasible</p>
+<p>A plain RNN rewrites its entire memory every quarter, so early quarters fade. The LSTM gates edit the cell state instead, so information persists <span class="math inline">\(\to\)</span> long-memory modeling feasible</p>
+</section>
+<section id="a-recurrent-network-in-pytorch" class="slide level2 th-slide th-wide center">
+<h2>A Recurrent Network in PyTorch</h2>
+<p><code>qrts</code> indicates the number of quarters (in this case) in a window</p>
+<div>
+<div id="pyodide-34" class="exercise-cell">
+
+</div>
+<script type="pyodide-34-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNsYXNzIFJlY3VycmVudE5ldChubi5Nb2R1bGUpOlxuICAgIGRlZiBfX2luaXRfXyhzZWxmLCBuX2ZlYXR1cmVzLCBoaWRkZW49MTYsIGNlbGw9XCJMU1RNXCIpOlxuICAgICAgICBzdXBlcihSZWN1cnJlbnROZXQsIHNlbGYpLl9faW5pdF9fKClcbiAgICAgICAgcm5uID0ge1wiUk5OXCI6IG5uLlJOTiwgXCJHUlVcIjogbm4uR1JVLCBcIkxTVE1cIjogbm4uTFNUTX1bY2VsbF1cbiAgICAgICAgc2VsZi5ybm4gPSBybm4obl9mZWF0dXJlcywgaGlkZGVuLCBiYXRjaF9maXJzdD1UcnVlKVxuICAgICAgICBzZWxmLmZjID0gbm4uTGluZWFyKGhpZGRlbiwgMSlcblxuICAgIGRlZiBmb3J3YXJkKHNlbGYsIHgpOiAgICAgICAgICAgICAgICAgICAgICAjIHg6IChiYXRjaCwgcXJ0cywgbl9mZWF0dXJlcykgXG4gICAgICAgIG91dHB1dCwgXyA9IHNlbGYucm5uKHgpICAgICAgICAgICAgICAgICMgKGJhdGNoLCBxcnRzLCBoaWRkZW4pXG4gICAgICAgIHggPSBzZWxmLmZjKG91dHB1dFs6LCAtMSwgOl0pICAgICAgICAgICMgdGhlIGxhc3QgcXVhcnRlcidzIGhpZGRlbiBzdGF0ZVxuXG4gICAgICAgIHJldHVybiB4In0=
+</script>
+</div>
+<aside class="notes">
+<p><code>[cell]</code> is a dictionary look-up matching the passed string to the corresponding PyTorch model. The <code>batch_first=True</code> argument makes the input shape <code>(batch, qrts, n_features)</code> instead of <code>(qrts, batch, n_features)</code>.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<aside class="notes">
+<p>The <code>self.rnn</code> returns the output and the hidden state, but we do not need the first thing here, hence the placeholder. The output is returned as (batch, qrts, hidden), and output[:, -1, :] extracts the final qrts, the last position, such that our output is (batch, hidden). This is passed to the linear layer.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="th"><span class="th-arrow">↑</span><span class="th-line"></span><span class="th-ref" style="bottom:19.11%"><b>Basic NN</b></span><span class="th-dot" style="bottom:26.10%"></span><span class="th-val" style="bottom:26.10%">RNN 11.174</span><span class="th-dot" style="bottom:15.93%"></span><span class="th-val" style="bottom:15.93%">LSTM 10.717</span></div>
 </section>
 <section id="the-transformer-revolution" class="slide level2 center">
 <h2>The Transformer Revolution</h2>
 <p><strong>Transformers</strong> (Vaswani et al., 2017) are the foundation of Large Language Models (LLMs)</p>
 <div class="triad cols-2">
-<div class="triad-card">
-<p><span class="tc-tag">Self-attention</span></p>
-<p>Transformers use self-attention mechanisms to process sequential data in parallel, allowing for better scalability and performance</p>
-</div>
 <div class="triad-card tc-light">
 <p><span class="tc-tag">Attention</span></p>
 <p>A mechanism that allows the model to focus on relevant parts of the input sequence when making predictions</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Self-attention</span></p>
+<p>Transformers use self-attention mechanisms to process sequential data in parallel, allowing for better scalability and performance</p>
 </div>
 </div>
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -2123,6 +2216,13 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 <p><span class="tc-tag">Value: <span class="math inline">\(\mathbf{V}\)</span></span></p>
 <p>Information passed on</p>
 </div>
+</div>
+<div class="spacer">
+
+</div>
+<p>Maths to decorate the slide,</p>
+<div class="pull-up">
+
 </div>
 <p><span class="math display">\[\text{Attention}(\mathbf{Q}, \mathbf{K}, \mathbf{V}) = \text{softmax}\left(\frac{\mathbf{Q}\mathbf{K}^\intercal}{\sqrt{d}}\right)\mathbf{V}\]</span></p>
 </section>
@@ -2175,13 +2275,13 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 </section>
 <section id="a-self-attention-network-i" class="slide level2 center">
 <h2>A Self-Attention Network I</h2>
-<p>Self-attention: query, key and value all come from the same window. The forecast is made from the output of the last quarter</p>
+<p><strong>Self-attention:</strong> query, key and value all come from the same window. The forecast is made from the output of the last quarter,</p>
 <div>
 <div id="pyodide-35" class="exercise-cell">
 
 </div>
 <script type="pyodide-35-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNsYXNzIEF0dGVudGlvbk5ldChubi5Nb2R1bGUpOlxuICAgIGRlZiBfX2luaXRfXyhzZWxmLCBuX2ZlYXR1cmVzLCBxcnRzLCBkPTE2KTpcbiAgICAgICAgc3VwZXIoQXR0ZW50aW9uTmV0LCBzZWxmKS5fX2luaXRfXygpXG4gICAgICAgIHNlbGYuZW1iZWQgPSBubi5MaW5lYXIobl9mZWF0dXJlcywgZCkgICAgICAgICAgICMgcXVhcnRlciAtPiB2ZWN0b3JcbiAgICAgICAgc2VsZi5wb3MgPSBubi5QYXJhbWV0ZXIodG9yY2guemVyb3MoMSwgcXJ0cywgZCkpICAgIyBsZWFybmVkIHBvc2l0aW9uc1xuICAgICAgICBzZWxmLmF0dG4gPSBubi5NdWx0aWhlYWRBdHRlbnRpb24oZCwgbnVtX2hlYWRzPTEsIGJhdGNoX2ZpcnN0PVRydWUpICMgY29udGFpbnMgV19RLCBXX0sgYW5kIFdfVlxuICAgICAgICBzZWxmLmZjID0gbm4uTGluZWFyKGQsIDEpXG5cbiMgQ29udGludWVkIG9uIG5leHQgc2xpZGUifQ==
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6ImNsYXNzIEF0dGVudGlvbk5ldChubi5Nb2R1bGUpOlxuICAgIGRlZiBfX2luaXRfXyhzZWxmLCBuX2ZlYXR1cmVzLCBxcnRzLCBkPTE2KTpcbiAgICAgICAgc3VwZXIoQXR0ZW50aW9uTmV0LCBzZWxmKS5fX2luaXRfXygpXG4gICAgICAgIHNlbGYuZW1iZWQgPSBubi5MaW5lYXIobl9mZWF0dXJlcywgZCkgICAgICAgICAgICMgcXVhcnRlciAtPiB2ZWN0b3JcbiAgICAgICAgc2VsZi5wb3MgPSBubi5QYXJhbWV0ZXIodG9yY2guemVyb3MoMSwgcXJ0cywgZCkpICAgIyBsZWFybmVkIHBvc2l0aW9uc1xuICAgICAgICBzZWxmLmF0dG4gPSBubi5NdWx0aWhlYWRBdHRlbnRpb24oZCwgbnVtX2hlYWRzPTEsIGJhdGNoX2ZpcnN0PVRydWUpICMgY29udGFpbnMgV19RLCBXX0sgYW5kIFdfVlxuICAgICAgICBzZWxmLmZjID0gbm4uTGluZWFyKGQsIDEpXG5cbiMgY29udCdkIG9uIG5leHQgc2xpZGUifQ==
 </script>
 </div>
 </section>
@@ -2192,16 +2292,16 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 
 </div>
 <script type="pyodide-36-contents">
-eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IiMgQ29udGludWVkIGZyb20gcHJldmlvdXMgc2xpZGVcbiAgICBkZWYgZm9yd2FyZChzZWxmLCB4KTogICAgICAgICAgICAgICAgICAgICAgIyB4OiAoYmF0Y2gsIHFydHMsIG5fZmVhdHVyZXMpXG4gICAgICAgIHggPSBzZWxmLmVtYmVkKHgpICsgc2VsZi5wb3MgICAgICAgICAgICMgKGJhdGNoLCBxcnRzLCBkKVxuICAgICAgICBjb250ZXh0LCB3ZWlnaHRzID0gc2VsZi5hdHRuKHgsIHgsIHgpICAjIHF1ZXJ5ID0ga2V5ID0gdmFsdWUgPSB4XG4gICAgICAgIHggPSBzZWxmLmZjKGNvbnRleHRbOiwgLTEsIDpdKSAgICAgICAgICMgdGhlIGxhc3QgcXVhcnRlcidzIGNvbnRleHRcblxuICAgICAgICByZXR1cm4geCJ9
+eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24iOmZhbHNlLCJzdGFydG92ZXIiOmZhbHNlfSwiY29kZSI6IiMgY29udCdkIGZyb20gcHJldmlvdXMgc2xpZGVcbiAgICBkZWYgZm9yd2FyZChzZWxmLCB4KTogICAgICAgICAgICAgICAgICAgICAgIyB4OiAoYmF0Y2gsIHFydHMsIG5fZmVhdHVyZXMpXG4gICAgICAgIHggPSBzZWxmLmVtYmVkKHgpICsgc2VsZi5wb3MgICAgICAgICAgICMgKGJhdGNoLCBxcnRzLCBkKVxuICAgICAgICBjb250ZXh0LCB3ZWlnaHRzID0gc2VsZi5hdHRuKHgsIHgsIHgpICAjIHF1ZXJ5ID0ga2V5ID0gdmFsdWUgPSB4XG4gICAgICAgIHggPSBzZWxmLmZjKGNvbnRleHRbOiwgLTEsIDpdKSAgICAgICAgICMgdGhlIGxhc3QgcXVhcnRlcidzIGNvbnRleHRcblxuICAgICAgICByZXR1cm4geCJ9
 </script>
 </div>
-<p>Attention treats the window as a set, so <code>self.pos</code> tells the network the order of the quarters</p>
+<p><code>d</code> sets the size of the query, key and value vectors. A larger <code>d</code> stores more information per vector, but adds more parameters to learn</p>
 <div class="th"><span class="th-arrow">↑</span><span class="th-line"></span><span class="th-ref" style="bottom:19.11%"><b>Basic NN</b></span><span class="th-dot" style="bottom:63.40%"></span><span class="th-val" style="bottom:63.40%">12.853</span></div>
 </section>
 <section id="from-attention-to-a-transformer" class="slide level2 center">
 <h2>From Attention to a Transformer</h2>
 <p>Attention only recombines the quarters. We still need non-linear activations.</p>
-<p>A Transformer block (Vaswani et al., 2017) adds them, and blocks are stacked:</p>
+<p>A Transformer block (Vaswani et al., 2017) adds them, and blocks are stacked,</p>
 <div class="flow">
 <div class="fn-navy">
 <p>Self-attention <span class="fn-sub">information is mixed across quarters</span></p>
@@ -2278,7 +2378,8 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 <div class="triad">
 <div class="triad-card">
 <p><span class="tc-tag">Hardware</span></p>
-<p>Training the Chinese LLM LongCat-2.0 Model without NVIDIA GPUs <span class="faint">(Reuters, 2026)</span></p>
+<p>The Chinese LLM LongCat-2.0 Model is trained without NVIDIA GPUs <span class="faint">(Reuters, 2026)</span></p>
+<!-- Training the Chinese LLM LongCat-2.0 Model without NVIDIA GPUs [(Reuters, 2026)]{.faint} -->
 </div>
 <div class="triad-card tc-light">
 <p><span class="tc-tag">Computer vision meets music</span></p>
@@ -2286,7 +2387,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOmZhbHNlLCJlZGl0Ijp0cnVlLCJldmFsIjp0cnVlLCJydW5idXR0b24i
 </div>
 <div class="triad-card tc-amber">
 <p><span class="tc-tag">Mathematics</span></p>
-<p>OpenAI and Anthropic (and others) are making progress in the field of mathematics</p>
+<p>OpenAI and Anthropic (etc.) make progress in the field of mathematics</p>
 </div>
 </div>
 </section>
