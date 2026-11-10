@@ -1275,6 +1275,11 @@ html.print-pdf .reveal .slides .pdf-page > section {
   margin: 0.3em 0;
 }
 
+.reveal .slides section.compact > .callout,
+.reveal .slides section.compact-xs > .callout {
+  font-size: 0.72em;
+}
+
 // ---------- aligned step titles ----------
 // same description start in every row; usage: ::: {.steplist .align-md}
 .steplist.align-md .step-title {
