@@ -1402,3 +1402,9 @@ html.print-pdf .reveal .slides .pdf-page > section {
   border: 1px dashed #c3c2b7;
   color: #a8a69f;
 }
+
+// smaller live (pyodide) code cell: ::: {.code-sm}
+.reveal .code-sm .cm-editor .cm-content,
+.reveal .code-sm .cm-editor .cm-gutters {
+  font-size: 16px !important;
+}

@@ -1,0 +1,2748 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="session_06_files/libs/clipboard/clipboard.min.js"></script>
+<script src="session_06_files/libs/quarto-html/tabby.min.js"></script>
+<script src="session_06_files/libs/quarto-html/popper.min.js"></script>
+<script src="session_06_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="session_06_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="session_06_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="session_06_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="session_06_files/libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="session_06_files/libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Natasia Villadsen">
+  <meta name="dcterms.date" content="2026-11-11">
+  <title>Anomalies and the Expected Market Return</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="session_06_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="session_06_files/libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="session_06_files/libs/revealjs/dist/theme/quarto-2d3af0211e95588844c47559e87a52da.css">
+  <link href="session_06_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="session_06_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="session_06_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="session_06_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script type="module" src="session_06_files/libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+  <link href="session_06_files/libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Anomalies and the Expected Market Return</h1>
+  <p class="subtitle">Forecasting with Machine Learning</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Natasia Villadsen
+</div>
+</div>
+</div>
+
+  <p class="date">2026-11-11</p>
+</section>
+<section>
+<section id="introduction" class="title-slide slide level1 divider center">
+<h1>Introduction</h1>
+
+</section>
+<section id="today" class="slide level2 center">
+<h2>Today</h2>
+<div class="steplist">
+<div class="step-row">
+<div class="step-num">
+<p>1</p>
+</div>
+<div class="step-title">
+<p>The idea</p>
+</div>
+<div class="step-desc">
+<p>Anomalies, long-short portfolios, limits to arbitrage, and why anomaly returns could forecast the market</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>2</p>
+</div>
+<div class="step-title">
+<p>The methods</p>
+</div>
+<div class="step-desc">
+<p>Seven forecasts of the market return, the expanding window, and how forecasts are evaluated</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>3</p>
+</div>
+<div class="step-title">
+<p>The results</p>
+</div>
+<div class="step-desc">
+<p>Table II, Figures 1 and 2, and the gap between the short and the long leg, next to our replication</p>
+</div>
+</div>
+</div>
+<div class="keypoint">
+<p>Unlike in Lecture 5, the authors provide data and code, so a full replication is possible</p>
+</div>
+</section>
+<section id="reading-guide" class="slide level2 center">
+<h2>Reading Guide</h2>
+<div class="steplist align-md">
+<div class="step-row">
+<div class="step-title">
+<p>Introduction</p>
+</div>
+<div class="step-desc">
+<p>pp.&nbsp;639–644: the question, the findings, the economic mechanism and a preview of the methods.</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-title">
+<p>Section I (optional)</p>
+</div>
+<div class="step-desc">
+<p>pp.&nbsp;644–651: a stylized model. Possibly read the first page, which gives the setup (Eqs. 1–3). The rest derives the sign of the predictive coefficient.</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-title">
+<p>Section II</p>
+</div>
+<div class="step-desc">
+<p>pp.&nbsp;651–656: the seven models and how they are evaluated.</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-title">
+<p>Sections III–IV</p>
+</div>
+<div class="step-desc">
+<p>pp.&nbsp;656–665: data (Table I) and the main results (Table II, Figures 1–3).</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-title">
+<p>Section V (optional)</p>
+</div>
+<div class="step-desc">
+<p>pp.&nbsp;666–676: further evidence on limits to arbitrage (Tables III–V, Figures 4–5).</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-title">
+<p>Section VI</p>
+</div>
+<div class="step-desc">
+<p>pp.&nbsp;676–677: conclusion.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="anomalies-and-the-expected-market-return-dong-et-al.-2022" class="slide level2 center">
+<h2>Anomalies and the Expected Market Return (Dong et al., 2022)</h2>
+<p>Paper: “Anomalies and the Expected Market Return”, <em>Journal of Finance</em>, 77(1), 639–681, 2022</p>
+<p>Authors:</p>
+<div class="overview">
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Xi Dong</p>
+</div>
+<div class="ov-desc">
+<p>Baruch College, City University of New York</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Yan Li</p>
+</div>
+<div class="ov-desc">
+<p>Southwestern University of Finance and Economics</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>David E. Rapach</p>
+</div>
+<div class="ov-desc">
+<p>Saint Louis University</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Guofu Zhou</p>
+</div>
+<div class="ov-desc">
+<p>Washington University in St.&nbsp;Louis</p>
+</div>
+</div>
+</div>
+<div class="spacer">
+
+</div>
+<div class="keypoint">
+<p>Research question: <strong>Do long-short anomaly returns predict the market excess return?</strong></p>
+</div>
+</section>
+<section id="the-authors-main-findings" class="slide level2 center">
+<h2>The Authors’ Main Findings</h2>
+<div class="overview">
+<div class="ov-row">
+<div class="ov-label">
+<p>Shrinkage is necessary</p>
+</div>
+<div class="ov-desc">
+<p>OLS on all 100 anomaly returns overfits: its monthly market return forecasts go beyond ±6% in some months, and its <span class="math inline">\(R^2_{\text{OOS}}\)</span> is −2,513.86%</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>Anomaly returns predict the market</p>
+</div>
+<div class="ov-desc">
+<p>The six regularized forecast models beat the prevailing mean (the average past market return). Their monthly <span class="math inline">\(R^2_{\text{OOS}}\)</span> is 0.89% to 2.81%, above the 0.5% that Campbell and Thompson (2008) call economically meaningful, and the Clark and West test is significant for all of them</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>Economic value</p>
+</div>
+<div class="ov-desc">
+<p>A mean-variance investor would pay a fee of 2.59 to 6.38 percentage points of returns per year to use the forecasts (forgo returns of this amount to get the same utility as with the forecasts)</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>Slow correction of overpricing</p>
+</div>
+<div class="ov-desc">
+<p>The signal comes from the short leg (the overpriced stocks), and predictability is stronger when market frictions are high.</p>
+<p>This aligns with overpricing being corrected slowly (explained on the next slides)</p>
+</div>
+</div>
+<div class="ov-row">
+<div class="ov-label">
+<p>A short-horizon signal</p>
+</div>
+<div class="ov-desc">
+<p>Predictability falls with the horizon, with no significant evidence at 12 months: the correction of mispricing plays out over a few months</p>
+</div>
+</div>
+</div>
+</section>
+<section id="characteristics-and-anomalies" class="slide level2 center">
+<h2>Characteristics and Anomalies</h2>
+<div class="compare">
+<div class="compare-col">
+<p><span class="cmp-title">Characteristic</span></p>
+<ul>
+<li>A firm-level variable observed for every stock in every month</li>
+<li>Example: the <strong>book-to-market ratio</strong>, the book value of equity divided by its market value. High: cheap relative to the books (value). Low: expensive (growth)</li>
+<li>On its own it makes no claim about future returns</li>
+</ul>
+</div>
+<div class="compare-col cmp-alt">
+<p><span class="cmp-title">Anomaly</span></p>
+<ul>
+<li>A stock characteristic that has been documented to predict returns, which standard asset pricing models (e.g., the CAPM) do not explain</li>
+<li>Example: stocks that rose the most over the past year tend to keep outperforming stocks that fell the most (momentum)</li>
+<li>Buying past winners and selling past losers earns a significant alpha, the return not explained by market risk</li>
+</ul>
+</div>
+</div>
+<aside class="notes">
+<p>The returns of the anomaly are regressed (usually the returns are in the shape of a long-short portfolio) on the Fama-French factors (MKT, SMB, HML). The factors absorb the part of the returns one could get by taking exposure to known risk factors. The intercept <span class="math inline">\(\alpha\)</span> is the average returns left over, it is the part of the anomaly the factors do not explain. Hence, in 71/100 cases, the Fama-French model does not manage to explain the anomaly returns. However, be aware of multiple testing. It is the three-factor model.</p>
+<p>Book value: Assets minus liabilities, Market value: Price times shares outstanding. Significant alpha. Regress the anomaly’s long-short return on risk factors, for example the market return in the CAPM or the three Fama-French factors. The intercept <span class="math inline">\(\alpha\)</span> is the average return the factors don’t explain. “Significant” means it is statistically different from zero, so the extra return is unlikely to be luck and isn’t just compensation for known risks. That is what makes it an anomaly.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<div class="keypoint">
+<p>Every anomaly is a characteristic, but not every characteristic is an anomaly</p>
+</div>
+</section>
+<section id="the-long-short-portfolio" class="slide level2 center">
+<h2>The Long-Short Portfolio</h2>
+<ul>
+<li>Each month, rank the stocks on a characteristic. The two extremes of the ranking are the <strong>legs</strong> of the portfolio</li>
+<li><strong>Long leg</strong>: expect to earn high returns (cheap stocks): buy</li>
+<li><strong>Short leg</strong>: expect to earn low returns (expensive stocks): sell (short). The shares are borrowed, sold now and bought back later, so the position gains if the price falls</li>
+<li>The short sale finances the purchases, so the net investment is approximately zero.</li>
+</ul>
+<div class="keypoint">
+<p>Payoff = return of the long leg minus return of the short leg</p>
+</div>
+</section>
+<section id="long-short-payoffs-example" class="slide level2 center">
+<h2>Long-Short Payoffs Example</h2>
+<div class="act-table" style="font-size: 0.7em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 42%">
+<col style="width: 15%">
+<col style="width: 16%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Month</th>
+<th style="text-align: center;">Long leg</th>
+<th style="text-align: center;">Short leg</th>
+<th style="text-align: center;">Long-short payoff</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Market booms</td>
+<td style="text-align: center;">+8%</td>
+<td style="text-align: center;">+6%</td>
+<td style="text-align: center;">+2%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Market crashes</td>
+<td style="text-align: center;">−5%</td>
+<td style="text-align: center;">−7%</td>
+<td style="text-align: center;">+2%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ranking right, market flat</td>
+<td style="text-align: center;">+3%</td>
+<td style="text-align: center;">−3%</td>
+<td style="text-align: center;">+6%</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ranking wrong</td>
+<td style="text-align: center;">+1%</td>
+<td style="text-align: center;">+4%</td>
+<td style="text-align: center;">−3%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="keypoint">
+<p>Market moves hit both legs and cancel, so the payoff depends on the ranking.</p>
+<p>It is positive only on average (mean 0.38% per month, standard deviation 4.37%, Table I)</p>
+</div>
+</section>
+<section id="value-weighted-decile-sorting" class="slide level2 center">
+<h2>Value-Weighted Decile Sorting</h2>
+<div class="steplist" style="font-size: 0.8em;">
+<div class="step-row">
+<div class="step-num">
+<p>1</p>
+</div>
+<div class="step-title">
+<p>Rank</p>
+</div>
+<div class="step-desc">
+<p>At the beginning of the month, rank all stocks on the characteristic (here the book-to-market ratio), which is known before the month’s returns</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>2</p>
+</div>
+<div class="step-title">
+<p>Cut</p>
+</div>
+<div class="step-desc">
+<p>Split the ranking into 10 equal-sized groups (deciles). Decile 1 has the lowest values (expensive stocks, the short leg), decile 10 the highest (cheap stocks, the long leg)</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>3</p>
+</div>
+<div class="step-title">
+<p>Weight</p>
+</div>
+<div class="step-desc">
+<p>Inside a decile, weight each stock by its market capitalization: value-weighted</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>4</p>
+</div>
+<div class="step-title">
+<p>Hold</p>
+</div>
+<div class="step-desc">
+<p>Hold the decile portfolios for the month and record their returns. Next month, rank again</p>
+</div>
+</div>
+</div>
+<div class="act-table" style="font-size: 0.58em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 9%">
+<col style="width: 18%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Decile</th>
+<th style="text-align: center;">Stock</th>
+<th style="text-align: center;">Book-to-market</th>
+<th style="text-align: center;">Market cap (USD bn)</th>
+<th style="text-align: center;">Return</th>
+<th style="text-align: center;">Equal-weighted return</th>
+<th style="text-align: left;">Value-weighted return</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">A</td>
+<td style="text-align: center;">1.8</td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">+4%</td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">B</td>
+<td style="text-align: center;">2.2</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">+9%</td>
+<td style="text-align: center;">6.5%</td>
+<td style="text-align: left;"><span class="math inline">\(0.8 \times 4 + 0.2 \times 9 = 5.0\%\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">0.3</td>
+<td style="text-align: center;">50</td>
+<td style="text-align: center;">−2%</td>
+<td style="text-align: center;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">D</td>
+<td style="text-align: center;">0.4</td>
+<td style="text-align: center;">50</td>
+<td style="text-align: center;">+2%</td>
+<td style="text-align: center;">0.0%</td>
+<td style="text-align: left;"><span class="math inline">\(0.5 \times (-2) + 0.5 \times 2 = 0.0\%\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="keypoint">
+<p>Long-short return: 5.0% − 0.0% = 5.0%.</p>
+<p>Value-weighting lets large firms dominate each portfolio, as in the market itself</p>
+</div>
+<aside class="notes">
+<p>Illustration with four stocks: only the stocks of decile 10 and decile 1 are shown, the other deciles are left out.</p>
+<p>Equal-weighted: the simple average of the returns in the decile, every stock counts the same. Value-weighted: the average weighted by market capitalization, so a large firm counts more than a small one (80 of 100 in decile 10 above).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="decile-sorting-in-code-i" class="slide level2 center">
+<h2>Decile Sorting in Code I</h2>
+<div class="code-sm">
+<div>
+<div id="pyodide-1" class="exercise-cell">
+
+</div>
+<script type="pyodide-1-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiJpbXBvcnQgbnVtcHkgYXMgbnBcbmltcG9ydCBwYW5kYXMgYXMgcGRcblxucm5nID0gbnAucmFuZG9tLmRlZmF1bHRfcm5nKDM5KVxuc3RvY2tzID0gcGQuRGF0YUZyYW1lKHtcImJvb2tfdG9fbWFya2V0XCI6IHJuZy51bmlmb3JtKDAuMSwgMi41LCAxMikucm91bmQoMiksXG4gICAgICAgICAgICAgICAgICAgICAgIFwiY2FwXCI6IHJuZy5pbnRlZ2Vycyg1LCAxMDAsIDEyKSwgICAgICAgICAgICAgICMgbWFya2V0IGNhcCwgVVNEIGJuXG4gICAgICAgICAgICAgICAgICAgICAgIFwicmV0XCI6IHJuZy5ub3JtYWwoMywgMywgMTIpLnJvdW5kKDEpfSkgICAgICAgICMgbmV4dCBtb250aCdzIHJldHVybiwgJVxuXG5zdG9ja3NbXCJyYW5rXCJdID0gc3RvY2tzW1wiYm9va190b19tYXJrZXRcIl0ucmFuayhtZXRob2Q9XCJmaXJzdFwiKS5hc3R5cGUoaW50KSAjIDEuIHJhbms6IDEgPSBtb3N0IGV4cGVuc2l2ZVxuc3RvY2tzW1wiZGVjaWxlXCJdID0gbnAuY2VpbChzdG9ja3NbXCJyYW5rXCJdIC8gKGxlbihzdG9ja3MpIC8gMTApKS5hc3R5cGUoaW50KSAgICMgMi4gMTAgZXF1YWwgZ3JvdXBzXG5zdG9ja3Muc29ydF92YWx1ZXMoXCJyYW5rXCIpIn0=
+</script>
+</div>
+</div>
+</section>
+<section id="decile-sorting-in-code-ii" class="slide level2 compact center">
+<h2>Decile Sorting in Code II</h2>
+<div>
+<div id="pyodide-2" class="exercise-cell">
+
+</div>
+<script type="pyodide-2-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiIjIDMuIHdlaWdodCA9IGNhcCAvIHRvdGFsIGNhcCBvZiB0aGUgZGVjaWxlIChlLmcuIDgwIC8gMTAwID0gMC44KVxuc3RvY2tzW1wid2VpZ2h0XCJdID0gc3RvY2tzW1wiY2FwXCJdIC8gc3RvY2tzLmdyb3VwYnkoXCJkZWNpbGVcIilbXCJjYXBcIl0udHJhbnNmb3JtKFwic3VtXCIpXG4jIDQuIGRlY2lsZSByZXR1cm4gPSBzdW0gb2Ygd2VpZ2h0IHggcmV0dXJuIChlLmcuIDAuOCB4IDQgKyAwLjIgeCA5ID0gNS4wKVxuZGVjaWxlX3JldCA9IChzdG9ja3NbXCJ3ZWlnaHRcIl0gKiBzdG9ja3NbXCJyZXRcIl0pLmdyb3VwYnkoc3RvY2tzW1wiZGVjaWxlXCJdKS5zdW0oKVxuXG5wcmludChzdG9ja3Nbc3RvY2tzW1wiZGVjaWxlXCJdLmlzaW4oWzEsIDEwXSldLnNvcnRfdmFsdWVzKFwicmFua1wiKS5yb3VuZCgyKSlcbnByaW50KFwibG9uZyBsZWcgKGRlYy4gMTApOlwiLCByb3VuZChkZWNpbGVfcmV0WzEwXSwgMiksIFwiICBzaG9ydCBsZWcgKGRlYy4gMSk6XCIsIHJvdW5kKGRlY2lsZV9yZXRbMV0sIDIpKVxucHJpbnQoXCJsb25nLXNob3J0OlwiLCByb3VuZChkZWNpbGVfcmV0WzEwXSAtIGRlY2lsZV9yZXRbMV0sIDIpKSJ9
+</script>
+</div>
+<ul>
+<li>Decile 10 minus decile 1: long-short return for one anomaly in one month, one cell of the predictor table</li>
+</ul>
+<aside class="notes">
+<p><code>.sum()</code> because the weights for e.g., the market capitalization is the relevant market capitalization divided by the sum of all market capitalizations. In the second case, sum because: a value-weighted return is a weighted average, and when the weights add up to 1, a weighted average is just a sum.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="cross-section-versus-time-series" class="slide level2 center">
+<h2>Cross-Section versus Time Series</h2>
+<div class="act-table" style="font-size: 0.66em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 41%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Cross-sectional</th>
+<th style="text-align: left;">Time series</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Question</td>
+<td style="text-align: left;">Which stocks beat which this month?</td>
+<td style="text-align: left;">Will the market go up or down next month?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">One observation</td>
+<td style="text-align: left;">A stock, <span class="math inline">\(r_{i,t+1}\)</span></td>
+<td style="text-align: left;">A month, <span class="math inline">\(r_{M,t+1}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Predictors</td>
+<td style="text-align: left;">Characteristics <span class="math inline">\(x_{i,t}\)</span> of each stock (value, size, momentum)</td>
+<td style="text-align: left;">Variables <span class="math inline">\(z_t\)</span> of each month (valuation ratios, interest rates, inflation)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Finding</td>
+<td style="text-align: left;">Anomalies: sorted portfolios earn average returns that standard models (CAPM, Fama-French) do not explain</td>
+<td style="text-align: left;">Few predictors beat the prevailing mean out of sample (Goyal and Welch, 2008)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Example</td>
+<td style="text-align: left;">Gu et al.&nbsp;(2020, Lecture 5): a panel, every stock in every month</td>
+<td style="text-align: left;">This paper</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="keypoint">
+<p>Anomalies are a cross-sectional phenomenon</p>
+<p>This paper asks whether they say anything about the market as a whole</p>
+</div>
+</section>
+<section id="how-the-paper-links-the-cross-section-to-the-time-series" class="slide level2 center">
+<h2>How the Paper Links the Cross-Section to the Time Series</h2>
+<div class="flow">
+<div class="fn">
+<p><strong>Cross-section</strong></p>
+<p>Month <span class="math inline">\(t\)</span>: an anomaly and a return for every stock</p>
+</div>
+<div class="fn">
+<p><strong>Sort</strong></p>
+<p>Decile 10 minus decile 1: one long-short return <span class="math inline">\(r^{i}_{LS,t}\)</span></p>
+</div>
+<div class="fn">
+<p><strong>Time series</strong></p>
+<p>Every month, every anomaly: 100 series of long-short returns</p>
+</div>
+<div class="fn fn-navy">
+<p><strong>Forecast</strong></p>
+<p>Regress <span class="math inline">\(r_{M,t+1}\)</span> on the 100 long-short returns of month <span class="math inline">\(t\)</span></p>
+</div>
+</div>
+<div class="keypoint">
+<p>The paper takes the long-short returns of the cross-sectional literature and uses them as predictors in a time-series forecast of the market excess returns</p>
+</div>
+</section>
+<section id="intuition-limits-to-arbitrage" class="slide level2 center">
+<h2>Intuition: Limits to Arbitrage</h2>
+<ul>
+<li><strong>Mispricing</strong>: a price that deviates from fundamental value</li>
+<li><strong>Arbitrageurs</strong> (e.g., hedge funds) buy underpriced and sell (short) overpriced stocks, which corrects the mispricing</li>
+<li><strong>Limits to arbitrage</strong>: reasons why they cannot do this fully or immediately</li>
+</ul>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">Costs</span></p>
+<p>Trading costs and fees for borrowing shares</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Risk</span></p>
+<p>Prices can move further away before they converge, and losses can force early liquidation</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Limited capital</span></p>
+<p>Only a limited amount of money can be allocated to each mispriced stock</p>
+</div>
+</div>
+<div class="keypoint">
+<p>The result: mispricing is corrected gradually, over several months.</p>
+<p>The paper calls this <strong>mispricing correction persistence (MCP)</strong></p>
+</div>
+</section>
+<section id="asymmetric-limits-to-arbitrage" class="slide level2 center">
+<h2>Asymmetric Limits to Arbitrage</h2>
+<div class="compare">
+<div class="compare-col">
+<p><span class="cmp-title">Underpriced stock: price 80$, worth 100$</span></p>
+<ul>
+<li>Buy the stock</li>
+<li>The most you can lose is 80$</li>
+<li>No borrowing, no fee</li>
+</ul>
+</div>
+<div class="compare-col cmp-alt">
+<p><span class="cmp-title">Overpriced stock: price 120$, worth 100$</span></p>
+<ul>
+<li>Must short it: borrow shares and pay a fee, if shares can be borrowed at all</li>
+<li>No limit on losses: the price can keep rising</li>
+<li>If the price rises to 140$ before it falls, losses keep growing and may force you to close the position</li>
+<li>Some investors are not allowed to short</li>
+</ul>
+</div>
+</div>
+<div class="keypoint">
+<p>Asymmetry: frictions are more significant when shorting than when going long</p>
+<p><span class="math inline">\(\to\)</span> Overpricing is corrected more slowly (Miller, 1977): stronger MCP for the short leg</p>
+</div>
+</section>
+<section id="from-frictions-to-predictability" class="slide level2 center">
+<h2>From Frictions to Predictability</h2>
+<div class="steplist" style="font-size: 0.9em;">
+<div class="step-row">
+<div class="step-num">
+<p>1</p>
+</div>
+<div class="step-title">
+<p>Frictions</p>
+</div>
+<div class="step-desc">
+<p>Short-selling frictions make it hard to correct overpricing of the stocks in the short leg</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>2</p>
+</div>
+<div class="step-title">
+<p>Slow correction</p>
+</div>
+<div class="step-desc">
+<p>Overpricing is corrected gradually: short-leg stocks that fell this month tend to fall again next month, because correction occurs slowly. The long leg is corrected quickly, so it carries little persistence</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>3</p>
+</div>
+<div class="step-title">
+<p>Signal</p>
+</div>
+<div class="step-desc">
+<p>A falling short leg raises the long-short return this month. The long leg also moves it, but that part does not persist</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>4</p>
+</div>
+<div class="step-title">
+<p>Market</p>
+</div>
+<div class="step-desc">
+<p>The short-leg stocks keep falling next month, and they are part of the market: the market return is lower</p>
+</div>
+</div>
+</div>
+<div class="keypoint">
+<p>In <span class="math inline">\(r_{M,t+1} = \alpha + \beta\, r_{LS,t} + \varepsilon_{t+1}\)</span>, <span class="math inline">\(\beta &lt; 0\)</span>: a higher long-short return this month lowers the forecast of next month’s market return</p>
+</div>
+<aside class="notes">
+<p>Point 3, carries little persistence, there will not necessarily be any effects in the next month.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-should-anomaly-returns-predict-the-market" class="slide level2 center">
+<h2>Why Should Anomaly Returns Predict the Market?</h2>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">Slow correction</span></p>
+<p><span class="tc-title">Mispricing correction persistence</span></p>
+<p>If overpricing is corrected slowly, a fall in the short leg today is followed by more falls next month, in the market too: <span class="math inline">\(\beta &lt; 0\)</span> (Sec. I, Eq. 15)</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Long minus short</span></p>
+<p><span class="tc-title">Noise reduction</span></p>
+<p>The two legs share a common component unrelated to mispricing (Sec. I, Eq. 1). Taking the difference removes it</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Many anomalies</span></p>
+<p><span class="tc-title">Aggregation</span></p>
+<p>Each anomaly return also contains noise of its own (Sec. I, Eq. 19). The noise is nearly uncorrelated across anomalies (average correlation 0.08, Table I), so combining the 100 series, as all seven models do, cancels much of it</p>
+</div>
+</div>
+</section></section>
+<section>
+<section id="methodology-and-replication" class="title-slide slide level1 divider center">
+<h1>Methodology and Replication</h1>
+
+</section>
+<section id="replication-plan" class="slide level2 center">
+<h2>Replication Plan</h2>
+<p>The authors’ package provides data, R code, and output files</p>
+<div class="act-table" style="font-size: 0.62em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 35%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">Task</th>
+<th style="text-align: left;">From the authors</th>
+<th style="text-align: left;">Detail to get right</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1 Data</td>
+<td style="text-align: left;">Long-short anomaly returns and the market excess return</td>
+<td style="text-align: left;">Finished returns (data files)</td>
+<td style="text-align: left;">The raw data (CRSP, Compustat) is proprietary</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2 Pre-processing</td>
+<td style="text-align: left;">Impute NAs, lag predictors, build multi-period targets</td>
+<td style="text-align: left;">R code</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3 Forecasting</td>
+<td style="text-align: left;">Seven methods in an expanding window: one forecast per month, 1985:01–2017:12 (396 forecasts)</td>
+<td style="text-align: left;">R code</td>
+<td style="text-align: left;">Elastic net with AICc, OLS with dependent columns</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4 Comparison</td>
+<td style="text-align: left;"><span class="math inline">\(R^2_{\text{OOS}}\)</span> and Clark-West statistics against Table II</td>
+<td style="text-align: left;">Output files (forecasts and tables)</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="data-and-forecasting-setup-secs.-ii.a-iii" class="slide level2 center">
+<h2>Data and Forecasting Setup (Secs. II.A, III)</h2>
+<div class="overview">
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Target</p>
+</div>
+<div class="ov-desc">
+<p>Next month’s market excess return <span class="math inline">\(r_{M,t+1}\)</span>: CRSP value-weighted return of all stocks minus the 1-month T-bill rate</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Predictors</p>
+</div>
+<div class="ov-desc">
+<p>The 100 long-short anomaly returns of month <span class="math inline">\(t\)</span>, <span class="math inline">\(r^{i}_{LS,t}\)</span>: decile 10 (long leg) minus decile 1 (short leg), value-weighted, rebalanced monthly</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Anomalies</p>
+</div>
+<div class="ov-desc">
+<p>From the cross-sectional literature, e.g., value, profitability, investment, issuance, momentum, and trading frictions</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Stocks</p>
+</div>
+<div class="ov-desc">
+<p>NYSE, AMEX and NASDAQ stocks, excluding stocks with a price below $5</p>
+</div>
+</div>
+<div class="ov-row-inline">
+<div class="ov-label">
+<p>Sample</p>
+</div>
+<div class="ov-desc">
+<p>1970:01–2017:12, 576 months per series</p>
+</div>
+</div>
+</div>
+<div class="keypoint">
+<p>The predictable part of the monthly market return is small (low signal-to-noise ratio), so the prevailing mean is hard to beat (Goyal and Welch, 2008)</p>
+</div>
+<div class="keypoint">
+<p>Table II also uses the 100 long-leg or the 100 short-leg anomaly returns as predictors instead</p>
+</div>
+</section>
+<section id="the-real-data-in-code-i" class="slide level2 compact center">
+<h2>The Real Data in Code I</h2>
+<div>
+<div id="pyodide-3" class="exercise-cell">
+
+</div>
+<script type="pyodide-3-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiJpbXBvcnQgcGFuZGFzIGFzIHBkXG5pbXBvcnQgbnVtcHkgYXMgbnBcblxucmV0dXJucyA9IHBkLnJlYWRfZXhjZWwoXCJhc3NldHMvZGF0YS9kYXRhTWFya2V0UngueGxzeFwiKVxuYW5vbWFsaWVzID0gcGQucmVhZF9leGNlbChcImFzc2V0cy9kYXRhL2RhdGFMb25nU2hvcnRNaXNzaW5nLnhsc3hcIilcblxueSA9IDEwMCAqIHJldHVybnMuaWxvY1s6LCAxXS50b19udW1weSgpICAgICAgICAgICAgIyBtYXJrZXQgZXhjZXNzIHJldHVybiwgJVxuWF9uYSA9IDEwMCAqIGFub21hbGllcy5pbG9jWzosIDE6XS50b19udW1weSgpICAgICAgIyAxMDAgYW5vbWFseSByZXR1cm5zLCAlLCB3aXRoIE5Bc1xuWF9hbGwgPSBucC53aGVyZShucC5pc25hbihYX25hKSwgbnAubmFubWVhbihYX25hLCBheGlzPTEsIGtlZXBkaW1zPVRydWUpLCBYX25hKVxuXG4jIGNvbnQnZCBvbiBuZXh0IHNsaWRlIn0=
+</script>
+</div>
+<ul>
+<li>Column 0 of both files holds the dates. <code>X_all</code> replaces each NA by the average of the other anomalies that month</li>
+</ul>
+</section>
+<section id="the-real-data-in-code-ii" class="slide level2 center">
+<h2>The Real Data in Code II</h2>
+<div>
+<div id="pyodide-4" class="exercise-cell">
+
+</div>
+<script type="pyodide-4-contents">
+eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWUsInN0YXJ0b3ZlciI6dHJ1ZX0sImNvZGUiOiIjIGNvbnQnZCBmcm9tIHByZXZpb3VzIHNsaWRlXG5cbiMgQ29udmVydGluZyB0byBkYXRhZnJhbWVcbmRhdGEgPSBwZC5EYXRhRnJhbWUoWF9hbGwsIGluZGV4PWFub21hbGllcy5pbG9jWzosIDBdLCBjb2x1bW5zPWFub21hbGllcy5jb2x1bW5zWzE6XSlcbmRhdGFbXCJ0YXJnZXQ6IG1hcmtldCwgbW9udGggdCsxXCJdID0gcGQuU2VyaWVzKHksIGluZGV4PWRhdGEuaW5kZXgpLnNoaWZ0KC0xKVxuZGF0YS5pbG9jWzosIFswLCAxLCAyLCAtMiwgLTFdXS5yb3VuZCgyKS5oZWFkKCkifQ==
+</script>
+</div>
+<ul>
+<li>Each column is a time series. The cross-sectional sorting is done already inside each cell</li>
+</ul>
+</section>
+<section id="benchmark-versus-competing-forecasts-sec.-ii.a" class="slide level2 center">
+<h2>Benchmark versus Competing Forecasts (Sec. II.A)</h2>
+<ul>
+<li><strong>Benchmark</strong>, the prevailing mean: the average of the market returns observed up to <span class="math inline">\(t\)</span></li>
+</ul>
+<p><span class="math display">\[\hat r^{\text{PM}}_{M,t+1} = \frac{1}{t}\sum_{s=1}^{t} r_{M,s}\]</span></p>
+<ul>
+<li><strong>Competing forecasts</strong>: regressions of next month’s market return on this month’s 100 anomaly returns</li>
+</ul>
+<p><span class="math display">\[r_{M,t+1} = \alpha + \sum_{i=1}^{100}\beta_i\, r^{i}_{LS,t} + \varepsilon_{t+1}\]</span></p>
+<ul>
+<li>The seven competing forecasts use the anomaly returns in different ways: all 100 at once (OLS, ENet), one at a time (Combine, C-ENet), or one constructed predictor (Avg, PCR, PLS)</li>
+</ul>
+</section>
+<section id="training-and-testing-samples-sec.-iv" class="slide level2 center">
+<h2>Training and Testing Samples (Sec. IV)</h2>
+<div class="splitbar">
+<div class="sb-train" style="flex: 10">
+<p>Step 1: 1970:01–1979:12</p>
+</div>
+<div class="sb-test" style="flex: 3">
+<p>1980:01</p>
+</div>
+<div style="flex: 38; text-align: left; color: #898781;">
+<p>First univariate forecast for C-ENet</p>
+</div>
+</div>
+<div class="splitbar">
+<div class="sb-train" style="flex: 15">
+<p>Step 61: 1970:01–1984:12</p>
+</div>
+<div class="sb-test" style="flex: 3">
+<p>1985:01</p>
+</div>
+<div style="flex: 33; text-align: left; color: #898781;">
+<p>First evaluated forecast, all seven methods</p>
+</div>
+</div>
+<div class="splitbar">
+<div class="sb-train" style="flex: 48">
+<p>Step 456: 1970:01–2017:11</p>
+</div>
+<div class="sb-test" style="flex: 3">
+<p>2017:12</p>
+</div>
+</div>
+<ul>
+<li>Expanding window, monthly re-estimation frequency. 396 forecasts, 1985:01–2017:12</li>
+<li>1980–1984, holdout: needed only by C-ENet, which selects anomalies by the past accuracy of their univariate forecasts. Defaults to estimation sample for the remaining models</li>
+<li>No validation sample: AICc chooses the elastic net penalty</li>
+</ul>
+<div style="font-size: 0.62em; color: #666;">
+<p>Dark: estimation sample. Light: the month that is forecast</p>
+</div>
+<aside class="notes">
+<p>The holdout is necessary because we need to be able to compare with returns realizations. This is how we select the variables.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-not-ols" class="slide level2 center">
+<h2>Why Not OLS?</h2>
+<ul>
+<li>Here: 101 coefficients, estimated from 179 months at the first evaluated forecast (1985:01)</li>
+<li>OLS fits the noise in the sample and forecasts it: <span class="math inline">\(R^2_{\text{OOS}} = -2{,}513.86\%\)</span> (Table II)</li>
+</ul>
+<div class="keypoint">
+<p>The six other forecasts restrict/regularize the regression in different ways</p>
+</div>
+</section>
+<section id="the-seven-models-sec.-ii.a" class="slide level2 center">
+<h2>The Seven Models (Sec. II.A)</h2>
+<div class="act-table" style="font-size: 0.68em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 55%">
+<col style="width: 35%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Forecast</th>
+<th style="text-align: left;">Construction</th>
+<th style="text-align: left;">Shrinkage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">OLS</td>
+<td style="text-align: left;">Multiple regression on all 100 anomaly returns</td>
+<td style="text-align: left;">None</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENet</td>
+<td style="text-align: left;">The same regression with an elastic net penalty, size chosen by AICc</td>
+<td style="text-align: left;">Penalty, sets some coefficients to zero</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Combine</td>
+<td style="text-align: left;">The average of 100 univariate regression forecasts, one per anomaly</td>
+<td style="text-align: left;">Averaging</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C-ENet</td>
+<td style="text-align: left;">The average of the univariate forecasts that an elastic net selects</td>
+<td style="text-align: left;">Selection, then averaging</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Avg</td>
+<td style="text-align: left;">Univariate regression on the average of the 100 anomaly returns</td>
+<td style="text-align: left;">One equal-weighted predictor</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PCR</td>
+<td style="text-align: left;">Univariate regression on the first principal component</td>
+<td style="text-align: left;">One component, ignores the target</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PLS</td>
+<td style="text-align: left;">Univariate regression on the first PLS component</td>
+<td style="text-align: left;">One component, built to covary with the target</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="keypoint">
+<p>All six alternatives to OLS shrink the forecast towards the prevailing mean</p>
+</div>
+</section>
+<section id="ols-in-code" class="slide level2 center">
+<h2>OLS in Code</h2>
+<div style="font-size: 0.68em;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> independent_columns(X):</span>
+<span id="cb1-2"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Columns of X to keep when linearly dependent ones are dropped, in order (as lm in R)."""</span></span>
+<span id="cb1-3"><a href="" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> np.column_stack([np.ones(<span class="bu">len</span>(X)), X])</span>
+<span id="cb1-4"><a href="" aria-hidden="true" tabindex="-1"></a>    tol <span class="op">=</span> <span class="fl">1e-8</span> <span class="op">*</span> np.<span class="bu">abs</span>(A).<span class="bu">max</span>() <span class="op">*</span> <span class="bu">max</span>(A.shape)</span>
+<span id="cb1-5"><a href="" aria-hidden="true" tabindex="-1"></a>    keep <span class="op">=</span> [<span class="dv">0</span>]                                              <span class="co"># the intercept</span></span>
+<span id="cb1-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, A.shape[<span class="dv">1</span>]):</span>
+<span id="cb1-7"><a href="" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> np.linalg.matrix_rank(A[:, keep <span class="op">+</span> [j]], tol<span class="op">=</span>tol) <span class="op">==</span> <span class="bu">len</span>(keep) <span class="op">+</span> <span class="dv">1</span>:</span>
+<span id="cb1-8"><a href="" aria-hidden="true" tabindex="-1"></a>            keep.append(j)</span>
+<span id="cb1-9"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [j <span class="op">-</span> <span class="dv">1</span> <span class="cf">for</span> j <span class="kw">in</span> keep[<span class="dv">1</span>:]]</span>
+<span id="cb1-10"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ols_forecaster(X_tr, y_tr, X_new):</span>
+<span id="cb1-12"><a href="" aria-hidden="true" tabindex="-1"></a>    keep <span class="op">=</span> independent_columns(X_tr)                      <span class="co"># drop linearly dependent columns, as lm() in R</span></span>
+<span id="cb1-13"><a href="" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> LinearRegression().fit(X_tr[:, keep], y_tr)   <span class="co"># estimate on the training months</span></span>
+<span id="cb1-14"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model.predict(X_new[:, keep])[<span class="dv">0</span>]               <span class="co"># forecast for the next month</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><code>ols_forecaster()</code> and the functions to follow receive the training data <code>X_tr</code>, <code>y_tr</code> and the new predictors <code>X_new</code>, and return the one-step-ahead forecast</li>
+</ul>
+<aside class="notes">
+<p>The authors’ code is in R, and <code>lm</code> drops linearly dependent columns (an anomaly missing in every training month is filled with the average of the others, an exact linear combination of the other columns). <code>LinearRegression</code> would instead return the minimum-norm solution</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="elastic-net-and-aicc" class="slide level2 compact-xs center">
+<h2>Elastic Net and AICc</h2>
+<p><span class="math display">\[\hat\beta_{\text{ENet}} = \underset{\beta}{\arg\min} \left\{ \sum_{t}\big(r_{M,t+1} - x_t^\top\beta\big)^2 + \lambda\left[\rho\sum_{j=1}^{100} |\beta_j| + (1-\rho)\sum_{j=1}^{100} \beta_j^2\right] \right\}\]</span></p>
+<ul>
+<li><span class="math inline">\(x_t\)</span>: predictors (anomaly returns of month <span class="math inline">\(t\)</span>), <span class="math inline">\(\lambda\)</span>: penalty strength, <span class="math inline">\(\rho\)</span>: mixing parameter. The <span class="math inline">\(\ell_1\)</span> part shrinks the coefficients and sets some to zero, while the <span class="math inline">\(\ell_2\)</span> part shrinks as well</li>
+<li><span class="math inline">\(\lambda\)</span> is chosen from a grid of 200 values by the <em>corrected</em> Akaike information criterion (AICc), with <span class="math inline">\(n\)</span> observations and <span class="math inline">\(\text{df}(\lambda)\)</span> non-zero coefficients,</li>
+</ul>
+<p><span class="math display">\[\begin{aligned}
+\text{AIC}(\lambda) &amp;= n\log\big(\text{RSS}(\lambda)/n\big) + 2\,\text{df}(\lambda)\\
+\text{AICc}(\lambda) &amp;= \text{AIC}(\lambda) + \frac{2\,\text{df}(\lambda)\big(\text{df}(\lambda)+1\big)}{n-\text{df}(\lambda)-1}
+\end{aligned}\]</span></p>
+<div class="keypoint">
+<p>The AICc replaces hyperparameter tuning via validation sample. Select the <span class="math inline">\(\lambda\)</span> minimizing the AICc</p>
+</div>
+<div class="small faint">
+<p>The authors use <code>glmnet</code> in R, with mixing parameter <code>alpha</code> = 0.5. It writes the penalty as <span class="math inline">\(\lambda[\alpha\lVert\beta\rVert_1 + \tfrac12(1-\alpha)\lVert\beta\rVert_2^2]\)</span> and divides the squared errors by <span class="math inline">\(2n\)</span>, so <code>alpha</code> = 0.5 is <span class="math inline">\(\rho = 2/3\)</span> above</p>
+</div>
+<aside class="notes">
+<p><span class="math inline">\(\rho = 1\)</span> is LASSO, <span class="math inline">\(\rho = 0\)</span> is ridge.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="elastic-net-in-code" class="slide level2 center">
+<h2>Elastic Net in Code</h2>
+<div style="font-size: 0.8em;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> enet_forecaster(X_tr, y_tr, X_new):</span>
+<span id="cb2-2"><a href="" aria-hidden="true" tabindex="-1"></a>    intercept, coef <span class="op">=</span> enet_aicc(X_tr, y_tr)</span>
+<span id="cb2-3"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (intercept <span class="op">+</span> X_new <span class="op">@</span> coef)[<span class="dv">0</span>] <span class="co"># Means intercept plus sum of coefficients times predictors</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>The authors implement elastic net via <code>glmnet</code> in <code>R</code></li>
+<li>We must implement this manually (<code>enet_aicc</code>), because <code>ElasticNet</code> from <code>sklearn</code> does not match the approach exactly (the forecasts differ from the paper in about 7% of the months)</li>
+<li><code>enet_forecaster</code> function relies on <code>enet_aicc()</code>, omitted because it is very long – see lecture notebook</li>
+</ul>
+</section>
+<section id="combine-average-of-univariate-forecasts" class="slide level2 center">
+<h2>Combine: Average of Univariate Forecasts</h2>
+<p><span class="math display">\[\hat r^{\,\text{Combine}}_{M,t+1} = \frac{1}{100}\sum_{i=1}^{100}\big(\hat\alpha_i + \hat\beta_i\, r^{i}_{LS,t}\big)\]</span></p>
+<ul>
+<li>Each term is the forecast of a univariate regression of <span class="math inline">\(r_{M,s+1}\)</span> on <span class="math inline">\(r^{i}_{LS,s}\)</span>, one per anomaly</li>
+</ul>
+<p><strong>Illustration with 4 anomalies</strong></p>
+<div class="act-table" style="font-size: 0.66em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 35%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">Anomaly 1</th>
+<th style="text-align: center;">Anomaly 2</th>
+<th style="text-align: center;">Anomaly 3</th>
+<th style="text-align: center;">Anomaly 4</th>
+<th style="text-align: center;">Combine</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Forecast of next month’s market return</td>
+<td style="text-align: center;">+0.9%</td>
+<td style="text-align: center;">+0.3%</td>
+<td style="text-align: center;">−0.2%</td>
+<td style="text-align: center;">+0.5%</td>
+<td style="text-align: center;">¼ (0.9 + 0.3 − 0.2 + 0.5) = +0.38%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="keypoint">
+<p>Each univariate forecast uses one noisy predictor. Averaging lets their errors offset, so <em>Combine</em> aids in isolating the signal from the noise</p>
+</div>
+</section>
+<section id="c-enet-choosing-which-forecasts-to-average" class="slide level2 center">
+<h2>C-ENet: Choosing Which Forecasts to Average</h2>
+<div class="steplist" style="font-size: 0.78em;">
+<div class="step-row">
+<div class="step-num">
+<p>1</p>
+</div>
+<div class="step-title">
+<p>Collect</p>
+</div>
+<div class="step-desc">
+<p>In every earlier month, 100 univariate forecasts were made and the market returns were later realized. Store both.</p>
+<p>This history is why forecasting starts in 1980, before the evaluation</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>2</p>
+</div>
+<div class="step-title">
+<p>Regress</p>
+</div>
+<div class="step-desc">
+<p>Regress the realized market returns on the 100 stored forecasts with an elastic net and non-negative coefficients (a Granger-Ramanathan regression)</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>3</p>
+</div>
+<div class="step-title">
+<p>Select</p>
+</div>
+<div class="step-desc">
+<p>Keep anomalies whose forecasts receive a non-zero coefficient</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>4</p>
+</div>
+<div class="step-title">
+<p>Average</p>
+</div>
+<div class="step-desc">
+<p>Average the forecasts – as made in the <em>Combine</em> approach – of the selected anomalies to produce the C-ENet forecast</p>
+</div>
+</div>
+</div>
+<p><strong>The same 4 anomalies</strong></p>
+<div class="act-table" style="font-size: 0.64em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 39%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">Anomaly 1</th>
+<th style="text-align: center;">Anomaly 2</th>
+<th style="text-align: center;">Anomaly 3</th>
+<th style="text-align: center;">Anomaly 4</th>
+<th style="text-align: center;">C-ENet</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Coefficients from the regression</td>
+<td style="text-align: center;">0.6</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">selects 1 and 3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Forecast</td>
+<td style="text-align: center;">+0.9%</td>
+<td style="text-align: center;">+0.3%</td>
+<td style="text-align: center;">−0.2%</td>
+<td style="text-align: center;">+0.5%</td>
+<td style="text-align: center;">(0.9 + (−0.2)) / 2 = +0.35%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="keypoint">
+<p>Averaging all 100 variables regularizes strongly.</p>
+<p>C-ENet avoids over-shrinking by averaging only the selected anomalies</p>
+</div>
+</section>
+<section id="combine-and-c-enet-in-code" class="slide level2 center">
+<h2>Combine and C-ENet in Code</h2>
+<div style="font-size: 0.74em;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> univariate_forecasts(X_tr, y_tr, X_new):</span>
+<span id="cb3-2"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="co"># One simple regression per anomaly: 100 forecasts </span></span>
+<span id="cb3-3"><a href="" aria-hidden="true" tabindex="-1"></a>    forecasts <span class="op">=</span> []</span>
+<span id="cb3-4"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(X_tr.shape[<span class="dv">1</span>]):              <span class="co"># loop over the 100 anomalies</span></span>
+<span id="cb3-5"><a href="" aria-hidden="true" tabindex="-1"></a>        x_tr_j <span class="op">=</span> X_tr[:, [j]]                   <span class="co"># anomaly j in the training months, as a column</span></span>
+<span id="cb3-6"><a href="" aria-hidden="true" tabindex="-1"></a>        x_new_j <span class="op">=</span> X_new[:, [j]]                 <span class="co"># anomaly j this month</span></span>
+<span id="cb3-7"><a href="" aria-hidden="true" tabindex="-1"></a>        model <span class="op">=</span> LinearRegression().fit(x_tr_j, y_tr)</span>
+<span id="cb3-8"><a href="" aria-hidden="true" tabindex="-1"></a>        forecasts.append(model.predict(x_new_j)[<span class="dv">0</span>])</span>
+<span id="cb3-9"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array(forecasts)</span>
+<span id="cb3-10"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> cenet_forecaster(uni_tr, y_tr, uni_new, pm):</span>
+<span id="cb3-12"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="co"># uni_tr: past univariate forecasts, y_tr: associated targets, </span></span>
+<span id="cb3-13"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="co"># uni_new: current univariate forecasts, pm: prevailing mean</span></span>
+<span id="cb3-14"><a href="" aria-hidden="true" tabindex="-1"></a>    _, coef <span class="op">=</span> enet_aicc(uni_tr, y_tr, lower<span class="op">=</span><span class="fl">0.0</span>)</span>
+<span id="cb3-15"><a href="" aria-hidden="true" tabindex="-1"></a>    selected <span class="op">=</span> coef <span class="op">!=</span> <span class="dv">0</span></span>
+<span id="cb3-16"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> uni_new[<span class="dv">0</span>, selected].mean() <span class="cf">if</span> selected.<span class="bu">any</span>() <span class="cf">else</span> pm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>Combine is the mean of the 100 univariate forecasts, <code>uni_new.mean()</code></li>
+<li><code>lower=0.0</code> imposes non-negative coefficients</li>
+<li>If C-ENet selects nothing, the forecast is the prevailing mean <code>pm</code></li>
+</ul>
+</section>
+<section id="principal-component-regression-pcr" class="slide level2 compact center">
+<h2>Principal Component Regression (PCR)</h2>
+<ul>
+<li>With many predictors <span class="math inline">\(x_{1,t}, \dots, x_{p,t}\)</span>, we can compress them into <span class="math inline">\(K \ll p\)</span> constructed predictors, <strong>the principal components</strong></li>
+<li>Each component is a weighted sum of the predictors: <span class="math inline">\(Z_{k,t} = w_k^\top x_t\)</span>, <span class="math inline">\(k = 1, \dots, K\)</span></li>
+<li>The weights are chosen such that the components retain as much of the information in the predictors as possible: <span class="math inline">\(Z_1\)</span> explains the largest share of their variation, <span class="math inline">\(Z_2\)</span> the largest share of what is left, and so on. The components are uncorrelated by construction</li>
+<li>The predictors for both PCR and PLS require standardization</li>
+<li>Regression of the target on the <span class="math inline">\(K\)</span> components: <span class="math inline">\(y_{t+1} = \alpha + \sum_{k=1}^{K} \beta_k Z_{k,t} + \varepsilon_{t+1}\)</span></li>
+<li>In this paper, both PCR and PLS use <strong>only the first component</strong>, <span class="math inline">\(K = 1\)</span>,</li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>We do not go into the construction of the components, as it is rather involved. Refer to the book <a href="https://www.statlearning.com/">An Introduction to Statistical Learning in Python (ISLP)</a>, James et al., 2023, chapters 6.3, 6.4, and 12.1-12.4.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="partial-least-squares-pls" class="slide level2 center">
+<h2>Partial Least Squares (PLS)</h2>
+<ul>
+<li>Same idea as PCR: compress the predictors into <span class="math inline">\(K\)</span> weighted sums <span class="math inline">\(Z_{k,t} = w_k^\top x_t\)</span>, and regress the target on them</li>
+<li>Difference: the components retain as much of the information that is relevant <em>for the target</em> as possible. <span class="math inline">\(Z_1\)</span> moves the most with the target, <span class="math inline">\(Z_2\)</span> the most among what remains, etc. The components are uncorrelated by construction</li>
+<li>For <span class="math inline">\(Z_1\)</span>, each predictor is weighted by how much it moves with the target. A predictor unrelated to the target gets a weight near zero</li>
+<li>Regression of the target on the <span class="math inline">\(K\)</span> components: <span class="math inline">\(y_{t+1} = \alpha + \sum_{k=1}^{K} \beta_k Z_{k,t} + \varepsilon_{t+1}\)</span></li>
+</ul>
+<div class="keypoint">
+<p>Unsupervised: PCR constructs components retaining information considering only the <em>predictors</em></p>
+<p>Supervised: PLS retains the information in the predictors relevant for the <em>target</em></p>
+</div>
+</section>
+<section id="dimension-reduction" class="slide level2 center">
+<h2>Dimension Reduction</h2>
+<p>The 100 anomaly returns are collapsed into one predictor <span class="math inline">\(Z_t\)</span>, followed by a univariate regression</p>
+<p><span class="math display">\[r_{M,t+1} = \alpha + \beta Z_t + \varepsilon_{t+1}, \qquad Z_t = \sum_{i=1}^{100} w_i\, r^{i}_{LS,t}\]</span></p>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">Model <em>Avg</em></span></p>
+<p><span class="tc-title">Equal weights</span></p>
+<p><span class="math inline">\(w_i = 1/100\)</span>: <span class="math inline">\(Z_t\)</span> is the (cross-sectional, i.e., row-wise) average of the anomaly returns</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Model <em>PCR</em></span></p>
+<p><span class="tc-title">Principal components: largest variance</span></p>
+<p>Weights chosen so that <span class="math inline">\(Z_t\)</span> has the largest variance explained, reducing dimensionality of the data while retaining as much information as possible. Does not account for the target</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Model <em>PLS</em></span></p>
+<p><span class="tc-title">Partial least squares: most relevant for the target</span></p>
+<p>Weights chosen so that <span class="math inline">\(Z_t\)</span> covaries as much as possible with the market return, retaining the information in the anomalies that is relevant for the target. Accounts for the target</p>
+</div>
+</div>
+</section>
+<section id="dimension-reduction-in-code" class="slide level2 compact center">
+<h2>Dimension Reduction in Code</h2>
+<div style="font-size: 0.7em;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> <span class="dv">180</span>                                                       <span class="co"># months observed</span></span>
+<span id="cb4-2"><a href="" aria-hidden="true" tabindex="-1"></a>S <span class="op">=</span> StandardScaler().fit_transform(X_all[:t])                 <span class="co"># standardized anomalies</span></span>
+<span id="cb4-3"><a href="" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.nanmean(X_na[:t], axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>)               <span class="co"># average of the 100 anomalies in each month</span></span>
+<span id="cb4-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> avg_forecaster(A_tr, y_tr, A_new):</span>
+<span id="cb4-6"><a href="" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> LinearRegression().fit(A_tr, y_tr)        <span class="co"># regress on the average</span></span>
+<span id="cb4-7"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model.predict(A_new)[<span class="dv">0</span>]</span>
+<span id="cb4-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pcr_forecaster(S_tr, y_tr, S_new):</span>
+<span id="cb4-10"><a href="" aria-hidden="true" tabindex="-1"></a>    pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">1</span>).fit(S_tr)               <span class="co"># first principal component</span></span>
+<span id="cb4-11"><a href="" aria-hidden="true" tabindex="-1"></a>    Z_tr, Z_new <span class="op">=</span> pca.transform(S_tr), pca.transform(S_new) <span class="co"># standardized PCs</span></span>
+<span id="cb4-12"><a href="" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> LinearRegression().fit(Z_tr, y_tr)        <span class="co"># regress on the component</span></span>
+<span id="cb4-13"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model.predict(Z_new)[<span class="dv">0</span>]</span>
+<span id="cb4-14"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pls_forecaster(S_tr, y_tr, S_new):</span>
+<span id="cb4-16"><a href="" aria-hidden="true" tabindex="-1"></a>    pls <span class="op">=</span> PLSRegression(n_components<span class="op">=</span><span class="dv">1</span>, scale<span class="op">=</span><span class="va">False</span>).fit(S_tr, y_tr)   <span class="co"># component and regression in one</span></span>
+<span id="cb4-17"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pls.predict(S_new).item()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><code>S</code>: standardized anomaly returns, so that no anomaly dominates PCR and PLS due to its scale</li>
+<li><code>A</code>: the one predictor of Avg, the average of the 100 anomaly returns in each month</li>
+</ul>
+<aside class="notes">
+<p>180: number of observations 179: number of training months (the last month is used to forecast the next) Without keepdims: shape (180,), a flat 1D array of 180 numbers. With keepdims=True: shape (180, 1), a single column with 180 rows. scale=False means that the pls_forecaster should not standardize the predictors again pls.predict(S_new).item(): item means we extract a scalar instead of a 1x1 matrix</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="implementing-all-models-for-one-month-i" class="slide level2 compact center">
+<h2>Implementing All Models for One Month I</h2>
+<div style="font-size: 0.78em;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forecast_all(t, h, uni):</span>
+<span id="cb5-2"><a href="" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> t <span class="op">-</span> R                                                <span class="co"># row of uni for month t</span></span>
+<span id="cb5-3"><a href="" aria-hidden="true" tabindex="-1"></a>    y_all <span class="op">=</span> target(t, h)                                     <span class="co"># the targets known at month t</span></span>
+<span id="cb5-4"><a href="" aria-hidden="true" tabindex="-1"></a>    y_tr <span class="op">=</span> y_all[<span class="dv">1</span>:]</span>
+<span id="cb5-5"><a href="" aria-hidden="true" tabindex="-1"></a>    pm <span class="op">=</span> y_all.mean()                                        <span class="co"># pm: the prevailing mean (benchmark)</span></span>
+<span id="cb5-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Window function: extracts training windows accounting for multi-period targets/longer horizon forecasting</span></span>
+<span id="cb5-7"><a href="" aria-hidden="true" tabindex="-1"></a>    X_tr, X_new <span class="op">=</span> window(X_all[:t], t, h)                    <span class="co"># the 100 anomaly returns</span></span>
+<span id="cb5-8"><a href="" aria-hidden="true" tabindex="-1"></a>    S_tr, S_new <span class="op">=</span> window(StandardScaler().fit_transform(X_all[:t]), t, h)    <span class="co"># standardised</span></span>
+<span id="cb5-9"><a href="" aria-hidden="true" tabindex="-1"></a>    A_tr, A_new <span class="op">=</span> window(np.nanmean(X_na[:t], axis<span class="op">=</span><span class="dv">1</span>, keepdims<span class="op">=</span><span class="va">True</span>), t, h)  <span class="co"># their average</span></span>
+<span id="cb5-10"><a href="" aria-hidden="true" tabindex="-1"></a>    uni_tr, uni_new <span class="op">=</span> uni[:i <span class="op">-</span> (h <span class="op">-</span> <span class="dv">1</span>)], uni[i:i <span class="op">+</span> <span class="dv">1</span>]        <span class="co"># univariate forecasts: past and current</span></span>
+<span id="cb5-11"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="co"># cont'd on next slide</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><code>t</code>: the number of months observed when the forecast is made</li>
+<li><code>h</code> is the horizon of the forecast in months</li>
+<li><code>R</code>: the 120 months of the initial estimation sample</li>
+<li><code>uni</code> has index initializing at <code>t = R</code>, meaning that month <code>t</code> has row <code>i = t - R</code></li>
+<li><code>uni</code>: the 100 univariate forecasts of every month after the initial estimation window, one row per month</li>
+</ul>
+<aside class="notes">
+<p><code>uni</code> is a table with one row per month since 1980:01, holding the 100 forecasts made that month: <code>uni_new</code> is this month’s row, and <code>uni_tr</code> is all the rows above it whose outcomes we already know.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="implementing-all-models-for-one-month-ii" class="slide level2 center">
+<h2>Implementing All Models for One Month II</h2>
+<div style="font-size: 0.78em;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-hidden="true" tabindex="-1"></a><span class="co"># cont'd from previous slide</span></span>
+<span id="cb6-2"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {<span class="st">"OLS"</span>: ols_forecaster(X_tr, y_tr, X_new),</span>
+<span id="cb6-3"><a href="" aria-hidden="true" tabindex="-1"></a>            <span class="st">"ENet"</span>: enet_forecaster(X_tr, y_tr, X_new),</span>
+<span id="cb6-4"><a href="" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Comb"</span>: uni_new.mean(),</span>
+<span id="cb6-5"><a href="" aria-hidden="true" tabindex="-1"></a>            <span class="st">"CENet"</span>: cenet_forecaster(uni_tr, y_all[R:], uni_new, pm),</span>
+<span id="cb6-6"><a href="" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Avg"</span>: avg_forecaster(A_tr, y_tr, A_new),</span>
+<span id="cb6-7"><a href="" aria-hidden="true" tabindex="-1"></a>            <span class="st">"PCR"</span>: pcr_forecaster(S_tr, y_tr, S_new),</span>
+<span id="cb6-8"><a href="" aria-hidden="true" tabindex="-1"></a>            <span class="st">"PLS"</span>: pls_forecaster(S_tr, y_tr, S_new),</span>
+<span id="cb6-9"><a href="" aria-hidden="true" tabindex="-1"></a>            <span class="st">"PM"</span>: pm}                                        <span class="co"># the benchmark, kept next to the forecasts</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>Only data up to time <code>t</code> enters, so every forecast is out of sample</li>
+</ul>
+</section>
+<section id="implementing-all-models-for-the-full-sample" class="slide level2 compact center">
+<h2>Implementing All Models for the Full Sample</h2>
+<div style="font-size: 0.75em;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-hidden="true" tabindex="-1"></a>R, hold, h <span class="op">=</span> <span class="dv">120</span>, <span class="dv">60</span>, <span class="dv">1</span>                 <span class="co"># initial window, holdout (months), horizon</span></span>
+<span id="cb7-2"><a href="" aria-hidden="true" tabindex="-1"></a>names <span class="op">=</span> [<span class="st">"OLS"</span>, <span class="st">"ENet"</span>, <span class="st">"Comb"</span>, <span class="st">"CENet"</span>, <span class="st">"Avg"</span>, <span class="st">"PCR"</span>, <span class="st">"PLS"</span>]   <span class="co"># the seven methods</span></span>
+<span id="cb7-3"><a href="" aria-hidden="true" tabindex="-1"></a>t_range <span class="op">=</span> <span class="bu">range</span>(R <span class="op">+</span> hold, <span class="bu">len</span>(y))       <span class="co"># t = 180, ..., 575: forecasts of 1985:01, ..., 2017:12</span></span>
+<span id="cb7-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="" aria-hidden="true" tabindex="-1"></a>uni <span class="op">=</span> past_univariate_forecasts(h)      <span class="co"># univariate forecasts for C-ENet (notebook)</span></span>
+<span id="cb7-6"><a href="" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> Parallel(n_jobs<span class="op">=-</span><span class="dv">1</span>)(delayed(forecast_all)(t, h, uni) <span class="cf">for</span> t <span class="kw">in</span> t_range)</span>
+<span id="cb7-7"><a href="" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(results)              <span class="co"># one row per forecast month, one column per method</span></span>
+<span id="cb7-8"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="" aria-hidden="true" tabindex="-1"></a>forecasts <span class="op">=</span> df[names]                   <span class="co"># the seven forecasts</span></span>
+<span id="cb7-10"><a href="" aria-hidden="true" tabindex="-1"></a>benchmark <span class="op">=</span> df[<span class="st">"PM"</span>].to_numpy()         <span class="co"># the prevailing-mean forecast</span></span>
+<span id="cb7-11"><a href="" aria-hidden="true" tabindex="-1"></a>realized <span class="op">=</span> y[R <span class="op">+</span> hold:]                 <span class="co"># the actual market return of each forecast month</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>A forecast only uses data up to its month <code>t</code>, so the 396 forecasts are independent</li>
+<li><code>past_univariate_forecasts(h)</code>: runs <code>univariate_forecasts</code> in every month after the initial window and stacks the results in <code>uni</code>, one row per month</li>
+<li>The 396 forecasts take a few minutes to compute, so we run them in parallel (<code>Parallel</code> (joblib) computes them simultaneously on different processor cores)</li>
+<li><code>realized</code>: the actual market return of each forecast month</li>
+</ul>
+<aside class="notes">
+<p>(<code>n_jobs=-1</code>: all cores) In the notebook, we do only <code>horizons = [1]</code> to save time</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="up-to-you" class="slide level2 center">
+<h2>Up to you</h2>
+<div class="steplist">
+<div class="step-row">
+<div class="step-num">
+<p>1</p>
+</div>
+<div class="step-title">
+<p>Run</p>
+</div>
+<div class="step-desc">
+<p>Start the notebook with <code>horizons = [1]</code> while we continue</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>2</p>
+</div>
+<div class="step-title">
+<p>Compare</p>
+</div>
+<div class="step-desc">
+<p>Check each row of Table II against your output once the run is done</p>
+</div>
+</div>
+<div class="step-row">
+<div class="step-num">
+<p>3</p>
+</div>
+<div class="step-title">
+<p>Consider</p>
+</div>
+<div class="step-desc">
+<p>Which forecasts do you expect to be significant, and why does OLS fail?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="evaluation-r2_textoos-sec.-ii.b" class="slide level2 center">
+<h2>Evaluation: <span class="math inline">\(R^2_{\text{OOS}}\)</span> (Sec. II.B)</h2>
+<p><span class="math display">\[R^2_{\text{OOS}} = 1 - \frac{\sum_{t}\big(r_{M,t} - \hat r_{M,t}\big)^2}{\sum_{t}\big(r_{M,t} - \bar r_{M,t}\big)^2}\]</span></p>
+<ul>
+<li>The sums run over the 396 forecast months, 1985:01–2017:12. <span class="math inline">\(\hat r_{M,t}\)</span> is the competing forecast and <span class="math inline">\(\bar r_{M,t}\)</span> the prevailing mean, both made with data up to month <span class="math inline">\(t-1\)</span></li>
+</ul>
+<div class="keypoint">
+<p>The benchmark fits the application: the prevailing mean for the market return, zero for individual stock returns (Gu et al., 2020)</p>
+</div>
+</section>
+<section id="evaluation-the-clark-west-test-sec.-ii.b" class="slide level2 compact center">
+<h2>Evaluation: The Clark-West Test (Sec. II.B)</h2>
+<div style="font-size: 0.8em;">
+<ul>
+<li>The competing models nest the benchmark: with all coefficients at zero, it is the prevailing mean</li>
+<li>Even if the true coefficients are zero, they are estimated with noise, which inflates the forecast errors</li>
+<li>The Diebold-Mariano test compares the two MSEs directly. Under equal predictive ability, the noise makes the benchmark look better</li>
+<li>The test is <strong>undersized</strong>: it rejects less often than it should and misses real predictability</li>
+<li>Clark and West offset the noise penalty, and regress this <em>adjusted</em> loss differential on a constant</li>
+</ul>
+<p><span class="math display">\[f_t = \big(r_{M,t} - \bar r_{M,t}\big)^2 - \big(r_{M,t} - \hat r_{M,t}\big)^2 + \big(\bar r_{M,t} - \hat r_{M,t}\big)^2 = \mu + \varepsilon_t\]</span></p>
+<ul>
+<li><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu \le 0\)</span>, no better than the prevailing mean. <span class="math inline">\(H_1\)</span>: <span class="math inline">\(\mu &gt; 0\)</span>, better than the prevailing mean. One-sided <span class="math inline">\(t\)</span>-test with HAC (Newey-West) standard errors</li>
+<li>Caveat: critical values are only approximate, justified by simulations. The test is modestly undersized (Clark and West, 2007)</li>
+<li>Implementation code is in the notebook</li>
+</ul>
+</div>
+<aside class="notes">
+<p>Without the correction (Diebold-Mariano), the test rejects too rarely and misses real predictability. The t-statistic uses Newey-West standard errors. Critical values are only approximate (Clark and West, 2007).</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="evaluation-economic-value-sec.-ii.c" class="slide level2 compact-xs center">
+<h2>Evaluation: Economic Value (Sec. II.C)</h2>
+<ul>
+<li>Does a better forecast translate to monetary gains? Consider an investor who each month splits wealth between the market and a risk-free asset</li>
+<li><strong>Mean-variance investor</strong>: values a portfolio by two numbers only, its average return and its variance (returns: gains/losses, variance: risk)</li>
+<li><span class="math inline">\(\gamma\)</span> expresses risk aversion, how strongly the investor dislikes risk</li>
+</ul>
+<p>The share of wealth in the market is,</p>
+<div class="pull-up">
+
+</div>
+<p><span class="math display">\[w_{t+1|t}^\ast = \frac{1}{\gamma} \times \frac{\text{forecast return}}{\text{forecast variance}} = \frac{1}{\gamma}\times\frac{\hat r_{M,t+1|t}}{\hat\sigma^2_{t+1|t}}\]</span></p>
+<div class="act-table" style="font-size: 0.65em;">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Forecast <span class="math inline">\(\hat r\)</span> (volatility 4.5%)</th>
+<th style="text-align: center;">Weight <span class="math inline">\(w^\ast\)</span></th>
+<th style="text-align: left;">Position</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0.6%</td>
+<td style="text-align: center;">0.99</td>
+<td style="text-align: left;">almost all wealth in the market</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.3%</td>
+<td style="text-align: center;">0.49</td>
+<td style="text-align: left;">half in the market</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">-0.5%</td>
+<td style="text-align: center;">-0.82</td>
+<td style="text-align: left;">short the market</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="keypoint">
+<p>Only <span class="math inline">\(\hat r\)</span> differs between the model and the prevailing mean, so better forecasts give better weights</p>
+</div>
+</section>
+<section id="scoring-the-investors-sharpe-ratio-and-utility-gain" class="slide level2 compact-xs center">
+<h2>Scoring the Investors: Sharpe Ratio and Utility Gain</h2>
+<p>The investor’s excess return in month <span class="math inline">\(t+1\)</span>: <span class="math inline">\(r_{p,t+1} = w^\ast_{t+1|t}\, r_{M,t+1}\)</span>, weight times market excess return</p>
+<div class="compare">
+<div class="compare-col">
+<p><span class="cmp-title">Sharpe ratio</span></p>
+<ul>
+<li>Average return / standard deviation of return, per year</li>
+<li>Return per unit of risk</li>
+<li>Example: 8% return, 16% volatility: Sharpe 0.5</li>
+<li>Paper: prevailing mean 0.45, ENet 0.81</li>
+</ul>
+</div>
+<div class="compare-col cmp-alt">
+<p><span class="cmp-title">Utility gain</span></p>
+<ul>
+<li>Utility = average return <span class="math inline">\(-\)</span> penalty for risk <span class="math inline">\(\left(\tfrac{\gamma}{2} \times\text{variance}\right)\)</span>: a risk-adjusted return</li>
+<li>Gain: the increase in yearly utility when the investor uses the model instead of the prevailing mean, i.e., the annual fee the investor would pay to use the model instead of the prevailing mean</li>
+<li>Example: ENet gain 6.26%. The investor would give up 6.26% of return per year to use ENet’s forecasts instead of the prevailing mean</li>
+</ul>
+</div>
+</div>
+<p><span class="math display">\[\text{Sharpe} = \sqrt{12}\,\frac{\bar r_p}{\sigma_p} \qquad\quad U = \bar r_p - \frac{\gamma}{2}\,\sigma_p^2 \qquad\quad \text{Gain} = 12\,\big(U_{\text{model}} - U_{\text{PM}}\big)\]</span></p>
+<div class="small faint">
+<p><span class="math inline">\(\bar r_p\)</span>, <span class="math inline">\(\sigma_p\)</span>: monthly average and standard deviation of <span class="math inline">\(r_{p,t+1}\)</span>. <span class="math inline">\(\sqrt{12}\)</span> and 12 annualize the Sharpe ratio and the utility</p>
+</div>
+<div class="keypoint">
+<p>Higher Sharpe ratio and positive utility gain: the forecast is worth money, not just a better <span class="math inline">\(R^2_{\text{OOS}}\)</span></p>
+</div>
+<aside class="notes">
+<p><span class="math inline">\(\sigma\)</span> is computed post-hoc based on realized returns therefore no hats</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="economic-value-in-code" class="slide level2 center">
+<h2>Economic Value in Code</h2>
+<div style="font-size: 0.74em;">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-hidden="true" tabindex="-1"></a>gamma, var_window, w_min, w_max <span class="op">=</span> <span class="dv">3</span>, <span class="dv">60</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>     <span class="co"># risk aversion, variance window, weight constraints</span></span>
+<span id="cb8-2"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="" aria-hidden="true" tabindex="-1"></a>t_ev <span class="op">=</span> np.arange(R <span class="op">+</span> hold, <span class="bu">len</span>(y))                 <span class="co"># 396 forecast months</span></span>
+<span id="cb8-4"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> weights(forecast):</span>
+<span id="cb8-6"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Equity weight and excess return of the mean-variance investor (h = 1)</span></span>
+<span id="cb8-7"><a href="" aria-hidden="true" tabindex="-1"></a>    variance <span class="op">=</span> []</span>
+<span id="cb8-8"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> t_ev:</span>
+<span id="cb8-9"><a href="" aria-hidden="true" tabindex="-1"></a>        past <span class="op">=</span> y[t <span class="op">-</span> var_window:t]                 <span class="co"># the 60 months before the forecast</span></span>
+<span id="cb8-10"><a href="" aria-hidden="true" tabindex="-1"></a>        variance.append(past.var(ddof<span class="op">=</span><span class="dv">1</span>))          <span class="co"># their sample variance</span></span>
+<span id="cb8-11"><a href="" aria-hidden="true" tabindex="-1"></a>    variance <span class="op">=</span> np.array(variance)</span>
+<span id="cb8-12"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="" aria-hidden="true" tabindex="-1"></a>    weight <span class="op">=</span> np.clip(<span class="dv">100</span> <span class="op">*</span> forecast <span class="op">/</span> (gamma <span class="op">*</span> variance), w_min, w_max)      <span class="co"># w = forecast / (gamma * variance)</span></span>
+<span id="cb8-14"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> weight, weight <span class="op">*</span> y[t_ev]                                          <span class="co"># weights and r_p, excess returns</span></span>
+<span id="cb8-15"><a href="" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> utility_and_sharpe(r_p):</span>
+<span id="cb8-17"><a href="" aria-hidden="true" tabindex="-1"></a>    r <span class="op">=</span> r_p <span class="op">/</span> <span class="dv">100</span></span>
+<span id="cb8-18"><a href="" aria-hidden="true" tabindex="-1"></a>    utility <span class="op">=</span> r.mean() <span class="op">-</span> <span class="fl">0.5</span> <span class="op">*</span> gamma <span class="op">*</span> r.var(ddof<span class="op">=</span><span class="dv">1</span>)  <span class="co"># mean minus risk penalty</span></span>
+<span id="cb8-19"><a href="" aria-hidden="true" tabindex="-1"></a>    sharpe <span class="op">=</span> np.sqrt(<span class="dv">12</span>) <span class="op">*</span> r.mean() <span class="op">/</span> r.std(ddof<span class="op">=</span><span class="dv">1</span>)   <span class="co"># annualized Sharpe ratio</span></span>
+<span id="cb8-20"><a href="" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> utility, sharpe</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<aside class="notes">
+<p>ddof=1: is the sample variance the var_window is the window used to estimate the variance, which is specified to be 60 by the authors weight constraints: we can be short all of our wealth or long double our wealth</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="results-in-the-paper" class="title-slide slide level1 divider center">
+<h1>Results in the Paper</h1>
+
+</section>
+<section id="figure-1-the-forecasts" class="slide level2 compact center">
+<h2>Figure 1: The Forecasts</h2>
+<div class="figblock fb-s415">
+<div class="fig-title">
+<p>Market excess return forecasts based on the 100 long-short anomaly returns</p>
+</div>
+<p><img src="../assets/figures/dong_fig1.svg"></p>
+<div class="fig-src">
+<p>Source: Dong et al.&nbsp;(2022), Figure 1. Purple: the model forecast. Yellow: the prevailing mean. Grey bars: NBER recessions. 1985:01–2017:12</p>
+</div>
+</div>
+<ul>
+<li>OLS oscillates beyond ±6% (overfitting)</li>
+<li>The other six models are shrunk towards the prevailing mean (benchmark), and are more volatile around recessions</li>
+</ul>
+</section>
+<section id="table-ii-r2_textoos-of-the-market-excess-return-forecasts" class="slide level2 center">
+<h2>Table II: <span class="math inline">\(R^2_{\text{OOS}}\)</span> of the Market Excess Return Forecasts</h2>
+<div class="act-table" style="font-size: 0.64em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 14%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Predictors</th>
+<th style="text-align: center;">OLS</th>
+<th style="text-align: center;">ENet</th>
+<th style="text-align: center;">Combine</th>
+<th style="text-align: center;">C-ENet</th>
+<th style="text-align: center;">Avg</th>
+<th style="text-align: center;">PCR</th>
+<th style="text-align: center;">PLS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Long-short return</td>
+<td style="text-align: center;">−2,513.86</td>
+<td style="text-align: center;">2.03**</td>
+<td style="text-align: center;">0.89***</td>
+<td style="text-align: center;">2.81***</td>
+<td style="text-align: center;">1.89**</td>
+<td style="text-align: center;">1.25**</td>
+<td style="text-align: center;">2.06***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Long-leg excess return</td>
+<td style="text-align: center;">−344,960.22</td>
+<td style="text-align: center;">−0.90</td>
+<td style="text-align: center;">0.29</td>
+<td style="text-align: center;">−0.68</td>
+<td style="text-align: center;">0.26</td>
+<td style="text-align: center;">0.24</td>
+<td style="text-align: center;">0.41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Short-leg excess return</td>
+<td style="text-align: center;">−13,284.68</td>
+<td style="text-align: center;">1.81*</td>
+<td style="text-align: center;">0.72*</td>
+<td style="text-align: center;">0.39*</td>
+<td style="text-align: center;">0.75*</td>
+<td style="text-align: center;">0.74*</td>
+<td style="text-align: center;">0.84*</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="small faint">
+<p>Monthly <span class="math inline">\(R^2_{\text{OOS}}\)</span> in percent, 1985:01–2017:12. *, **, ***: Clark and West test at the 10%, 5% and 1% level</p>
+</div>
+<ul>
+<li>OLS: 101 coefficients from 179 months at the first evaluated forecast, so it fits noise and its forecasts oscillate wildly (overfitting, Figure 1)</li>
+<li>Long-short returns forecast better than either leg alone</li>
+<li>The short leg has some predictive power (all six forecasts significant at the 10% level), the long leg exhibits no significant predictive power</li>
+</ul>
+<aside class="notes">
+<p>Returns versus excess returns in the rows of Table II.</p>
+<p>Long-short row (“return”): long $1 in decile 10, short $1 in decile 1. The sale of the short side pays for the purchase, so you invest nothing. A return on a zero investment is already an excess return: there is nothing to subtract the risk-free rate from.</p>
+<p>Leg rows (“excess return”): a leg is a fully invested position in stocks. Its raw return includes what a bill would pay without any risk. Subtracting the risk-free rate leaves the reward for bearing stock risk, which is what the market excess return measures too.</p>
+<p>The rows are consistent: <span class="math inline">\(r_L - r_S = (r_L - r_f) - (r_S - r_f)\)</span>, everything is measured relative to the risk-free rate. The short-leg return is the return of holding decile 1, not of shorting it. The paper does not spell out this reasoning; it is the standard convention, and Table I labels the legs “excess returns”.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="our-replication-vs.-table-ii" class="slide level2 center">
+<h2>Our Replication vs.&nbsp;Table II</h2>
+<p>Monthly <span class="math inline">\(R^2_{\text{OOS}}\)</span> (percent) of the long-short anomaly returns, 1985:01–2017:12</p>
+<div class="act-table" style="font-size: 0.72em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">OLS</th>
+<th style="text-align: center;">ENet</th>
+<th style="text-align: center;">Combine</th>
+<th style="text-align: center;">C-ENet</th>
+<th style="text-align: center;">Avg</th>
+<th style="text-align: center;">PCR</th>
+<th style="text-align: center;">PLS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ours</td>
+<td style="text-align: center;">−2,513.86</td>
+<td style="text-align: center;">2.03**</td>
+<td style="text-align: center;">0.89***</td>
+<td style="text-align: center;">2.81***</td>
+<td style="text-align: center;">1.89**</td>
+<td style="text-align: center;">1.25**</td>
+<td style="text-align: center;">2.06***</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Paper</td>
+<td style="text-align: center;">−2,513.86</td>
+<td style="text-align: center;">2.03**</td>
+<td style="text-align: center;">0.89***</td>
+<td style="text-align: center;">2.81***</td>
+<td style="text-align: center;">1.89**</td>
+<td style="text-align: center;">1.25**</td>
+<td style="text-align: center;">2.06***</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="small faint">
+<p>*, **, ***: Clark and West test at the 10%, 5% and 1% level. Ours: from the <span class="math inline">\(t\)</span>-statistics with the one-sided critical values 1.28, 1.64 and 2.33</p>
+</div>
+<div class="keypoint">
+<p>All seven <span class="math inline">\(R^2_{\text{OOS}}\)</span> statistics and all significance levels agree with Table II</p>
+</div>
+</section>
+<section id="other-horizons-replication-and-paper" class="slide level2 center">
+<h2>Other Horizons: Replication and Paper</h2>
+<p>Monthly <span class="math inline">\(R^2_{\text{OOS}}\)</span> (percent) by forecast horizon <span class="math inline">\(h\)</span> in months: <strong>ours (paper)</strong></p>
+<div class="act-table" style="font-size: 0.58em;">
+<table class="caption-top" style="width:100%;">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: center;"><span class="math inline">\(h=1\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(h=2\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(h=3\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(h=6\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(h=12\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ENet</td>
+<td style="text-align: center;">2.03 (2.03**)</td>
+<td style="text-align: center;">2.47 (2.47***)</td>
+<td style="text-align: center;">0.55 (0.55***)</td>
+<td style="text-align: center;">−0.47 (−0.47)</td>
+<td style="text-align: center;">−2.11 (−2.11)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Combine</td>
+<td style="text-align: center;">0.89 (0.89***)</td>
+<td style="text-align: center;">0.54 (0.54**)</td>
+<td style="text-align: center;">0.57 (0.57***)</td>
+<td style="text-align: center;">0.61 (0.61***)</td>
+<td style="text-align: center;">0.09 (0.09)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C-ENet</td>
+<td style="text-align: center;">2.81 (2.81***)</td>
+<td style="text-align: center;">0.08 (0.08**)</td>
+<td style="text-align: center;">0.85 (0.85**)</td>
+<td style="text-align: center;">0.77 (0.77)</td>
+<td style="text-align: center;">−0.51 (−0.51)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Avg</td>
+<td style="text-align: center;">1.89 (1.89**)</td>
+<td style="text-align: center;">1.01 (1.01**)</td>
+<td style="text-align: center;">1.44 (1.44**)</td>
+<td style="text-align: center;">1.36 (1.36**)</td>
+<td style="text-align: center;">−0.35 (−0.35)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PCR</td>
+<td style="text-align: center;">1.25 (1.25**)</td>
+<td style="text-align: center;">0.60 (0.60*)</td>
+<td style="text-align: center;">0.36 (0.36)</td>
+<td style="text-align: center;">0.66 (0.66*)</td>
+<td style="text-align: center;">−0.78 (−0.78)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">PLS</td>
+<td style="text-align: center;">2.06 (2.06***)</td>
+<td style="text-align: center;">0.17 (0.17**)</td>
+<td style="text-align: center;">−0.16 (−0.16)</td>
+<td style="text-align: center;">1.32 (1.32***)</td>
+<td style="text-align: center;">−5.94 (−5.94)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="small faint">
+<p>Paper: Table II for <span class="math inline">\(h=1\)</span>, Internet Appendix Table IA.X for the other horizons. Significance from the Clark and West test (*, **, ***: 10%, 5%, 1%). OLS is far below zero at every horizon (−2,513.86 at <span class="math inline">\(h=1\)</span> to −188,308.44 at <span class="math inline">\(h=6\)</span>) in both</p>
+</div>
+<div class="keypoint">
+<p>Predictability fades with the horizon, and no <span class="math inline">\(R^2_{\text{OOS}}\)</span> is significant at <span class="math inline">\(h = 12\)</span></p>
+</div>
+</section>
+<section id="figure-2-cumulative-portfolio-returns" class="slide level2 center">
+<h2>Figure 2: Cumulative Portfolio Returns</h2>
+<div class="figblock">
+<div class="fig-title">
+<p>Log cumulative excess return of portfolios based on the forecasts</p>
+</div>
+<p><img src="../assets/figures/dong_fig2.svg"></p>
+<div class="fig-src">
+<p>Source: Dong et al.&nbsp;(2022), Figure 2, 1985:01–2017:12. Purple: investor using model forecast.</p>
+<p>Teal: investor using prevailing-mean forecast. Yellow: investor holding the market.</p>
+</div>
+</div>
+</section>
+<section id="economic-value-replication-and-paper" class="slide level2 center">
+<h2>Economic Value: Replication and Paper</h2>
+<p>Annualized Sharpe ratio and utility gain (percent per year)</p>
+<div class="act-table" style="font-size: 0.6em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">Prevailing mean</th>
+<th style="text-align: center;">OLS</th>
+<th style="text-align: center;">ENet</th>
+<th style="text-align: center;">Combine</th>
+<th style="text-align: center;">C-ENet</th>
+<th style="text-align: center;">Avg</th>
+<th style="text-align: center;">PCR</th>
+<th style="text-align: center;">PLS</th>
+<th style="text-align: center;">Market</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Sharpe, ours</td>
+<td style="text-align: center;">0.42</td>
+<td style="text-align: center;">0.23</td>
+<td style="text-align: center;">0.81</td>
+<td style="text-align: center;">0.59</td>
+<td style="text-align: center;">0.79</td>
+<td style="text-align: center;">0.65</td>
+<td style="text-align: center;">0.62</td>
+<td style="text-align: center;">0.80</td>
+<td style="text-align: center;">0.57</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sharpe, paper</td>
+<td style="text-align: center;">0.45</td>
+<td style="text-align: center;">0.23</td>
+<td style="text-align: center;">0.81</td>
+<td style="text-align: center;">0.59</td>
+<td style="text-align: center;">0.79</td>
+<td style="text-align: center;">0.65</td>
+<td style="text-align: center;">0.62</td>
+<td style="text-align: center;">0.80</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gain, ours</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">−4.97</td>
+<td style="text-align: center;">6.26</td>
+<td style="text-align: center;">2.59</td>
+<td style="text-align: center;">6.06</td>
+<td style="text-align: center;">3.74</td>
+<td style="text-align: center;">3.28</td>
+<td style="text-align: center;">6.38</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gain, paper</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">−4.97</td>
+<td style="text-align: center;">6.26</td>
+<td style="text-align: center;">2.59</td>
+<td style="text-align: center;">6.06</td>
+<td style="text-align: center;">3.74</td>
+<td style="text-align: center;">3.28</td>
+<td style="text-align: center;">6.38</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="small faint">
+<p>Paper: Figure 2 and Internet Appendix Table IA.IV (our numbers are compared with the paper’s reported values, not with the authors’ output files). The paper reports no Sharpe ratio for the market</p>
+</div>
+<ul>
+<li>Every shrinkage forecast beats the prevailing-mean investor, and the OLS does worst overall</li>
+<li>All gains and Sharpe ratios match, except the Sharpe ratio of the prevailing-mean investor (0.42 against 0.45), which we cannot explain. The bootstrap tests are not replicated</li>
+</ul>
+</section></section>
+<section>
+<section id="wrapping-up" class="title-slide slide level1 divider center">
+<h1>Wrapping Up</h1>
+
+</section>
+<section id="conclusion-of-replication" class="slide level2 center">
+<h2>Conclusion of Replication</h2>
+<div class="triad">
+<div class="triad-card">
+<p><span class="tc-tag">Forecasts</span></p>
+<p><span class="tc-title">Table II matches exactly</span></p>
+<p>All seven forecasts match Table II, and the other horizons match the authors’ output files</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Economic value</span></p>
+<p><span class="tc-title">Figure 2 matches, one exception</span></p>
+<p>Utility gains and Sharpe ratios match Figure 2 and Table IA.IV, except the Sharpe ratio of the prevailing-mean investor (0.42 against 0.45)</p>
+</div>
+<div class="triad-card">
+<p><span class="tc-tag">Details matter</span></p>
+<p><span class="tc-title">Exact match needs R’s solver</span></p>
+<p>Exact agreement needed the coordinate descent of <code>glmnet</code> for the elastic net and an OLS that drops dependent columns, as <code>lm</code> does (see the appendix)</p>
+</div>
+</div>
+<p>The authors’ output files tell us when we get it right, which was not possible for Gu et al.&nbsp;(2020)</p>
+<div class="small faint">
+<p>Not replicated: the bootstrap tests of the utility gains, the long-leg and short-leg rows of Table II, the limits-to-arbitrage evidence (Sec. V), and the construction of the anomaly returns from CRSP, Compustat and I/B/E/S (we start from the finished anomaly long-short returns)</p>
+</div>
+<div class="keypoint">
+<p>Ultimately, <strong>the replication is a success</strong>: we match the paper’s results</p>
+</div>
+</section>
+<section id="references" class="slide level2 center">
+<h2>References</h2>
+<div style="font-size: 0.58em;">
+<ul>
+<li>Campbell, J. Y. and Thompson, S. B. (2008). Predicting excess stock returns out of sample. <em>Review of Financial Studies</em>, 21(4), 1509–1531. <a href="https://doi.org/10.1093/rfs/hhm055">doi:10.1093/rfs/hhm055</a></li>
+<li>Clark, T. E. and West, K. D. (2007). Approximately normal tests for equal predictive accuracy in nested models. <em>Journal of Econometrics</em>, 138(1), 291–311. <a href="https://doi.org/10.1016/j.jeconom.2006.05.023">doi:10.1016/j.jeconom.2006.05.023</a></li>
+<li>Dong, X., Li, Y., Rapach, D. E. and Zhou, G. (2022). Anomalies and the expected market return. <em>Journal of Finance</em>, 77(1), 639–681. <a href="https://doi.org/10.1111/jofi.13099">doi:10.1111/jofi.13099</a></li>
+<li>Replication package of Dong et al.&nbsp;(2022): data, R code and output files, in the supporting information of the article at the link above (folder “Replication code-20200266”)</li>
+<li>Goyal, A. and Welch, I. (2008). A comprehensive look at the empirical performance of equity premium prediction. <em>Review of Financial Studies</em>, 21(4), 1455–1508. <a href="https://doi.org/10.1093/rfs/hhm014">doi:10.1093/rfs/hhm014</a></li>
+<li>Gu, S., Kelly, B. and Xiu, D. (2020). Empirical asset pricing via machine learning. <em>Review of Financial Studies</em>, 33(5), 2223–2273. <a href="https://doi.org/10.1093/rfs/hhaa009">doi:10.1093/rfs/hhaa009</a></li>
+<li>James, G., Witten, D., Hastie, T., Tibshirani, R. and Taylor, J. (2023). <em>An Introduction to Statistical Learning: with Applications in Python</em>. Springer Texts in Statistics. Springer, Cham. <a href="https://www.statlearning.com/">statlearning.com</a></li>
+<li>McLean, R. D. and Pontiff, J. (2016). Does academic research destroy stock return predictability? <em>Journal of Finance</em>, 71(1), 5–32. <a href="https://doi.org/10.1111/jofi.12365">doi:10.1111/jofi.12365</a></li>
+<li>Shleifer, A. and Vishny, R. W. (1997). The limits of arbitrage. <em>Journal of Finance</em>, 52(1), 35–55. <a href="https://doi.org/10.1111/j.1540-6261.1997.tb03807.x">doi:10.1111/j.1540-6261.1997.tb03807.x</a></li>
+<li>Miller, E. M. (1977). Risk, uncertainty, and divergence of opinion. <em>Journal of Finance</em>, 32(4), 1151–1168. <a href="https://doi.org/10.1111/j.1540-6261.1977.tb03317.x">doi:10.1111/j.1540-6261.1977.tb03317.x</a></li>
+<li>Friedman, J., Hastie, T. and Tibshirani, R. (2010). Regularization paths for generalized linear models via coordinate descent. <em>Journal of Statistical Software</em>, 33(1), 1–22. <a href="https://doi.org/10.18637/jss.v033.i01">doi:10.18637/jss.v033.i01</a></li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="appendix" class="title-slide slide level1 divider center">
+<h1>Appendix</h1>
+
+</section>
+<section id="multi-period-targets" class="slide level2 center">
+<h2>Multi-Period Targets</h2>
+<ul>
+<li>For horizon <span class="math inline">\(h &gt; 1\)</span> the target is the average market return over the next <span class="math inline">\(h\)</span> months. The paper uses <span class="math inline">\(h = 1, 2, 3, 6, 12\)</span>, the main results are <span class="math inline">\(h = 1\)</span></li>
+<li>The training sample loses <span class="math inline">\(h - 1\)</span> additional rows, because their targets are not yet complete</li>
+</ul>
+<p>Example at <span class="math inline">\(t = 6\)</span> and <span class="math inline">\(h = 2\)</span>:</p>
+<div class="act-table" style="font-size: 0.72em;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Training rows</th>
+<th style="text-align: left;">Training targets</th>
+<th style="text-align: center;">Forecast from</th>
+<th style="text-align: left;">Target of the forecast</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">months 1–4</td>
+<td style="text-align: left;"><span class="math inline">\(\tfrac12(r_2 + r_3), \dots, \tfrac12(r_5 + r_6)\)</span></td>
+<td style="text-align: center;">month 6</td>
+<td style="text-align: left;"><span class="math inline">\(\tfrac12(r_7 + r_8)\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="keypoint">
+<p>Needed only for the horizon results (see <em>Other Horizons</em>): the signal fades after a few months</p>
+</div>
+</section>
+<section id="elastic-net-as-in-glmnet" class="slide level2 center">
+<h2>Elastic Net as in glmnet</h2>
+<ul>
+<li>The authors’ code uses R’s <code>glmnet</code> with <code>alpha</code> = 0.5 and 200 values of <span class="math inline">\(\lambda\)</span></li>
+<li>The <span class="math inline">\(\lambda\)</span> grid starts at the smallest value that sets all coefficients to zero and decreases geometrically, down to <span class="math inline">\(10^{-4}\)</span> times the start (or <span class="math inline">\(10^{-2}\)</span> if there are more predictors than observations)</li>
+<li>At each <span class="math inline">\(\lambda\)</span>, coordinate descent cycles over the active variables until the largest squared change in a coefficient is below <span class="math inline">\(10^{-7}\)</span></li>
+<li>The path stops when the fit stops improving (glmnet’s rule). We also stop when AICc has not improved for 100 values of <span class="math inline">\(\lambda\)</span>, which does not change the result</li>
+</ul>
+<div class="small faint">
+<p><code>enet_aicc(X, y)</code> is defined in the notebook, in the section “Elastic net as in R’s <code>glmnet</code>”. It returns the intercept and the coefficients at the AICc-optimal <span class="math inline">\(\lambda\)</span>, and <code>lower=0</code> imposes non-negative coefficients. ENet and C-ENet call it</p>
+</div>
+</section>
+<section id="why-not-scikit-learns-elasticnet" class="slide level2 center">
+<h2>Why Not scikit-learn’s ElasticNet?</h2>
+<ul>
+<li>AICc picks the penalty from the number of non-zero coefficients, <span class="math inline">\(\text{df}\)</span></li>
+<li>The <code>ElasticNet</code> of scikit-learn solves the same problem, but it stops at a different tolerance and cycles through the variables in a different order</li>
+<li>That changes which coefficients are exactly zero, hence <span class="math inline">\(\text{df}\)</span>, hence the selected <span class="math inline">\(\lambda\)</span>. The forecasts then differ from the paper’s in about 7% of the months</li>
+<li>The fix is to re-implement the coordinate descent of R’s <code>glmnet</code> (same <span class="math inline">\(\lambda\)</span> grid, threshold, active-set cycling and stopping rule), as on the previous slide</li>
+</ul>
+<div class="keypoint">
+<p>Same lesson as in Lecture 5: the solver can decide the result</p>
+</div>
+</section>
+<section id="the-model-behind-the-idea-sec.-i" class="slide level2 compact center">
+<h2>The Model Behind the Idea (Sec. I)</h2>
+<p>Each leg’s return = a common part + a change in mispricing:</p>
+<p><span class="math display">\[r_{l,t} = f_t + \Delta u_{l,t}\ \ (l = L, S), \qquad r_{LS,t} = \Delta u_{L,t} - \Delta u_{S,t}\]</span></p>
+<ul>
+<li><span class="math inline">\(f_t\)</span>: market-wide news, common to both legs. It cancels in the long-short return</li>
+<li><span class="math inline">\(u_{L,t} \le 0\)</span>: underpricing (long leg). <span class="math inline">\(u_{S,t} \ge 0\)</span>: overpricing (short leg)</li>
+<li>In <span class="math inline">\(r_{M,t+1} = \alpha + \beta\, r_{LS,t} + \varepsilon_{t+1}\)</span>, <span class="math inline">\(\beta &lt; 0\)</span> when</li>
+</ul>
+<p><span class="math display">\[\operatorname{cov}(\Delta u_{S,t+1}, \Delta u_{S,t}) &gt; \operatorname{cov}(\Delta u_{L,t+1}, \Delta u_{L,t})\]</span></p>
+<ul>
+<li>That is, the correction of overpricing persists more from month to month than the correction of underpricing</li>
+</ul>
+<div class="small faint">
+<p>Paper pp.&nbsp;644–651, Eqs. (1), (2), (13), (15). Noise reduction (Eqs. 16–17) and aggregation (Eqs. 19–22): see “Why Should Anomaly Returns Predict the Market?”</p>
+</div>
+
+<script type="pyodide-data">
+eyJvcHRpb25zIjp7ImVudiI6eyJQTE9UTFlfUkVOREVSRVIiOiJwbG90bHlfbWltZXR5cGUifSwiaW5kZXhVUkwiOiJodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvcHlvZGlkZS92MC4yOC4xL2Z1bGwvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsicHlvZGlkZV9odHRwIiwibWljcm9waXAiLCJpcHl0aG9uIiwibnVtcHkiLCJwYW5kYXMiLCJzY2lraXQtbGVhcm4iLCJvcGVucHl4bCJdfX0=
+</script>
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJweW9kaWRlLTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl80ID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS00LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtNC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzQgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTMiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl8zID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzMgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzMsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl8yID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0yLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzIgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzIsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF9weW9kaWRlX2VkaXRvcl8xID0ge1xuICBjb25zdCB7IFB5b2RpZGVFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuXG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwicHlvZGlkZS0xLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHB5b2RpZGUtMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBQeW9kaWRlRXhlcmNpc2VFZGl0b3IoXG4gICAgcHlvZGlkZU9qcy5weW9kaWRlUHJvbWlzZSxcbiAgICBibG9jay5jb2RlLFxuICAgIG9wdGlvbnNcbiAgKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl9weW9kaWRlX3ZhbHVlXzEgPSBweW9kaWRlT2pzLnByb2Nlc3MoX3B5b2RpZGVfZWRpdG9yXzEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJweW9kaWRlLXByZWx1ZGUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJweW9kaWRlT2pzID0ge1xuICBjb25zdCB7XG4gICAgUHlvZGlkZUV2YWx1YXRvcixcbiAgICBQeW9kaWRlRW52aXJvbm1lbnRNYW5hZ2VyLFxuICAgIHNldHVwUHl0aG9uLFxuICAgIHN0YXJ0UHlvZGlkZVdvcmtlcixcbiAgICBiNjREZWNvZGUsXG4gICAgY29sbGFwc2VQYXRoLFxuICB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcblxuICBjb25zdCBzdGF0dXNDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctc3RhdHVzXCIpO1xuICBjb25zdCBpbmRpY2F0b3JDb250YWluZXIgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImV4ZXJjaXNlLWxvYWRpbmctaW5kaWNhdG9yXCIpO1xuICBpbmRpY2F0b3JDb250YWluZXIuY2xhc3NMaXN0LnJlbW92ZShcImQtbm9uZVwiKTtcblxuICBsZXQgc3RhdHVzVGV4dCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoXCJkaXZcIilcbiAgc3RhdHVzVGV4dC5jbGFzc0xpc3QgPSBcImV4ZXJjaXNlLWxvYWRpbmctZGV0YWlsc1wiO1xuICBzdGF0dXNUZXh0ID0gc3RhdHVzQ29udGFpbmVyLmFwcGVuZENoaWxkKHN0YXR1c1RleHQpO1xuICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYEluaXRpYWxpc2VgO1xuXG4gIC8vIEhvaXN0IGluZGljYXRvciBvdXQgZnJvbSBmaW5hbCBzbGlkZSB3aGVuIHJ1bm5pbmcgdW5kZXIgcmV2ZWFsXG4gIGNvbnN0IHJldmVhbFN0YXR1cyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoXCIucmV2ZWFsIC5leGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaWYgKHJldmVhbFN0YXR1cykge1xuICAgIHJldmVhbFN0YXR1cy5yZW1vdmUoKTtcbiAgICBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCA+IC5zbGlkZXNcIikuYXBwZW5kQ2hpbGQocmV2ZWFsU3RhdHVzKTtcbiAgfVxuXG4gIC8vIE1ha2UgYW55IHJldmVhbCBzbGlkZXMgd2l0aCBsaXZlIGNlbGxzIHNjcm9sbGFibGVcbiAgZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbChcIi5yZXZlYWwgLmV4ZXJjaXNlLWNlbGxcIikuZm9yRWFjaCgoZWwpID0+IHtcbiAgICBlbC5jbG9zZXN0KCdzZWN0aW9uLnNsaWRlJykuY2xhc3NMaXN0LmFkZChcInNjcm9sbGFibGVcIik7XG4gIH0pXG5cbiAgLy8gUHlvZGlkZSBzdXBwbGVtZW50YWwgZGF0YSBhbmQgb3B0aW9uc1xuICBjb25zdCBkYXRhQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJweW9kaWRlLWRhdGFcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBkYXRhID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZGF0YUNvbnRlbnQpKTtcblxuICAvLyBHcmFiIGxpc3Qgb2YgcmVzb3VyY2VzIHRvIGJlIGRvd25sb2FkZWRcbiAgY29uc3QgZmlsZXNDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcInZmcy1maWxlXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZmlsZXMgPSBKU09OLnBhcnNlKGI2NERlY29kZShmaWxlc0NvbnRlbnQpKTtcblxuICBsZXQgcHlvZGlkZVByb21pc2UgPSAoYXN5bmMgKCkgPT4ge1xuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgUHlvZGlkZWA7XG4gICAgY29uc3QgcHlvZGlkZSA9IGF3YWl0IHN0YXJ0UHlvZGlkZVdvcmtlcihkYXRhLm9wdGlvbnMpO1xuXG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBwYWNrYWdlOiBtaWNyb3BpcGA7XG4gICAgYXdhaXQgcHlvZGlkZS5sb2FkUGFja2FnZShcIm1pY3JvcGlwXCIpO1xuICAgIGNvbnN0IG1pY3JvcGlwID0gYXdhaXQgcHlvZGlkZS5weWltcG9ydChcIm1pY3JvcGlwXCIpO1xuICAgIGF3YWl0IGRhdGEucGFja2FnZXMucGtncy5tYXAoKHBrZykgPT4gKCkgPT4ge1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyBwYWNrYWdlOiAke3BrZ31gO1xuICAgICAgcmV0dXJuIG1pY3JvcGlwLmluc3RhbGwocGtnKTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcbiAgICBhd2FpdCBtaWNyb3BpcC5kZXN0cm95KCk7XG5cbiAgICAvLyBEb3dubG9hZCBhbmQgaW5zdGFsbCByZXNvdXJjZXNcbiAgICBhd2FpdCBmaWxlcy5tYXAoKGZpbGUpID0+IGFzeW5jICgpID0+IHtcbiAgICAgIGNvbnN0IG5hbWUgPSBmaWxlLnN1YnN0cmluZyhmaWxlLmxhc3RJbmRleE9mKCcvJykgKyAxKTtcbiAgICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgRG93bmxvYWRpbmcgcmVzb3VyY2U6ICR7bmFtZX1gO1xuICAgICAgY29uc3QgcmVzcG9uc2UgPSBhd2FpdCBmZXRjaChmaWxlKTtcbiAgICAgIGlmICghcmVzcG9uc2Uub2spIHtcbiAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBDYW4ndCBkb3dubG9hZCBcXGAke2ZpbGV9XFxgLiBFcnJvciAke3Jlc3BvbnNlLnN0YXR1c306IFwiJHtyZXNwb25zZS5zdGF0dXNUZXh0fVwiLmApO1xuICAgICAgfVxuICAgICAgY29uc3QgZGF0YSA9IGF3YWl0IHJlc3BvbnNlLmFycmF5QnVmZmVyKCk7XG5cbiAgICAgIC8vIFN0b3JlIFVSTHMgaW4gdGhlIGN3ZCB3aXRob3V0IGFueSBzdWJkaXJlY3Rvcnkgc3RydWN0dXJlXG4gICAgICBpZiAoZmlsZS5pbmNsdWRlcyhcIjovL1wiKSkge1xuICAgICAgICBmaWxlID0gbmFtZTtcbiAgICAgIH1cblxuICAgICAgLy8gQ29sbGFwc2UgaGlnaGVyIGRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGZpbGUgPSBjb2xsYXBzZVBhdGgoZmlsZSk7XG5cbiAgICAgIC8vIENyZWF0ZSBkaXJlY3RvcnkgdHJlZSwgaWdub3JpbmcgXCJkaXJlY3RvcnkgZXhpc3RzXCIgVkZTIGVycm9yc1xuICAgICAgY29uc3QgcGFydHMgPSBmaWxlLnNwbGl0KCcvJykuc2xpY2UoMCwgLTEpO1xuICAgICAgbGV0IHBhdGggPSAnJztcbiAgICAgIHdoaWxlIChwYXJ0cy5sZW5ndGggPiAwKSB7XG4gICAgICAgIHBhdGggKz0gcGFydHMuc2hpZnQoKSArICcvJztcbiAgICAgICAgdHJ5IHtcbiAgICAgICAgICBhd2FpdCBweW9kaWRlLkZTLm1rZGlyKHBhdGgpO1xuICAgICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgICAgaWYgKGUubmFtZSAhPT0gXCJFcnJub0Vycm9yXCIpIHRocm93IGU7XG4gICAgICAgICAgaWYgKGUuZXJybm8gIT09IDIwKSB7XG4gICAgICAgICAgICBjb25zdCBlcnJvclRleHRQdHIgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuX3N0cmVycm9yKGUuZXJybm8pO1xuICAgICAgICAgICAgY29uc3QgZXJyb3JUZXh0ID0gYXdhaXQgcHlvZGlkZS5fbW9kdWxlLlVURjhUb1N0cmluZyhlcnJvclRleHRQdHIpO1xuICAgICAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBGaWxlc3lzdGVtIEVycm9yICR7ZS5lcnJub30gXCIke2Vycm9yVGV4dH1cIi5gKTtcbiAgICAgICAgICB9XG4gICAgICAgIH1cbiAgICAgIH1cblxuICAgICAgLy8gV3JpdGUgdGhpcyBmaWxlIHRvIHRoZSBWRlNcbiAgICAgIHRyeSB7XG4gICAgICAgIHJldHVybiBhd2FpdCBweW9kaWRlLkZTLndyaXRlRmlsZShmaWxlLCBuZXcgVWludDhBcnJheShkYXRhKSk7XG4gICAgICB9IGNhdGNoIChlKSB7XG4gICAgICAgIGlmIChlLm5hbWUgIT09IFwiRXJybm9FcnJvclwiKSB0aHJvdyBlO1xuICAgICAgICBjb25zdCBlcnJvclRleHRQdHIgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuX3N0cmVycm9yKGUuZXJybm8pO1xuICAgICAgICBjb25zdCBlcnJvclRleHQgPSBhd2FpdCBweW9kaWRlLl9tb2R1bGUuVVRGOFRvU3RyaW5nKGVycm9yVGV4dFB0cik7XG4gICAgICAgIHRocm93IG5ldyBFcnJvcihgRmlsZXN5c3RlbSBFcnJvciAke2UuZXJybm99IFwiJHtlcnJvclRleHR9XCIuYCk7XG4gICAgICB9XG4gICAgfSkucmVkdWNlKChjdXIsIG5leHQpID0+IGN1ci50aGVuKG5leHQpLCBQcm9taXNlLnJlc29sdmUoKSk7XG5cbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYFB5b2RpZGUgZW52aXJvbm1lbnQgc2V0dXBgO1xuICAgIGF3YWl0IHNldHVwUHl0aG9uKHB5b2RpZGUpO1xuXG4gICAgc3RhdHVzVGV4dC5yZW1vdmUoKTtcbiAgICBpZiAoc3RhdHVzQ29udGFpbmVyLmNoaWxkcmVuLmxlbmd0aCA9PSAwKSB7XG4gICAgICBzdGF0dXNDb250YWluZXIucGFyZW50Tm9kZS5yZW1vdmUoKTtcbiAgICB9XG4gICAgcmV0dXJuIHB5b2RpZGU7XG4gIH0pKCkuY2F0Y2goKGVycikgPT4ge1xuICAgIHN0YXR1c1RleHQuc3R5bGUuY29sb3IgPSBcInZhcigtLWV4ZXJjaXNlLWVkaXRvci1obC1lciwgI0FEMDAwMClcIjtcbiAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gZXJyLm1lc3NhZ2U7XG4gICAgLy9pbmRpY2F0b3JDb250YWluZXIucXVlcnlTZWxlY3RvcihcIi5zcGlubmVyLWdyb3dcIikuY2xhc3NMaXN0LmFkZChcImQtbm9uZVwiKTtcbiAgICB0aHJvdyBlcnI7XG4gIH0pO1xuXG4gIC8vIEtlZXAgdHJhY2sgb2YgaW5pdGlhbCBPSlMgYmxvY2sgcmVuZGVyXG4gIGNvbnN0IHJlbmRlcmVkT2pzID0ge307XG5cbiAgY29uc3QgcHJvY2VzcyA9IGFzeW5jIChjb250ZXh0LCBpbnB1dHMpID0+IHtcbiAgICBjb25zdCBweW9kaWRlID0gYXdhaXQgcHlvZGlkZVByb21pc2U7XG4gICAgY29uc3QgZXZhbHVhdG9yID0gbmV3IFB5b2RpZGVFdmFsdWF0b3IocHlvZGlkZSwgY29udGV4dCk7XG4gICAgYXdhaXQgZXZhbHVhdG9yLnByb2Nlc3MoaW5wdXRzKTtcbiAgICByZXR1cm4gZXZhbHVhdG9yLmNvbnRhaW5lcjtcbiAgfVxuXG4gIHJldHVybiB7XG4gICAgcHlvZGlkZVByb21pc2UsXG4gICAgcmVuZGVyZWRPanMsXG4gICAgcHJvY2VzcyxcbiAgfTtcbn1cbiJ9XX0=
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+WyIuLi9hc3NldHMvZGF0YS9kYXRhTWFya2V0UngueGxzeCIsIi4uL2Fzc2V0cy9kYXRhL2RhdGFMb25nU2hvcnRNaXNzaW5nLnhsc3giXQ==
+</script>
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Forecasting with Machine Learning</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="session_06_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="session_06_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="session_06_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="session_06_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="session_06_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="session_06_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="session_06_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="session_06_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="session_06_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="session_06_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': false,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true,"numbers":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'fast',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1280,
+
+        height: 720,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 6.0e-2,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script>
+    // Start Over also hides the revealed solution (and brings back "Show Solution").
+    (function () {
+      var pending = {};
+      document.addEventListener('click', function (ev) {
+        var btn = ev.target.closest && ev.target.closest('a, button');
+        if (!btn) return;
+        var cell = btn.closest('.exercise-cell');
+        if (btn.classList.contains('btn-exercise-solution')) {
+          var header = btn.parentElement;
+          pending.parent = header; pending.className = btn.className; pending.html = btn.innerHTML;
+          return;
+        }
+        if (btn.classList.contains('btn-outline-dark') && /Start Over/.test(btn.textContent) && cell) {
+          var ex = null;
+          document.querySelectorAll('.exercise-solution').forEach(function (sol) {
+            if (!sol.classList.contains('d-none')) {
+              sol.classList.add('d-none');
+              if (pending.parent) {
+                var again = document.createElement('a');
+                again.className = pending.className; again.innerHTML = pending.html;
+                again.setAttribute('role', 'button'); again.tabIndex = 0;
+                again.onclick = function () { sol.classList.remove('d-none'); again.remove(); };
+                pending.parent.prepend(again);
+                pending = {};
+              }
+            }
+          });
+        }
+      }, true);
+    })();
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      var timer;
+      var observer = new MutationObserver(function () {
+        clearTimeout(timer);
+        timer = setTimeout(function () { Reveal.layout(); }, 100);
+      });
+      observer.observe(document.querySelector(".reveal .slides"), {
+        childList: true,
+        subtree: true
+      });
+    });
+    </script>
+
+    <script>
+    const t = setInterval(() => {
+      const pages = document.querySelectorAll(".pdf-page");
+      if (!pages.length) return;
+      clearInterval(t);
+      pages.forEach((p, i) => {
+        const s = p.querySelector(".slide-number-pdf");
+        if (s) s.textContent = (i + 1) + " / " + pages.length;
+      });
+    }, 300);
+    </script>
+    <script type="ojs-module-contents">
+    eyJjb250ZW50cyI6W119
+    </script>
+    <script type="module">
+    if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+    window._ojs.paths.runtimeToDoc = "../../..";
+    window._ojs.paths.runtimeToRoot = "../../../..";
+    window._ojs.paths.docToRoot = "..";
+    window._ojs.selfContained = false;
+    window._ojs.runtime.interpretFromScriptTags();
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
