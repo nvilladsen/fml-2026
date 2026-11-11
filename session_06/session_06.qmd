@@ -1024,8 +1024,8 @@ def avg_forecaster(A_tr, y_tr, A_new):
     return model.predict(A_new)[0]
 
 def pcr_forecaster(S_tr, y_tr, S_new):
-    pca = PCA(n_components=1).fit(S_tr)               # first principal component
-    Z_tr, Z_new = pca.transform(S_tr), pca.transform(S_new) # standardized PCs
+    pca = PCA(n_components=1).fit(S_tr)               # fitting the model
+    Z_tr, Z_new = pca.transform(S_tr), pca.transform(S_new) # obtaining the first principal component
     model = LinearRegression().fit(Z_tr, y_tr)        # regress on the component
     return model.predict(Z_new)[0]
 
