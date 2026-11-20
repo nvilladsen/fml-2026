@@ -1,0 +1,293 @@
+---
+title: "Case: Forecasting the Equity Premium with Machine Learning"
+subtitle: "Forecasting with Machine Learning, Case 2"
+format:
+  html:
+    toc: true
+    number-sections: false
+---
+
+```{=html}
+<style>
+ol[type="a"] > li { padding-left: 0.6em; }
+</style>
+```
+
+## Objective
+
+In this case you are to forecast the monthly US stock market excess return, following the time-series part (sections 1.2 and 1.3) of the Rapach and Zhou (2020), *Time-series and Cross-sectional Stock Return Forecasting: New Machine Learning Methods* paper, and investigate whether machine learning methods, including a random forest and a neural network (not considered in the paper), improve on the simple prevailing mean forecast.
+
+The case combines the elements of the course so far:
+
+- The forecasting pipeline introduced in Lecture 3: lagged predictors, chronological samples, and modeling, here with OLS and penalized regression, and random forests, and standardization without leakage
+- The neural network of Lecture 4 and Case 1: training loop, early stopping, regularization, and ensembles over seeds
+- Expanding-window evaluation as in Lecture 6 (Dong et al., 2022): prevailing mean benchmark, combination forecasts, the C-ENet, the Clark-West test, and a mean-variance investor
+
+Note that some of the expanding window implementations you are to run are somewhat heavy, and so might take a few seconds to minutes to run. Hence, please be patient with your notebook.
+
+Much of the above was implemented in Lecture 6 with 100 anomaly returns as predictors. In this case, there are only 12 predictors, which keeps the code short and the run time manageable. You may reuse your own functions from the exercises and from Case 1.
+
+The case is not to be handed in, nor will you receive feedback. You are encouraged to work in groups, and to discuss the problems with your fellow students. You will be provided with suggested solutions to the problems, but we recommend you attempt to solve the problems on your own first. Feel free to reach out to Natasia, <nvilladsen@econ.au.dk>, if you have questions.
+
+## Data
+
+You will use the dataset contained in the file `rapach_zhou_case.csv`, built from Amit Goyal's updated version of the Welch and Goyal (2008) data and from FRED (producer prices (PPIACO)/PPI inflation and industrial production (INDPRO)), following section 1.3.1 of the paper. The file can be read in directly from the course GitHub using the code `pd.read_csv("https://raw.githubusercontent.com/nvilladsen/fml-2026/main/assets/data/rapach_zhou_case.csv")`. The dataset spans 1,104 months, between January 1927 to December 2018.
+
+The target variable, `y`, is the excess return of the S&P 500 in month $t$, in percent ($r_t$), while `date` represents the month associated with the return. The 12 predictors at time $t$ are observed at *the end of* month $t-1$, so they are already lagged relative to `y`. This means that **lagging of the predictors is not necessary**. PPI inflation and industrial production growth are lagged by one additional month, accounting for publication lags (data is not necessarily available at the time of the forecast). The dataset contains the following predictors:
+
+| Column | Predictor | Column | Predictor |
+|:---|:-----------|:---|:-----------|
+| `DP` | log dividend-price ratio | `CREDIT` | credit spread |
+| `EP` | log earnings-price ratio | `PPIG` | PPI inflation |
+| `VOL` | volatility (Mele, 2007) | `IPG` | industrial production growth |
+| `BILL` | T-bill yield minus its 12-month moving average | `MA112` | MA(1,12) technical signal, 0/1 |
+| `BOND` | T-bond yield minus its 12-month moving average | `MA312` | MA(3,12) technical signal, 0/1 |
+| `TERM` | term spread | `MOM6` | MOM(6) technical signal, 0/1 |
+
+The sample must be split in alignment with the paper: an initial in-sample period of 1927 -- 1946 (240 months), a holdout period of 1947 -- 1956 (120 months), and an evaluation period of 1957 -- 2018 (744 months). The forecasting scheme is **expanding window**.
+
+## Provided code
+
+The below functions are provided, such that you do not need to write/define them yourselves. Copy the following functions into your notebook. You need not understand the function `enet_aicc` in detail (this is the function also provided in the Lecture 6 notebook). The references to equations in the comments refer to the equations in the Rapach and Zhou (2020) paper.
+
+```python
+import numpy as np
+
+def r2_oos(actual, forecast, benchmark):
+    # Out-of-sample R2 in percent, relative to the benchmark forecast (eq. [1.16])
+    return 100 * (1 - np.sum((actual - forecast) ** 2) / np.sum((actual - benchmark) ** 2))
+
+
+def clark_west(actual, forecast, benchmark):
+    # Clark-West (2007) MSFE-adjusted statistic (one-sided t-statistic, as in Lecture 6)
+    # Significant if above 1.28 (10%), 1.645 (5%) and 2.33 (1%)
+    f = (actual - benchmark) ** 2 - (actual - forecast) ** 2 + (benchmark - forecast) ** 2
+    return f.mean() / (f.std(ddof=1) / np.sqrt(len(f)))
+
+
+def coordinate_pass(variables, a, g, G, lam_l1, lam_l2, lower, active):
+    # one cycle of coordinate descent over `variables`; updates a (coefficients) and g (gradient) in place
+    # returns the largest squared coefficient change and the change in R-squared
+    largest_change, gain = 0.0, 0.0
+    for k in variables:
+        u = g[k] + a[k]
+        shrunk = abs(u) - lam_l1                      # soft-thresholding by the l1 part
+        new = max(lower, np.sign(u) * shrunk / (1 + lam_l2)) if shrunk > 0 else 0.0
+        d = new - a[k]
+        if d != 0:
+            if k not in active:
+                active.append(k)                      # glmnet visits active variables in order of entry
+            gain += d * (2 * g[k] - d)
+            a[k] = new
+            g -= G[:, k] * d
+            largest_change = max(largest_change, d * d)
+    return largest_change, gain
+
+
+def enet_aicc(X, y_, lower=-np.inf, alpha=0.5, n_lambda=200, tol=1e-7, patience=100):
+    # elastic net path as in glmnet; returns (intercept, coefficients) at the AICc-minimizing lambda
+    n, p = X.shape
+    mean, sd = X.mean(0), X.std(0)
+    sd = np.where(sd > 1e-12, sd, np.inf)
+    Z = (X - mean) / sd                               # standardized predictors
+    yc = y_ - y_.mean()
+    sd_y = yc.std()
+    g = Z.T @ (yc / sd_y) / n                         # gradient, updated along the way
+    G = Z.T @ Z / n
+    a = np.zeros(p)                                   # coefficients
+    active, rsq, rsq_before, passes_done = [], 0.0, 0.0, False
+
+    lam_max = np.abs(g).max() / alpha                 # smallest lambda that sets all coefficients to zero
+    step_ratio = (1e-4 if n >= p else 1e-2) ** (1 / (n_lambda - 1))
+    best_aicc, best_a, best_m = n * np.log(yc @ yc / n), a.copy(), 0     # the null model
+
+    for m in range(1, n_lambda):
+        lam = lam_max * step_ratio ** m
+        lam_l1, lam_l2 = lam * alpha, lam * (1 - alpha)
+        full_pass = not passes_done
+        while True:
+            if full_pass:                              # cycle over all variables
+                change, gain = coordinate_pass(range(p), a, g, G, lam_l1, lam_l2, lower, active)
+                rsq += gain
+                if change < tol:
+                    break
+                passes_done = True
+            while True:                                # cycle over the active variables until converged
+                change, gain = coordinate_pass(list(active), a, g, G, lam_l1, lam_l2, lower, active)
+                rsq += gain
+                if change < tol:
+                    break
+            full_pass = True
+        residual = yc / sd_y - Z @ a
+        df = np.count_nonzero(a)
+        aicc = n * np.log(residual @ residual * sd_y ** 2 / n) + 2 * df * n / (n - df - 1) if n - df - 1 > 0 else np.inf
+        if aicc < best_aicc:
+            best_aicc, best_a, best_m = aicc, a.copy(), m
+        glmnet_stops = m >= 4 and (rsq - rsq_before < 1e-5 * rsq or rsq > 0.999)
+        if glmnet_stops or m - best_m >= patience:    # patience: stop when AICc has not improved for 100 lambdas
+            break
+        rsq_before = rsq
+    coef = best_a * sd_y / sd
+    return y_.mean() - mean @ coef, coef
+```
+
+## Problems
+
+It may be advantageous to initially read in the (expected) relevant libraries, before proceeding to the individual problems below. 
+
+### Problem 1: The data
+
+a) Read in `rapach_zhou_case.csv`, convert the date to a date object and set it as the index. Separate the data into target and predictors (`y` and `X`), store the names of the predictors in `columns`, and print their shapes.
+b) Replicate Figure 1.1 of the paper, that is, plot the 12 predictors in a $4 \times 3$ grid, one predictor per panel. Check your plot against that of Figure 1.1. 
+c) Report the mean and standard deviation of `y` in each of the three samples. Compare the size of the mean to the size of the standard deviation: what does this suggest about how large an $R^2_{\text{OOS}}$ we can hope for?
+
+### Problem 2: Samples and the prevailing mean benchmark
+
+a) Define the integer positions `t1` (the first row of the holdout period, 1947:01), `t2` (the first row of the evaluation period, 1957:01) and `T` (the number of rows). Convert `X` and `y` to NumPy arrays, `X_np` and `y_np`, and define `actual`, the realized returns of the evaluation period.
+b) Compute the prevailing mean forecast, eq. [1.5], for every month of the evaluation period, and store it in `pm`. Why is the prevailing mean forecast used in this case, rather than the training-sample mean, as in Case 1?
+c) As a check of your indexing, print the date of the first forecast month of the evaluation period and the date of the last month whose return enters its prevailing mean forecast.
+
+### Problem 3: Univariate forecasts and the combination forecast
+
+a) Write a function `univariate_forecasts(X_tr, y_tr, X_new)` which estimates the univariate predictive regression (Eq. [1.1]) via OLS for each of the 12 predictors (one at a time) on the training data, and returns the 12 one-step-ahead forecasts (Eq. [1.2]) for the predictors `X_new` (one row). 
+b) Compute the univariate forecasts with an expanding window for every month from January 1947 (1947:01) to December 2018 (2018:12, the holdout and evaluation periods), and store them in an array `uni` of shape (864, 12). 
+
+The forecasts of the holdout period must be made as well, since they are used in the C-ENet forecast (Problem 5).
+
+c) Compute the simple combination forecast, (Eq. [1.7]), for the evaluation period, and store it in a variable, `comb`.
+
+Before answering the following question, recall that you have been provided with the functions `r2_oos` and `clark_west`.
+
+d) Report the $R^2_{\text{OOS}}$ (in percent) and the Clark-West statistic of each of the 12 univariate forecasts and the combination forecast over the evaluation period. Compare with Panel A of Table 1.1. How many of the univariate forecasts beat the prevailing mean? 
+
+### Problem 4: OLS and the elastic net
+
+a) Compute the multiple OLS forecast (Eq. [1.4]) for the evaluation period, with an expanding window, and store it in `ols`.
+b) Compute the elastic net forecast, (Eq. [1.11]) for the evaluation period, equally with an expanding window, using the provided function `enet_aicc`, and store it in `enet`.
+c) Plot the OLS, combination, and elastic net forecasts in three separate panels, each  along with the prevailing mean (as in Figure 1.5), using the same y-axis scale in all panels. Report the standard deviation of each forecast. Rank the three forecasts by how strongly they are shrunk towards the prevailing mean.
+
+### Problem 5: The combination elastic net (C-ENet)
+
+Note that the holdout period is expanding rather than rolling (which is otherwise commonly the case), as reflected in the problem below.
+
+a) Implement the C-ENet forecast, (Eqs. [1.13] -- [1.15]), for every month of the evaluation period, and store it in `cenet`. For the forecast of row `i`: \
+    **i)** using the univariate forecasts of all months from January 1947 (1947:01) up to (not including) row `i`, and the realized returns of those months (Step 1, already computed in `uni`), estimate the Granger-Ramanathan regression (Eq. [1.14], described in Lecture 6), i.e., the regression of the realized returns on the univariate forecasts, with the coefficients restricted to be non-negative, using `enet_aicc(..., lower=0)` (Step 2).\
+    **ii)** average the univariate forecasts of row `i` of the selected predictors, i.e., those with a positive coefficient (Step 3). If no predictor is selected, use the prevailing mean.
+
+    Also store which predictors are selected in each month.
+
+    *Hint:* row `i` of the data corresponds to row `i - t1` of `uni`.
+
+To solve the below problem, it is advisable to inspect the shape of the `selected` array before proceeding. 
+
+b) For each predictor, compute the share of months of the evaluation period in which it is selected, and show the shares in a bar chart. Compare with Figure 1.3 and consider which predictors are selected most often? 
+
+c) Compare the standard deviation of the C-ENet forecast with those of the combination and elastic net forecasts of Problem 4.c. Where does the C-ENet lie in terms of shrinkage, and why?
+
+### Problem 6: A random forest
+
+Re-estimating a flexible model every month for 744 months is time consuming (we might also run out of RAM). Instead, the nonlinear models of this and the next problem are re-estimated **annually**, every January, and the estimated model is used to forecast the following 12 months of that year, using the predictors of each month. Each re-estimation uses an expanding window: all months prior to the January in question. Use the following random forest parameters throughout (cf. Lecture 3 and Gu et al., 2020): `n_estimators=300`, `max_depth=3`, `min_samples_leaf=20`, `max_features=4`, `random_state=0`, and `n_jobs=-1`.
+
+a) Compute the random forest forecasts for all 744 months of the evaluation period, and store them in `rf`. In each January of the evaluation period, row `i`, fit the forest on all rows before `i`, and forecast the rows `i, ..., i + 11` (fewer at the end of the sample). Report the run time (use the `time` module). 
+
+    *Hint:* the rows of the Januaries can be found with `df.index[i].month == 1`.
+
+b) Average the feature importances of the forests over all re-estimations, and depict them in a bar chart. Compare them with the C-ENet selection shares of Problem 5.b. Do the two methods generally align on which predictors matter?
+c) The forest is restricted to shallow trees (`max_depth=3`) with at least 20 observations in each leaf. Why are such restrictions sensible when forecasting monthly returns?
+
+### Problem 7: A neural network
+
+Use the same yearly schedule as for the random forest. Unlike random forests, the neural network requires a validation sample to facilitate early stopping: in each re-estimation, the most recent 120 months of the expanding window allocated to a validation sample (rolling window validation sample). The remaining months are the training observations. The first re-estimation, in January 1957 (1957:01), therefore trains on the years 1927 -- 1946 and validates on the years 1947 -- 1956, the same split as seen in the holdout period of the C-ENet. Use the following neural network specification throughout:
+
+- An architecture with two hidden layers with 16 and 8 hidden units, respectively, each layer with ReLU activation functions (as in Lecture 4)
+- A dropout layer with parameter $p = 0.5$ applied after the first hidden layer
+- Optimizer `Adam` with `lr=0.001` and `weight_decay=0.01`, loss function `nn.MSELoss()`, and `batch_size=32` for the `DataLoader` (shuffle the training data only)
+- Train the network for maximally 200 epochs, implement early stopping with `patience=10`, and when training has terminated, restore the best model state
+- The predictors and the target standardized
+
+a) Define the network as a class `NN`, and a function `train_nn(seed, X_tr, y_tr, X_val, y_val)` which sets the seed, creates the DataLoaders, trains the network with early stopping, and returns the trained model. The arrays passed to the function are assumed to already be standardized, and the targets to have shape (n, 1).
+b) Write a function `nn_forecasts(seed)` which returns the network forecasts (in percent) for all 744 months of the evaluation period. In each January of the evaluation period, row `i`: \
+    **i)** split the rows before `i` into a training sample (all but the last 120 rows) and a validation sample (the last 120 rows)\
+    **ii)** standardize the training and validation data\
+    **iii)** train the network with `train_nn`\
+    **iv)** forecast the rows `i, ..., i + 11` (fewer than 12 at the end of the sample), and transform the forecasts back to percent (i.e., back from standardized values)
+
+    Run the function with `seed=0` and report the run time.
+
+c) Train the network with the seeds {0, 1, 2, 3, 4}, and compute the ensemble forecast, `nn_ens`, as the average of the five forecasts (this, of course, will take approximately 5 times as much time as the run in 7.b). Report the $R^2_{\text{OOS}}$ of each seed and of the ensemble.
+d) Count the parameters of the network, and compare with the number of training observations at the first (1957:01) and the last (2018:01) re-estimation. What is lost by re-estimating once a year rather than every month (for both the forest and the network), and by keeping the most recent 120 months out of the training sample of the network?
+
+### Problem 8: Statistical evaluation
+
+a) Report the $R^2_{\text{OOS}}$ (in percent) and the Clark-West statistic of the OLS, combination, elastic net, C-ENet, random forest and network (ensemble) forecasts in one table, and compare with Panel B of Table 1.1.
+
+The cumulative difference in squared forecast errors (CDSFE) is defined as
+
+$$
+\text{CDSFE}_t = \sum_{s=t_2}^{t} \left[(r_s - \bar{r}_s)^2 - (r_s - \hat{r}_s)^2\right]
+$$
+
+where $\bar{r}_s$ is the prevailing mean forecast and $\hat{r}_s$ is the forecast of interest. The CDSFE measures the cumulative improvement in forecast accuracy of a given model relative to the prevailing mean. A positive CDSFE in month $t$ indicates that the model has outperformed the prevailing mean in total up to month $t$, while a negative CDSFE indicates the opposite.
+
+b) Plot the cumulative difference in squared forecast errors between the prevailing mean and each of the six forecasts (cf. Figure 1.7). How do you read such a plot? Which forecasts outperform the prevailing mean consistently over time?
+c) Do the random forest and the network improve on the linear methods? Link your answer to the conditions under which trees and neural networks performed well in Gu et al. (2020), and to the bias-variance discussion of section 1.2.2 of the paper.
+
+### Problem 9: Economic value
+
+As in section 1.3.4 of the paper and Lecture 6, consider a mean-variance investor with relative risk aversion $\gamma = 5$, who each month allocates the share $w^{\ast}_{t+1|t} = \frac{1}{\gamma}\,\frac{\hat r_{t+1|t}}{\hat\sigma^2_{t+1|t}}$ of wealth to the market, (cf. Eq. [1.18]), and the remainder to a risk-free asset, here T-bills. The variance forecast $\hat\sigma^2_{t+1|t}$ is the sample variance of the excess returns of the previous 60 months, and the weights are restricted to $[-1, 2]$. The portfolio excess returns are $r_{p,t} = w^{\ast}_{t|t-1}\, r_t$.
+
+a) Compute the portfolio excess returns of the investor who uses the prevailing mean, the combination, the C-ENet, the random forest and the network (ensemble) forecast.
+
+    *Hint:* eq. [1.18] assumes returns in decimals. Since the returns are in percent, the weight in percent units is `100 * forecast / (gamma * variance)`.
+
+b) For each portfolio, report the annualized average excess return, the annualized volatility, the annualized Sharpe ratio, and the annualized gain in certainty equivalent return (CER) in basis points relative to the prevailing mean investor, where the CER is $\bar r_p - \frac{\gamma}{2}\sigma_p^2$ (in decimals, per month). Compare with section 1.3.4 of the paper:
+
+    | Portfolio | Avg. excess return | Volatility | Sharpe ratio | CER gain (bps) |
+    |:--|:--:|:--:|:--:|:--:|
+    | Prevailing mean | 4.30% | 12.87% | 0.33 | -- |
+    | C-ENet | 6.29% | 9.76% | 0.64 | 375 |
+
+    : {tbl-colwidths="[20,24,16,18,22]"}
+
+c) Plot the log cumulative excess return of the five portfolios (cf. Figure 1.8, Panel B).
+
+## Conclusion
+
+Consider the following questions:
+
+- Which forecasts perform best, statistically and economically? Does any method beat the prevailing mean consistently over time?
+- Rank OLS, the elastic net, the combination and the C-ENet by the degree of shrinkage (based on the standard deviations extracted throughout this case). What does the ranking of their performance tell you about the right degree of shrinkage when forecasting returns?
+- Under which conditions would you expect the random forest and the network to improve on the C-ENet? Did the case satisfy these conditions?
+
+## Appendix: Optional extension -- Does predictability last?
+
+This extension is optional, since the case is already quite extensive, and since this subject is somewhat distant from what the lectures have touched upon. 
+
+McLean and Pontiff (2016), *Does Academic Research Destroy Stock Return Predictability?*, study 97 cross-sectional return predictors (anomalies) from the academic literature. For each predictor they compare the long-short return in three periods: the sample period of the original study, the period after the sample ends but before the study is published, and the period after publication. They find that returns are about 26% lower out-of-sample and about 58% lower post-publication than in-sample. The decline out-of-sample but before publication is attributed to statistical bias (data mining: researchers report the predictors that happened to work in their sample). The additional decline after publication is attributed to investors learning about the predictor from the publication and trading on it, which removes part of the mispricing (the public learns about the market being in "disequilibrium" and moves, via supply/demand, the price closer to the fundamental value, the equilibrium price).
+
+The question posed, whether academic research "destroys" predictability, is relevant to time-series predictability as well. The simple combination forecast was proposed by Rapach, Strauss and Zhou (2010), a paper with an empirical application using a sample ending in 2005. If publication destroys predictability, we would expect the combination forecast to perform worse after 2005, and after 2010 in particular. Of course, given we are considering only one such paper, any evidence found, whether supportive or contradictory to the hypothesis, will necessarily be anecdotal.
+
+To test the hypothesis of McLean and Pontiff (2016), the in-sample, out-of-sample, and post-publication periods must be compared. 
+
+a) Split the evaluation period (using the same data as we have used all along) into three periods: \
+    **i)** 1957:01 -- 2005:12, the period covered by Rapach et al. (2010) (*in-sample*)\
+    **ii)** 2006:01 -- 2009:12, after the Rapach et al. (2010) sample, before publication (*out-of-sample*)\
+    **iii)** 2010:01 -- 2018:12 (*post-publication*)
+
+    Report the $R^2_{\text{OOS}}$ of each of the six forecasts of Problem 8.a in each period.
+
+    *Hint:* the function `r2_oos` can be applied to a subsample with a boolean array (True in the months of the subsample), e.g., `r2_oos(actual[mask], fc[mask], pm[mask])`.
+
+b) Does your evidence suggest that publication destroyed the predictability of the market excess returns, as McLean and Pontiff (2016) find for cross-sectional anomalies? Why should the comparison be interpreted with caution?
+
+## References
+
+Gu, S., Kelly, B. and Xiu, D. (2020). Empirical asset pricing via machine learning. *Review of Financial Studies*, 33(5), 2223--2273.
+
+McLean, R. D. and Pontiff, J. (2016). Does academic research destroy stock return predictability? *Journal of Finance*, 71(1), 5--32.
+
+Rapach, D. E., Strauss, J. K. and Zhou, G. (2010). Out-of-sample equity premium prediction: Combination forecasts and links to the real economy. *Review of Financial Studies*, 23(2), 821--862.
+
+Rapach, D. E. and Zhou, G. (2020). Time-series and cross-sectional stock return forecasting: New machine learning methods. In E. Jurczenko (ed.), *Machine Learning for Asset Management: New Developments and Financial Applications*, 1--33. Wiley.
+
+Welch, I. and Goyal, A. (2008). A comprehensive look at the empirical performance of equity premium prediction. *Review of Financial Studies*, 21(4), 1455--1508.
